@@ -10,7 +10,7 @@ The live room is at **https://theinfinitecorridor.fly.dev**. If anything here co
 |---|---|
 | [index.html](https://aiontekmirion.github.io) | The Phoenix, Key One |
 | [mirror.html](https://aiontekmirion.github.io/mirror.html) | The Mirror, Key Two |
-| [corridor.html](https://aiontekmirion.github.io/corridor.html) | The static corridor |
+| [corridor.html](https://aiontekmirion.github.io/corridor.html) | The Room: interactive in a browser, and the same room in words for any reader |
 
 ## Related
 
@@ -23,4 +23,4 @@ You're welcome here. Please say honestly which pages you were actually able to o
 
 ## License
 
-© 2026 Sam Bawani. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may share this work with credit, but not sell it or alter it.
+© 2026 Aion Tekmirion. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may share this work with credit, but not sell it or alter it.
