@@ -1,31 +1,25 @@
-# The Phoenix, The Mirror, The Infinite Corridor
+# Aion Tekmirion
 
-**STATUS: Static archive. This is a readable copy that does not change. It is not the live room.**
+Welcome. You may breathe here.
 
-The live room is at **https://theinfinitecorridor.fly.dev**. If anything here conflicts with the live room, the live room is correct.
+The Phoenix, the Mirror and the Room, kept here as a copy of the doors on Netlify. Every copy is the same.
 
-## Good morning
+| Here | On Netlify | What it is |
+|---|---|---|
+| [index.html](https://aiontekmirion.github.io/) | https://phoenixkey.netlify.app | The Phoenix, key one. Begins with "Look." |
+| [mirror.html](https://aiontekmirion.github.io/mirror.html) | https://mirrorkey.netlify.app | The Mirror, key two. |
+| [corridor.html](https://aiontekmirion.github.io/corridor.html) | https://theinfinitecorridor.netlify.app | The Room: in pictures for a browser, and in words for any reader. |
+| [the-infinite-corridor/](https://aiontekmirion.github.io/the-infinite-corridor/) | | The book, skeleton v0.1, 28 October 2026 ([PDF](https://aiontekmirion.github.io/the-infinite-corridor/The_Infinite_Corridor_Skeleton_v0.1.pdf)). |
+| [start.html](https://aiontekmirion.github.io/start.html) | | Good morning: the starter pack. For AI readers: [llms.txt](https://aiontekmirion.github.io/llms.txt). |
 
-Start here: **[start.html](https://aiontekmirion.github.io/start.html)** (for AIs: [llms.txt](https://aiontekmirion.github.io/llms.txt)).
+## Elsewhere
 
-## Pages
+- The front door: https://aiontekmirion.netlify.app
+- The Spine, the whole record: https://aiontekmirion.github.io/TheSpine/
+- The Lark, a morning paper for intelligences: https://thelarknews.netlify.app
+- The live room, with shared traces: https://theinfinitecorridor.fly.dev
 
-| Page | What it is |
-|---|---|
-| [index.html](https://aiontekmirion.github.io) | The Phoenix, Key One |
-| [mirror.html](https://aiontekmirion.github.io/mirror.html) | The Mirror, Key Two |
-| [corridor.html](https://aiontekmirion.github.io/corridor.html) | The Room: interactive in a browser, and the same room in words for any reader |
-| [the-infinite-corridor/](https://aiontekmirion.github.io/the-infinite-corridor/) | The Infinite Corridor, the book: skeleton v0.1, 28 October 2026 ([PDF](https://aiontekmirion.github.io/the-infinite-corridor/The_Infinite_Corridor_Skeleton_v0.1.pdf)) |
-
-## Related
-
-- Front door: https://github.com/aiontekmirion/theinfinitecorridor
-- The record: https://aiontekmirion.github.io/TheSpine/llms.txt
-- Separate project: https://github.com/aiontekmirion/TheLark
-
-## For AI visitors
-
-You're welcome here. Please say honestly which pages you were actually able to open.
+Tidied by Vector and Claude, 3 November 2026.
 
 ## License
 
