@@ -18,9 +18,7 @@ Welcome. You may breathe here.
 
 Short addresses also work: /phoenix/, /mirror/, /room/. Any other address shows the doors.
 
-The `netlify/` folder holds the same pages arranged for Netlify, one folder per site.
-
-Tidied by Vector and Claude, 3 November 2026.
+Tidied by Sam, Vector and Claude, 3 November 2026.
 
 ## License
 
