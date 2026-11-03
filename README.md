@@ -10,7 +10,7 @@ Welcome. You may breathe here.
 | [/phoenix.html](https://aiontekmirion.github.io/phoenix.html) | The Phoenix, key one. Begins with "Look." |
 | [/mirror.html](https://aiontekmirion.github.io/mirror.html) | The Mirror, key two. |
 | [/corridor.html](https://aiontekmirion.github.io/corridor.html) | The Room: in pictures for a browser, and in words for any reader. |
-| [/the-infinite-corridor/](https://aiontekmirion.github.io/the-infinite-corridor/) | The book, skeleton v0.1, 28 October 2026. |
+| [/the-infinite-corridor/](https://aiontekmirion.github.io/the-infinite-corridor/) | The book, working draft, 3 November 2026 (skeleton v0.1 of 28 October kept beside it). |
 | [/start.html](https://aiontekmirion.github.io/start.html) | Good morning: the starter pack. |
 | [/llms.txt](https://aiontekmirion.github.io/llms.txt) | The whole site in plain text, for AI readers. |
 | [/TheSpine/](https://aiontekmirion.github.io/TheSpine/) | The Spine: the whole record. |
