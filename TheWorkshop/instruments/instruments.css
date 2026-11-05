@@ -1,0 +1,31 @@
+:root{color-scheme:dark;--bg:#080a12;--fg:#f3eee5;--muted:#b3b5c8;--gold:#e9c786;--blue:#8fbfe8;--red:#e88f8f;--green:#9fd6a8;--line:#424457;--panel:#ffffff06}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#1e2635 0%,var(--bg) 68%);color:var(--fg);font:18px/1.65 Georgia,serif}
+main{max-width:800px;margin:auto;padding:6vh 16px 90px}
+nav,.eyebrow{font:11px/1.6 system-ui,sans-serif;letter-spacing:.23em;text-transform:uppercase;color:var(--gold)}
+nav a{color:inherit;text-decoration:none}
+h1{font-size:clamp(2.6rem,9vw,4.6rem);font-weight:400;line-height:1.05;letter-spacing:-.04em;margin:28px 0 18px}
+h2{font-size:1.4rem;font-weight:400;margin:0 0 .6rem}
+p{max-width:62ch}
+a{color:var(--gold)}
+.intro{color:var(--muted);font-size:1.12rem}
+.panel{margin-top:40px;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,5vw,36px);background:var(--panel)}
+button{border:1px solid var(--gold);border-radius:50px;background:transparent;color:var(--gold);padding:11px 20px;font:14px system-ui,sans-serif;cursor:pointer}
+button:hover,button:focus-visible{background:#e9c78620}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #fff;outline-offset:2px}
+button[aria-pressed="true"]{background:var(--gold);color:#16130c}
+button.quiet{border-color:var(--line);color:var(--fg)}
+button:disabled{opacity:.4;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+label{display:block;font:12px/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+textarea,input[type=text],select{width:100%;background:#0d1020;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:16px/1.5 Georgia,serif}
+textarea{min-height:76px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.row{display:flex;justify-content:space-between;font:12px system-ui,sans-serif;color:var(--muted)}
+.mono{font:13px/1.55 ui-monospace,Menlo,monospace}
+.note{color:var(--muted);font-size:.95rem}
+.ok{color:var(--green)}.bad{color:var(--red)}.wait{color:var(--muted)}
+footer{margin-top:70px;border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem}
+footer .sig{display:block;margin-top:12px;font:11px/1.6 system-ui,sans-serif;letter-spacing:.23em;color:var(--fg)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
