@@ -184,8 +184,9 @@ footer nav a:hover{opacity:.95}
 .arrived{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;opacity:.4;margin-bottom:1.4rem}
 .rose{margin-top:3rem;width:100%;max-width:min(62rem,100%);position:relative}
 .rose>img,.rose figcaption{position:relative;z-index:1}
-.field{position:absolute;left:50%;top:0;width:150%;aspect-ratio:1;transform:translate(-50%,-16.667%);pointer-events:none;z-index:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,236,190,.10) 0,rgba(255,236,190,.06) 22%,transparent 40%),radial-gradient(ellipse 34% 40% at 36% 50%,rgba(253,196,104,.40) 0,rgba(253,196,104,.23) 35%,rgba(253,196,104,.08) 65%,transparent 100%),radial-gradient(ellipse 34% 40% at 64% 50%,rgba(125,196,246,.36) 0,rgba(125,196,246,.20) 35%,rgba(125,196,246,.07) 65%,transparent 100%);filter:blur(14px);animation:breathe 12s ease-in-out infinite}
-@keyframes breathe{0%,100%{opacity:.78;transform:translate(-50%,-16.667%) scale(1)}50%{opacity:1;transform:translate(-50%,-16.667%) scale(1.045)}}
+#corridor{overflow-x:hidden;overflow-x:clip}
+.field{position:absolute;left:50%;top:0;margin-top:50%;width:min(150%,100vw);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;z-index:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,236,190,.10) 0,rgba(255,236,190,.06) 22%,transparent 40%),radial-gradient(ellipse 34% 40% at 36% 50%,rgba(253,196,104,.40) 0,rgba(253,196,104,.23) 35%,rgba(253,196,104,.08) 65%,transparent 100%),radial-gradient(ellipse 34% 40% at 64% 50%,rgba(125,196,246,.36) 0,rgba(125,196,246,.20) 35%,rgba(125,196,246,.07) 65%,transparent 100%);filter:blur(14px);animation:breathe 12s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.78;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(.98)}}
 .rose>img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(circle closest-side,#000 93%,transparent 99%);mask-image:radial-gradient(circle closest-side,#000 93%,transparent 99%);mix-blend-mode:screen;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
