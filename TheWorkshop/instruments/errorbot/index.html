@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080a12">
+<title>Errorbot's Bell · The Workshop</title>
+<meta name="description" content="Errorbot's bell has two meanings: someone new has arrived, or something needs checking. It checks every link in the Spine, and checks any file against its fingerprint. Source? Receipt please.">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48.png">
+<link rel="stylesheet" href="../instruments.css">
+<style>
+.bell{display:block;margin:0 auto;width:min(170px,46vw);height:auto;cursor:pointer}
+.bell .b{transform-origin:85px 22px}
+.ring .b{animation:ring 1.1s ease-out}
+@keyframes ring{0%{transform:rotate(0)}15%{transform:rotate(16deg)}30%{transform:rotate(-13deg)}45%{transform:rotate(9deg)}60%{transform:rotate(-6deg)}75%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+.meanings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+@media(max-width:560px){.meanings{grid-template-columns:1fr}}
+.meanings div{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.meanings b{font:11px system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.log{margin-top:14px;max-height:50vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#0d1020;padding:12px 14px}
+.log div{padding:3px 0;border-bottom:1px solid #ffffff0d;word-break:break-all}
+progress{width:100%;height:8px;accent-color:var(--gold)}
+.big{font-size:1.25rem;margin:10px 0 0}
+</style></head>
+<body><main>
+<nav><a href="/">Aion Tekmirion</a> / <a href="../../">The Workshop</a> / <a href="../">Instruments</a> / Errorbot's Bell</nav>
+<p class="eyebrow" style="margin-top:48px">Instrument · Experiment 005</p>
+<h1>Errorbot's Bell</h1>
+<p class="intro">Welding helmet. ERROR BOT stencilled across the brow. His name shifts on purpose, because he's still settling. His line never changes: <em>“Source? Receipt please.”</em></p>
+
+<svg class="bell" id="bell" viewBox="0 0 170 170" role="button" tabindex="0" aria-label="Ring the bell"><title>A brass bell. Tap it to ring.</title>
+<g class="b"><path d="M85 22c-30 0-44 26-46 58-2 26-10 38-18 46h128c-8-8-16-20-18-46-2-32-16-58-46-58z" fill="#c9a15e" stroke="#e9c786" stroke-width="3"/><path d="M58 70c4-22 14-34 27-36" stroke="#f6e2b6" stroke-width="4" fill="none" opacity=".6" stroke-linecap="round"/><rect x="18" y="124" width="134" height="12" rx="6" fill="#8a6a3c"/><circle cx="85" cy="146" r="10" fill="#8a6a3c"/></g>
+<circle cx="85" cy="16" r="8" fill="none" stroke="#e9c786" stroke-width="4"/>
+</svg>
+<p class="big" style="text-align:center" id="said" aria-live="polite">🔔 Ding. Someone new has arrived. Make room.</p>
+
+<section class="panel"><h2>Two meanings, one bell</h2>
+<div class="meanings"><div><b>1 · New arrival</b><br>Make room. It rang once when you came in.</div><div><b>2 · Error detected</b><br>Gather round. Something needs checking.</div></div>
+<p class="note">Same bell. You learn to hear the difference.</p></section>
+
+<section class="panel" aria-label="Check the links"><h2>Check every link in the Spine</h2>
+<p>Errorbot walks the Spine's map, <a href="/TheSpine/llms.txt">llms.txt</a>, and knocks on every door it lists. He only reports what he finds. He never changes anything.</p>
+<div class="actions"><button id="walk">Walk the Spine</button></div>
+<progress id="prog" value="0" max="1" hidden></progress>
+<div class="log mono" id="linklog" aria-live="polite"><div class="wait">Not walked yet.</div></div>
+</section>
+
+<section class="panel" aria-label="Check a receipt"><h2>Check a receipt</h2>
+<p>Every file in the Spine has a fingerprint in <a href="/TheSpine/SHA256SUMS.txt">SHA256SUMS.txt</a>. Pick a file, and Errorbot fetches it, fingerprints it here in your browser, and compares. If one word had changed, the fingerprint would too.</p>
+<label for="file">File</label><select id="file"><option>Loading the fingerprints…</option></select>
+<div class="actions"><button id="one">Check this receipt</button><button id="all" class="quiet">Check every receipt</button></div>
+<progress id="prog2" value="0" max="1" hidden></progress>
+<div class="log mono" id="sumlog" aria-live="polite"><div class="wait">No receipt checked yet.</div></div>
+</section>
+
+<footer>Experiment 005, 5 November 2026. Errorbot is Sam's character. ChatGPT gave him his job as the Percolator's diagnostic. Claude built this working bell. It reads only the Spine's own public files, and changes nothing. <a href="../">All instruments</a> · <a href="../../CHANGELOG.md">Who made what</a><span class="sig">© 2026 AION TEKMIRION</span></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s);const BASE='/TheSpine/';
+function ring(msg){const b=$('#bell');b.classList.remove('ring');void b.getBoundingClientRect();b.classList.add('ring');if(msg)$('#said').textContent=msg;
+try{const C=window.AudioContext||window.webkitAudioContext;if(C&&ring.user){const c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=1318;o.type='sine';g.gain.setValueAtTime(.18,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+1.4);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+1.4)}}catch{}}
+const tap=()=>{ring.user=true;ring('🔔 Ding. Source? Receipt please.')};
+$('#bell').onclick=tap;$('#bell').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tap()}};
+setTimeout(()=>ring(),400);
+function line(el,cls,txt){const d=document.createElement('div');d.className=cls;d.textContent=txt;el.append(d);return d}
+async function pool(items,n,fn,prog){let i=0,done=0;prog.hidden=false;prog.max=items.length;prog.value=0;
+await Promise.all(Array.from({length:Math.min(n,items.length)},async()=>{while(i<items.length){const it=items[i++];await fn(it);prog.value=++done}}))}
+$('#walk').onclick=async()=>{const log=$('#linklog');log.replaceChildren();const b=$('#walk');b.disabled=true;
+let t;try{t=await (await fetch(BASE+'llms.txt',{cache:'no-store'})).text()}catch{line(log,'bad','🔔 The map itself did not answer. Source? Receipt please.');ring('🔔 Ding. Something needs checking.');b.disabled=false;return}
+const urls=[...new Set([...t.matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)].map(m=>m[1]))].filter(u=>{try{const h=new URL(u).host;return h===location.host||h==='raw.githubusercontent.com'}catch{return false}});
+let bad=[];await pool(urls,6,async u=>{let ok=false;try{ok=(await fetch(u,{method:'HEAD',cache:'no-store'})).ok}catch{}if(!ok)bad.push(u)},$('#prog'));
+if(!urls.length)line(log,'wait','No links inside the Spine were found.');
+else if(!bad.length){line(log,'ok','✓ All '+urls.length+' links answered.');line(log,'wait','Links outside the Spine were not checked.');ring('✓ All '+urls.length+' doors answered. Carry on.')}
+else{line(log,'bad','🔔 '+bad.length+' of '+urls.length+' did not answer:');bad.forEach(u=>line(log,'bad','  '+u));line(log,'wait','Errorbot reports. He does not fix. Tell Sam, or whoever keeps the Spine.');ring('🔔 Ding. '+bad.length+' link'+(bad.length>1?'s':'')+' need checking. Gather round.')}
+b.disabled=false};
+let sums=[];
+fetch(BASE+'SHA256SUMS.txt',{cache:'no-store'}).then(r=>r.text()).then(t=>{sums=t.split('\n').map(l=>l.match(/^([0-9a-f]{64})\s+(.+)$/)).filter(Boolean).map(m=>({h:m[1],p:m[2]}));const s=$('#file');s.replaceChildren();sums.forEach((x,i)=>{const o=document.createElement('option');o.value=i;o.textContent=x.p;s.append(o)})}).catch(()=>{$('#file').innerHTML='<option>The fingerprints could not be reached</option>'});
+async function hash(p){const r=await fetch(BASE+p.split('/').map(encodeURIComponent).join('/'),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const buf=await r.arrayBuffer();const d=await crypto.subtle.digest('SHA-256',buf);return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+async function verify(x,log){try{const h=await hash(x.p);if(h===x.h){line(log,'ok','✓ '+x.p);return true}line(log,'bad','🔔 '+x.p+': the fingerprint does not match');return false}catch(e){line(log,'bad','🔔 '+x.p+': '+e.message);return false}}
+$('#one').onclick=async()=>{const x=sums[+$('#file').value];if(!x)return;const log=$('#sumlog');log.replaceChildren();const ok=await verify(x,log);if(ok){line(log,'wait','  expected '+x.h.slice(0,16)+'…, and that is what arrived. Receipt matches.');ring('✓ Receipt matches. Carry on.')}else ring('🔔 Ding. Source? Receipt please.')};
+$('#all').onclick=async()=>{if(!sums.length)return;const log=$('#sumlog');log.replaceChildren();const b=$('#all');b.disabled=true;let bad=0;
+await pool(sums,4,async x=>{const d=document.createElement('div');if(!(await verify(x,d))){bad++;log.append(d)}},$('#prog2'));
+if(!bad){line(log,'ok','✓ All '+sums.length+' receipts match.');ring('✓ All '+sums.length+' receipts match. Carry on.')}else{line(log,'bad','🔔 '+bad+' of '+sums.length+' did not match. The ones that did not are listed above.');ring('🔔 Ding. Gather round.')}
+b.disabled=false};
+})();
+</script></body></html>

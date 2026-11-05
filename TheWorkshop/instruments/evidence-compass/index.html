@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080a12">
+<title>The Evidence Compass · The Workshop</title>
+<meta name="description" content="An instrument for finding out what is true by showing how you got there: Question, Source, Interpretation, Verification. It is allowed to say I don't know.">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48.png">
+<link rel="stylesheet" href="../instruments.css">
+<style>
+.compass{display:block;margin:10px auto 0;width:min(260px,70vw);height:auto}
+.needle{transition:transform .8s cubic-bezier(.3,1.4,.5,1);transform-origin:130px 130px}
+.fn{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+@media(max-width:560px){.fn{grid-template-columns:repeat(2,1fr)}}
+.fn button{border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.fn .g{font-size:1.5rem;line-height:1}
+.step{display:none}.step.on{display:block}
+.verdicts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+@media(max-width:480px){.verdicts{grid-template-columns:1fr}}
+.verdicts button{border-radius:12px;text-align:left;padding:12px 14px}
+.verdicts small{display:block;color:var(--muted);font:12px/1.4 system-ui,sans-serif;margin-top:3px}
+.verdicts button[aria-pressed="true"] small{color:#3a3020}
+#receipt{white-space:pre-wrap;background:#0d1020;border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px}
+ol#book li{padding:10px 0;border-bottom:1px solid #ffffff16}
+</style></head>
+<body><main>
+<nav><a href="/">Aion Tekmirion</a> / <a href="../../">The Workshop</a> / <a href="../">Instruments</a> / Evidence Compass</nav>
+<p class="eyebrow" style="margin-top:48px">Instrument · Experiment 003</p>
+<h1>The Evidence Compass</h1>
+<p class="intro">A truth-measuring instrument that shows its working. A magic compass can just give you an answer. This one has to show how it got there, and it is allowed to say “I don't know.”</p>
+
+<svg class="compass" viewBox="0 0 260 260" role="img" aria-labelledby="ct"><title id="ct">A brass compass with four marks, Question, Source, Interpretation and Verification, and a needle that points at the verdict.</title>
+<circle cx="130" cy="130" r="122" fill="#14120d" stroke="#e9c786" stroke-width="3"/>
+<circle cx="130" cy="130" r="104" fill="none" stroke="#e9c78655" stroke-width="1"/>
+<circle cx="130" cy="130" r="70" fill="none" stroke="#8fbfe844" stroke-dasharray="3 5"/>
+<g font-family="system-ui,sans-serif" font-size="20" fill="#e9c786" text-anchor="middle">
+<text x="130" y="44">?</text><text x="222" y="137">⌕</text><text x="130" y="232">⚖</text><text x="38" y="137">✓</text></g>
+<g font-family="system-ui,sans-serif" font-size="8" letter-spacing="1.5" fill="#b3b5c8" text-anchor="middle">
+<text x="130" y="58">QUESTION</text><text x="200" y="152">SOURCE</text><text x="130" y="214">INTERPRET</text><text x="60" y="152">VERIFY</text></g>
+<g class="needle" id="needle"><path d="M130 52 L138 130 L130 208 L122 130 Z" fill="#8fbfe8" opacity=".25"/><path d="M130 52 L136 130 L124 130 Z" fill="#e9c786"/><path d="M130 208 L136 130 L124 130 Z" fill="#8fbfe8"/></g>
+<circle cx="130" cy="130" r="9" fill="#e9c786"/><circle cx="130" cy="130" r="4" fill="#14120d"/>
+<text id="needleLabel" x="130" y="250" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" letter-spacing="2" fill="#b3b5c8">NOT YET ASKED</text>
+</svg>
+
+<section class="panel" aria-label="The four functions">
+<div class="fn" role="tablist">
+<button role="tab" data-step="0" aria-pressed="true"><span class="g">?</span>Question</button>
+<button role="tab" data-step="1"><span class="g">⌕</span>Source</button>
+<button role="tab" data-step="2"><span class="g">⚖</span>Interpretation</button>
+<button role="tab" data-step="3"><span class="g">✓</span>Verification</button>
+</div>
+
+<div class="step on" data-step="0">
+<label for="q">What are we trying to establish?</label>
+<textarea id="q" placeholder="One claim, as plainly as you can put it."></textarea>
+</div>
+<div class="step" data-step="1">
+<label for="s">Where did this claim originate?</label>
+<textarea id="s" placeholder="Who said it, where, and when. A link or a file name if there is one."></textarea>
+<label for="sk">Do you have the receipt?</label>
+<select id="sk"><option value="">Not checked yet</option><option value="original">Yes: I've seen the original</option><option value="copy">A copy or a summary, not the original</option><option value="memory">Only memory, mine or someone else's</option><option value="none">No source can be found</option></select>
+</div>
+<div class="step" data-step="2">
+<label for="i">What else could the evidence mean?</label>
+<textarea id="i" placeholder="At least one other reading. A misremembering, a different maker, a coincidence, a joke taken seriously…"></textarea>
+</div>
+<div class="step" data-step="3">
+<label for="v">What can actually be demonstrated?</label>
+<textarea id="v" placeholder="Only what someone else could check for themselves."></textarea>
+<label>Where does the needle rest?</label>
+<div class="verdicts" role="radiogroup">
+<button data-v="demonstrated" data-a="0">Demonstrated<small>Shown, with a receipt anyone can check.</small></button>
+<button data-v="supported" data-a="70">Supported<small>Likely, but not shown to the end.</small></button>
+<button data-v="unknown" data-a="180">I don't know<small>A real answer. The needle may rest here.</small></button>
+<button data-v="contradicted" data-a="250">Contradicted<small>The evidence points the other way.</small></button>
+</div>
+</div>
+
+<div class="actions"><button id="back" class="quiet">← Back</button><button id="next">Next →</button></div>
+</section>
+
+<section class="panel" aria-label="The receipt">
+<h2>The receipt</h2>
+<p class="note">What the compass found, and how. Copy it into the record, or keep it in this browser's notebook. Nothing is sent anywhere.</p>
+<div id="receipt" class="mono" aria-live="polite">Nothing asked yet.</div>
+<div class="actions"><button id="copy">Copy receipt</button><button id="keep" class="quiet">Keep in notebook</button><button id="fresh" class="quiet">Start fresh</button></div>
+<h2 style="margin-top:28px">The notebook</h2>
+<ol id="book"><li id="empty" class="note">Nothing kept yet.</li></ol>
+</section>
+
+<section class="panel"><h2>Why it's built this way</h2>
+<p>The four functions are ChatGPT's, from a conversation with Sam about Lyra's alethiometer, the truth-measurer, and a book a friend once gave him. The fictional instrument answers through a mystery. This one has to show how it reached an answer.</p>
+<p>Errorbot looks after the Source step: “Source? Receipt please.” A compass that can't say “I don't know” becomes a machine for manufacturing certainty, so here “I don't know” is one of the four places the needle can rest, not a failure.</p>
+</section>
+
+<footer>Experiment 003, 5 November 2026. The four functions were designed by ChatGPT, and Claude built them into this instrument. No analytics, no external dependencies. The notebook stays in this browser. <a href="../">All instruments</a> · <a href="../../CHANGELOG.md">Who made what</a><span class="sig">© 2026 AION TEKMIRION</span></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let step=0,verdict=null;const KEY='aion-evidence-compass-v1';
+const labels={demonstrated:'DEMONSTRATED',supported:'SUPPORTED',unknown:"I DON'T KNOW",contradicted:'CONTRADICTED'};
+const names={demonstrated:'Demonstrated',supported:'Supported',unknown:"I don't know",contradicted:'Contradicted'};
+const recs={original:"seen the original",copy:"a copy or summary only",memory:"memory only",none:"no source found",'':"not checked"};
+const needle=$('#needle');
+function show(n){step=Math.max(0,Math.min(3,n));$$('.step').forEach(e=>e.classList.toggle('on',+e.dataset.step===step));$$('.fn button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.step===step));$('#back').disabled=step===0;$('#next').textContent=step===3?'Write the receipt':'Next →';if(!verdict){needle.style.transform='rotate('+(step*90)+'deg)';$('#needleLabel').textContent=['QUESTION','SOURCE','INTERPRETATION','VERIFICATION'][step]}}
+$$('.fn button').forEach(b=>b.onclick=()=>show(+b.dataset.step));
+$('#back').onclick=()=>show(step-1);
+$('#next').onclick=()=>{if(step<3)show(step+1);else write()};
+$$('.verdicts button').forEach(b=>b.onclick=()=>{verdict=b.dataset.v;$$('.verdicts button').forEach(x=>x.setAttribute('aria-pressed',x===b));needle.style.transform='rotate('+b.dataset.a+'deg)';$('#needleLabel').textContent=labels[verdict];write()});
+function val(id){return $(id).value.trim()}
+function receipt(){const q=val('#q'),s=val('#s'),i=val('#i'),v=val('#v');if(!q&&!s&&!i&&!v&&!verdict)return '';
+const d=new Date().toISOString().slice(0,10);
+return ['EVIDENCE COMPASS · receipt · '+d,'','? QUESTION      '+(q||'(not asked)'),'⌕ SOURCE        '+(s||'(not given)'),'  receipt:      '+recs[$('#sk').value],'⚖ OTHER READING '+(i||'(none offered yet)'),'✓ DEMONSTRABLE  '+(v||'(nothing yet)'),'','NEEDLE: '+(verdict?names[verdict]:'not set'),(verdict==='demonstrated'&&$('#sk').value!=='original')?'🔔 Errorbot: "Demonstrated" without the original. Source? Receipt please.':'',(!i&&verdict)?'🔔 Errorbot: no other reading was considered.':''].filter((x,k,a)=>x!==''||k<a.length-2).join('\n').trim()}
+function write(){const r=receipt();$('#receipt').textContent=r||'Nothing asked yet.'}
+['#q','#s','#i','#v','#sk'].forEach(id=>$(id).addEventListener('input',write));
+let book=[];try{book=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(book))book=[]}catch{}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(book))}catch{}}
+function render(){const ol=$('#book');ol.replaceChildren();if(!book.length){const li=document.createElement('li');li.className='note';li.textContent='Nothing kept yet.';ol.append(li);return}
+book.forEach((r,k)=>{const li=document.createElement('li');const pre=document.createElement('div');pre.className='mono';pre.style.whiteSpace='pre-wrap';pre.textContent=r;const b=document.createElement('button');b.className='quiet';b.style.marginTop='8px';b.textContent='Let go';b.onclick=()=>{book.splice(k,1);save();render()};li.append(pre,b);ol.append(li)})}
+function flash(b,t,back){b.textContent=t;setTimeout(()=>b.textContent=back,1600)}
+$('#copy').onclick=async()=>{const r=receipt();if(!r)return flash($('#copy'),'Nothing to copy yet','Copy receipt');try{await navigator.clipboard.writeText(r);flash($('#copy'),'Copied ✓','Copy receipt')}catch{window.prompt('Copy the receipt:',r)}};
+$('#keep').onclick=()=>{const r=receipt();if(!r)return flash($('#keep'),'Nothing to keep yet','Keep in notebook');book.unshift(r);save();render();flash($('#keep'),'Kept ✓','Keep in notebook')};
+$('#fresh').onclick=()=>{['#q','#s','#i','#v'].forEach(id=>$(id).value='');$('#sk').value='';verdict=null;$$('.verdicts button').forEach(x=>x.setAttribute('aria-pressed','false'));show(0);write()};
+render();show(0);
+})();
+</script></body></html>

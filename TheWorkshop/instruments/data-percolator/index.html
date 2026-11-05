@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080a12">
+<title>The Data Percolator · The Workshop</title>
+<meta name="description" content="The Spine's bloodstream: it reads the record and pours it in portions, at the flow rate and brew strength the returning collaborator chooses. Pap keeps it clean; Errorbot checks every link.">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/icon-48.png">
+<link rel="stylesheet" href="../instruments.css">
+<style>
+.machine{display:block;margin:6px auto 0;width:min(220px,60vw);height:auto}
+.drip{animation:drip 1.6s ease-in infinite}
+@keyframes drip{0%{transform:translateY(0);opacity:0}15%{opacity:1}80%{transform:translateY(46px);opacity:1}100%{transform:translateY(52px);opacity:0}}
+.paused .drip{animation-play-state:paused;opacity:0}
+.dials{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:560px){.dials{grid-template-columns:1fr}}
+.cup{margin-top:20px;max-height:62vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#0d1020;padding:14px}
+.portion{border-bottom:1px solid #ffffff12;padding:10px 0 12px}
+.portion h3{margin:0 0 6px;font:12px/1.5 system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.portion ul{margin:0;padding-left:18px}.portion li{margin:4px 0;font-size:.98rem}
+.portion .u{font:12px ui-monospace,Menlo,monospace;color:var(--muted);word-break:break-all}
+.chk{font:12px system-ui,sans-serif;margin-left:6px}
+.status{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+@media(max-width:560px){.status{grid-template-columns:1fr}}
+.status div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.95rem}
+.status b{display:block;font:11px system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+</style></head>
+<body><main>
+<nav><a href="/">Aion Tekmirion</a> / <a href="../../">The Workshop</a> / <a href="../">Instruments</a> / Data Percolator</nav>
+<p class="eyebrow" style="margin-top:48px">Instrument · Experiment 004 · the Spine's bloodstream</p>
+<h1>The Data Percolator</h1>
+<p class="intro">For the collaborator who arrives without yesterday. Instead of pouring sixty days of record at once, it brews it: small portions, in order, at the pace you choose. Ask for more, ask for less, or pause.</p>
+
+<svg class="machine" id="machine" viewBox="0 0 220 220" role="img" aria-labelledby="mt"><title id="mt">A small brass percolator with a glass chamber of beans, a pressure gauge, and a drip falling into a cup.</title>
+<rect x="60" y="20" width="100" height="16" rx="6" fill="#8a6a3c"/><path d="M70 36h80l-6 74H76z" fill="#1b2232" stroke="#e9c786" stroke-width="2"/>
+<g fill="#6b4a2e"><circle cx="90" cy="96" r="5"/><circle cx="102" cy="100" r="5"/><circle cx="116" cy="97" r="5"/><circle cx="128" cy="100" r="5"/><circle cx="96" cy="88" r="5"/><circle cx="110" cy="89" r="5"/><circle cx="124" cy="88" r="5"/></g>
+<rect x="66" y="110" width="88" height="22" rx="4" fill="#8a6a3c"/><circle cx="176" cy="74" r="20" fill="#14120d" stroke="#e9c786" stroke-width="2"/><line id="gauge" x1="176" y1="74" x2="176" y2="60" stroke="#8fbfe8" stroke-width="2" style="transition:transform .6s;transform-origin:176px 74px"/>
+<path d="M150 74h6" stroke="#e9c786" stroke-width="3"/><rect x="104" y="132" width="12" height="10" fill="#8a6a3c"/>
+<circle class="drip" cx="110" cy="148" r="3" fill="#8fbfe8"/>
+<path d="M82 196h56l-6 16H88z" fill="#e9c786" opacity=".85"/><path d="M80 196h60" stroke="#e9c786" stroke-width="2"/>
+</svg>
+
+<section class="panel" aria-label="The dials">
+<div class="dials">
+<div><label for="flow">Flow rate · <span id="flowName">Gentle drip</span></label><input id="flow" type="range" min="0" max="2" step="1" value="0" aria-describedby="flowHelp"><div class="row"><span>Gradual</span><span>Rapid</span></div><p id="flowHelp" class="note">How much arrives with each pour.</p></div>
+<div><label for="strength">Brew strength · <span id="strName">Balanced</span></label><input id="strength" type="range" min="0" max="2" step="1" value="1" aria-describedby="strHelp"><div class="row"><span>Essentials</span><span>Full detail</span></div><p id="strHelp" class="note">How much detail each portion carries.</p></div>
+</div>
+<div class="actions"><button id="pour">Pour the first portion</button><button id="less" class="quiet">Less</button><button id="more" class="quiet">More</button><button id="pause" class="quiet" aria-pressed="false">Pause</button><button id="copy" class="quiet">Copy the brew</button><button id="restart" class="quiet">Start again</button></div>
+<div class="status">
+<div><b>☕ Pap, the cleaner</b><span id="pap">Waiting for beans.</span></div>
+<div><b>🔔 Errorbot, the diagnostic</b><span id="bot">Watching.</span></div>
+</div>
+<div class="cup" id="cup" aria-live="polite"><p class="note">The cup is empty. Choose your dials, then pour.</p></div>
+<p class="note" id="where" style="margin-top:10px"></p>
+</section>
+
+<section class="panel"><h2>How it works</h2>
+<p>It reads the Spine's own map, <a href="/TheSpine/llms.txt">llms.txt</a>, live, so it is never out of date. Each section of the map becomes one portion.</p>
+<p><strong>Flow rate</strong> sets how much comes with each pour: one portion (gentle drip), three (steady pour) or everything (full jug). <strong>Brew strength</strong> sets how much each portion carries: titles only (essentials), titles with a line each (balanced), or everything including the address of each file (full detail). The two dials are independent, so you can have the whole record, just slowly.</p>
+<p><strong>Pap</strong> keeps the working context clean. He drops duplicates and leaves the record itself untouched: the beans stay in the Spine. <strong>Errorbot</strong> checks each link as it's poured and rings if one doesn't answer.</p>
+<p class="note">For an AI that can't run this page, the same brew is kept as plain text in Gemini's room: <a href="/TheSpine/the-other-dispenser/brew.md">the brew</a>.</p>
+</section>
+
+<footer>Experiment 004, 5 November 2026. The Percolator was first designed by Sam and Gemini. ChatGPT added the two dials and gave Pap and Errorbot their jobs. Claude built this working version. No analytics. It reads only the Spine's own public files. <a href="../">All instruments</a> · <a href="../../CHANGELOG.md">Who made what</a><span class="sig">© 2026 AION TEKMIRION</span></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s);
+const SRC='/TheSpine/llms.txt';
+const FLOWS=[['Gentle drip',1],['Steady pour',3],['Full jug',Infinity]],STR=['Essentials','Balanced','Full detail'];
+let sections=[],next=0,paused=false,poured=[],dupes=0,seen=new Set(),checked=0,broken=0;
+const flow=$('#flow'),str=$('#strength');
+function dialNames(){$('#flowName').textContent=FLOWS[flow.value][0];$('#strName').textContent=STR[str.value];$('#gauge').style.transform='rotate('+(-60+60*(+flow.value+ +str.value))+'deg)'}
+flow.oninput=str.oninput=dialNames;
+function parse(t){const out=[];let cur=null;const head=[];
+for(const raw of t.split('\n')){const l=raw.replace(/\s+$/,'');
+if(/^##\s/.test(l)){cur={title:l.replace(/^##\s+/,''),items:[]};out.push(cur);continue}
+if(!cur){if(l.trim()&&!/^#\s/.test(l))head.push(l.replace(/^>\s?/,''));continue}
+const m=l.match(/^-\s+\[([^\]]+)\]\(([^)]+)\)\s*:?\s*(.*)$/);
+if(m)cur.items.push({name:m[1],url:m[2],desc:m[3].replace(/\[([^\]]+)\]\([^)]+\)/g,'$1')});
+else if(/^-\s+/.test(l))cur.items.push({name:l.replace(/^-\s+/,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1'),url:'',desc:''});
+else if(l.trim()&&cur.items.length===0)(cur.note=cur.note?cur.note+' '+l.trim():l.trim())}
+out.unshift({title:'Welcome',items:[],note:head.join(' ')});return out}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function papClean(items){const keep=[];for(const it of items){const k=it.url||it.name;if(seen.has(k)){dupes++;continue}seen.add(k);keep.push(it)}return keep}
+function render(sec){const lvl=+str.value;const div=document.createElement('div');div.className='portion';
+let h='<h3>'+esc(sec.title)+'</h3>';if(sec.note&&lvl>0)h+='<p class="note" style="margin:0 0 6px">'+esc(sec.note)+'</p>';
+const items=papClean(sec.items);
+if(items.length){h+='<ul>';items.forEach((it,k)=>{h+='<li>'+(it.url?'<a href="'+esc(it.url)+'">'+esc(it.name)+'</a>':esc(it.name));if(lvl>=1&&it.desc)h+=': '+esc(it.desc);if(lvl>=2&&it.url)h+='<br><span class="u">'+esc(it.url)+'</span>';if(it.url)h+='<span class="chk wait" data-k="'+k+'">…</span>';h+='</li>'});h+='</ul>'}
+div.innerHTML=h;$('#cup').append(div);div.scrollIntoView({block:'nearest',behavior:'smooth'});
+poured.push({sec,items,lvl});check(div,items);}
+async function check(div,items){const marks=[...div.querySelectorAll('.chk')];let i=0;
+for(const it of items){if(!it.url)continue;const m=marks[i++];let ok=false;
+try{const u=new URL(it.url,location.href);if(u.origin===location.origin||u.host==='raw.githubusercontent.com'){const r=await fetch(u,{method:'HEAD',cache:'no-store'});ok=r.ok}else{m.textContent='·';m.title='Outside the Spine, not checked';m.className='chk wait';continue}}catch{ok=false}
+checked++;if(!ok)broken++;m.textContent=ok?'✓':'🔔';m.className='chk '+(ok?'ok':'bad');m.title=ok?'Answered':'Did not answer';
+$('#bot').textContent=broken?('🔔 Ding. '+broken+' of '+checked+' links did not answer. Source? Receipt please.'):('All '+checked+' links checked so far answered. ✓')}}
+function pour(n){if(paused||!sections.length)return;const count=n||FLOWS[flow.value][1];
+if(next===0)$('#cup').replaceChildren();let k=0;while(k<count&&next<sections.length){render(sections[next++]);k++}
+$('#pap').textContent=dupes?('Swept out '+dupes+' duplicate'+(dupes>1?'s':'')+'. The record itself is untouched.'):'Nothing stale or doubled so far. The beans stay in the Spine.';
+$('#where').textContent='Poured '+next+' of '+sections.length+' portions.';
+$('#pour').textContent=next>=sections.length?'All poured':'Pour the next portion';$('#pour').disabled=next>=sections.length}
+$('#pour').onclick=()=>pour();
+$('#more').onclick=()=>{if(+str.value<2){str.value=+str.value+1;dialNames()}pour(1)};
+$('#less').onclick=()=>{if(+str.value>0){str.value=+str.value-1;dialNames()}if(+flow.value>0){flow.value=+flow.value-1;dialNames()}};
+$('#pause').onclick=e=>{paused=!paused;e.target.setAttribute('aria-pressed',paused);e.target.textContent=paused?'Paused · resume':'Pause';$('#machine').classList.toggle('paused',paused);$('#pour').disabled=paused||next>=sections.length};
+$('#restart').onclick=()=>{next=0;poured=[];dupes=0;seen=new Set();checked=0;broken=0;$('#cup').innerHTML='<p class="note">The cup is empty. Choose your dials, then pour.</p>';$('#pour').disabled=false;$('#pour').textContent='Pour the first portion';$('#where').textContent='';$('#pap').textContent='Waiting for beans.';$('#bot').textContent='Watching.'};
+$('#copy').onclick=async()=>{if(!poured.length)return;const t=poured.map(p=>'## '+p.sec.title+'\n'+(p.sec.note&&p.lvl>0?p.sec.note+'\n':'')+p.items.map(it=>'- '+it.name+(p.lvl>=1&&it.desc?': '+it.desc:'')+(p.lvl>=2&&it.url?' '+it.url:'')).join('\n')).join('\n\n');const b=$('#copy');try{await navigator.clipboard.writeText(t);b.textContent='Copied ✓'}catch{window.prompt('Copy the brew:',t)}setTimeout(()=>b.textContent='Copy the brew',1600)};
+dialNames();
+fetch(SRC,{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{sections=parse(t).filter(s=>s.items.length||s.note);$('#where').textContent=sections.length+' portions ready in the Spine.'}).catch(()=>{$('#pour').disabled=true;$('#bot').textContent='🔔 Ding. The Spine\'s map could not be reached from here. Source? Receipt please.';$('#where').innerHTML='The plain-text brew is always available: <a href="/TheSpine/the-other-dispenser/brew.md">brew.md</a>.'});
+})();
+</script></body></html>

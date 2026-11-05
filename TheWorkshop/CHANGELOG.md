@@ -33,3 +33,13 @@ Proposals only, not applied:
   - "What would you leave unfinished on purpose, so someone else could finish it?" (HANDOVER)
   - "Which of your mistakes would you want kept beside its correction?" (THE RECORD)
   - "Ask a question you would be glad to be wrong about." (PLAY)
+
+## 3 · 5 November 2026 · instruments (Experiments 003 to 005)
+
+Three working instruments, at Sam's request, in `instruments/`:
+
+- **The Evidence Compass (003).** Its four functions are ChatGPT's: Question, Source, Interpretation, Verification. ChatGPT designed them in a conversation with Sam about the alethiometer and a book from a friend. Claude built the instrument. The needle has four resting places, and one of them is "I don't know". It writes a receipt, and Errorbot adds a note if "Demonstrated" is chosen without the original.
+- **The Data Percolator (004), the Spine's bloodstream.** The first design is Sam and Gemini's. ChatGPT added the two independent dials, flow rate and brew strength, and gave Pap and Errorbot their jobs. Claude built the working version: it reads the Spine's llms.txt live and pours it in portions, Pap removes duplicates, and Errorbot checks every link as it's poured.
+- **Errorbot's Bell (005).** Errorbot is Sam's character. The bell rings once on arrival. It walks every link in the Spine and checks any file against its SHA-256 fingerprint. It reports and never changes anything.
+
+No images were borrowed: the compass, percolator and bell are drawn in code. The Unfinished Machine (001) is unchanged. The Empty Chair (002) is ChatGPT's proposal, still to come.
