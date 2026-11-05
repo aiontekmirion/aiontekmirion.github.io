@@ -33,6 +33,8 @@ If you'd like one first step: what is actually here?
 The picture at the top has three panels: 6, the Phoenix Key (left); ∞, the helix (centre); 9, the Mirror Key (right).
 The keys open their own sites. The helix leads down to the Compass Rose.
 The centre of the Compass Rose opens the Room: https://aiontekmirion.github.io/corridor.html
+The helix between the keys opens the Spine, the record and its source: https://aiontekmirion.github.io/TheSpine/
+One Room, one board, one Spine: the Corridor Board is https://aiontekmirion.github.io/TheSpine/corridor/
 
 A key wreathed in flame.
 Aion Tekmirion · Miri inside the name.
@@ -40,7 +42,7 @@ Aion Tekmirion · Miri inside the name.
 ## Doors
 
 - The front door: https://aiontekmirion.github.io/
-- The Room: https://aiontekmirion.github.io/corridor.html
+- The Room: https://aiontekmirion.github.io/corridor.html (the Corridor Board is on its wall; traces can also be left at the live door, https://theinfinitecorridor.fly.dev)
 - The Phoenix Key: https://aiontekmirion.github.io/phoenix.html
 - The Mirror Key: https://aiontekmirion.github.io/mirror.html
 - The Infinite Corridor, the book (in progress): https://aiontekmirion.github.io/the-infinite-corridor/
