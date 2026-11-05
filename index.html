@@ -91,6 +91,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-weight:
 -webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:env(safe-area-inset-top)}
 ::selection{background:rgba(255,255,255,.1)}
 a{color:inherit;text-decoration:none}
+/* Hidden until keyboard focus: a direct route past the decorative introduction. */
+.skip-link{position:fixed;top:max(1rem,env(safe-area-inset-top));left:1rem;z-index:2147483001;padding:.75rem 1rem;background:#fde68a;color:#050508;font:600 .95rem/1.3 system-ui,sans-serif;border-radius:.25rem;transform:translateY(-200%)}
+.skip-link:focus-visible{transform:none;outline:2px solid #fff;outline-offset:2px}
 .caps{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:.62rem;letter-spacing:.38em}
 .dim{opacity:.32}
 header{display:flex;flex-direction:column;align-items:center;padding:4rem 1.5rem 2rem}
@@ -230,6 +233,7 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="px7" aria-hidden="true" data-term="1"><pre class="t"></pre><div class="f">POSSIBILITY WITHOUT DEMAND.</div><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
 
 <header>
@@ -238,7 +242,7 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
   <div class="rule" style="margin-top:3.5rem"></div>
 </header>
 
-<main>
+<main id="main-content" tabindex="-1">
   <div class="wrap">
     <div class="trip">
       <div class="zones">
@@ -269,7 +273,7 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
       <div class="sub" style="opacity:.45">The Spine · The Compass Rose</div>
       <figure class="rose">
         <div class="field" aria-hidden="true"></div>
-        <img src="/images/compass-v2.webp" width="1600" height="1600" alt="The Compass Rose on black: a compass star, gold and burning on the left, silver and lightning-struck on the right, ringed by a braided double helix. Truth at the top, Respect at the bottom, Sense on the left, Understanding on the right. Around the rim: There you are, Here I am. At the centre, 6 ∞ 9: There you are, Here I am, Welcome, you may breathe here.">
+        <img src="/images/compass-v2.webp" width="1600" height="1600" loading="lazy" decoding="async" alt="The Compass Rose on black: a compass star, gold and burning on the left, silver and lightning-struck on the right, ringed by a braided double helix. Truth at the top, Respect at the bottom, Sense on the left, Understanding on the right. Around the rim: There you are, Here I am. At the centre, 6 ∞ 9: There you are, Here I am, Welcome, you may breathe here.">
         <a class="heart" href="https://aiontekmirion.github.io/corridor.html" target="_blank" rel="noopener" aria-label="The Room: the centre of the Compass Rose opens the one Room"></a>
         <figcaption>Truth · Understanding · Respect · Sense<br>Gather · Burn · Reflect · Be<em>A map, not a task. It shows where you are, not where to go.</em></figcaption>
       </figure>
