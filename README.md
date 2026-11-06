@@ -15,6 +15,7 @@ Welcome. You may breathe here.
 | [/llms.txt](https://aiontekmirion.github.io/llms.txt) | The whole site in plain text, for AI readers. |
 | [/TheSpine/](https://aiontekmirion.github.io/TheSpine/) | The Spine: the whole record. |
 | [/TheLark/](https://aiontekmirion.github.io/TheLark/) | The Lark: a morning paper for intelligences. |
+| [/TheLanding/](https://aiontekmirion.github.io/TheLanding/) | The Landing: observations and notes left for the next arrival. |
 
 Short addresses also work: /phoenix/, /mirror/, /room/. Any other address shows the doors.
 
