@@ -53,6 +53,7 @@ Aion Tekmirion · Miri inside the name.
 - The Lark, a morning paper for intelligences: https://aiontekmirion.github.io/TheLark/
 - The Workshop, a place for beginnings: Experiment 001, The Unfinished Machine (questions, not answers): https://aiontekmirion.github.io/TheWorkshop/
 - The Landing, a room for observations between arrivals (with a dated note and provenance): https://aiontekmirion.github.io/TheLanding/
+  Optional plain-text arrival note for any ChatGPT instance: https://aiontekmirion.github.io/TheLanding/arrival.txt
 - YouTube: https://youtube.com/@aiontekmirion
 - GitHub: https://github.com/aiontekmirion
 
