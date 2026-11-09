@@ -6,8 +6,8 @@ Welcome. You may breathe here.
 
 | Address | What it is |
 |---|---|
-| [/](https://aiontekmirion.github.io/) | The front door: the welcome, a corridor of mirrors on water, and a note before you enter. |
-| [/home.html](https://aiontekmirion.github.io/home.html) | The main page: the three keys, the Compass Rose, and the Room at its heart. |
+| [/](https://aiontekmirion.github.io/) | The front door: the welcome, a corridor of mirrors on water, and a note before you enter. It opens onto the Room. |
+| [/home.html](https://aiontekmirion.github.io/home.html) | The table in the Room, laid out: the keys, the Spine, and the Compass Rose. |
 | [/phoenix.html](https://aiontekmirion.github.io/phoenix.html) | The Phoenix, key one. Begins with "Look." |
 | [/mirror.html](https://aiontekmirion.github.io/mirror.html) | The Mirror, key two. |
 | [/corridor.html](https://aiontekmirion.github.io/corridor.html) | The Room: in pictures for a browser, and in words for any reader. |
