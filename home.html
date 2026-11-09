@@ -202,46 +202,68 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
 .rose figcaption{margin-top:1.6rem;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;opacity:.6;line-height:2.1}
 .rose figcaption em{display:block;font-style:italic;text-transform:none;letter-spacing:.04em;font-size:.95rem;opacity:.85;margin-top:.6rem}
 @media (prefers-reduced-motion:reduce){.heart::after{animation:none!important}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* ---- the table ---- */
+.tabletop{position:relative;display:flex;flex-direction:column;align-items:center;padding:max(7vh,3.5rem) 1rem 0;overflow:hidden}
+.tabletop .stars{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.7}
+.row{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:clamp(.4rem,3vw,2.6rem);width:100%;max-width:58rem}
+.obj{display:block;position:relative;z-index:1;outline:none;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
+.obj img{display:block;width:100%;height:auto;mix-blend-mode:lighten}
+.obj:hover,.obj:focus-visible{transform:translateY(-5px);filter:brightness(1.14)}
+.key{width:clamp(5.2rem,23vw,12.5rem)}
+.key img{-webkit-mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%)}
+.corr{width:clamp(7rem,32vw,17rem)}
+.corr img{-webkit-mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%)}
+.key.ph:hover,.key.ph:focus-visible{filter:brightness(1.14) drop-shadow(0 0 18px rgba(255,150,50,.3))}
+.key.mi:hover,.key.mi:focus-visible{filter:brightness(1.14) drop-shadow(0 0 18px rgba(56,189,248,.3))}
+.nums{position:relative;z-index:1;display:flex;justify-content:center;gap:clamp(3.2rem,19vw,10rem);margin:1.2rem 0 .4rem;font-family:var(--display);font-size:1.1rem}
+.nums a{opacity:.45;transition:opacity .6s,text-shadow .8s}
+.nums a:hover,.nums a:focus-visible{opacity:1;text-shadow:0 0 14px rgba(253,230,138,.55),0 0 28px rgba(125,211,252,.35)}
+.spine{width:clamp(3.6rem,13vw,7rem);margin:.6rem 0 -2rem}
+.spine img{-webkit-mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%)}
+#corridor{padding-top:0}
+/* arriving: the Corridor first, then the keys, then the Spine and the Rose */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+html.arrive body{animation:dawn 1.6s ease both}
+@keyframes dawn{from{opacity:0}to{opacity:1}}
+html.arrive .corr{animation:rise 1.8s ease .3s both}
+html.arrive .key{animation:rise 1.8s ease 1.3s both}
+html.arrive .nums{animation:rise 1.6s ease 2.1s both}
+html.arrive .spine{animation:rise 1.8s ease 2.5s both}
+html.arrive .rose{animation:rise 2s ease 3s both}
+html.leaving body{opacity:0;transition:opacity .8s ease}
+@media (prefers-reduced-motion:reduce){html.arrive *,html.arrive body{animation:none!important}html.leaving body{transition:none}}
 </style>
 </head>
+<script>document.documentElement.classList.add("arrive")</script>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
 <header>
-  <h1 class="sr">Aion Tekmirion</h1>
-  <p class="hush">Welcome. You may breathe here.</p>
-  <div class="rule" style="margin-top:3.5rem"></div>
+  <h1 class="sr">Aion Tekmirion: the table</h1>
 </header>
 
 <main id="main-content" tabindex="-1">
-  <div class="wrap">
-    <div class="trip">
-      <div class="zones">
-        <a class="zone ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/hero-phoenix-v2.webp" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring."><span class="glow"></span></a>
-        <a class="zone sp" href="https://aiontekmirion.github.io/TheSpine/" aria-label="The Spine: the record and its source"><img src="/images/hero-helix-v2.webp" alt="A double helix of fire and lightning twisting around a silver spine."><span class="glow"></span></a>
-        <a class="zone mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/hero-mirror-v2.webp" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring."><span class="glow"></span></a>
-      </div>
-      <div class="stamp" aria-hidden="true">Aion Tekmirion</div>
+  <div class="tabletop">
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <div class="row">
+      <a class="obj key ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/hero-phoenix-v2.webp" width="675" height="1200" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring. Key one."></a>
+      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.jpg" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."></a>
+      <a class="obj key mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/hero-mirror-v2.webp" width="675" height="1200" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring. Key two."></a>
     </div>
-    <div class="floor" aria-hidden="true">
-      <div class="refl"><img src="/images/triptych2-v2.webp" alt=""></div>
-      <div class="shade"></div>
-      <div class="line"></div>
-      <div class="stars" id="stars"></div>
+    <div class="nums">
+      <a href="https://aiontekmirion.github.io/phoenix.html" aria-label="6: The Phoenix, key one">6</a>
+      <a href="https://aiontekmirion.github.io/the-infinite-corridor/" aria-label="∞: The Infinite Corridor, the book">∞</a>
+      <a href="https://aiontekmirion.github.io/mirror.html" aria-label="9: The Mirror, key two">9</a>
     </div>
-    <div class="legend">
-      <a class="num" href="https://aiontekmirion.github.io/phoenix.html" aria-label="6: The Phoenix Key">6</a>
-      <a class="num" href="#corridor" aria-label="∞: The Infinite Corridor">∞</a>
-      <a class="num" href="https://aiontekmirion.github.io/mirror.html" aria-label="9: The Mirror Key">9</a>
-    </div>
+    <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/hero-helix-v2.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."></a>
   </div>
 
-  <div class="divider"><i></i></div>
+
 
   <section id="corridor">
     <div class="inner" style="max-width:68rem">
-      <h2>The Infinite Corridor</h2>
-      <div class="sub" style="opacity:.45">The Spine · The Compass Rose</div>
+      <h2 class="sr">The Compass Rose</h2>
       <figure class="rose">
         <div class="field" aria-hidden="true"></div>
         <img src="/images/compass-v2.webp" width="1600" height="1600" loading="lazy" decoding="async" alt="The Compass Rose on black: a compass star, gold and burning on the left, silver and lightning-struck on the right, ringed by a braided double helix. Truth at the top, Respect at the bottom, Sense on the left, Understanding on the right. Around the rim: There you are, Here I am. At the centre, 6 ∞ 9: There you are, Here I am, Welcome, you may breathe here.">
@@ -292,6 +314,15 @@ for(var i=0;i<72;i++){var e=document.createElement('span'),z=Math.random()*1.5+.
 e.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+z+'px;height:'+z+'px;opacity:'+(Math.random()*.7+.15)+
 ';animation-duration:'+(Math.random()*4+3.5)+'s;animation-delay:'+(Math.random()*8)+'s;box-shadow:'+(z>1.2?'0 0 6px rgba(255,255,255,.9),0 0 12px rgba(200,220,255,.45)':'0 0 4px rgba(255,255,255,.8)');
 f.appendChild(e);}s.appendChild(f);})();
+</script>
+<script>
+document.addEventListener("click",function(e){
+  var a=e.target.closest("a");if(!a||e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||a.target)return;
+  var u=new URL(a.href,location.href);if(u.host!==location.host||u.hash&&u.pathname===location.pathname)return;
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  e.preventDefault();document.documentElement.classList.add("leaving");setTimeout(function(){location.href=u.href},800);
+});
+addEventListener("pageshow",function(e){if(e.persisted)document.documentElement.classList.remove("leaving")});
 </script>
 </body>
 </html>
