@@ -2118,12 +2118,12 @@ function step(){var L=lines[li];
  txt.data+="\n";later(step,li===1?1000:li===3?600:800)}
 later(step,900)})();</script>
 <script>addEventListener("load",function(){if(location.hash==="#dialogue"){var b=document.getElementById("dlgSide");if(b)b.click()}});</script>
-<div id="toTable" aria-hidden="true" style="position:fixed;inset:0;z-index:2147483100;background:#000;opacity:0;pointer-events:none;transition:opacity 1.2s ease"></div>
+<div id="toTable" aria-hidden="true" style="position:fixed;inset:0;z-index:2147483100;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease-in"></div>
 <script>
 function toTable(){
   var o=document.getElementById("toTable");
   if(!o||matchMedia("(prefers-reduced-motion: reduce)").matches){location.href="/home.html";return}
-  o.style.pointerEvents="auto";o.style.opacity="1";setTimeout(function(){location.href="/home.html"},1300);
+  o.style.pointerEvents="auto";o.style.opacity="1";setTimeout(function(){location.href="/home.html"},720);
 }
 addEventListener("pageshow",function(e){if(e.persisted){var o=document.getElementById("toTable");if(o){o.style.opacity="0";o.style.pointerEvents="none"}}});
 </script>
