@@ -219,18 +219,13 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
 .nums{position:relative;z-index:1;display:flex;justify-content:center;gap:clamp(3.2rem,19vw,10rem);margin:1.2rem 0 .4rem;font-family:var(--display);font-size:1.1rem}
 .nums a{opacity:.45;transition:opacity .6s,text-shadow .8s}
 .nums a:hover,.nums a:focus-visible{opacity:1;text-shadow:0 0 14px rgba(253,230,138,.55),0 0 28px rgba(125,211,252,.35)}
-.spine{width:clamp(3.6rem,13vw,7rem);margin:.6rem 0 -2rem}
+.spine{width:clamp(6.2rem,25vw,11.5rem);margin:.4rem 0 -2.5rem}
 .spine img{-webkit-mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%)}
 #corridor{padding-top:0}
-/* arriving: the Corridor first, then the keys, then the Spine and the Rose */
+/* arriving: one slow fade from the dark */
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-html.arrive body{animation:dawn 1.6s ease both}
+html.arrive body{animation:dawn 2.2s ease both}
 @keyframes dawn{from{opacity:0}to{opacity:1}}
-html.arrive .corr{animation:rise 1.8s ease .3s both}
-html.arrive .key{animation:rise 1.8s ease 1.3s both}
-html.arrive .nums{animation:rise 1.6s ease 2.1s both}
-html.arrive .spine{animation:rise 1.8s ease 2.5s both}
-html.arrive .rose{animation:rise 2s ease 3s both}
 html.leaving body{opacity:0;transition:opacity .8s ease}
 @media (prefers-reduced-motion:reduce){html.arrive *,html.arrive body{animation:none!important}html.leaving body{transition:none}}
 </style>
