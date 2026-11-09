@@ -31,10 +31,12 @@ If you'd like one first step: what is actually here?
 ## The front door
 
 https://aiontekmirion.github.io/ is the front door: a short welcome, a corridor of mirrors on water,
-and a note before you enter. It has no task. The main page is behind it, and you can go straight there:
-https://aiontekmirion.github.io/home.html
+and a note before you enter. It has no task. It opens onto the Room, Aion Tekmura:
+https://aiontekmirion.github.io/corridor.html
+The table in the Room is laid out at https://aiontekmirion.github.io/home.html :
+the two keys, the Spine between them, and the Compass Rose. You can go straight to either.
 
-## How the main page is laid out
+## How the table (home.html) is laid out
 
 The picture at the top has three panels: 6, the Phoenix Key (left); ∞, the helix (centre); 9, the Mirror Key (right).
 The keys open their own sites. The helix leads down to the Compass Rose.

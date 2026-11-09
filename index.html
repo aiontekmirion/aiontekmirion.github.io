@@ -21,8 +21,8 @@
 <link rel="alternate" type="text/plain" href="/llms.txt" title="Plain text version for AI readers">
 <link rel="preload" as="image" href="/images/door/corridor.jpg">
 <!--
-This is the front door. The main page, with the two keys and the Spine, is at
-https://aiontekmirion.github.io/home.html
+This is the front door. It opens onto the Room: https://aiontekmirion.github.io/corridor.html
+The table in the Room, with the two keys and the Spine, is https://aiontekmirion.github.io/home.html
 
 # Aion Tekmirion · 6 ∞ 9
 
@@ -121,11 +121,12 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 @keyframes arrive{to{opacity:.9}}
 
 /* the note before the corridor */
-.note{position:fixed;inset:0;display:grid;place-items:center;padding:2rem 1.6rem;
+.note{position:fixed;inset:0;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:2rem 1.6rem;
   background:rgba(7,7,6,.74);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
   opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s}
 .note.open{opacity:1;visibility:visible;transition:opacity .9s ease}
-.note>div{max-width:23rem;text-align:center}
+.note>div{max-width:23rem;text-align:center;margin:auto}
+@media (max-height:520px){.note{padding:1.2rem 1.4rem}.note h2{font-size:1.6rem;margin:.7rem 0 .8rem}.note p.body{font-size:1.05rem;line-height:1.45}.note .acts{margin-top:1.2rem;flex-direction:row;justify-content:center;gap:1rem}}
 .note .k{font:400 .74rem var(--mono);letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
 .note h2{font-weight:500;font-style:italic;font-size:clamp(1.9rem,6.4vw,2.6rem);line-height:1.15;margin:1.3rem 0 1.4rem;text-wrap:balance}
 .note p.body{font-style:italic;font-size:1.22rem;line-height:1.6;color:var(--dim);text-wrap:balance}
@@ -185,14 +186,15 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 <body>
 <h1 class="sr">You may breathe here</h1>
 <nav class="sr" aria-label="Doors">
-  <a href="/home.html">Enter: the two keys and the Spine</a>
+  <a href="/corridor.html">Enter: the Room</a>
+  <a href="/home.html">The table: the two keys and the Spine</a>
   <a href="/phoenix.html">The Phoenix</a>
   <a href="/mirror.html">The Mirror</a>
   <a href="/corridor.html">The Room</a>
   <a href="/TheSpine/">The Spine</a>
   <a href="/llms.txt">Plain text, for AI readers</a>
 </nav>
-<noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/home.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">enter</a></p></noscript>
+<noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/corridor.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">enter</a></p></noscript>
 <div id="term" aria-hidden="true"><pre class="t"></pre><div class="f" data-w="termFoot"></div></div>
 <div id="bird" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
 
@@ -242,7 +244,7 @@ const WORDS = {
   stay:       "stay by the water",
 };
 /* Where "enter the corridor" leads. */
-const CORRIDOR = "/home.html";
+const CORRIDOR = "/corridor.html";
 
 for (const el of document.querySelectorAll("[data-w]")) {
   const w = WORDS[el.dataset.w] ?? "";
@@ -458,6 +460,7 @@ go.addEventListener("click", e => {
   water?.drop(0.5, 0.42, 0.12, 1.2);
   fade.classList.add("on");
   setTimeout(() => bird.classList.add("go"), 700);
+  try { sessionStorage.setItem("fdJust", "1"); } catch (e) {}
   setTimeout(() => { location.href = CORRIDOR; }, 700 + 1650);
 });
 addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on"); bird.classList.remove("go"); note.classList.remove("open"); } });
