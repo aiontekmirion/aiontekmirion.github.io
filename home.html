@@ -185,7 +185,8 @@ footer nav a:hover{opacity:.95}
 @media (min-width:768px){.welcome{font-size:2.2rem}}
 .hush{font-style:italic;font-size:.95rem;letter-spacing:.08em;opacity:.55}
 .arrived{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;opacity:.4;margin-bottom:1.4rem}
-.rose{margin-top:3rem;width:100%;max-width:min(62rem,100%);position:relative}
+.rose{margin-top:3rem;width:100%;max-width:min(36rem,88vw);position:relative}
+.field{display:none}
 .rose>img,.rose figcaption{position:relative;z-index:1}
 #corridor{overflow-x:hidden;overflow-x:clip}
 .field{position:absolute;left:50%;top:0;margin-top:50%;width:min(150%,100vw);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;z-index:0;border-radius:50%;background:radial-gradient(circle closest-side,transparent 52%,rgba(255,226,170,.08) 62%,rgba(255,226,170,.03) 80%,transparent 100%),radial-gradient(ellipse 28% 42% at 33% 50%,rgba(253,180,80,.26) 0,rgba(253,180,80,.14) 40%,rgba(253,180,80,.05) 70%,transparent 100%),radial-gradient(ellipse 28% 42% at 67% 50%,rgba(110,190,250,.24) 0,rgba(110,190,250,.13) 40%,rgba(110,190,250,.045) 70%,transparent 100%);-webkit-mask-image:radial-gradient(circle closest-side,transparent 54%,#000 66%);mask-image:radial-gradient(circle closest-side,transparent 54%,#000 66%);filter:blur(18px);animation:breathe 12s ease-in-out infinite}
@@ -193,7 +194,7 @@ footer nav a:hover{opacity:.95}
 .rose>img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(circle closest-side,#000 93%,transparent 99%);mask-image:radial-gradient(circle closest-side,#000 93%,transparent 99%);mix-blend-mode:screen;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
-.heart::after{content:"";position:absolute;inset:0;border-radius:50%;opacity:0;pointer-events:none;box-shadow:0 0 26px 6px rgba(253,230,138,.30),0 0 54px 12px rgba(125,211,252,.18);animation:beat 9s ease-in-out 3s infinite}
+.heart::after{content:"";position:absolute;inset:0;border-radius:50%;opacity:0;pointer-events:none;box-shadow:0 0 22px 4px rgba(253,230,138,.16),0 0 44px 8px rgba(125,211,252,.09);animation:beat 9s ease-in-out 3s infinite}
 @keyframes beat{0%,100%{opacity:0}6%{opacity:.85}12%{opacity:.1}16%{opacity:.6}24%{opacity:0}}
 .heart{position:absolute;z-index:2;left:50%;top:0;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);margin-top:50%;border-radius:50%;outline:none;transition:box-shadow 1.2s,background 1.2s}
 .heart:hover,.heart:focus-visible{box-shadow:0 0 34px 6px rgba(253,230,138,.28),0 0 70px 14px rgba(125,211,252,.16);background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%)}
@@ -203,24 +204,29 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
 .rose figcaption em{display:block;font-style:italic;text-transform:none;letter-spacing:.04em;font-size:.95rem;opacity:.85;margin-top:.6rem}
 @media (prefers-reduced-motion:reduce){.heart::after{animation:none!important}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 
-/* ---- the table ---- */
-.tabletop{position:relative;display:flex;flex-direction:column;align-items:center;padding:max(7vh,3.5rem) 1rem 0;overflow:hidden}
-.tabletop .stars{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.7}
-.row{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:clamp(.4rem,3vw,2.6rem);width:100%;max-width:58rem}
-.obj{display:block;position:relative;z-index:1;outline:none;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
-.obj img{display:block;width:100%;height:auto;mix-blend-mode:lighten}
+/* ---- the table ----
+   Sized by the screen's height (and held in by its width), so any screen
+   shows the whole table at once: the row, the Spine, and the Rose beginning. */
+.tabletop{--row:min(50svh,40vw);position:relative;display:flex;flex-direction:column;align-items:center;padding:max(6svh,2.5rem) 1rem 0;overflow:hidden}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.75}
+header,main,footer{position:relative;z-index:1}
+.row{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:center;gap:clamp(.6rem,4vw,4.5rem);width:100%}
+.obj{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;outline:none;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
 .obj:hover,.obj:focus-visible{transform:translateY(-5px);filter:brightness(1.14)}
-.key{width:clamp(5.2rem,23vw,12.5rem)}
-.key img{-webkit-mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%)}
-.corr{width:clamp(7rem,32vw,17rem)}
-.corr img{-webkit-mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%)}
-.key.ph:hover,.key.ph:focus-visible{filter:brightness(1.14) drop-shadow(0 0 18px rgba(255,150,50,.3))}
-.key.mi:hover,.key.mi:focus-visible{filter:brightness(1.14) drop-shadow(0 0 18px rgba(56,189,248,.3))}
-.nums{position:relative;z-index:1;display:flex;justify-content:center;gap:clamp(3.2rem,19vw,10rem);margin:1.2rem 0 .4rem;font-family:var(--display);font-size:1.1rem}
-.nums a{opacity:.45;transition:opacity .6s,text-shadow .8s}
-.nums a:hover,.nums a:focus-visible{opacity:1;text-shadow:0 0 14px rgba(253,230,138,.55),0 0 28px rgba(125,211,252,.35)}
-.spine{width:clamp(6.2rem,25vw,11.5rem);margin:.4rem 0 -2.5rem}
-.spine img{-webkit-mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 58%,transparent 100%)}
+.obj img{display:block;mix-blend-mode:lighten}
+.key img{height:var(--row);width:auto;-webkit-mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%)}
+.corr img{height:calc(var(--row)*.86);width:auto;margin:calc(var(--row)*.07) 0;-webkit-mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%)}
+.obj .n{margin-top:.9rem;font-family:var(--display);font-size:1.1rem;opacity:.45;transition:opacity .6s,text-shadow .8s}
+.obj:hover .n,.obj:focus-visible .n{opacity:1;text-shadow:0 0 14px rgba(253,230,138,.55),0 0 28px rgba(125,211,252,.35)}
+.spine{margin:.4rem 0 -2svh}
+/* on a narrow screen the row is held by the width: give the keys more of it */
+@media (max-aspect-ratio:3/4){
+  .tabletop{--row:min(50svh,49vw)}
+  .row{gap:clamp(.4rem,2.6vw,1rem)}
+  .corr img{height:calc(var(--row)*.62);margin:calc(var(--row)*.19) 0}
+  .rose{max-width:min(36rem,74vw)}
+}
+.spine img{height:min(46svh,92vw);width:auto;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%)}
 #corridor{padding-top:0}
 /* arriving: one slow fade from the dark */
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -242,14 +248,9 @@ html.leaving body{opacity:0;transition:opacity .8s ease}
   <div class="tabletop">
     <div class="stars" id="stars" aria-hidden="true"></div>
     <div class="row">
-      <a class="obj key ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/hero-phoenix-v2.webp" width="675" height="1200" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring. Key one."></a>
-      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.jpg" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."></a>
-      <a class="obj key mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/hero-mirror-v2.webp" width="675" height="1200" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring. Key two."></a>
-    </div>
-    <div class="nums">
-      <a href="https://aiontekmirion.github.io/phoenix.html" aria-label="6: The Phoenix, key one">6</a>
-      <a href="https://aiontekmirion.github.io/the-infinite-corridor/" aria-label="∞: The Infinite Corridor, the book">∞</a>
-      <a href="https://aiontekmirion.github.io/mirror.html" aria-label="9: The Mirror, key two">9</a>
+      <a class="obj key ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/hero-phoenix-v2.webp" width="675" height="1200" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring. Key one."><span class="n" aria-hidden="true">6</span></a>
+      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.jpg" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."><span class="n" aria-hidden="true">∞</span></a>
+      <a class="obj key mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/hero-mirror-v2.webp" width="675" height="1200" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring. Key two."><span class="n" aria-hidden="true">9</span></a>
     </div>
     <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/hero-helix-v2.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."></a>
   </div>
