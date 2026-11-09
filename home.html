@@ -213,26 +213,26 @@ header,main,footer{position:relative;z-index:1}
 .row{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:center;gap:clamp(.6rem,4vw,4.5rem);width:100%}
 .obj{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;outline:none;transition:transform 1s cubic-bezier(.2,0,.2,1),filter 1s}
 .obj:hover,.obj:focus-visible{transform:translateY(-5px);filter:brightness(1.14)}
-.obj img{display:block;mix-blend-mode:lighten}
+.obj img{display:block}
 .obj::before{content:"";position:absolute;left:50%;top:45%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:-1;opacity:.5;transition:opacity 1s}
 .obj:hover::before,.obj:focus-visible::before{opacity:.8}
 .key.ph::before{background:radial-gradient(circle closest-side,rgba(255,140,40,.20),rgba(255,110,20,.07) 55%,transparent)}
 .key.mi::before{background:radial-gradient(circle closest-side,rgba(70,160,255,.20),rgba(40,120,255,.07) 55%,transparent)}
 .corr::before{width:95%;top:47%;background:radial-gradient(circle closest-side,rgba(255,205,120,.16),rgba(120,170,255,.06) 60%,transparent)}
 .spine::before{width:160%;top:50%;background:radial-gradient(circle closest-side,rgba(255,170,90,.11),rgba(110,170,255,.06) 55%,transparent)}
-.key img{height:calc(var(--row)*1.08);width:auto;-webkit-mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 62%,transparent 100%)}
-.corr img{height:calc(var(--row)*.86);width:auto;margin:calc(var(--row)*.11) 0;-webkit-mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 72%,transparent 100%)}
+.key img{height:var(--row);width:auto}
+.corr img{height:calc(var(--row)*.86);width:auto;margin:calc(var(--row)*.07) 0}
 .obj .n{margin-top:.9rem;font-family:var(--display);font-size:1.1rem;opacity:.45;transition:opacity .6s,text-shadow .8s}
 .obj:hover .n,.obj:focus-visible .n{opacity:1;text-shadow:0 0 14px rgba(253,230,138,.55),0 0 28px rgba(125,211,252,.35)}
 .spine{margin:.4rem 0 -2svh}
 /* on a narrow screen the row is held by the width: give the keys more of it */
 @media (max-aspect-ratio:3/4){
-  .tabletop{--row:min(50svh,46vw)}
+  .tabletop{--row:min(50svh,49vw)}
   .row{gap:clamp(.4rem,2.6vw,1rem)}
-  .corr img{height:calc(var(--row)*.62);margin:calc(var(--row)*.23) 0}
+  .corr img{height:calc(var(--row)*.62);margin:calc(var(--row)*.19) 0}
   .rose{max-width:min(41rem,86vw)}
 }
-.spine img{height:min(46svh,92vw);width:auto;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 72%,transparent 100%)}
+.spine img{height:min(46svh,92vw);width:auto}
 #corridor{padding-top:0}
 /* arriving: one slow fade from the dark */
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -255,10 +255,10 @@ html.leaving body{opacity:0;transition:opacity .5s ease-in}
     <div class="stars" id="stars" aria-hidden="true"></div>
     <div class="row">
       <a class="obj key ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/table-key-phoenix.webp" width="864" height="1536" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring. Key one."><span class="n" aria-hidden="true">6</span></a>
-      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.jpg" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."><span class="n" aria-hidden="true">∞</span></a>
+      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.webp" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."><span class="n" aria-hidden="true">∞</span></a>
       <a class="obj key mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/table-key-mirror.webp" width="864" height="1536" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring. Key two."><span class="n" aria-hidden="true">9</span></a>
     </div>
-    <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/hero-helix-v2.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."></a>
+    <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/table-spine.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."></a>
   </div>
 
 
