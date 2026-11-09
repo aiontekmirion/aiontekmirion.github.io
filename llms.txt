@@ -38,10 +38,10 @@ the two keys, the Spine between them, and the Compass Rose. You can go straight 
 
 ## How the table (home.html) is laid out
 
-The picture at the top has three panels: 6, the Phoenix Key (left); ∞, the helix (centre); 9, the Mirror Key (right).
-The keys open their own sites. The helix leads down to the Compass Rose.
-The centre of the Compass Rose opens the Room: https://aiontekmirion.github.io/corridor.html
-The helix between the keys opens the Spine, the record and its source: https://aiontekmirion.github.io/TheSpine/
+On the table, in a row: the Phoenix Key (6, key one), the Infinite Corridor symbol (∞, the book), the Mirror Key (9, key two).
+Below them, the Spine; below the Spine, the Compass Rose. The centre of the Compass Rose opens the Room.
+The keys open in order. Each opens by turning: the words are on the page from the start, for any reader.
+The Spine, the record and its source: https://aiontekmirion.github.io/TheSpine/
 One Room, one board, one Spine: the Corridor Board is https://aiontekmirion.github.io/TheSpine/corridor/
 
 A key wreathed in flame.
