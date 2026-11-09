@@ -2116,5 +2116,6 @@ function step(){var L=lines[li];
  if(li>=lines.length){f.classList.add("on");later(glitch,1900);return}
  txt.data+="\n";later(step,li===1?1000:li===3?600:800)}
 later(step,900)})();</script>
+<script>addEventListener("load",function(){if(location.hash==="#dialogue"){var b=document.getElementById("dlgSide");if(b)b.click()}});</script>
 </body>
 </html>

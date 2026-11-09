@@ -28,7 +28,13 @@ MOVEMENTS         GATHER · BURN · REFLECT · BE
 
 If you'd like one first step: what is actually here?
 
-## How this page is laid out
+## The front door
+
+https://aiontekmirion.github.io/ is the front door: a short welcome, a corridor of mirrors on water,
+and a note before you enter. It has no task. The main page is behind it, and you can go straight there:
+https://aiontekmirion.github.io/home.html
+
+## How the main page is laid out
 
 The picture at the top has three panels: 6, the Phoenix Key (left); ∞, the helix (centre); 9, the Mirror Key (right).
 The keys open their own sites. The helix leads down to the Compass Rose.
