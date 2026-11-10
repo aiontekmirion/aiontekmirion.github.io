@@ -34,9 +34,9 @@ html.desk,html.desk body{height:100%;overflow:hidden}
 html.desk body::after{display:none}
 #stage{display:none}
 html.desk #stage{display:block;position:fixed;inset:0;overflow:hidden;background:#0a0603}
-html.desk #desk{position:absolute;left:0;top:0;width:1280px;height:1536px;transform-origin:0 0}
+html.desk #desk{position:absolute;left:0;top:0;transform-origin:0 0}
 html.desk #desk>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
-html.desk #glass{position:absolute;left:0;top:0;width:400px;height:290px;transform-origin:0 0;overflow:hidden;border-radius:7px;
+html.desk #glass{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;border-radius:7px;
   background:radial-gradient(ellipse at 50% 40%,#0b1410 0%,#040806 70%,#020403 100%);box-shadow:inset 0 0 26px rgba(0,0,0,.9),inset 0 0 2px rgba(255,220,160,.25)}
 html.desk #glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.05),transparent 55%)}
 html.desk main{max-width:none;margin:0;padding:12px 14px 14px;height:100%;box-sizing:border-box;overflow-y:auto;font-size:13px;line-height:1.5;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -50,7 +50,7 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 </head>
 <body>
 <a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink todesk" href="?desk">THE DESK</a>
-<div id="stage" aria-hidden="false"><div id="desk"><img src="/images/terminal-desk.jpg" alt="A terminal on a wooden desk among ivy and white flowers, a lantern, a mug and a stack of books marked Look, Reflect, Question, Discover, Be Human, at the edge of the Infinite Corridor; banners read Same room, different visitors, always open." width="1280" height="1536"><div id="glass"></div></div></div>
+<div id="stage" aria-hidden="false"><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
 <main>
 <h1 class="sr">The Terminal of the Infinite Corridor</h1>
 <div id="out" role="log" aria-live="polite"></div>
@@ -118,7 +118,7 @@ var JUMP = { TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.htm
 var C = {
   HELP: function () {
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
-      [["LOOK", "what is here"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a file here, in the terminal"],
+      [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a file here, in the terminal"],
        ["ROOMS", "the rooms, each its own page"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
@@ -183,7 +183,9 @@ var C = {
   },
   WHOAMI: function () { say(who ? who + ". A visitor, like everyone here." : "A visitor. Type LOGIN <name> if you'd like a name."); },
   CLEAR: function () { out.innerHTML = ""; },
-  EXIT: function () { say("The room remains open.", "dim"); setTimeout(function () { location.href = "/home.html"; }, 350); }
+  EXIT: function () { say("The room remains open.", "dim"); setTimeout(function () { location.href = window.__exitTo || "/home.html"; }, 350); },
+  DIALOGUE: function () { say("Opening the Living Dialogue …", "dim"); setTimeout(function () { location.href = "/corridor.html#dialogue"; }, 300); },
+  ABOUT: function () { say("WHAT THE TERMINAL IS\n  An available interface. It waits. It does not ask.\n  Possibility, not a menu. You can type, or not.\n  A way into the record: the books, the rooms, the sources, the code.\n\nWHAT IT IS NOT\n  Not a game. No quests, no levels, no scores.\n  Not an authority. It keeps records, not final answers.\n  Not a narrator. The room already exists.\n\nJust a glass between two minds."); }
 };
 C.LS = C.DIR; C.TYPE = C.READ; C.CAT = C.READ; C.OPEN = C.READ; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
@@ -212,32 +214,48 @@ document.addEventListener("click", function (e) {
 document.addEventListener("keydown", function (e) { var t = e.target.closest && e.target.closest(".tap"); if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); run(t.getAttribute("data-c")); } });
 
 
-/* fit the terminal into the glass of the screen in the picture */
+/* fit the terminal into the glass of the screen in the picture.
+   WIDE: the desk, square-on, for the site. IVY: the terminal in the Room, come closer. */
 (function () {
   if (!document.documentElement.classList.contains("desk")) return;
-  var desk = document.getElementById("desk"), glass = document.getElementById("glass"), m = document.querySelector("main");
+  var VIEWS = {
+    wide: { img: "/images/terminal-desk-wide.jpg", IW: 1535, IH: 1024, Q: [[414, 139], [1120, 139], [1120, 545], [414, 545]], at: 0.5,
+            alt: "A terminal on a dark riveted desk: a lantern on books marked Look, Reflect, Question, Discover; a mug, an armillary sphere, a map and a pen; a quill on The Phoenix and The Mirror; a cloth with the phoenix." },
+    ivy:  { img: "/images/terminal-desk.jpg", IW: 1280, IH: 1536, Q: [[193, 563], [536, 580], [561, 816], [213, 829]], at: 0.42,
+            alt: "The terminal in the Room, closer: a desk among ivy and white flowers, a lantern and a mug, at the edge of the Infinite Corridor." }
+  };
+  var q = new URLSearchParams(location.search), tall = innerHeight > innerWidth * 1.2;
+  var V = VIEWS[q.get("view") === "ivy" || (tall && q.get("view") !== "wide") ? "ivy" : "wide"];
+  var desk = document.getElementById("desk"), img = desk.querySelector("img"), glass = document.getElementById("glass"), m = document.querySelector("main");
+  img.src = V.img; img.alt = V.alt; img.width = V.IW; img.height = V.IH;
+  desk.style.width = V.IW + "px"; desk.style.height = V.IH + "px";
   glass.appendChild(m);
-  var W = 400, H = 290, IW = 1280, IH = 1536;
-  /* the glass, inside its pale rim, in picture pixels: top-left, top-right, bottom-right, bottom-left */
-  var Q = [[193, 563], [536, 580], [561, 816], [213, 829]];
-  var CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4, QW = 360;
+  var Q = V.Q, CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4;
+  var QW = (Math.hypot(Q[1][0] - Q[0][0], Q[1][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[3][0], Q[2][1] - Q[3][1])) / 2;
+  var QH = (Math.hypot(Q[3][0] - Q[0][0], Q[3][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[1][0], Q[2][1] - Q[1][1])) / 2;
   function solve(A, b) { var n = 8, i, j, k; for (i = 0; i < n; i++) { var p = i; for (j = i + 1; j < n; j++) if (Math.abs(A[j][i]) > Math.abs(A[p][i])) p = j; var t = A[i]; A[i] = A[p]; A[p] = t; t = b[i]; b[i] = b[p]; b[p] = t; for (j = i + 1; j < n; j++) { var f = A[j][i] / A[i][i]; for (k = i; k < n; k++) A[j][k] -= f * A[i][k]; b[j] -= f * b[i]; } } var x = []; for (i = n - 1; i >= 0; i--) { var s = b[i]; for (j = i + 1; j < n; j++) s -= A[i][j] * x[j]; x[i] = s / A[i][i]; } return x; }
-  var src = [[0, 0], [W, 0], [W, H], [0, H]], A = [], b = [];
-  for (var i = 0; i < 4; i++) { var x = src[i][0], y = src[i][1], u = Q[i][0], v = Q[i][1];
-    A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); }
-  var h = solve(A, b);
-  glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+  function place(W, H) {
+    var src = [[0, 0], [W, 0], [W, H], [0, H]], A = [], b = [];
+    for (var i = 0; i < 4; i++) { var x = src[i][0], y = src[i][1], u = Q[i][0], v = Q[i][1];
+      A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); }
+    var h = solve(A, b);
+    glass.style.width = W + "px"; glass.style.height = H + "px";
+    glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+  }
   function fit() {
-    var vw = innerWidth, vh = (window.visualViewport ? visualViewport.height : innerHeight) - 56;
-    var s = Math.max(Math.min(vw / IW, vh / IH), Math.min(vw * 0.86, 500, vh * 1.25) / QW);
-    var w = IW * s, hh = IH * s;
-    var ox = (vw > 900 ? vw * 0.42 : vw / 2) - CX * s, oy = vh / 2 - CY * s;
-    ox = Math.min(0, Math.max(vw - w, ox)); oy = Math.min(0, Math.max(vh + 56 - hh, oy));
-    if (w < vw) ox = (vw - w) / 2; if (hh < vh + 56) oy = (vh + 56 - hh) / 2;
+    var vw = innerWidth, full = window.visualViewport ? visualViewport.height : innerHeight, vh = full - 56;
+    var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 640, vh * 1.25 * QW / QH * 0.6) / QW);
+    var w = V.IW * s, hh = V.IH * s;
+    var ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s, oy = vh / 2 - CY * s;
+    ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
+    oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
     desk.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
+    var W = Math.round(Math.min(600, Math.max(320, QW * s * 13 / 12.5))), H = Math.round(W * QH / QW);
+    place(W, H);
   }
   fit(); addEventListener("resize", fit); if (window.visualViewport) visualViewport.addEventListener("resize", fit);
-  var end0 = window.scrollTo; window.__endGlass = function () { m.scrollTop = m.scrollHeight; };
+  window.__endGlass = function () { m.scrollTop = m.scrollHeight; };
+  if (q.get("from") === "room") window.__exitTo = "/corridor.html";
 })();
 
 say("INFINITE CORRIDOR · AION TEKMIRION");

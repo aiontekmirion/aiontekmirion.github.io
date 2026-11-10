@@ -441,6 +441,5 @@ document.addEventListener("selectionchange",function(){var s=getSelection();if(s
 var f=document.createDocumentFragment();for(var i=0;i<90;i++){var e=document.createElement("span"),z=Math.random()*1.5+.5;
 e.style.cssText="left:"+Math.random()*100+"%;top:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;opacity:"+(Math.random()*.7+.15)+";animation-duration:"+(Math.random()*4+3.5)+"s;animation-delay:"+(Math.random()*8)+"s;box-shadow:"+(z>1.2?"0 0 6px rgba(255,255,255,.9),0 0 12px rgba(200,220,255,.45)":"0 0 4px rgba(255,255,255,.8)");f.appendChild(e)}s.appendChild(f)})();</script>
 <script src="/threshold.js" defer></script>
-<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("p.next a");if(!a||e.metaKey||e.ctrlKey||e.shiftKey||!window.crossTo)return;e.preventDefault();window.crossTo(a.href)});</script>
 </body>
 </html>
