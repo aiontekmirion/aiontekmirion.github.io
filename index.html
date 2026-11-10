@@ -476,7 +476,7 @@ go.addEventListener("click", e => {
     if (p && p.catch) p.catch(enter);                  /* if a browser will not play it, go straight in */
     book.addEventListener("ended", enter, { once: true });
     book.addEventListener("click", enter, { once: true });
-    setTimeout(enter, 3200);                           /* never wait longer than this */
+    setTimeout(enter, 6500);                           /* never wait longer than this */
   }, 700 + 1550);
 });
 addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on"); bird.classList.remove("go"); note.classList.remove("open");
