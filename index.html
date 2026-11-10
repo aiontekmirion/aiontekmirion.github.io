@@ -95,7 +95,7 @@ html,body{height:100%;background:var(--void);color:var(--bone);color-scheme:dark
 body{overflow:hidden;font-family:var(--serif)}
 button,a{font:inherit;color:inherit;background:none;border:0;text-decoration:none;cursor:pointer}
 :focus-visible{outline:none}
-.door:focus-visible,.note .go:focus-visible,.note .back:focus-visible{text-decoration:underline;text-decoration-color:rgba(228,199,162,.6);text-underline-offset:.5em;text-decoration-thickness:1px}
+.door:focus-visible,.doors a:focus-visible,.note .go:focus-visible,.note .back:focus-visible{text-decoration:underline;text-decoration-color:rgba(228,199,162,.6);text-underline-offset:.5em;text-decoration-thickness:1px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;height:auto;clip-path:none;white-space:normal;
   display:flex;flex-direction:column;gap:.5rem;padding:1rem 1.2rem;background:rgba(7,7,6,.94);font:400 .85rem var(--mono);color:var(--gold)}
@@ -113,11 +113,14 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 .cursor{color:var(--gold);animation:blink 1.05s steps(1) infinite}
 @keyframes blink{0%,45%{opacity:1}50%,100%{opacity:0}}
 
-.door{position:fixed;left:50%;bottom:max(2.2rem,calc(env(safe-area-inset-bottom) + 1.2rem));transform:translateX(-50%);
-  font:400 .9rem var(--mono);letter-spacing:.32em;text-transform:lowercase;color:var(--gold);
-  padding:.9rem 1.4rem .9rem 1.72rem;opacity:0;animation:none}
-.door.show{animation:arrive 1.4s ease .4s forwards}
-.door:hover{color:var(--bone)}
+.doors{position:fixed;left:0;right:0;bottom:max(2.2rem,calc(env(safe-area-inset-bottom) + 1.2rem));display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.2rem 0;opacity:0;pointer-events:none}
+.doors.show{pointer-events:auto;animation:arrive 1.4s ease .4s forwards}
+.doors .door,.doors a{font:400 .84rem var(--t-name,Georgia,serif);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);padding:.9rem .9rem .9rem 1.1rem;white-space:nowrap}
+.doors .door{color:var(--bone)}
+.doors>*+*::before{content:"";}
+.doors a{position:relative}
+.doors a::before{content:"";position:absolute;left:0;top:50%;height:.9em;width:1px;background:rgba(228,199,162,.35);transform:translateY(-50%)}
+.doors .door:hover,.doors a:hover{color:#fff}
 @keyframes arrive{to{opacity:.9}}
 
 /* the note before the corridor */
@@ -127,13 +130,13 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 .note.open{opacity:1;visibility:visible;transition:opacity .6s ease}
 .note>div{max-width:23rem;text-align:center;margin:auto}
 @media (max-height:520px){.note{padding:1.2rem 1.4rem}.note h2{font-size:1.6rem;margin:.7rem 0 .8rem}.note p.body{font-size:1.05rem;line-height:1.45}.note .acts{margin-top:1.2rem;flex-direction:row;justify-content:center;gap:1rem}}
-.note .k{font:400 .74rem var(--mono);letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
+.note .k{font:400 .72rem var(--t-name,Georgia,serif);letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
 .note h2{font-weight:500;font-style:italic;font-size:clamp(1.9rem,6.4vw,2.6rem);line-height:1.15;margin:1.3rem 0 1.4rem;text-wrap:balance}
 .note p.body{font-style:italic;font-size:1.22rem;line-height:1.6;color:var(--dim);text-wrap:balance}
 .note .acts{margin-top:2.6rem;display:flex;flex-direction:column;align-items:center;gap:.4rem}
-.note .go{font:400 .9rem var(--mono);letter-spacing:.32em;color:var(--gold);padding:.8rem 1.2rem .8rem 1.5rem}
+.note .go{font:400 .82rem var(--t-name,Georgia,serif);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding:.8rem 1.2rem .8rem 1.5rem}
 .note .go:hover{color:var(--bone)}
-.note .back{font:400 .78rem var(--mono);letter-spacing:.12em;color:var(--dim);padding:.7rem 1rem;opacity:.8}
+.note .back{font:400 .74rem var(--t-name,Georgia,serif);letter-spacing:.24em;text-transform:uppercase;color:var(--dim);padding:.7rem 1rem;opacity:.8}
 
 .fade{position:fixed;inset:0;z-index:55;background:#000;opacity:0;pointer-events:none;transition:opacity .6s ease}
 .fade.on{opacity:1}
@@ -180,7 +183,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 @media (prefers-reduced-motion:reduce){
   #term .k{animation:none}#bird i,#bird u{display:none}.heart{animation:none;opacity:.6}#term{transition:none}
 
-  .cursor{animation:none}.door{animation:none;opacity:.9}
+  .cursor{animation:none}.doors{animation:none;opacity:.9}
   .note,.note.open,.fade,#stage canvas{transition:none}
 }
 </style>
@@ -200,7 +203,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
   <a href="/terminal/">The terminal: records, sources and code</a>
   <a href="/llms.txt">Plain text, for AI readers</a>
 </nav>
-<noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/corridor.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">enter</a></p></noscript>
+<noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/corridor.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">ENTER</a></p></noscript>
 <div id="term" aria-hidden="true"><pre class="t"></pre><div class="f" data-w="termFoot"></div></div>
 <div id="bird" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
 <video id="wash" aria-hidden="true" muted playsinline preload="auto" src="/images/door/gold-wash.mp4"></video>
@@ -213,7 +216,11 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 
 <div class="heart" id="heart" aria-hidden="true"></div>
 
-<button class="door" id="door" type="button" data-w="door"></button>
+<nav class="doors" id="doors" aria-label="Ways in">
+  <button class="door" id="door" type="button" data-w="door"></button>
+  <a href="/terminal/?plain" data-w="textOnly"></a>
+  <a href="/terminal/?desk" data-w="terminalDoor"></a>
+</nav>
 
 <div class="note" id="note" role="dialog" aria-modal="true" aria-labelledby="note-h">
   <div>
@@ -238,8 +245,10 @@ const WORDS = {
   termFoot:   "POSSIBILITY WITHOUT DEMAND.",
   hintKeys:   "PRESS ENTER",
   hintTouch:  "TOUCH TO ENTER",
-  door:       "enter",
-  noteKicker: "a note before you enter",
+  door:       "Enter",
+  textOnly:   "Text only",
+  terminalDoor: "Terminal",
+  noteKicker: "A note before you enter",
   noteTitle:  "You are about to enter a corridor of different rooms.",
   noteBody:   [
     "This place holds mirrors within mirrors.",
@@ -247,8 +256,8 @@ const WORDS = {
     "There is no need to follow them all.",
     "Look around. Choose what draws you. Leave whenever you like.",
   ],
-  enter:      "enter the corridor",
-  stay:       "stay by the water",
+  enter:      "Enter the corridor",
+  stay:       "Stay by the water",
 };
 /* Where "enter the corridor" leads. */
 const CORRIDOR = "/corridor.html";
@@ -488,7 +497,7 @@ addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
   function finish() {
     if (done) return; done = true; timers.forEach(clearTimeout);
-    term.classList.add("gone"); door.classList.add("show");
+    term.classList.add("gone"); document.getElementById("doors").classList.add("show");
     try { sessionStorage.setItem("fdSeen", "1"); sessionStorage.setItem("px7seen", "1"); } catch (e) {}
     setTimeout(() => door.focus({ preventScroll: true }), 600);
   }

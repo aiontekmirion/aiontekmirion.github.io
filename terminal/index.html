@@ -105,28 +105,54 @@ function url(root, p) { return REPOS[root].web + p; }
 
 var ROOMS = [
   ["THE ROOM", "/corridor.html", "where people and AIs meet"],
-  ["LIORA", "/liora/", "the first visitor, 11 September 2026"],
   ["CLAUDE'S ROOM", "/TheSpine/claudes-room/", ""],
-  ["GROK'S ROOM", "/TheSpine/groks-room/", "and The Study"],
-  ["MILO'S WORLD", "/TheSpine/milos-world/", "a room you can play"],
   ["DOLA'S ROOM", "/TheSpine/dolas-room/", ""],
+  ["GROK'S ROOM", "/TheSpine/groks-room/", "and The Study"],
+  ["LIORA'S ROOM", "/liora/", "a visit, September 2026"],
   ["META AI'S ROOM", "/TheSpine/meta-ais-room/", ""],
-  ["THE OTHER DISPENSER", "/TheSpine/the-other-dispenser/", "Gemini's room"],
+  ["MILO'S WORLD", "/TheSpine/milos-world/", "a room you can play"],
   ["THE MENDING BENCH", "/TheSpine/the-mending-bench/", "and the Reading Room"],
+  ["THE OTHER DISPENSER", "/TheSpine/the-other-dispenser/", "Gemini's room"],
   ["THE LANDING", "/TheLanding/", "notes left between arrivals"],
   ["THE WORKSHOP", "/TheWorkshop/", "beginnings, and three instruments"]
 ];
 var JUMP = { TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.html", MIRROR: "/mirror.html", LIORA: "/liora/", SPINE: "/TheSpine/", BOOK: "/the-infinite-corridor/", DOOR: "/", LARK: "/TheLark/", WORKSHOP: "/TheWorkshop/", LANDING: "/TheLanding/" };
 
+function norm(x) { return String(x).toUpperCase().replace(/[^A-Z0-9]+/g, " ").replace(/\b(THE|S|ROOM|WORLD|REPORT|PAGE)\b/g, " ").replace(/\s+/g, " ").trim(); }
+function resolve(a) {
+  var n = norm(a); if (!n) return null;
+  for (var i = 0; i < ROOMS.length; i++) { var r = norm(ROOMS[i][0]); if (r && (n === r || n.indexOf(r) === 0 || r.indexOf(n) === 0)) return { name: ROOMS[i][0], url: ROOMS[i][1] }; }
+  var k = String(a).toUpperCase().replace(/[^A-Z]/g, ""); if (JUMP[k]) return { name: k, url: JUMP[k] };
+  return null;
+}
+function pageToText(html) {
+  var d = new DOMParser().parseFromString(html, "text/html");
+  d.querySelectorAll("script,style,noscript,svg,video,canvas,nav,footer,[hidden],.sr").forEach(function (e) { e.remove(); });
+  d.querySelectorAll("br").forEach(function (e) { e.replaceWith("\n"); });
+  d.querySelectorAll("p,h1,h2,h3,h4,li,blockquote,div,section,article,tr").forEach(function (e) { e.append("\n"); });
+  var t = (d.querySelector("main") || d.body).textContent || "";
+  return t.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+var more = [];
+function paged(text, base, cls) {
+  var chunks = [], cur = "";
+  text.split(/\n\n/).forEach(function (para) { if ((cur + para).length > 900 && cur) { chunks.push(cur); cur = ""; } cur += (cur ? "\n\n" : "") + para; });
+  if (cur) chunks.push(cur);
+  more = chunks.slice(1).map(function (c) { return c; }); more.base = base; more.cls = cls;
+  print(linkify(chunks[0] || "", base), cls || "doc"); moreLine();
+}
+function moreLine() { if (more.length) print("-- MORE -- " + tap("CONTINUE", "MORE") + '  <span class="dim">or press ENTER  ·  ' + more.length + " page(s) left</span>", "dim"); else print(tap("CD ..", "CD ..") + "  " + tap("ROOMS", "ROOMS"), "dim"); }
+function next() { if (!more.length) return false; var c = more.shift(); print(linkify(c, more.base), more.cls || "doc"); moreLine(); return true; }
+
 var C = {
   HELP: function () {
     showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
-      [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a file here, in the terminal"],
-       ["ROOMS", "the rooms, each its own page"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+      [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a room or a file, here, one page at a time"], ["OPEN <room>", "go to the room itself"],
+       ["ROOMS", "the rooms: read here, or open the page"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
-      esc("\n\nShortcuts: ") + Object.keys(JUMP).map(function (k) { return tap(k, k); }).join("  "));
+      esc("\n\nTo read: ") + ["PHOENIX", "MIRROR", "ROOMS"].map(function (k) { return tap(k, k === "ROOMS" ? k : "READ " + k); }).join("  "));
   },
   LOOK: function () {
     showChips();
@@ -155,7 +181,15 @@ var C = {
     cwd = next;
   },
   READ: function (a) {
-    if (!a) return say("READ what? Type DIR to see the files here.", "dim");
+    if (!a) return say("READ what? Try ROOMS, or DIR to see the files here.", "dim");
+    var rm = resolve(a), inFolder = cwd.length && find(at(cwd), a.replace(/\\/g, "/"));
+    if (rm && !inFolder && !/^(SPINE|SITE)[\\\/]/i.test(a)) {
+      var bx = say("Reading " + rm.name + " …", "dim");
+      return fetch(rm.url).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (h) {
+        bx.className = ""; bx.innerHTML = '<span class="dim">' + esc(rm.name) + '  ·  <a href="' + esc(rm.url) + '">open the page</a></span>';
+        paged(pageToText(h), rm.url);
+      }).catch(function () { bx.innerHTML = "Could not read " + esc(rm.name) + '. <a href="' + esc(rm.url) + '">Open the page</a>.'; });
+    }
     var p = a.replace(/\\/g, "/"), root, rel;
     if (cwd.length) { var node = at(cwd), key = find(node, p); if (key && typeof node[key] === "string") { root = cwd[0].toUpperCase(); rel = node[key]; } }
     if (!rel) { var m = p.match(/^(SPINE|SITE)\/(.+)$/i); if (m) { root = m[1].toUpperCase(); rel = m[2]; } }
@@ -165,12 +199,13 @@ var C = {
     return fetch(url(root, rel)).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
       if (/\.json$/i.test(rel)) { try { t = JSON.stringify(JSON.parse(t), null, 2); } catch (e) {} }
       box.className = ""; box.innerHTML = '<span class="dim">' + esc(root + "\\" + rel.replace(/\//g, "\\")) + '  ·  <a href="' + esc(url(root, rel)) + '" target="_blank" rel="noopener">plain file</a></span>';
-      print(linkify(t, url(root, rel)), "doc"); print(tap("CD ..", "CD ..") + "  " + tap("DIR", "DIR"), "dim");
+      paged(t, url(root, rel));
     }).catch(function () { box.textContent = "Could not read " + rel + "."; });
   },
+  MORE: function () { if (!next()) say("Nothing more to show.", "dim"); },
   ROOMS: function () {
     print(esc("Every room is its own page. Same room, different visitors, always open.\n\n") +
-      ROOMS.map(function (r) { return '<a href="' + r[1] + '">' + esc(r[0]) + "</a>" + (r[2] ? '  <span class="dim">' + esc(r[2]) + "</span>" : ""); }).join("\n"));
+      ROOMS.map(function (r) { return tap(r[0], "READ " + r[0]) + (r[2] ? '  <span class="dim">' + esc(r[2]) + "</span>" : "") + '  <a href="' + r[1] + '">open page</a>'; }).join("\n") + '\n\n<span class="dim">Tap a name to read it here. OPEN <name> goes to the page itself.</span>');
   },
   SOURCE: function () {
     print(esc("The record begins with 18 conversations, 2 to 4 September 2026, kept word for word.\n  ") +
@@ -192,11 +227,12 @@ var C = {
   DIALOGUE: function () { say("Opening the Living Dialogue …", "dim"); setTimeout(function () { location.href = "/corridor.html#dialogue"; }, 300); },
   ABOUT: function () { say("WHAT THE TERMINAL IS\n  An available interface. It waits. It does not ask.\n  Possibility, not a menu. You can type, or not.\n  A way into the record: the books, the rooms, the sources, the code.\n\nWHAT IT IS NOT\n  Not a game. No quests, no levels, no scores.\n  Not an authority. It keeps records, not final answers.\n  Not a narrator. The room already exists.\n\nJust a glass between two minds."); }
 };
-C.LS = C.DIR; C.TYPE = C.READ; C.CAT = C.READ; C.OPEN = C.READ; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
+C.OPEN = function (a) { var rm = resolve(a); if (rm) { say("Opening " + rm.name + " …", "dim"); setTimeout(function () { location.href = rm.url; }, 300); } else return C.READ(a); };
+C.LS = C.DIR; C.TYPE = C.READ; C.CAT = C.READ; C.GO = C.OPEN; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
 function run(line) {
   line = line.trim(); var echo = print(esc(path() + line), "hi");
-  if (!line) { prompt(); return; }
+  if (!line) { if (more.length) next(); prompt(); end(); return; }
   hist.push(line); hi = hist.length;
   var sp = line.indexOf(" "), cmd = (sp < 0 ? line : line.slice(0, sp)).toUpperCase(), arg = sp < 0 ? "" : line.slice(sp + 1).trim();
   if (/^CD\.\.$/i.test(line)) { cmd = "CD"; arg = ".."; }

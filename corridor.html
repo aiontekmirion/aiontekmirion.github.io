@@ -1881,7 +1881,7 @@ document.querySelectorAll(".panel > .close").forEach(b=>b.onclick=()=>setDown(b.
 document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const p=document.querySelector(".panel.open");if(p)setDown(p);});
 
 const out=$("termOut"), termPanel=$("term");
-terminalHot.onclick=()=>{document.documentElement.style.transition="opacity .35s";document.documentElement.style.opacity="0";setTimeout(()=>{location.href="/terminal/?view=ivy&from=room"},340)};
+terminalHot.onclick=()=>{document.documentElement.style.transition="opacity .35s";document.documentElement.style.opacity="0";setTimeout(()=>{location.href="/terminal/?from=room"},340)};
 const __oldTerminal=()=>{openP("term");cmd.focus();if(!out.dataset.welcomed){out.dataset.welcomed="1";out.innerHTML='<span class="blink">_</span>';setTimeout(()=>{out.textContent="WELCOME.\nYOU MAY BREATHE HERE.\n"},900)}};
 gramHot.onclick=()=>openP("music");
 corridorHot.onclick=()=>toast("Doorways within doorways. It has no far wall.");
