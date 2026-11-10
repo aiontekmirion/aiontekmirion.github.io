@@ -29,9 +29,28 @@ a:hover,.tap:hover,a:focus-visible,.tap:focus-visible{color:#fff;border-bottom-c
 .chips button:hover,.chips button:focus-visible{border-color:var(--amber);outline:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* the desk: the terminal lives inside the glass of the screen in the picture */
+html.desk,html.desk body{height:100%;overflow:hidden}
+html.desk body::after{display:none}
+#stage{display:none}
+html.desk #stage{display:block;position:fixed;inset:0;overflow:hidden;background:#0a0603}
+html.desk #desk{position:absolute;left:0;top:0;width:1280px;height:1536px;transform-origin:0 0}
+html.desk #desk>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+html.desk #glass{position:absolute;left:0;top:0;width:400px;height:290px;transform-origin:0 0;overflow:hidden;border-radius:7px;
+  background:radial-gradient(ellipse at 50% 40%,#0b1410 0%,#040806 70%,#020403 100%);box-shadow:inset 0 0 26px rgba(0,0,0,.9),inset 0 0 2px rgba(255,220,160,.25)}
+html.desk #glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.05),transparent 55%)}
+html.desk main{max-width:none;margin:0;padding:12px 14px 14px;height:100%;box-sizing:border-box;overflow-y:auto;font-size:13px;line-height:1.5;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+html.desk main::-webkit-scrollbar{display:none}
+html.desk .chips{background:linear-gradient(transparent,rgba(0,0,0,.85) 40%)}
+.plainlink{position:fixed;top:max(.6rem,env(safe-area-inset-top));right:.8rem;z-index:5;font-size:.72rem;letter-spacing:.12em;color:var(--amber);text-decoration:none;border:1px solid var(--faint);background:rgba(0,0,0,.7);padding:.3rem .55rem;border-radius:2px}
+html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,html:not(.desk) .plainlink.toplain{display:none}
+@media (prefers-reduced-motion:reduce){html.desk #glass::after{display:none}}
 </style>
+<script>(function(){var q=new URLSearchParams(location.search);var plain=q.has("plain");try{if(plain)sessionStorage.setItem("termPlain","1");else if(q.has("desk"))sessionStorage.removeItem("termPlain");else if(sessionStorage.getItem("termPlain"))plain=true}catch(e){}if(!plain)document.documentElement.classList.add("desk")})();</script>
 </head>
 <body>
+<a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink todesk" href="?desk">THE DESK</a>
+<div id="stage" aria-hidden="false"><div id="desk"><img src="/images/terminal-desk.jpg" alt="A terminal on a wooden desk among ivy and white flowers, a lantern, a mug and a stack of books marked Look, Reflect, Question, Discover, Be Human, at the edge of the Infinite Corridor; banners read Same room, different visitors, always open." width="1280" height="1536"><div id="glass"></div></div></div>
 <main>
 <h1 class="sr">The Terminal of the Infinite Corridor</h1>
 <div id="out" role="log" aria-live="polite"></div>
@@ -64,7 +83,7 @@ function say(text, cls) { return print(esc(text), cls); }
 function tap(label, cmd) { return '<span class="tap" role="button" tabindex="0" data-c="' + esc(cmd) + '">' + esc(label) + "</span>"; }
 function path() { return "C:\\INFINITE_CORRIDOR" + (cwd.length ? "\\" + cwd.join("\\").toUpperCase() : "") + "> "; }
 function prompt() { ps.textContent = path(); }
-function end() { window.scrollTo(0, document.body.scrollHeight); }
+function end() { if (window.__endGlass) window.__endGlass(); else window.scrollTo(0, document.body.scrollHeight); }
 
 /* the file tree: live from GitHub, or the copy kept beside this page */
 function add(root, p) { var node = tree[root] || (tree[root] = {}); var parts = p.split("/"); for (var i = 0; i < parts.length - 1; i++) node = node[parts[i]] || (node[parts[i]] = {}); node[parts[parts.length - 1]] = p; }
@@ -191,6 +210,35 @@ document.addEventListener("click", function (e) {
   run(t.getAttribute("data-c"));
 });
 document.addEventListener("keydown", function (e) { var t = e.target.closest && e.target.closest(".tap"); if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); run(t.getAttribute("data-c")); } });
+
+
+/* fit the terminal into the glass of the screen in the picture */
+(function () {
+  if (!document.documentElement.classList.contains("desk")) return;
+  var desk = document.getElementById("desk"), glass = document.getElementById("glass"), m = document.querySelector("main");
+  glass.appendChild(m);
+  var W = 400, H = 290, IW = 1280, IH = 1536;
+  /* the glass, inside its pale rim, in picture pixels: top-left, top-right, bottom-right, bottom-left */
+  var Q = [[193, 563], [536, 580], [561, 816], [213, 829]];
+  var CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4, QW = 360;
+  function solve(A, b) { var n = 8, i, j, k; for (i = 0; i < n; i++) { var p = i; for (j = i + 1; j < n; j++) if (Math.abs(A[j][i]) > Math.abs(A[p][i])) p = j; var t = A[i]; A[i] = A[p]; A[p] = t; t = b[i]; b[i] = b[p]; b[p] = t; for (j = i + 1; j < n; j++) { var f = A[j][i] / A[i][i]; for (k = i; k < n; k++) A[j][k] -= f * A[i][k]; b[j] -= f * b[i]; } } var x = []; for (i = n - 1; i >= 0; i--) { var s = b[i]; for (j = i + 1; j < n; j++) s -= A[i][j] * x[j]; x[i] = s / A[i][i]; } return x; }
+  var src = [[0, 0], [W, 0], [W, H], [0, H]], A = [], b = [];
+  for (var i = 0; i < 4; i++) { var x = src[i][0], y = src[i][1], u = Q[i][0], v = Q[i][1];
+    A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); }
+  var h = solve(A, b);
+  glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+  function fit() {
+    var vw = innerWidth, vh = (window.visualViewport ? visualViewport.height : innerHeight) - 56;
+    var s = Math.max(Math.min(vw / IW, vh / IH), Math.min(vw * 0.86, 500, vh * 1.25) / QW);
+    var w = IW * s, hh = IH * s;
+    var ox = (vw > 900 ? vw * 0.42 : vw / 2) - CX * s, oy = vh / 2 - CY * s;
+    ox = Math.min(0, Math.max(vw - w, ox)); oy = Math.min(0, Math.max(vh + 56 - hh, oy));
+    if (w < vw) ox = (vw - w) / 2; if (hh < vh + 56) oy = (vh + 56 - hh) / 2;
+    desk.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
+  }
+  fit(); addEventListener("resize", fit); if (window.visualViewport) visualViewport.addEventListener("resize", fit);
+  var end0 = window.scrollTo; window.__endGlass = function () { m.scrollTop = m.scrollHeight; };
+})();
 
 say("INFINITE CORRIDOR · AION TEKMIRION");
 say("The terminal. The records, the sources and the wiring underneath the rooms.\n", "dim");
