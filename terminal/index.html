@@ -224,8 +224,8 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
 (function () {
   if (!document.documentElement.classList.contains("desk")) return;
   var VIEWS = {
-    wide: { img: "/images/terminal-desk-wide.jpg", IW: 1535, IH: 1024, Q: [[414, 139], [1120, 139], [1120, 545], [414, 545]], at: 0.5,
-            alt: "A terminal on a dark riveted desk: a lantern on books marked Look, Reflect, Question, Discover; a mug, an armillary sphere, a map and a pen; a quill on The Phoenix and The Mirror; a cloth with the phoenix." },
+    wide: { img: "/images/terminal-desk-wide.jpg", IW: 1536, IH: 1024, Q: [[292, 229], [754, 257], [754, 611], [293, 616]], at: 0.38,
+            alt: "A terminal at the edge of the Infinite Corridor: a lantern on books marked Look, Reflect, Question, Discover, Be Human; a mug, an armillary sphere and a pen; The Phoenix and The Mirror on the desk, a quill, and a banner reading Welcome, you may breathe here." },
     ivy:  { img: "/images/terminal-desk.jpg", IW: 1280, IH: 1536, Q: [[193, 563], [536, 580], [561, 816], [213, 829]], at: 0.42,
             alt: "The terminal in the Room, closer: a desk among ivy and white flowers, a lantern and a mug, at the edge of the Infinite Corridor." }
   };
@@ -252,13 +252,14 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
   function fit() {
     var vw = SW, full = SH, vh = full - 56;
     var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 640, vh * 1.25 * QW / QH * 0.6) / QW);
+    if (vw > 900 && q.get("view") !== "ivy") s = Math.min(vw / V.IW, full / V.IH);
     document.getElementById("stage").style.height = SH + "px";
     var w = V.IW * s, hh = V.IH * s;
     var ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s, oy = vh / 2 - CY * s;
     ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
     oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
     desk.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
-    var W = Math.round(Math.min(600, Math.max(320, QW * s * 13 / 12.5))), H = Math.round(W * QH / QW);
+    var W = Math.round(Math.min(600, Math.max(vw > 900 ? 0 : 320, QW * s * 13 / 12.5))), H = Math.round(W * QH / QW);
     place(W, H);
   }
   fit();
