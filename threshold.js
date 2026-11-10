@@ -23,6 +23,7 @@
     w.addEventListener("ended", go, { once: true });
     setTimeout(go, 2800);                       /* never wait longer than this */
     w.currentTime = 0;
+    try { w.playbackRate = 1.25; } catch (e) {}  /* a fraction quicker: about a second and a half */
     var p = w.play(); w.style.opacity = "1";
     if (p && p.catch) p.catch(go);              /* if a browser will not play it, go straight in */
   };
