@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=overlays-content">
 <title>The Terminal · Aion Tekmirion</title>
 <meta name="description" content="The terminal of the Infinite Corridor: the records, the sources, the plain-text files and the code underneath the rooms. Nothing is required.">
 <link rel="canonical" href="https://aiontekmirion.github.io/terminal/">
@@ -25,15 +25,17 @@ a:hover,.tap:hover,a:focus-visible,.tap:focus-visible{color:#fff;border-bottom-c
 #in{flex:1;min-width:2ch;background:transparent;border:0;outline:none;color:inherit;font:inherit;text-shadow:inherit;caret-color:var(--amber);padding:0;text-transform:uppercase}
 .doc{border-left:1px solid var(--faint);padding:.2rem 0 .2rem 1rem;margin:.6rem 0}
 .chips{position:fixed;left:0;right:0;bottom:0;display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;padding:.7rem .8rem max(.7rem,env(safe-area-inset-bottom));background:linear-gradient(transparent,#000 35%)}
+.chips{transition:opacity .6s ease}.chips.off{opacity:0;pointer-events:none;visibility:hidden}
 .chips button{background:#000;color:var(--amber);border:1px solid var(--faint);border-radius:2px;font:inherit;font-size:.78em;letter-spacing:.08em;padding:.35rem .6rem;cursor:pointer;text-shadow:inherit}
 .chips button:hover,.chips button:focus-visible{border-color:var(--amber);outline:none}
+#hint{opacity:0;transition:opacity 1.6s ease;color:var(--faint)}#hint.on{opacity:1}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* the desk: the terminal lives inside the glass of the screen in the picture */
 html.desk,html.desk body{height:100%;overflow:hidden}
 html.desk body::after{display:none}
 #stage{display:none}
-html.desk #stage{display:block;position:fixed;inset:0;overflow:hidden;background:#0a0603}
+html.desk #stage{display:block;position:fixed;left:0;right:0;top:0;overflow:hidden;background:#0a0603}
 html.desk #desk{position:absolute;left:0;top:0;transform-origin:0 0}
 html.desk #desk>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
 html.desk #glass{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;border-radius:7px;
@@ -56,7 +58,7 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 <div id="out" role="log" aria-live="polite"></div>
 <div class="line"><label for="in" class="ps" id="ps">C:\INFINITE_CORRIDOR&gt; </label><input id="in" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" aria-label="Type a command"></div>
 </main>
-<nav class="chips" aria-label="Common commands">
+<nav class="chips off" id="chips" aria-label="Common commands">
 <button data-c="HELP">HELP</button><button data-c="LOOK">LOOK</button><button data-c="DIR">DIR</button><button data-c="ROOMS">ROOMS</button><button data-c="SOURCE">SOURCE</button><button data-c="CD ..">CD ..</button><button data-c="EXIT">EXIT</button>
 </nav>
 <noscript><p style="padding:1rem">The terminal needs JavaScript. The plain-text map of everything is at <a href="/llms.txt">/llms.txt</a> and <a href="/TheSpine/llms.txt">/TheSpine/llms.txt</a>.</p></noscript>
@@ -83,6 +85,7 @@ function say(text, cls) { return print(esc(text), cls); }
 function tap(label, cmd) { return '<span class="tap" role="button" tabindex="0" data-c="' + esc(cmd) + '">' + esc(label) + "</span>"; }
 function path() { return "C:\\INFINITE_CORRIDOR" + (cwd.length ? "\\" + cwd.join("\\").toUpperCase() : "") + "> "; }
 function prompt() { ps.textContent = path(); }
+function showChips() { var c = document.getElementById("chips"); if (c) c.classList.remove("off"); var h = document.getElementById("hint"); if (h) h.remove(); }
 function end() { if (window.__endGlass) window.__endGlass(); else window.scrollTo(0, document.body.scrollHeight); }
 
 /* the file tree: live from GitHub, or the copy kept beside this page */
@@ -117,6 +120,7 @@ var JUMP = { TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.htm
 
 var C = {
   HELP: function () {
+    showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
       [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a file here, in the terminal"],
        ["ROOMS", "the rooms, each its own page"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
@@ -125,6 +129,7 @@ var C = {
       esc("\n\nShortcuts: ") + Object.keys(JUMP).map(function (k) { return tap(k, k); }).join("  "));
   },
   LOOK: function () {
+    showChips();
     say("You are in the terminal of the Infinite Corridor. The table is upstairs: two keys, the Spine between them.\n" +
       "Down here is what holds the rooms up: every conversation kept word for word, the records, the notes, the code.\n");
     print(esc("Two drives are mounted:\n  ") + tap("SPINE", "CD SPINE") + esc("   the record, kept in the open\n  ") + tap("SITE", "CD SITE") + esc("    the site itself, its pages and code"));
@@ -224,8 +229,8 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     ivy:  { img: "/images/terminal-desk.jpg", IW: 1280, IH: 1536, Q: [[193, 563], [536, 580], [561, 816], [213, 829]], at: 0.42,
             alt: "The terminal in the Room, closer: a desk among ivy and white flowers, a lantern and a mug, at the edge of the Infinite Corridor." }
   };
-  var q = new URLSearchParams(location.search), tall = innerHeight > innerWidth * 1.2;
-  var V = VIEWS[q.get("view") === "ivy" || (tall && q.get("view") !== "wide") ? "ivy" : "wide"];
+  var q = new URLSearchParams(location.search);
+  var V = VIEWS[q.get("view") === "ivy" ? "ivy" : "wide"];
   var desk = document.getElementById("desk"), img = desk.querySelector("img"), glass = document.getElementById("glass"), m = document.querySelector("main");
   img.src = V.img; img.alt = V.alt; img.width = V.IW; img.height = V.IH;
   desk.style.width = V.IW + "px"; desk.style.height = V.IH + "px";
@@ -242,9 +247,12 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     glass.style.width = W + "px"; glass.style.height = H + "px";
     glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
   }
+  /* the picture is fixed: its size is taken once and kept, so the keyboard and the browser bars cannot shrink or crop it */
+  var SW = innerWidth, SH = Math.max(innerHeight, document.documentElement.clientHeight), lastW = SW;
   function fit() {
-    var vw = innerWidth, full = window.visualViewport ? visualViewport.height : innerHeight, vh = full - 56;
+    var vw = SW, full = SH, vh = full - 56;
     var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 640, vh * 1.25 * QW / QH * 0.6) / QW);
+    document.getElementById("stage").style.height = SH + "px";
     var w = V.IW * s, hh = V.IH * s;
     var ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s, oy = vh / 2 - CY * s;
     ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
@@ -253,15 +261,17 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     var W = Math.round(Math.min(600, Math.max(320, QW * s * 13 / 12.5))), H = Math.round(W * QH / QW);
     place(W, H);
   }
-  fit(); addEventListener("resize", fit); if (window.visualViewport) visualViewport.addEventListener("resize", fit);
+  fit();
+  addEventListener("resize", function () { var w = innerWidth; if (Math.abs(w - lastW) > 40) { lastW = SW = w; SH = innerHeight; fit(); } else if (innerHeight > SH) { SH = innerHeight; fit(); } });
+  if (window.visualViewport) visualViewport.addEventListener("scroll", function () { scrollTo(0, 0); });
   window.__endGlass = function () { m.scrollTop = m.scrollHeight; };
   if (q.get("from") === "room") window.__exitTo = "/corridor.html";
 })();
 
-say("INFINITE CORRIDOR · AION TEKMIRION");
-say("The terminal. The records, the sources and the wiring underneath the rooms.\n", "dim");
-say((who ? "Welcome back, " + who + ". " : "") + "Welcome. You may breathe here.");
-say("Nothing is required. Type HELP, or tap a word below.\n", "dim");
+say("WELCOME.\nYOU MAY BREATHE HERE.\n");
+if (who) say("Welcome back, " + who + ".", "dim");
+var hint = say("Type LOOK or HELP. Nothing is required.\n", "faint"); hint.id = "hint";
+setTimeout(function () { hint.classList.add("on"); }, 3500);
 prompt();
 load().then(function () {
   var q = new URLSearchParams(location.search), rd = q.get("read"), cd = q.get("cd");
