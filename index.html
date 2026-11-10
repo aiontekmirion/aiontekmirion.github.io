@@ -462,7 +462,6 @@ go.addEventListener("click", e => {
   e.preventDefault();
   water?.drop(0.5, 0.42, 0.12, 1.2);
   fade.classList.add("on");
-  setTimeout(() => bird.classList.add("go"), 700);
   try { sessionStorage.setItem("fdJust", "1"); } catch (e) {}
   /* after the phoenix, the book falls open onto the Room */
   const book = document.getElementById("book");
@@ -477,7 +476,7 @@ go.addEventListener("click", e => {
     book.addEventListener("ended", enter, { once: true });
     book.addEventListener("click", enter, { once: true });
     setTimeout(enter, 6500);                           /* never wait longer than this */
-  }, 700 + 1550);
+  }, 700);
 });
 addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on"); bird.classList.remove("go"); note.classList.remove("open");
   const b = document.getElementById("book"); if (b) { b.classList.remove("on"); b.pause(); } } });
