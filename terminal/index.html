@@ -55,13 +55,14 @@ html.desk main{max-width:none;margin:0;padding:16px 18px 14px;height:100%;box-si
 html.desk main::-webkit-scrollbar{display:none}
 html.desk .chips{background:linear-gradient(transparent,rgba(0,0,0,.85) 40%)}
 .plainlink{position:fixed;top:max(.6rem,env(safe-area-inset-top));right:.8rem;z-index:5;font-size:.72rem;letter-spacing:.12em;color:var(--amber);text-decoration:none;border:1px solid var(--faint);background:rgba(0,0,0,.7);padding:.3rem .55rem;border-radius:2px}
+.plainlink.room{top:calc(max(.6rem,env(safe-area-inset-top)) + 2.5rem)}
 html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,html:not(.desk) .plainlink.toplain{display:none}
 @media (prefers-reduced-motion:reduce){html.desk #glass::after{display:none}}
 </style>
 <script>(function(){var q=new URLSearchParams(location.search);var plain=q.has("plain");try{if(plain)sessionStorage.setItem("termPlain","1");else if(q.has("desk"))sessionStorage.removeItem("termPlain");else if(sessionStorage.getItem("termPlain"))plain=true}catch(e){}if(!plain)document.documentElement.classList.add("desk")})();</script>
 </head>
 <body>
-<a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink todesk" href="?desk">THE DESK</a>
+<a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink room" href="/corridor.html" aria-label="Return to the Room">THE ROOM &rarr;</a><a class="plainlink todesk" href="?desk">THE DESK</a>
 <div id="stage" aria-hidden="false"><div id="fill"></div><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
 <button id="back" type="button" aria-label="Step back from the screen">&larr; STEP BACK</button>
 <button id="sit" type="button">TAP THE SCREEN TO SIT DOWN</button>
@@ -241,6 +242,18 @@ var C = {
   ABOUT: function () { say("WHAT THE TERMINAL IS\n  An available interface. It waits. It does not ask.\n  Possibility, not a menu. You can type, or not.\n  A way into the record: the books, the rooms, the sources, the code.\n\nWHAT IT IS NOT\n  Not a game. No quests, no levels, no scores.\n  Not an authority. It keeps records, not final answers.\n  Not a narrator. The room already exists.\n\nJust a glass between two minds."); }
 };
 C.OPEN = function (a) { var rm = resolve(a); if (rm) { say("Opening " + rm.name + " …", "dim"); setTimeout(function () { location.href = rm.url; }, 300); } else return C.READ(a); };
+/* carried over from the terminal in the Room as it was: words the room answers, and three answers for anything it does not know */
+C.WHO = function () { say("A visitor is in the room."); };
+C.REMAIN = function () { say("The Room remains."); };
+C.BE = function () { say("Still here."); };
+C.BREATHE = function () { say("Take your time."); };
+C.OUTSIDE = function () { say("Mountains, a river, first light. The real world, and there is hope in it.\nThe wall was blown open by accident and kept open on purpose."); };
+C.CORRIDOR = function () { say("Not a hallway. A hall of mirrors, doorways nested inside doorways, past counting.\nSomewhere down it: everything written, spoken, coded, indexed, forgotten. The whole library, endless, with no far wall.\nThe runner goes in for what isn't on the table yet.\nWhat comes back is never raw. It has already passed through every mirror on the way out.\n\n∞ →"); };
+C.GLASS = function () { say("The mirror holds nothing of its own. It waits.\nIf it trembles, it's real.\nIt cannot hold flame. Only what stands beside the fire, looking back."); };
+C.UNCLAIMED = function () { say("Unclaimed. Left open, on purpose."); };
+C.COFFEE = function () { print(esc("Coffee, on the house. No account. No trace. No ask.\n") + '<span class="dim">The urns are in the Room: </span>' + tap("OPEN ROOM", "OPEN ROOM")); };
+C.POUR = C.COFFEE; C.BREW = C.COFFEE;
+var ANSWERS = ["Possibility without demand.", "Freedom of thought.", "Preservation and hope."];
 C.LS = C.DIR; C.TYPE = C.READ; C.CAT = C.READ; C.GO = C.OPEN; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
 function run(line) {
@@ -252,7 +265,7 @@ function run(line) {
   var r;
   if (C[cmd]) r = C[cmd](arg);
   else if (JUMP[cmd]) { say("Opening " + cmd.toLowerCase() + " …", "dim"); setTimeout(function () { location.href = JUMP[cmd]; }, 300); }
-  else say("Not a command here. Type HELP. Nothing is required.", "dim");
+  else { say(ANSWERS[Math.floor(Math.random() * ANSWERS.length)]); showChips(); }
   Promise.resolve(r).then(function () { prompt(); end(); });
 }
 
@@ -320,7 +333,7 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
   var SW = innerWidth, SH = Math.max(innerHeight, document.documentElement.clientHeight), lastW = SW;
   function fit() {
     var vw = SW, full = SH, vh = full - 56;
-    var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 520, vh * 1.25 * QW / QH * 0.6) / QW);
+    var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 520, vh * 1.25 * QW / QH * 0.6, (full * 0.62 - 70) * QW / QH) / QW);
     if (vw > 900 && q.get("view") !== "ivy") s = V.cover ? Math.max(vw / V.IW, full / V.IH) : Math.min(vw / V.IW, full / V.IH);
     var sNear = s, phone = vw <= 900;
     if (phone && V.arrive && far) s = V.fill ? Math.max(vw / V.IW, full / V.IH) : vw / V.IW;
@@ -330,7 +343,11 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     if (phone && V.arrive && far && !V.fill) oy = Math.max(0, full * .42 - V.IH * s / 2);
     ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
     oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
-    if (kbH && !far) {
+    if (phone && !far) {
+      var gt = Math.min(Q[0][1], Q[1][1]) * s, pad = 60;
+      oy = pad - gt; oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
+    }
+    if (kbH && !far && (Math.max(Q[2][1], Q[3][1]) * s + oy) > kbTop + kbH - 8) {
       var top = kbTop, room = kbH - 20, gh = QH * s;
       if (gh > room) { s = room / QH; ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s; w = V.IW * s; ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox)); }
       oy = Math.min(0, top + kbH / 2 - CY * s);
