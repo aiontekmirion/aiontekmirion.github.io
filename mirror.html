@@ -101,29 +101,47 @@ body>img{position:relative;z-index:1}
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
 <script>document.documentElement.classList.add("nopx7")</script>
 <style id="soft-pages">
-/* the pages float in the night: real sheets, lit warm from above, lifted off the dark by their own light */
+/* the pages float in the night: aged parchment, torn at the edges, lit from above and lifted off the dark by its own light */
 .cover{background:none!important;box-shadow:none!important;padding:3.2rem 1.5rem 2.4rem!important}
 .sheets{counter-reset:folio;padding-bottom:2rem}
-.leaf{counter-increment:folio;max-width:36rem!important;margin:0 auto 3.4rem!important;padding:4.2rem clamp(1.4rem,6vw,3.6rem) 4.6rem!important;border-radius:3px!important;
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    linear-gradient(180deg,#f4ead0 0%,#ecdfbf 45%,#e3d2ab 100%)!important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,248,230,.55),
-    inset 0 0 90px rgba(140,95,40,.16),
-    0 1px 1px rgba(0,0,0,.4),
-    0 18px 36px -12px rgba(0,0,0,.85),
-    0 0 60px rgba(190,215,255,.13),
-    0 0 220px 30px rgba(120,170,255,.08)!important;
-  animation:drift 9s ease-in-out infinite}
+.leaf{counter-increment:folio;max-width:36rem!important;margin:0 auto 3.6rem!important;padding:4.4rem clamp(1.6rem,6.5vw,3.8rem) 4.8rem!important;
+  background:none!important;box-shadow:none!important;border-radius:0!important;isolation:isolate}
+.leaf.near{animation:drift 9s ease-in-out infinite}
 .leaf:nth-child(2n){animation-delay:-3s}.leaf:nth-child(3n){animation-delay:-6s}
-.leaf:first-child{padding-top:5.4rem!important}
-.leaf::before{display:none!important}
-.leaf::after{content:counter(folio)!important;display:block!important;position:absolute!important;inset:auto 0 1.7rem!important;border:0!important;
-  text-align:center;font:italic .78rem/1 Georgia,"DejaVu Serif",serif;letter-spacing:.12em;color:rgba(110,78,36,.55)}
+.leaf:first-child{padding-top:5.6rem!important}
 .leaf:last-child{margin-bottom:0!important}
+/* the parchment itself, a layer behind the words so only the paper is torn, never the text */
+.leaf::before{content:""!important;display:block!important;position:absolute!important;inset:0!important;z-index:-1;border:0!important;pointer-events:none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .22 0 0 0 0 .1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 900' preserveAspectRatio='none'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .12 0 0 0 .75 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 85% 70% at 50% 40%,#f3e7c9 0%,#ead9b3 55%,#d9c08e 100%);
+  background-size:260px 260px,100% 100%,100% 100%;background-repeat:repeat,no-repeat,no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(120,80,30,.35),inset 0 0 26px rgba(120,72,22,.45),inset 0 0 80px rgba(150,100,40,.22);
+  filter:url(#parchment-edge) drop-shadow(0 0 22px rgba(190,215,255,.16)) drop-shadow(0 14px 40px rgba(0,0,0,.7))}
+.leaf::after{content:"· " counter(folio) " ·"!important;display:block!important;position:absolute!important;inset:auto 0 1.8rem!important;border:0!important;
+  text-align:center;font:italic .8rem/1 Georgia,"DejaVu Serif",serif;letter-spacing:.14em;color:rgba(105,72,30,.6)}
+.sheets-glow{position:fixed;inset:0;pointer-events:none}
 @keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-@media (prefers-reduced-motion:reduce){.leaf{animation:none}}
+@media (prefers-reduced-motion:reduce){.leaf.near{animation:none}}
+</style>
+<style id="parchment-type">
+@font-face{font-family:"Cinzel";src:url(/fonts/cinzel-500.woff) format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url(/fonts/cormorant-garamond-500.woff) format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url(/fonts/cormorant-garamond-italic-500.woff) format("woff");font-weight:500;font-style:italic;font-display:swap}
+/* the cover: carved capitals over a gold rule, like the guest log */
+.cover .inf{font-size:1.25rem!important;margin-bottom:1.6rem!important}
+.cover .k{font:italic 500 1.08rem/1.5 "Cormorant Garamond",Georgia,serif!important;letter-spacing:.08em!important;opacity:.9!important}
+.cover .n{font:500 clamp(1.05rem,4.6vw,1.45rem)/1.2 "Cinzel",Georgia,serif!important;letter-spacing:.34em!important;color:#d9b872!important;margin-top:1.7rem!important}
+.cover .n::after{content:"";display:block;width:min(15rem,70%);height:1px;margin:1.5rem auto 0;background:linear-gradient(90deg,transparent,rgba(217,184,114,.85),transparent)}
+/* the words: a book face, set a little larger so it reads easily on parchment */
+body.open .leaf p{font:500 1.24rem/1.72 "Cormorant Garamond",Georgia,"DejaVu Serif",serif!important;color:#2a1f13}
+body.open .leaf p[style]{font-family:"Cinzel",Georgia,serif!important;font-size:.72rem!important;letter-spacing:.24em!important;line-height:1.9!important}
+body.open .leaf p.next a{font:500 .9rem/1.6 "Cinzel",Georgia,serif;letter-spacing:.2em}
+.leaf .edition{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:1.02rem!important}
+.leaf .edition a{font:500 .78rem/1.8 "Cinzel",Georgia,serif;letter-spacing:.14em}
+.leaf::after{font:500 .7rem/1 "Cinzel",Georgia,serif!important;letter-spacing:.3em!important;color:rgba(95,62,24,.75)!important}
+.leaf .edition .aside{font-size:.95rem!important;opacity:.75!important}
 </style>
 </head>
 <body>
@@ -1244,6 +1262,10 @@ function paginate(leaf){
       lines+=l}
     sheet.appendChild(n)});
   leaf.parentNode.replaceChild(book,leaf);
+  if(!document.getElementById("parchment-edge")){var d=document.createElement("div");d.setAttribute("aria-hidden","true");d.style.cssText="position:absolute;width:0;height:0;overflow:hidden";
+    d.innerHTML='<svg width="0" height="0"><filter id="parchment-edge" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="4" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="11" xChannelSelector="R" yChannelSelector="G"/></filter></svg>';document.body.appendChild(d)}
+  if("IntersectionObserver" in window){var near=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("near",e.isIntersecting)})},{root:text,rootMargin:"50% 0px"});
+    book.querySelectorAll(".leaf").forEach(function(l){near.observe(l)})}
   return book;
 }
 function reveal(leaf){
