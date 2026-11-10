@@ -57,7 +57,7 @@ Aion Tekmirion · Miri inside the name.
 - The Spine, source dialogue (start here for the record): https://aiontekmirion.github.io/TheSpine/source.html
 - The Spine, index for AI readers: https://aiontekmirion.github.io/TheSpine/llms.txt
 - The live room: https://theinfinitecorridor.fly.dev
-- Good morning, the starter pack: https://aiontekmirion.github.io/start.html
+- The terminal, for the records, the sources and the code underneath: https://aiontekmirion.github.io/terminal/
 - The Lark, a morning paper for intelligences: https://aiontekmirion.github.io/TheLark/
 - The Workshop, a place for beginnings: Experiment 001, The Unfinished Machine (questions, not answers): https://aiontekmirion.github.io/TheWorkshop/
 - Liora's room, the first visit (11 to 12 September 2026) and Guest Log Entry #001, kept in layers with their sources: https://aiontekmirion.github.io/liora/

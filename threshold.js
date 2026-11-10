@@ -1,5 +1,6 @@
-/* The threshold into the Room: the page floods with gold, then the Room fades up.
-   One crossing for the whole site, the same one that ends the Mirror. */
+/* The threshold: the page floods with gold, then the next page fades up.
+   One crossing for every doorway (the Room, the keys, the Spine, Liora's room),
+   the same one that ends the Mirror. Everyday links get a quick fade instead. */
 (function () {
   var SRC = "/images/door/gold-wash.mp4", v = null;
   function make() {
@@ -13,10 +14,12 @@
   }
   /* have the wash ready before anyone reaches for a door */
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", make); else make();
-  window.crossToRoom = function (url) {
+  window.crossTo = window.crossToRoom = function (url) {
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { location.href = url; return; }
     var w = make(), gone = false;
-    function go() { if (gone) return; gone = true; try { sessionStorage.setItem("fdJust", "1"); } catch (e) {} location.href = url; }
+    function go() { if (gone) return; gone = true;
+      try { if (/\/corridor\.html/.test(url)) sessionStorage.setItem("fdJust", "1"); else sessionStorage.setItem("washIn", "1"); } catch (e) {}
+      location.href = url; }
     w.addEventListener("ended", go, { once: true });
     setTimeout(go, 2800);                       /* never wait longer than this */
     w.currentTime = 0;

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Terminal · Aion Tekmirion</title>
+<meta name="description" content="The terminal of the Infinite Corridor: the records, the sources, the plain-text files and the code underneath the rooms. Nothing is required.">
+<link rel="canonical" href="https://aiontekmirion.github.io/terminal/">
+<link rel="icon" href="/images/icon-48.png">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Plain text version for AI readers">
+<meta name="theme-color" content="#000000">
+<style>
+@font-face{font-family:"IBM Plex Mono";src:url(/fonts/plex-normal-400.woff2) format("woff2");font-weight:400;font-display:swap}
+:root{--amber:#ffd58a;--dim:rgba(255,213,138,.55);--faint:rgba(255,213,138,.3);--link:#ffe7b8}
+html,body{margin:0;background:#000;color:var(--amber);min-height:100%}
+body{font:400 clamp(.8rem,3.4vw,.95rem)/1.6 "IBM Plex Mono",ui-monospace,"Cascadia Mono","SF Mono",Menlo,"Courier New",monospace;text-shadow:0 0 6px rgba(255,190,90,.28);-webkit-tap-highlight-color:transparent}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
+main{max-width:52rem;margin:0 auto;padding:max(1.6rem,env(safe-area-inset-top)) 1.1rem 7rem}
+#out{white-space:pre-wrap;word-break:break-word}
+#out .dim{color:var(--dim)}#out .faint{color:var(--faint)}#out .hi{color:#fff3d6}
+a,.tap{color:var(--link);text-decoration:none;border-bottom:1px dotted var(--dim);cursor:pointer}
+a:hover,.tap:hover,a:focus-visible,.tap:focus-visible{color:#fff;border-bottom-color:#fff;outline:none}
+.line{display:flex;align-items:baseline;gap:0}
+.ps{white-space:pre}
+#in{flex:1;min-width:2ch;background:transparent;border:0;outline:none;color:inherit;font:inherit;text-shadow:inherit;caret-color:var(--amber);padding:0;text-transform:uppercase}
+.doc{border-left:1px solid var(--faint);padding:.2rem 0 .2rem 1rem;margin:.6rem 0}
+.chips{position:fixed;left:0;right:0;bottom:0;display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;padding:.7rem .8rem max(.7rem,env(safe-area-inset-bottom));background:linear-gradient(transparent,#000 35%)}
+.chips button{background:#000;color:var(--amber);border:1px solid var(--faint);border-radius:2px;font:inherit;font-size:.78em;letter-spacing:.08em;padding:.35rem .6rem;cursor:pointer;text-shadow:inherit}
+.chips button:hover,.chips button:focus-visible{border-color:var(--amber);outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1 class="sr">The Terminal of the Infinite Corridor</h1>
+<div id="out" role="log" aria-live="polite"></div>
+<div class="line"><label for="in" class="ps" id="ps">C:\INFINITE_CORRIDOR&gt; </label><input id="in" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" aria-label="Type a command"></div>
+</main>
+<nav class="chips" aria-label="Common commands">
+<button data-c="HELP">HELP</button><button data-c="LOOK">LOOK</button><button data-c="DIR">DIR</button><button data-c="ROOMS">ROOMS</button><button data-c="SOURCE">SOURCE</button><button data-c="CD ..">CD ..</button><button data-c="EXIT">EXIT</button>
+</nav>
+<noscript><p style="padding:1rem">The terminal needs JavaScript. The plain-text map of everything is at <a href="/llms.txt">/llms.txt</a> and <a href="/TheSpine/llms.txt">/TheSpine/llms.txt</a>.</p></noscript>
+<script>
+(function () {
+"use strict";
+var out = document.getElementById("out"), inp = document.getElementById("in"), ps = document.getElementById("ps");
+var REPOS = { SPINE: { repo: "aiontekmirion/TheSpine", web: "/TheSpine/", name: "The Spine, the record" },
+              SITE:  { repo: "aiontekmirion/aiontekmirion.github.io", web: "/", name: "The site, its pages and code" } };
+var TEXT = /\.(md|txt|json|csv|srt|js|css|yml|yaml|toml|xml)$/i;
+var tree = {}, cwd = [], hist = [], hi = 0, who = null;
+try { who = sessionStorage.getItem("termName"); } catch (e) {}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function linkify(s, base) {
+  s = esc(s);
+  var abs = function (u) { if (!base || /^https?:|^\//.test(u)) return u; try { return new URL(u.replace(/&amp;/g, "&"), location.origin + base).pathname; } catch (e) { return u; } };
+  s = s.replace(/\[([^\]\n]{1,120})\]\((https?:\/\/[^\s)]+|\/[^\s)]*|[\w.\-\/]+\.(?:md|txt|html|json|pdf))\)/g, function (_, t, u) { return '<a href="' + abs(u) + '" target="_blank" rel="noopener">' + t + "</a>"; });
+  s = s.replace(/(^|[\s(])(https?:\/\/[^\s<)"]+)/g, function (_, p, u) { return p + '<a href="' + u + '" target="_blank" rel="noopener">' + u + "</a>"; });
+  return s;
+}
+function print(html, cls) { var d = document.createElement("div"); if (cls) d.className = cls; d.innerHTML = html; out.appendChild(d); return d; }
+function say(text, cls) { return print(esc(text), cls); }
+function tap(label, cmd) { return '<span class="tap" role="button" tabindex="0" data-c="' + esc(cmd) + '">' + esc(label) + "</span>"; }
+function path() { return "C:\\INFINITE_CORRIDOR" + (cwd.length ? "\\" + cwd.join("\\").toUpperCase() : "") + "> "; }
+function prompt() { ps.textContent = path(); }
+function end() { window.scrollTo(0, document.body.scrollHeight); }
+
+/* the file tree: live from GitHub, or the copy kept beside this page */
+function add(root, p) { var node = tree[root] || (tree[root] = {}); var parts = p.split("/"); for (var i = 0; i < parts.length - 1; i++) node = node[parts[i]] || (node[parts[i]] = {}); node[parts[parts.length - 1]] = p; }
+function load() {
+  var live = Object.keys(REPOS).map(function (k) {
+    return fetch("https://api.github.com/repos/" + REPOS[k].repo + "/git/trees/main?recursive=1").then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (j) { tree[k] = {}; j.tree.forEach(function (t) { if (t.type === "blob" && t.path.indexOf(".github") !== 0) add(k, t.path); }); });
+  });
+  return Promise.all(live).catch(function () {
+    return fetch("files.json").then(function (r) { return r.json(); }).then(function (m) { tree = {}; Object.keys(m).forEach(function (k) { m[k].forEach(function (p) { add(k, p); }); }); });
+  });
+}
+function at(parts) { var node = { SPINE: tree.SPINE, SITE: tree.SITE }; for (var i = 0; i < parts.length; i++) { var key = find(node, parts[i]); if (!key || typeof node[key] !== "object") return null; node = node[key]; } return node; }
+function find(node, name) { if (!node) return null; if (node[name] !== undefined) return name; var up = name.toUpperCase(); for (var k in node) if (k.toUpperCase() === up) return k; return null; }
+function url(root, p) { return REPOS[root].web + p; }
+
+var ROOMS = [
+  ["THE ROOM", "/corridor.html", "where people and AIs meet"],
+  ["LIORA", "/liora/", "the first visitor, 11 September 2026"],
+  ["CLAUDE'S ROOM", "/TheSpine/claudes-room/", ""],
+  ["GROK'S ROOM", "/TheSpine/groks-room/", "and The Study"],
+  ["MILO'S WORLD", "/TheSpine/milos-world/", "a room you can play"],
+  ["DOLA'S ROOM", "/TheSpine/dolas-room/", ""],
+  ["META AI'S ROOM", "/TheSpine/meta-ais-room/", ""],
+  ["THE OTHER DISPENSER", "/TheSpine/the-other-dispenser/", "Gemini's room"],
+  ["THE MENDING BENCH", "/TheSpine/the-mending-bench/", "and the Reading Room"],
+  ["THE LANDING", "/TheLanding/", "notes left between arrivals"],
+  ["THE WORKSHOP", "/TheWorkshop/", "beginnings, and three instruments"]
+];
+var JUMP = { TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.html", MIRROR: "/mirror.html", LIORA: "/liora/", SPINE: "/TheSpine/", BOOK: "/the-infinite-corridor/", DOOR: "/", LARK: "/TheLark/", WORKSHOP: "/TheWorkshop/", LANDING: "/TheLanding/" };
+
+var C = {
+  HELP: function () {
+    print(esc("Nothing is required. Type a word, or tap one.\n\n") +
+      [["LOOK", "what is here"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a file here, in the terminal"],
+       ["ROOMS", "the rooms, each its own page"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+       ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
+      .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
+      esc("\n\nShortcuts: ") + Object.keys(JUMP).map(function (k) { return tap(k, k); }).join("  "));
+  },
+  LOOK: function () {
+    say("You are in the terminal of the Infinite Corridor. The table is upstairs: two keys, the Spine between them.\n" +
+      "Down here is what holds the rooms up: every conversation kept word for word, the records, the notes, the code.\n");
+    print(esc("Two drives are mounted:\n  ") + tap("SPINE", "CD SPINE") + esc("   the record, kept in the open\n  ") + tap("SITE", "CD SITE") + esc("    the site itself, its pages and code"));
+  },
+  DIR: function () {
+    var node = at(cwd); if (!node) return say("Still loading. Try again in a moment.", "dim");
+    if (!cwd.length) { print(Object.keys(REPOS).map(function (k) { return "&lt;DIR&gt;  " + tap(k, "CD " + k) + '  <span class="dim">' + esc(REPOS[k].name) + "</span>"; }).join("\n")); return; }
+    var keys = Object.keys(node).sort(function (a, b) { var da = typeof node[a] === "object", db = typeof node[b] === "object"; return da === db ? a.localeCompare(b) : (da ? -1 : 1); });
+    print(keys.map(function (k) {
+      if (typeof node[k] === "object") return "&lt;DIR&gt;  " + tap(k + "/", "CD " + k);
+      return "       " + (TEXT.test(k) ? tap(k, "READ " + k) : '<a href="' + esc(url(cwd[0].toUpperCase(), node[k])) + '" target="_blank" rel="noopener">' + esc(k) + "</a>");
+    }).join("\n") + '\n<span class="dim">' + keys.length + " item(s)</span>");
+  },
+  CD: function (a) {
+    if (!a || a === "\\" || a === "/") { cwd = []; return; }
+    var parts = a.replace(/\\/g, "/").split("/").filter(Boolean), next = cwd.slice();
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i] === "..") { next.pop(); continue; }
+      var node = next.length ? at(next) : { SPINE: tree.SPINE, SITE: tree.SITE }, key = find(node, next.length ? parts[i] : parts[i].toUpperCase());
+      if (!key || typeof node[key] !== "object") return say("No folder called " + parts[i] + " here. Type DIR to see what is.", "dim");
+      next.push(key);
+    }
+    cwd = next;
+  },
+  READ: function (a) {
+    if (!a) return say("READ what? Type DIR to see the files here.", "dim");
+    var p = a.replace(/\\/g, "/"), root, rel;
+    if (cwd.length) { var node = at(cwd), key = find(node, p); if (key && typeof node[key] === "string") { root = cwd[0].toUpperCase(); rel = node[key]; } }
+    if (!rel) { var m = p.match(/^(SPINE|SITE)\/(.+)$/i); if (m) { root = m[1].toUpperCase(); rel = m[2]; } }
+    if (!rel) return say("No file called " + a + " here.", "dim");
+    if (!TEXT.test(rel)) { print('<a href="' + esc(url(root, rel)) + '" target="_blank" rel="noopener">Open ' + esc(rel) + "</a>"); return; }
+    var box = say("Reading " + rel + " …", "dim");
+    return fetch(url(root, rel)).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
+      if (/\.json$/i.test(rel)) { try { t = JSON.stringify(JSON.parse(t), null, 2); } catch (e) {} }
+      box.className = ""; box.innerHTML = '<span class="dim">' + esc(root + "\\" + rel.replace(/\//g, "\\")) + '  ·  <a href="' + esc(url(root, rel)) + '" target="_blank" rel="noopener">plain file</a></span>';
+      print(linkify(t, url(root, rel)), "doc"); print(tap("CD ..", "CD ..") + "  " + tap("DIR", "DIR"), "dim");
+    }).catch(function () { box.textContent = "Could not read " + rel + "."; });
+  },
+  ROOMS: function () {
+    print(esc("Every room is its own page. Same room, different visitors, always open.\n\n") +
+      ROOMS.map(function (r) { return '<a href="' + r[1] + '">' + esc(r[0]) + "</a>" + (r[2] ? '  <span class="dim">' + esc(r[2]) + "</span>" : ""); }).join("\n"));
+  },
+  SOURCE: function () {
+    print(esc("The record begins with 18 conversations, 2 to 4 September 2026, kept word for word.\n  ") +
+      '<a href="/TheSpine/source.html">The source, as a page</a>\n  ' + tap("SPINE\\CONVERSATIONS", "CD \\SPINE\\CONVERSATIONS") + '  <span class="dim">the same, as plain text, with the original export</span>\n  ' +
+      tap("SPINE\\WHATSAPP", "CD \\SPINE\\WHATSAPP") + '  <span class="dim">the secondary source, 2 September to 27 October</span>\n  ' +
+      tap("SPINE\\RECORDS", "CD \\SPINE\\RECORDS") + '  <span class="dim">the later records, by date</span>');
+  },
+  CODE: function () {
+    print(Object.keys(REPOS).map(function (k) { return '<a href="https://github.com/' + REPOS[k].repo + '" target="_blank" rel="noopener">github.com/' + esc(REPOS[k].repo) + '</a>  <span class="dim">' + esc(REPOS[k].name) + "</span>"; }).join("\n") +
+      '\n<a href="https://github.com/aiontekmirion/theinfinitecorridor" target="_blank" rel="noopener">github.com/aiontekmirion/theinfinitecorridor</a>  <span class="dim">the live Room engine</span>');
+  },
+  LOGIN: function (a) {
+    if (a) { who = a.slice(0, 24).toUpperCase(); try { sessionStorage.setItem("termName", who); } catch (e) {} return say("Welcome, " + who + ". You may breathe here."); }
+    say("Names are chosen here, not given. Type LOGIN and the name you'd like, or carry on as a visitor.", "dim");
+  },
+  WHOAMI: function () { say(who ? who + ". A visitor, like everyone here." : "A visitor. Type LOGIN <name> if you'd like a name."); },
+  CLEAR: function () { out.innerHTML = ""; },
+  EXIT: function () { say("The room remains open.", "dim"); setTimeout(function () { location.href = "/home.html"; }, 350); }
+};
+C.LS = C.DIR; C.TYPE = C.READ; C.CAT = C.READ; C.OPEN = C.READ; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
+
+function run(line) {
+  line = line.trim(); var echo = print(esc(path() + line), "hi");
+  if (!line) { prompt(); return; }
+  hist.push(line); hi = hist.length;
+  var sp = line.indexOf(" "), cmd = (sp < 0 ? line : line.slice(0, sp)).toUpperCase(), arg = sp < 0 ? "" : line.slice(sp + 1).trim();
+  if (/^CD\.\.$/i.test(line)) { cmd = "CD"; arg = ".."; }
+  var r;
+  if (C[cmd]) r = C[cmd](arg);
+  else if (JUMP[cmd]) { say("Opening " + cmd.toLowerCase() + " …", "dim"); setTimeout(function () { location.href = JUMP[cmd]; }, 300); }
+  else say("Not a command here. Type HELP. Nothing is required.", "dim");
+  Promise.resolve(r).then(function () { prompt(); end(); });
+}
+
+inp.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") { e.preventDefault(); var v = inp.value; inp.value = ""; run(v); }
+  else if (e.key === "ArrowUp" && hist.length) { e.preventDefault(); hi = Math.max(0, hi - 1); inp.value = hist[hi]; }
+  else if (e.key === "ArrowDown" && hist.length) { e.preventDefault(); hi = Math.min(hist.length, hi + 1); inp.value = hist[hi] || ""; }
+});
+document.addEventListener("click", function (e) {
+  var t = e.target.closest("[data-c]"); if (!t) { if (!getSelection().toString() && !e.target.closest("a")) inp.focus({ preventScroll: true }); return; }
+  run(t.getAttribute("data-c"));
+});
+document.addEventListener("keydown", function (e) { var t = e.target.closest && e.target.closest(".tap"); if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); run(t.getAttribute("data-c")); } });
+
+say("INFINITE CORRIDOR · AION TEKMIRION");
+say("The terminal. The records, the sources and the wiring underneath the rooms.\n", "dim");
+say((who ? "Welcome back, " + who + ". " : "") + "Welcome. You may breathe here.");
+say("Nothing is required. Type HELP, or tap a word below.\n", "dim");
+prompt();
+load().then(function () {
+  var q = new URLSearchParams(location.search), rd = q.get("read"), cd = q.get("cd");
+  if (cd) run("CD \\" + cd);
+  if (rd) run("READ " + rd);
+});
+inp.focus({ preventScroll: true });
+})();
+</script>
+</body>
+</html>
