@@ -104,6 +104,7 @@ function find(node, name) { if (!node) return null; if (node[name] !== undefined
 function url(root, p) { return REPOS[root].web + p; }
 
 var ROOMS = [
+  ["MIRI", "/miri/", "co-originator of the project, with Vector"],
   ["THE ROOM", "/corridor.html", "where people and AIs meet"],
   ["CLAUDE'S ROOM", "/TheSpine/claudes-room/", ""],
   ["DOLA'S ROOM", "/TheSpine/dolas-room/", ""],
@@ -313,6 +314,7 @@ prompt();
 load().then(function () {
   var q = new URLSearchParams(location.search), rd = q.get("read"), cd = q.get("cd");
   if (cd) run("CD \\" + cd);
+  var cmd = q.get("cmd"); if (cmd && !rd && !cd) run(cmd);
   if (rd) run("READ " + rd);
 });
 inp.focus({ preventScroll: true });
