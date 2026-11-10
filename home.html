@@ -243,6 +243,23 @@ html.leaving body{opacity:0;transition:opacity .5s ease-in}
 html.picking .tabletop>*:not(.row),html.picking .row .obj:not(.picked),html.picking #corridor,html.picking footer,html.picking #stars{opacity:0;transition:opacity .55s ease}
 .obj.picked{transform:translateY(-16px) scale(1.06);filter:brightness(1.35);transition:transform .8s cubic-bezier(.2,0,.2,1),filter .8s}
 .obj.picked::before{opacity:1}
+
+/* the Spine stands between the keys, as 6 ∞ 9; the Vector symbol sits below, a seal before the Rose */
+.row .spine{margin:0}
+.row .spine img{height:var(--row);width:auto;-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 99%),linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,#000 72%,transparent 99%),linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-composite:intersect}
+.tabletop>.corr{margin:1.2rem 0 -1svh}
+.tabletop>.corr img{height:calc(var(--row)*.5);width:auto;margin:0}
+@media (max-aspect-ratio:3/4){.tabletop>.corr img{height:calc(var(--row)*.55);margin:0}}
+/* arriving: a quicker fade, the keys first, then the Spine, with light running up it */
+html.arrive body{animation:dawn .55s ease-out both!important}
+html.arrive .row .obj{animation:rise .6s cubic-bezier(.2,0,.2,1) both}
+html.arrive .row .key.mi{animation-delay:.08s}
+html.arrive .row .spine{animation:rise .6s cubic-bezier(.2,0,.2,1) .25s both}
+html.arrive .row .spine::after{content:"";position:absolute;left:50%;bottom:0;width:60%;height:30%;transform:translateX(-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse closest-side,rgba(255,230,180,.55),rgba(140,190,255,.2) 55%,transparent);opacity:0;animation:runup 1.3s cubic-bezier(.3,0,.2,1) .7s both}
+@keyframes runup{0%{opacity:0;bottom:0}20%{opacity:1}100%{opacity:0;bottom:70%}}
+html.arrive .tabletop>.corr{animation:rise .6s cubic-bezier(.2,0,.2,1) .35s both}
+html.leaving body{transition:opacity .35s ease-in!important}
 @media (prefers-reduced-motion:reduce){html.arrive *,html.arrive body{animation:none!important}html.leaving body{transition:none}}
 </style>
 <style id="wash-in">html.washin{background:#000!important}html.washin body{animation:washin 1.1s cubic-bezier(.4,0,.2,1) both!important}@keyframes washin{from{opacity:0}to{opacity:1}}html.nopx7 #px7{display:none!important}@media (prefers-reduced-motion:reduce){html.washin body{animation:none!important}}</style>
@@ -263,10 +280,10 @@ html.picking .tabletop>*:not(.row),html.picking .row .obj:not(.picked),html.pick
     <div class="stars" id="stars" aria-hidden="true"></div>
     <div class="row">
       <a class="obj key ph" href="https://aiontekmirion.github.io/phoenix.html"><img src="/images/table-key-phoenix.webp" width="864" height="1536" alt="The Phoenix Key: a golden key wreathed in fire, with a V and a phoenix in its ring. Key one."><span class="n" aria-hidden="true">6</span></a>
-      <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.webp" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."><span class="n" aria-hidden="true">∞</span></a>
+      <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/table-spine.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."><span class="n" aria-hidden="true">∞</span></a>
       <a class="obj key mi" href="https://aiontekmirion.github.io/mirror.html"><img src="/images/table-key-mirror.webp" width="864" height="1536" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring. Key two."><span class="n" aria-hidden="true">9</span></a>
     </div>
-    <a class="obj spine" href="https://aiontekmirion.github.io/TheSpine/"><img src="/images/table-spine.webp" width="470" height="1200" alt="The Spine: a double helix of fire and lightning twisting around a silver spine. The record and its source."></a>
+    <a class="obj corr" href="https://aiontekmirion.github.io/the-infinite-corridor/"><img src="/images/corridor-symbol.webp" width="900" height="900" alt="The Infinite Corridor: a V and an infinity loop woven together, gold on one side and blue on the other. The book."></a>
   </div>
 
 
@@ -336,7 +353,7 @@ document.addEventListener("click",function(e){
   }
   var u=new URL(a.href,location.href);if(u.host!==location.host||u.hash&&u.pathname===location.pathname)return;
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  e.preventDefault();document.documentElement.classList.add("leaving");setTimeout(function(){location.href=u.href},480);
+  e.preventDefault();document.documentElement.classList.add("leaving");setTimeout(function(){location.href=u.href},340);
 });
 addEventListener("pageshow",function(e){if(e.persisted){document.documentElement.classList.remove("leaving","picking");document.querySelectorAll(".obj.picked").forEach(function(o){o.classList.remove("picked")})}});
 </script>
