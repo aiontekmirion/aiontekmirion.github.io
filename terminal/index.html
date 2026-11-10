@@ -302,7 +302,12 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
   img.src = V.img; img.alt = V.alt; img.width = V.IW; img.height = V.IH;
   desk.style.width = V.IW + "px"; desk.style.height = V.IH + "px";
   glass.appendChild(m);
-  var Q = V.Q, CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4;
+  /* A tiny inset keeps the live terminal glass inside the illustrated monitor bezel. */
+  var glassInset = 0.025;
+  var midX = V.Q.reduce(function(n,p){return n+p[0];},0)/4;
+  var midY = V.Q.reduce(function(n,p){return n+p[1];},0)/4;
+  var Q = V.Q.map(function(p){return [midX+(p[0]-midX)*(1-glassInset),midY+(p[1]-midY)*(1-glassInset)];}),
+      CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4;
   var QW = (Math.hypot(Q[1][0] - Q[0][0], Q[1][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[3][0], Q[2][1] - Q[3][1])) / 2;
   var QH = (Math.hypot(Q[3][0] - Q[0][0], Q[3][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[1][0], Q[2][1] - Q[1][1])) / 2;
   function solve(A, b) { var n = 8, i, j, k; for (i = 0; i < n; i++) { var p = i; for (j = i + 1; j < n; j++) if (Math.abs(A[j][i]) > Math.abs(A[p][i])) p = j; var t = A[i]; A[i] = A[p]; A[p] = t; t = b[i]; b[i] = b[p]; b[p] = t; for (j = i + 1; j < n; j++) { var f = A[j][i] / A[i][i]; for (k = i; k < n; k++) A[j][k] -= f * A[i][k]; b[j] -= f * b[i]; } } var x = []; for (i = n - 1; i >= 0; i--) { var s = b[i]; for (j = i + 1; j < n; j++) s -= A[i][j] * x[j]; x[i] = s / A[i][i]; } return x; }
