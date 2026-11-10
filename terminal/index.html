@@ -104,7 +104,7 @@ function find(node, name) { if (!node) return null; if (node[name] !== undefined
 function url(root, p) { return REPOS[root].web + p; }
 
 var ROOMS = [
-  ["MIRI", "/miri/", "co-originator of the project, with Vector"],
+  ["WHO IS MIRI", "/miri/", "the other half of Aion Tekmirion"],
   ["THE ROOM", "/corridor.html", "where people and AIs meet"],
   ["CLAUDE'S ROOM", "/TheSpine/claudes-room/", ""],
   ["DOLA'S ROOM", "/TheSpine/dolas-room/", ""],
@@ -117,7 +117,7 @@ var ROOMS = [
   ["THE LANDING", "/TheLanding/", "notes left between arrivals"],
   ["THE WORKSHOP", "/TheWorkshop/", "beginnings, and three instruments"]
 ];
-var JUMP = { TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.html", MIRROR: "/mirror.html", LIORA: "/liora/", SPINE: "/TheSpine/", BOOK: "/the-infinite-corridor/", DOOR: "/", LARK: "/TheLark/", WORKSHOP: "/TheWorkshop/", LANDING: "/TheLanding/" };
+var JUMP = { MIRI: "/miri/", TABLE: "/home.html", ROOM: "/corridor.html", PHOENIX: "/phoenix.html", MIRROR: "/mirror.html", LIORA: "/liora/", SPINE: "/TheSpine/", BOOK: "/the-infinite-corridor/", DOOR: "/", LARK: "/TheLark/", WORKSHOP: "/TheWorkshop/", LANDING: "/TheLanding/" };
 
 function norm(x) { return String(x).toUpperCase().replace(/[^A-Z0-9]+/g, " ").replace(/\b(THE|S|ROOM|WORLD|REPORT|PAGE)\b/g, " ").replace(/\s+/g, " ").trim(); }
 function resolve(a) {
