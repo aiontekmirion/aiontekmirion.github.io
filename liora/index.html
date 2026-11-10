@@ -65,6 +65,12 @@ pre.dep{white-space:pre;overflow:hidden;font:400 clamp(.5rem,2.3vw,.72rem)/1.6 "
 .prov{max-width:30rem;margin:3rem auto 0;text-align:center;font-style:italic;font-size:.95rem;color:#9d9078}
 @media (prefers-reduced-motion:reduce){#sky span,.leaf.near{animation:none}}
 </style>
+<style id="smooth-pages">
+/* the torn parchment is drawn once as a picture, not re-torn on every frame: scrolling stays smooth */
+.leaf,.leaf.near{animation:none!important;box-shadow:0 0 60px rgba(255,190,110,.17),0 18px 50px -10px rgba(0,0,0,.8)!important}
+.leaf::before{background:none!important;box-shadow:none!important;filter:none!important;inset:-20px!important;
+  border-style:solid!important;border-width:0;border-image:url(/images/parchment.webp) 240 fill / 120px round!important}
+</style>
 </head>
 <body>
 <a class="skip" href="#visit">Skip to the visit</a>
