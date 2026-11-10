@@ -37,6 +37,13 @@ html.desk body::after{display:none}
 #stage{display:none}
 html.desk #stage{display:block;position:fixed;left:0;right:0;top:0;overflow:hidden;background:#0a0603}
 html.desk #desk{position:absolute;left:0;top:0;transform-origin:0 0}
+html.desk #fill{position:absolute;inset:-40px;background:center/cover no-repeat;filter:blur(22px) brightness(.38) saturate(1.1);transform:scale(1.08)}
+html.desk.glide #desk{transition:transform 1.1s cubic-bezier(.45,.05,.2,1)}
+html.desk #sit{display:none}
+html.desk.far #sit{display:block;position:fixed;left:0;right:0;bottom:max(1.6rem,env(safe-area-inset-bottom));z-index:4;text-align:center;font:500 .78rem/1.4 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.22em;color:#d9b872;background:none;border:0;padding:1rem;cursor:pointer;animation:sitpulse 2.8s ease-in-out infinite}
+@keyframes sitpulse{0%,100%{opacity:.45}50%{opacity:1}}
+html.desk.far .chips{display:none}
+@media (prefers-reduced-motion:reduce){html.desk.glide #desk{transition:none}html.desk.far #sit{animation:none;opacity:.85}}
 html.desk #desk>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
 html.desk #glass{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;border-radius:7px;
   background:radial-gradient(ellipse at 50% 40%,#0b1410 0%,#040806 70%,#020403 100%);box-shadow:inset 0 0 26px rgba(0,0,0,.9),inset 0 0 2px rgba(255,220,160,.25)}
@@ -52,7 +59,8 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 </head>
 <body>
 <a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink todesk" href="?desk">THE DESK</a>
-<div id="stage" aria-hidden="false"><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
+<div id="stage" aria-hidden="false"><div id="fill"></div><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
+<button id="sit" type="button">TAP THE SCREEN TO SIT DOWN</button>
 <main>
 <h1 class="sr">The Terminal of the Infinite Corridor</h1>
 <div id="out" role="log" aria-live="polite"></div>
@@ -261,14 +269,17 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
 (function () {
   if (!document.documentElement.classList.contains("desk")) return;
   var VIEWS = {
+    corridor: { img: "/images/terminal-corridor.jpg", IW: 1672, IH: 941, Q: [[236, 242], [768, 278], [778, 626], [244, 638]], at: 0.4, cover: true, arrive: true,
+            alt: "A terminal at the edge of the Infinite Corridor, under ivy and white flowers: a mug with a gold infinity sign, a pen on a parchment map, The Phoenix and The Mirror stacked beside it, a lantern and an armillary sphere; a banner reads Welcome, you may breathe here; the corridor runs away to the right between a fire-gold door and a blue one, joined by a crossing of light." },
     wide: { img: "/images/terminal-desk-wide.jpg", IW: 1120, IH: 1024, Q: [[87, 229], [549, 257], [549, 611], [88, 616]], at: 0.38,
             alt: "A terminal at the edge of the Infinite Corridor: a mug and a pen on the desk; The Phoenix and The Mirror stacked beside it; the Infinite Corridor behind, under a banner reading Welcome, you may breathe here." },
     ivy:  { img: "/images/terminal-desk.jpg", IW: 1280, IH: 1536, Q: [[193, 563], [536, 580], [561, 816], [213, 829]], at: 0.42,
             alt: "The terminal in the Room, closer: a desk among ivy and white flowers, a lantern and a mug, at the edge of the Infinite Corridor." }
   };
   var q = new URLSearchParams(location.search);
-  var V = VIEWS[q.get("view") === "ivy" ? "ivy" : "wide"];
+  var V = VIEWS[VIEWS[q.get("view")] ? q.get("view") : "corridor"];
   var desk = document.getElementById("desk"), img = desk.querySelector("img"), glass = document.getElementById("glass"), m = document.querySelector("main");
+  document.getElementById("fill").style.backgroundImage = "url(" + V.img + ")";
   img.src = V.img; img.alt = V.alt; img.width = V.IW; img.height = V.IH;
   desk.style.width = V.IW + "px"; desk.style.height = V.IH + "px";
   glass.appendChild(m);
@@ -285,18 +296,34 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
   }
   /* the picture is fixed: its size is taken once and kept, so the keyboard and the browser bars cannot shrink or crop it */
+  var root = document.documentElement, far = false;
+  try { far = !!V.arrive && innerWidth <= 900 && !q.has("read") && !q.has("cd") && !q.has("cmd") && !sessionStorage.getItem("termSat"); } catch (e) { far = !!V.arrive && innerWidth <= 900; }
+  if (far) root.classList.add("far");
+  function sit() {
+    if (!far) return; far = false; try { sessionStorage.setItem("termSat", "1"); } catch (e) {}
+    root.classList.add("glide"); root.classList.remove("far"); fit();
+    setTimeout(function () { root.classList.remove("glide"); inp.focus({ preventScroll: true }); }, 1150);
+  }
+  document.getElementById("sit").addEventListener("click", sit);
+  document.getElementById("stage").addEventListener("click", sit);
+  m.addEventListener("click", function (e) { if (far) { e.preventDefault(); e.stopPropagation(); sit(); } }, true);
+  inp.addEventListener("focus", function () { if (far) sit(); });
+  document.addEventListener("keydown", function () { if (far) sit(); }, true);
   var SW = innerWidth, SH = Math.max(innerHeight, document.documentElement.clientHeight), lastW = SW;
   function fit() {
     var vw = SW, full = SH, vh = full - 56;
     var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 640, vh * 1.25 * QW / QH * 0.6) / QW);
-    if (vw > 900 && q.get("view") !== "ivy") s = Math.min(vw / V.IW, full / V.IH);
+    if (vw > 900 && q.get("view") !== "ivy") s = V.cover ? Math.max(vw / V.IW, full / V.IH) : Math.min(vw / V.IW, full / V.IH);
+    var sNear = s, phone = vw <= 900;
+    if (phone && V.arrive && far) s = vw / V.IW;
     document.getElementById("stage").style.height = SH + "px";
     var w = V.IW * s, hh = V.IH * s;
-    var ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s, oy = vh / 2 - CY * s;
+    var ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s, oy = (phone && V.arrive && far ? full * .42 : vh / 2) - CY * s;
+    if (phone && V.arrive && far) oy = Math.max(0, full * .42 - V.IH * s / 2);
     ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
     oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
     desk.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
-    var W = Math.round(Math.min(600, Math.max(vw > 900 ? 0 : 320, QW * s * 13 / 12.5))), H = Math.round(W * QH / QW);
+    var W = Math.round(Math.min(600, Math.max(vw > 900 ? 0 : 320, QW * sNear * 13 / 12.5))), H = Math.round(W * QH / QW);
     place(W, H);
   }
   fit();
@@ -317,7 +344,7 @@ load().then(function () {
   var cmd = q.get("cmd"); if (cmd && !rd && !cd) run(cmd);
   if (rd) run("READ " + rd);
 });
-inp.focus({ preventScroll: true });
+if (!document.documentElement.classList.contains("far")) inp.focus({ preventScroll: true });
 })();
 </script>
 </body>
