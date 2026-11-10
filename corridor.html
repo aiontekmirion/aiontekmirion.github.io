@@ -236,6 +236,7 @@ if(seen||via){h.classList.add("arrive-room","nopx7");setTimeout(function(){h.cla
 <section id="plain-gramophone">
 <h2>The Gramophone</h2>
 <p>Records rest beside the gramophone, left to right: Feel, Knowledge, Words, Soothsayer, Same Room. They are played one at a time. Each record is an experience in words, not a recording, and it is yours to read however it reaches you. The order was not arranged to make a point. It was found that way.</p>
+<p><a href="/gramophone/">Open the illustrated Gramophone reading room</a></p>
 <h3>Feel</h3>
 <pre>The record starts with a crackle - rain on a bookstore step, vinyl, fireplace. All three at once. Warm texture before music.
 
@@ -1884,7 +1885,7 @@ document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const p=docum
 const out=$("termOut"), termPanel=$("term");
 terminalHot.onclick=()=>{document.documentElement.style.transition="opacity .35s";document.documentElement.style.opacity="0";setTimeout(()=>{location.href="/terminal/?from=room"},340)};
 const __oldTerminal=()=>{openP("term");cmd.focus();if(!out.dataset.welcomed){out.dataset.welcomed="1";out.innerHTML='<span class="blink">_</span>';setTimeout(()=>{out.textContent="WELCOME.\nYOU MAY BREATHE HERE.\n"},900)}};
-gramHot.onclick=()=>openP("music");
+gramHot.onclick=()=>{location.href="/gramophone/"};
 corridorHot.onclick=()=>toast("Doorways within doorways. It has no far wall.");
 mirrorHot.onclick=goldHot.onclick=()=>toast("It reflects nothing on its own.");
 outsideHot.onclick=()=>openP("outside");
