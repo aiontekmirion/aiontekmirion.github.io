@@ -100,6 +100,14 @@ body>img{position:relative;z-index:1}
 <style id="clean">.text:focus,.text:focus-visible{outline:none}</style>
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
 <script>document.documentElement.classList.add("nopx7")</script>
+<style id="soft-pages">
+/* the books float in the night: no frames, the page's edges melt into the dark */
+.cover{background:none!important;box-shadow:none!important;padding:3.2rem 1.5rem 2.4rem!important}
+.leaf::before,.leaf::after{display:none!important}
+.leaf{max-width:38rem!important;padding:6rem 3.6rem 5rem!important;box-shadow:none!important;border-radius:0!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 5.5rem,#000 calc(100% - 5.5rem),transparent);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 5.5rem,#000 calc(100% - 5.5rem),transparent);mask-composite:intersect}
+</style>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
@@ -1228,5 +1236,15 @@ document.addEventListener("selectionchange",function(){var s=getSelection();if(s
 <script>(function(){var s=document.createElement("div");s.id="sky";s.setAttribute("aria-hidden","true");document.body.insertBefore(s,document.body.firstChild);
 var f=document.createDocumentFragment();for(var i=0;i<90;i++){var e=document.createElement("span"),z=Math.random()*1.5+.5;
 e.style.cssText="left:"+Math.random()*100+"%;top:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;opacity:"+(Math.random()*.7+.15)+";animation-duration:"+(Math.random()*4+3.5)+"s;animation-delay:"+(Math.random()*8)+"s;box-shadow:"+(z>1.2?"0 0 6px rgba(255,255,255,.9),0 0 12px rgba(200,220,255,.45)":"0 0 4px rgba(255,255,255,.8)");f.appendChild(e)}s.appendChild(f)})();</script>
+<script>(function(){
+/* having read both keys, the way into the Room floods with gold */
+var calm=matchMedia("(prefers-reduced-motion: reduce)").matches,v=null;
+new MutationObserver(function(){if(!v&&document.body.classList.contains("open")&&!calm){v=document.createElement("video");v.src="/images/door/gold-wash.mp4";v.muted=true;v.playsInline=true;v.setAttribute("playsinline","");v.preload="auto";v.setAttribute("aria-hidden","true");
+  v.style.cssText="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:2147483646;background:#000;opacity:0;pointer-events:none;transition:opacity .25s ease";document.body.appendChild(v)}}).observe(document.body,{attributes:true,attributeFilter:["class"]});
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("p.next a");
+  if(!a||!v||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();var h=a.href,gone=false;
+  function go(){if(gone)return;gone=true;try{sessionStorage.setItem("fdJust","1")}catch(x){}location.href=h}
+  v.addEventListener("ended",go,{once:true});setTimeout(go,2800);var p=v.play();v.style.opacity="1";if(p&&p.catch)p.catch(go)});
+})();</script>
 </body>
 </html>
