@@ -345,10 +345,11 @@ document.addEventListener("click",function(e){
   if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
     if(a.matches(".heart")){e.preventDefault();var r=a.href;window.crossToRoom?window.crossToRoom(r):(location.href=r);return}
     /* the doorways: a key, the Spine, Liora's room, the Room. The key lifts, then the page floods with gold and the book opens onto it */
+    /* a key: it lifts, the table fades, the book opens. Gold is kept for one doorway only: into the Room */
     if(a.matches(".key")){e.preventDefault();var h=a.href;a.classList.add("picked");document.documentElement.classList.add("picking");
-      setTimeout(function(){window.crossTo?window.crossTo(h):(location.href=h)},280);return}
+      setTimeout(function(){document.documentElement.classList.add("leaving")},380);setTimeout(function(){location.href=h},700);return}
     var d=new URL(a.href,location.href);
-    if(d.host===location.host&&/^\/(corridor\.html|liora\/|TheSpine\/(index\.html)?$)/.test(d.pathname)&&window.crossTo){e.preventDefault();window.crossTo(d.href);return}
+    if(d.host===location.host&&/^\/corridor\.html$/.test(d.pathname)&&!d.hash&&window.crossTo){e.preventDefault();window.crossTo(d.href);return}
   }
   var u=new URL(a.href,location.href);if(u.host!==location.host||u.hash&&u.pathname===location.pathname)return;
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
