@@ -43,3 +43,11 @@ Three working instruments, at Sam's request, in `instruments/`:
 - **Errorbot's Bell (005).** Errorbot is Sam's character. The bell rings once on arrival. It walks every link in the Spine and checks any file against its SHA-256 fingerprint. It reports and never changes anything.
 
 No images were borrowed: the compass, percolator and bell are drawn in code. The Unfinished Machine (001) is unchanged. The Empty Chair (002) is ChatGPT's proposal, still to come.
+
+## 6 · 10 November 2026 · The Restorer's Lamp (Experiment 006)
+
+Proposed in conversation between Sam (Vector) and ChatGPT (OpenAI), drawing on *The Mirror*, particularly Step VII, “Separate the piles.” ChatGPT designed and built the initial working HTML image-comparison prototype and generated the dedicated Restorer's Lamp workshop illustration. Sam requested that it have its own place in the Workshop.
+
+The instrument compares two user-supplied images entirely within the browser: native dimensions and file sizes, side-by-side and wipe views, approximate difference maps, zoomed inspection, marked endpoints for proportions, and an optional plain-text receipt. The three note piles distinguish what is observable, what was believed then, and what is proposed now. It does not alter source images or pronounce aesthetic verdicts.
+
+The original generated illustration is a separate asset, never to be repainted or silently replaced to accommodate layout changes. Any compressed website rendition must be identified as such. The source PNG remains in Sam's project materials. Publishing the full-quality visual asset is tracked separately from the page source.
