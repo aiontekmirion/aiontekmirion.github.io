@@ -203,6 +203,20 @@ details.leave>summary{cursor:pointer;color:#f4d9aa;padding:8px 0}
 <script>try{if(sessionStorage.getItem("washIn")){sessionStorage.removeItem("washIn");sessionStorage.setItem("px7seen","1");var h=document.documentElement;h.classList.add("washin","nopx7");setTimeout(function(){h.classList.remove("washin")},1300)}}catch(e){}</script>
 <script src="/wash.js" defer></script>
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
+<style id="eyes">
+/* arriving in the Room: the dark parts softly from the middle, like eyes opening */
+html.eyes body::after{content:"";position:fixed;left:50%;top:50%;width:150vw;height:0;transform:translate(-50%,-50%);border-radius:50%;
+  box-shadow:0 0 0 300vmax #000;filter:blur(34px);z-index:2147482999;pointer-events:none;animation:eyes 2.9s cubic-bezier(.45,0,.25,1) .15s forwards}
+html.eyes body{animation:eyesfocus 2.9s ease-out .15s both}
+@keyframes eyes{0%{height:0;opacity:1}30%{height:16vh;opacity:1}40%{height:12vh;opacity:1}78%{height:150vh;width:200vw;opacity:1}100%{height:260vh;width:300vw;opacity:0}}
+@keyframes eyesfocus{0%{filter:blur(6px) brightness(.85)}60%{filter:blur(1.5px) brightness(.97)}100%{filter:none}}
+html.eyes.washin body{animation:eyesfocus 2.9s ease-out .15s both!important}
+@media (prefers-reduced-motion:reduce){html.eyes body::after{display:none}html.eyes body{animation:none}}
+</style>
+<script>(function(){var h=document.documentElement,seen=false,via=false;
+try{seen=sessionStorage.getItem("px7seen")==="1";via=sessionStorage.getItem("fdJust")==="1"||sessionStorage.getItem("washIn")==="1"}catch(e){}
+/* the Room's own glitch intro is its entrance on a first direct visit; otherwise the eyes open */
+if(seen||via){h.classList.add("eyes","nopx7");setTimeout(function(){h.classList.remove("eyes")},3300)}})();</script>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
