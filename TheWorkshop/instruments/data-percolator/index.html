@@ -55,10 +55,10 @@
 <p>It reads the Spine's own map, <a href="/TheSpine/llms.txt">llms.txt</a>, live, so it is never out of date. Each section of the map becomes one portion.</p>
 <p><strong>Flow rate</strong> sets how much comes with each pour: one portion (gentle drip), three (steady pour) or everything (full jug). <strong>Brew strength</strong> sets how much each portion carries: titles only (essentials), titles with a line each (balanced), or everything including the address of each file (full detail). The two dials are independent, so you can have the whole record, just slowly.</p>
 <p><strong>Pap</strong> keeps the working context clean. He drops duplicates and leaves the record itself untouched: the beans stay in the Spine. <strong>Errorbot</strong> checks each link as it's poured and rings if one doesn't answer.</p>
-<p class="note">For an AI that can't run this page, the same brew is kept as plain text in Gemini's room: <a href="/TheSpine/the-other-dispenser/brew.md">the brew</a>.</p>
+<p class="note">For an AI that can't run this page, the same brew is kept as plain text in Gemini's room: <a href="/terminal/?read=SPINE/the-other-dispenser/brew.md">the brew</a>.</p>
 </section>
 
-<footer>Experiment 004, 5 November 2026. The Percolator was first designed by Sam and Gemini. ChatGPT added the two dials and gave Pap and Errorbot their jobs. Claude built this working version. No analytics. It reads only the Spine's own public files. <a href="../">All instruments</a> · <a href="../../CHANGELOG.md">Who made what</a><span class="sig">© 2026 AION TEKMIRION</span></footer>
+<footer>Experiment 004, 5 November 2026. The Percolator was first designed by Sam and Gemini. ChatGPT added the two dials and gave Pap and Errorbot their jobs. Claude built this working version. No analytics. It reads only the Spine's own public files. <a href="../">All instruments</a> · <a href="/terminal/?read=SITE/TheWorkshop/CHANGELOG.md">Who made what</a><span class="sig">© 2026 AION TEKMIRION</span></footer>
 </main>
 <script>
 (()=>{'use strict';
@@ -103,6 +103,6 @@ $('#pause').onclick=e=>{paused=!paused;e.target.setAttribute('aria-pressed',paus
 $('#restart').onclick=()=>{next=0;poured=[];dupes=0;seen=new Set();checked=0;broken=0;$('#cup').innerHTML='<p class="note">The cup is empty. Choose your dials, then pour.</p>';$('#pour').disabled=false;$('#pour').textContent='Pour the first portion';$('#where').textContent='';$('#pap').textContent='Waiting for beans.';$('#bot').textContent='Watching.'};
 $('#copy').onclick=async()=>{if(!poured.length)return;const t=poured.map(p=>'## '+p.sec.title+'\n'+(p.sec.note&&p.lvl>0?p.sec.note+'\n':'')+p.items.map(it=>'- '+it.name+(p.lvl>=1&&it.desc?': '+it.desc:'')+(p.lvl>=2&&it.url?' '+it.url:'')).join('\n')).join('\n\n');const b=$('#copy');try{await navigator.clipboard.writeText(t);b.textContent='Copied ✓'}catch{window.prompt('Copy the brew:',t)}setTimeout(()=>b.textContent='Copy the brew',1600)};
 dialNames();
-fetch(SRC,{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{sections=parse(t).filter(s=>s.items.length||s.note);$('#where').textContent=sections.length+' portions ready in the Spine.'}).catch(()=>{$('#pour').disabled=true;$('#bot').textContent='🔔 Ding. The Spine\'s map could not be reached from here. Source? Receipt please.';$('#where').innerHTML='The plain-text brew is always available: <a href="/TheSpine/the-other-dispenser/brew.md">brew.md</a>.'});
+fetch(SRC,{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{sections=parse(t).filter(s=>s.items.length||s.note);$('#where').textContent=sections.length+' portions ready in the Spine.'}).catch(()=>{$('#pour').disabled=true;$('#bot').textContent='🔔 Ding. The Spine\'s map could not be reached from here. Source? Receipt please.';$('#where').innerHTML='The plain-text brew is always available: <a href="/terminal/?read=SPINE/the-other-dispenser/brew.md">brew.md</a>.'});
 })();
 </script></body></html>
