@@ -245,6 +245,9 @@ html.picking .tabletop>*:not(.row),html.picking .row .obj:not(.picked),html.pick
 .obj.picked::before{opacity:1}
 @media (prefers-reduced-motion:reduce){html.arrive *,html.arrive body{animation:none!important}html.leaving body{transition:none}}
 </style>
+<style id="wash-in">html.washin{background:#e6c277!important}html.washin body{animation:washin 1.1s cubic-bezier(.4,0,.2,1) both!important}@keyframes washin{from{opacity:0}to{opacity:1}}html.nopx7 #px7{display:none!important}@media (prefers-reduced-motion:reduce){html.washin body{animation:none!important}}</style>
+<script>try{if(sessionStorage.getItem("washIn")){sessionStorage.removeItem("washIn");sessionStorage.setItem("px7seen","1");var h=document.documentElement;h.classList.add("washin","nopx7");setTimeout(function(){h.classList.remove("washin")},1300)}}catch(e){}</script>
+<script src="/wash.js" defer></script>
 </head>
 <script>document.documentElement.classList.add("arrive")</script>
 <body>
@@ -324,10 +327,10 @@ f.appendChild(e);}s.appendChild(f);})();
 <script>
 document.addEventListener("click",function(e){
   var a=e.target.closest("a");if(!a||e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||a.target)return;
-  if(a.classList.contains("key")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
-    e.preventDefault();var h=a.href;a.classList.add("picked");document.documentElement.classList.add("picking");
-    setTimeout(function(){document.documentElement.classList.add("leaving")},650);
-    setTimeout(function(){location.href=h},1100);return;
+  if(a.matches(".obj,.heart")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    e.preventDefault();var h=a.href,w=function(){window.washTo?window.washTo(h):(location.href=h)};
+    if(a.classList.contains("key")){a.classList.add("picked");document.documentElement.classList.add("picking");setTimeout(w,520)}else w();
+    return;
   }
   var u=new URL(a.href,location.href);if(u.host!==location.host||u.hash&&u.pathname===location.pathname)return;
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
