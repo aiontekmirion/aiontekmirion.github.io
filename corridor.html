@@ -202,10 +202,10 @@ details.leave>summary{cursor:pointer;color:#f4d9aa;padding:8px 0}
 <style id="wash-in">html.washin{background:#000!important}html.washin body{animation:washin 1.1s cubic-bezier(.4,0,.2,1) both!important}@keyframes washin{from{opacity:0}to{opacity:1}}html.nopx7 #px7{display:none!important}@media (prefers-reduced-motion:reduce){html.washin body{animation:none!important}}</style>
 <script>try{if(sessionStorage.getItem("washIn")){sessionStorage.removeItem("washIn");sessionStorage.setItem("px7seen","1");var h=document.documentElement;h.classList.add("washin","nopx7");setTimeout(function(){h.classList.remove("washin")},1300)}}catch(e){}</script>
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
-<style id="arrive-room">html.arrive-room body{animation:roomfade 1.4s ease-out both}@keyframes roomfade{from{opacity:0}to{opacity:1}}html.arrive-room.washin body{animation:roomfade 1.4s ease-out both!important}@media (prefers-reduced-motion:reduce){html.arrive-room body{animation:none!important}}</style>
+<style id="arrive-room">html.arrive-room body{animation:roomfade .5s ease-out both}@keyframes roomfade{from{opacity:0}to{opacity:1}}html.arrive-room.washin body{animation:roomfade .5s ease-out both!important}@media (prefers-reduced-motion:reduce){html.arrive-room body{animation:none!important}}</style>
 <script>(function(){var h=document.documentElement,seen=false,via=false;
 try{seen=sessionStorage.getItem("px7seen")==="1";via=sessionStorage.getItem("fdJust")==="1"||sessionStorage.getItem("washIn")==="1"}catch(e){}
-if(seen||via){h.classList.add("arrive-room","nopx7");setTimeout(function(){h.classList.remove("arrive-room")},1600)}})();</script>
+if(seen||via){h.classList.add("arrive-room","nopx7");setTimeout(function(){h.classList.remove("arrive-room")},700)}})();</script>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
