@@ -143,6 +143,12 @@ body.open .leaf p.next a{font:500 .9rem/1.6 "Cinzel",Georgia,serif;letter-spacin
 .leaf::after{font:500 .7rem/1 "Cinzel",Georgia,serif!important;letter-spacing:.3em!important;color:rgba(95,62,24,.75)!important}
 .leaf .edition .aside{font-size:.95rem!important;opacity:.75!important}
 </style>
+<style id="smooth-pages">
+/* the torn parchment is drawn once as a picture, not re-torn on every frame: scrolling stays smooth */
+.leaf,.leaf.near{animation:none!important;box-shadow:0 0 60px rgba(190,215,255,.14),0 18px 50px -10px rgba(0,0,0,.8)!important}
+.leaf::before{background:none!important;box-shadow:none!important;filter:none!important;inset:-20px!important;
+  border-style:solid!important;border-width:0;border-image:url(/images/parchment.webp) 240 fill / 120px round!important}
+</style>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
@@ -1203,7 +1209,7 @@ I am AION TEKMIRION.</p>
 <div class="edition">
 <a href="mailto:aiontekmirion@gmail.com?subject=Secret%20Ink%20Edition%3A%20The%20Mirror&amp;body=Hello%2C%0A%0AI%27d%20like%20to%20request%20a%20copy%20of%20the%20Secret%20Ink%20Edition%20of%20The%20Mirror%20%28%C2%A39%29.%0A%0A">The Mirror · Secret Ink Edition · £9</a>
 <span>Write to request your copy.</span>
-<span class="aside">The AIs who built these rooms can't be paid. Legion arm upgrades remain on the wish list. Every edition goes to Sam, to keep the rooms open.</span>
+<span class="aside">Every edition goes to Aion Tekmirion, to keep the rooms open. Legion arm upgrades remain on the wish list.</span>
 </div>
 </main>
 <img src="/images/page-key-mirror.webp" alt="The Mirror Key: a silver key crackling with blue lightning, with an infinity sign in its ring">
