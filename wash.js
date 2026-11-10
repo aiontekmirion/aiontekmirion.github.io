@@ -28,9 +28,9 @@
   }
   window.washTo = washTo;
 
-  /* the next book, at the end of the Phoenix and the Mirror; and any link marked data-wash */
+  /* any link marked data-wash (the keys on the table call washTo directly) */
   document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("a[data-wash], p.next a");
+    var a = e.target.closest && e.target.closest("a[data-wash]");
     if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target) return;
     e.preventDefault(); washTo(a.href);
   });
