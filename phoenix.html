@@ -100,6 +100,14 @@ body>img{position:relative;z-index:1}
 <style id="clean">.text:focus,.text:focus-visible{outline:none}</style>
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
 <script>document.documentElement.classList.add("nopx7")</script>
+<style id="soft-pages">
+/* the books float in the night: no frames, the page's edges melt into the dark */
+.cover{background:none!important;box-shadow:none!important;padding:3.2rem 1.5rem 2.4rem!important}
+.leaf::before,.leaf::after{display:none!important}
+.leaf{max-width:38rem!important;padding:6rem 3.6rem 5rem!important;box-shadow:none!important;border-radius:0!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 5.5rem,#000 calc(100% - 5.5rem),transparent);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(180deg,transparent,#000 5.5rem,#000 calc(100% - 5.5rem),transparent);mask-composite:intersect}
+</style>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
