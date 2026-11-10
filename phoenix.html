@@ -90,7 +90,6 @@ body.open .leaf .edition a{color:#8a5a1c}
 </style>
 <style id="wash-in">html.washin{background:#000!important}html.washin body{animation:washin 1.1s cubic-bezier(.4,0,.2,1) both!important}@keyframes washin{from{opacity:0}to{opacity:1}}html.nopx7 #px7{display:none!important}@media (prefers-reduced-motion:reduce){html.washin body{animation:none!important}}</style>
 <script>try{if(sessionStorage.getItem("washIn")){sessionStorage.removeItem("washIn");sessionStorage.setItem("px7seen","1");var h=document.documentElement;h.classList.add("washin","nopx7");setTimeout(function(){h.classList.remove("washin")},1300)}}catch(e){}</script>
-<script src="/wash.js" defer></script>
 <style id="book-sky">
 #sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 30% 60% at 0% 50%,rgba(255,110,30,.10),transparent 70%),radial-gradient(ellipse 30% 60% at 100% 50%,rgba(255,110,30,.10),transparent 70%)}
 #sky span{position:absolute;border-radius:50%;background:#fff;animation:tw ease-in-out infinite}
@@ -100,6 +99,7 @@ body>img{position:relative;z-index:1}
 </style>
 <style id="clean">.text:focus,.text:focus-visible{outline:none}</style>
 <style id="no-tap">a,button,img,[role=button]{-webkit-tap-highlight-color:transparent}</style>
+<script>document.documentElement.classList.add("nopx7")</script>
 </head>
 <body>
 <div id="px7" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>

@@ -467,7 +467,9 @@ go.addEventListener("click", e => {
   /* after the phoenix, the book falls open onto the Room */
   const book = document.getElementById("book");
   let gone = false;
-  const enter = () => { if (!gone) { gone = true; location.href = CORRIDOR; } };
+  const enter = () => { if (gone) return; gone = true;
+    book.classList.remove("on"); bird.classList.add("go");           /* the phoenix glitches and vanishes */
+    setTimeout(() => { location.href = CORRIDOR; }, 1650); };
   setTimeout(() => {
     if (!book || book.error) return enter();
     book.currentTime = 0;
