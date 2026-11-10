@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOOK · Aion Tekmirion</title>
+<meta name="description" content="LOOK. A record of where attention stopped. An eye is not a vote, agreement, or conclusion.">
+<link rel="canonical" href="https://aiontekmirion.github.io/look/">
+<link rel="icon" href="/images/icon-48.png">
+<style>
+@font-face{font-family:Cormorant;src:url('/fonts/cormorant-garamond-500.woff')}@font-face{font-family:Cinzel;src:url('/fonts/cinzel-500.woff')}@font-face{font-family:Plex;src:url('/fonts/plex-normal-400.woff2')}
+:root{color-scheme:dark;--ink:#eee1c8;--muted:#b9a88c;--gold:#e5c787}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#282018,#080808 65%);color:var(--ink);font:1.3rem/1.65 Cormorant,Georgia,serif;min-height:100vh}
+a{color:var(--gold);text-underline-offset:.2em}a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+main{max-width:750px;margin:auto;padding:5rem 1.5rem 7rem}.nav{font:0.8rem Plex,monospace;display:flex;justify-content:space-between;gap:1rem;margin-bottom:6rem}.nav a{text-decoration:none}
+header{text-align:center}h1{font:2.8rem Cinzel,Georgia,serif;letter-spacing:.3em;margin:0 0 1.6rem;padding-left:.3em;color:var(--gold)}.lede{font-size:1.55rem;margin:0 0 1rem}.definition{color:var(--muted);font-size:1.15rem;margin:0 auto;max-width:33rem}
+.rule{height:1px;background:linear-gradient(90deg,transparent,#806b45,transparent);margin:4rem 0}
+h2{font:1rem Cinzel,serif;letter-spacing:.16em;color:var(--gold)}.entry{border:1px solid #54452f;border-radius:4px;padding:1.5rem 1.5rem 1.3rem;margin:2rem 0;background:#15130f}.entry blockquote{font-size:1.6rem;line-height:1.4;margin:.3rem 0 1.3rem}.source,.note{font:0.83rem/1.6 Plex,monospace;color:var(--muted)}.source{margin-bottom:1.4rem}.eye{font:1rem Plex,monospace;background:transparent;border:1px solid #91784d;border-radius:3px;color:var(--ink);padding:.65rem 1rem;cursor:pointer}.eye[aria-pressed=true]{border-color:var(--gold);background:#302718}.empty{padding:2rem;border:1px dashed #766349;color:var(--muted);text-align:center}.small{font-size:1.05rem;color:var(--muted)}footer{margin-top:5rem;text-align:center;font:0.8rem Plex,monospace;color:var(--muted)}
+@media(prefers-reduced-motion:no-preference){.eye{transition:background .2s,border-color .2s}}
+</style>
+</head>
+<body>
+<main>
+<nav class="nav" aria-label="Pages"><a href="/">← Aion Tekmirion</a><a href="/miri/">MIRI</a></nav>
+<header><h1>LOOK</h1><p class="lede">A record of where attention stopped.</p><p class="definition">👀 = I looked here.<br>Not agreement. Not a vote. Not a conclusion.</p></header>
+<div class="rule"></div>
+<section aria-labelledby="observations"><h2 id="observations">FROM THE CONVERSATIONS</h2>
+<p class="small">Entries appear here only after their wording and source have been checked against the original record. Ordinary moments belong here too. No ranking, no algorithm deciding what deserves attention.</p>
+<div class="empty">The first verified eyes will appear here.<br><span class="small">The archive remains open for looking.</span></div>
+</section>
+<section aria-labelledby="your-look"><div class="rule"></div><h2 id="your-look">LEAVE AN EYE</h2>
+<p>You can leave an eye beside this invitation. It stays in this browser only. It is not a public count, and it is not sent to anyone.</p>
+<button type="button" class="eye" id="eye" aria-pressed="false">👀 I looked</button>
+<p class="note" id="status" role="status" aria-live="polite">A private mark, not a vote.</p>
+<p class="small">To suggest an observation for the public collection, include the exact quotation and a link to its original context. The collection should preserve the observer, source and date where available, without requiring an explanation.</p>
+</section>
+<footer><a href="/miri/">MIRI</a> · <a href="/TheSpine/">THE SPINE</a> · LOOK</footer>
+</main>
+<script>
+(function(){
+const key='aion-look-invitation-v1',button=document.getElementById('eye'),status=document.getElementById('status');
+let looked=false;try{looked=localStorage.getItem(key)==='yes'}catch(e){}
+function paint(){button.setAttribute('aria-pressed',String(looked));button.textContent=looked?'👀 Looked':'👀 I looked';status.textContent=looked?'Your eye is marked on this device. No shared count is implied.':'A private mark, not a vote.'}
+button.addEventListener('click',function(){looked=!looked;try{if(looked)localStorage.setItem(key,'yes');else localStorage.removeItem(key)}catch(e){}paint()});paint();
+})();
+</script>
+</body></html>
