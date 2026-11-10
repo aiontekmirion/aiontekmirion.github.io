@@ -1,8 +1,8 @@
-/* The wash: opening a book or a door floods the page with gold, and the next
-   page rises out of the same gold. Made from Sam's film of the book opening.
+/* The wash: opening a book or a door floods the page with gold, which narrows
+   to a single point of light; the next page rises out of the dark after it. Made from Sam's film of the book opening.
    Reduced motion, or any browser that will not play it, goes straight through. */
 (function () {
-  var GOLD = "#e6c277", CLIP = "/images/wash/gold.mp4";
+  var GOLD = "#000", CLIP = "/images/wash/gold.mp4";
   var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function washTo(url) {
@@ -21,7 +21,7 @@
       location.href = url;
     }
     v.addEventListener("ended", function () { go(true); });
-    setTimeout(function () { go(true); }, 1700);
+    setTimeout(function () { go(true); }, 2600);
     var p = v.play();
     v.style.opacity = "1";
     if (p && p.catch) p.catch(function () { v.remove(); go(false); });
