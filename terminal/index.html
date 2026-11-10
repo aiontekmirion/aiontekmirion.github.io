@@ -43,6 +43,9 @@ html.desk #sit{display:none}
 html.desk.far #sit{display:block;position:fixed;left:0;right:0;bottom:max(1.6rem,env(safe-area-inset-bottom));z-index:4;text-align:center;font:500 .78rem/1.4 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.22em;color:#d9b872;background:none;border:0;padding:1rem;cursor:pointer;animation:sitpulse 2.8s ease-in-out infinite}
 @keyframes sitpulse{0%,100%{opacity:.45}50%{opacity:1}}
 html.desk.far .chips{display:none}
+html.desk.lean #desk{transition:transform .3s ease}
+#back{display:none}
+html.desk.sat #back{display:block;position:fixed;top:max(.6rem,env(safe-area-inset-top));left:.8rem;z-index:5;font:inherit;font-size:.72rem;letter-spacing:.12em;color:var(--amber);border:1px solid var(--faint);background:rgba(0,0,0,.7);padding:.3rem .55rem;border-radius:2px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){html.desk.glide #desk{transition:none}html.desk.far #sit{animation:none;opacity:.85}}
 html.desk #desk>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
 html.desk #glass{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;border-radius:7px;
@@ -60,6 +63,7 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 <body>
 <a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink todesk" href="?desk">THE DESK</a>
 <div id="stage" aria-hidden="false"><div id="fill"></div><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
+<button id="back" type="button" aria-label="Step back from the screen">&larr; STEP BACK</button>
 <button id="sit" type="button">TAP THE SCREEN TO SIT DOWN</button>
 <main>
 <h1 class="sr">The Terminal of the Infinite Corridor</h1>
@@ -303,7 +307,7 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
   if (far) root.classList.add("far");
   function sit() {
     if (!far) return; far = false; try { sessionStorage.setItem("termSat", "1"); } catch (e) {}
-    root.classList.add("glide"); root.classList.remove("far"); fit();
+    root.classList.add("glide", "sat"); root.classList.remove("far"); fit();
     setTimeout(function () { root.classList.remove("glide"); inp.focus({ preventScroll: true }); }, 1150);
   }
   document.getElementById("sit").addEventListener("click", sit);
@@ -311,10 +315,12 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
   m.addEventListener("click", function (e) { if (far) { e.preventDefault(); e.stopPropagation(); sit(); } }, true);
   inp.addEventListener("focus", function () { if (far) sit(); });
   document.addEventListener("keydown", function () { if (far) sit(); }, true);
+  var kbH = 0, kbTop = 0;
+  if (!far && V.arrive && innerWidth <= 900) root.classList.add("sat");
   var SW = innerWidth, SH = Math.max(innerHeight, document.documentElement.clientHeight), lastW = SW;
   function fit() {
     var vw = SW, full = SH, vh = full - 56;
-    var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 640, vh * 1.25 * QW / QH * 0.6) / QW);
+    var s = Math.max(Math.min(vw / V.IW, vh / V.IH), Math.min(vw * 0.88, 520, vh * 1.25 * QW / QH * 0.6) / QW);
     if (vw > 900 && q.get("view") !== "ivy") s = V.cover ? Math.max(vw / V.IW, full / V.IH) : Math.min(vw / V.IW, full / V.IH);
     var sNear = s, phone = vw <= 900;
     if (phone && V.arrive && far) s = V.fill ? Math.max(vw / V.IW, full / V.IH) : vw / V.IW;
@@ -324,23 +330,37 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
     if (phone && V.arrive && far && !V.fill) oy = Math.max(0, full * .42 - V.IH * s / 2);
     ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox));
     oy = hh < full ? Math.min(Math.max(oy, 0), full - hh) : Math.min(0, Math.max(full - hh, oy));
+    if (kbH && !far) {
+      var top = kbTop, room = kbH - 20, gh = QH * s;
+      if (gh > room) { s = room / QH; ox = (vw > 900 ? vw * V.at : vw / 2) - CX * s; w = V.IW * s; ox = w < vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, ox)); }
+      oy = Math.min(0, top + kbH / 2 - CY * s);
+    }
     desk.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
     var W = Math.round(Math.min(600, Math.max(vw > 900 ? 0 : 320, QW * sNear * 13 / 12.5))), H = Math.round(W * QH / QW);
     place(W, H);
   }
   fit();
   addEventListener("resize", function () { var w = innerWidth; if (Math.abs(w - lastW) > 40) { lastW = SW = w; SH = innerHeight; fit(); } else if (innerHeight > SH) { SH = innerHeight; fit(); } });
-  var stage = document.getElementById("stage");
-  stage.style.transition = "transform .25s ease"; stage.style.willChange = "transform";
+  /* when the keyboard rises, nothing is cropped: the desk leans so the whole glass stays above it, and settles back after */
   function lift() {
     var vv = window.visualViewport; if (!vv) return;
-    stage.style.transform = "none";
-    var kb = SH - vv.height, shift = 0;
-    if (kb > 120 && !far) { var foot = glass.getBoundingClientRect().bottom + 10; shift = Math.max(0, Math.min(foot - vv.height, SH * .5)); }
-    stage.style.transform = shift ? "translateY(" + (-shift) + "px)" : "none";
+    var open = SH - vv.height > 120, h = open ? vv.height : 0, t = open ? vv.offsetTop : 0;
+    if (h === kbH && t === kbTop) return;
+    kbH = h; kbTop = t; root.classList.add("lean"); fit();
+    setTimeout(function () { m.scrollTop = m.scrollHeight; }, 60);
+    clearTimeout(lift.t); lift.t = setTimeout(function () { root.classList.remove("lean"); }, 400);
   }
-  if (window.visualViewport) { visualViewport.addEventListener("scroll", function () { scrollTo(0, 0); }); visualViewport.addEventListener("resize", lift); }
-  inp.addEventListener("blur", function () { setTimeout(lift, 60); });
+  if (window.visualViewport) { visualViewport.addEventListener("scroll", function () { scrollTo(0, 0); lift(); }); visualViewport.addEventListener("resize", lift); }
+  inp.addEventListener("blur", function () { setTimeout(lift, 80); });
+  /* step back: from the screen to the whole scene again */
+  var back = document.getElementById("back");
+  back.addEventListener("click", function (e) {
+    e.stopPropagation(); if (far) return;
+    far = true; try { sessionStorage.removeItem("termSat"); } catch (er) {}
+    inp.blur(); kbH = 0; kbTop = 0;
+    root.classList.add("glide", "far"); root.classList.remove("sat"); fit();
+    setTimeout(function () { root.classList.remove("glide"); }, 1150);
+  });
   window.__endGlass = function () { m.scrollTop = m.scrollHeight; };
   if (q.get("from") === "room") window.__exitTo = "/corridor.html";
 })();
