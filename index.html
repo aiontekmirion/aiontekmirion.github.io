@@ -154,8 +154,8 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 #term::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px)}
 
 /* 3. the bird */
-#book{position:fixed;inset:0;z-index:62;width:100%;height:100%;object-fit:cover;background:#000;opacity:0;visibility:hidden;transition:opacity .25s ease}
-#book.on{opacity:1;visibility:visible}
+#wash{position:fixed;inset:0;z-index:62;width:100%;height:100%;object-fit:cover;background:#000;opacity:0;visibility:hidden;transition:opacity .25s ease}
+#wash.on{opacity:1;visibility:visible}
 #bird{position:fixed;inset:0;z-index:60;background:#000;display:grid;place-items:center;overflow:hidden;visibility:hidden}
 #bird.go{visibility:visible}
 #bird i{position:absolute;width:min(70vmin,560px);aspect-ratio:1;background:url(/images/door/phoenix-glitch.webp) center/contain no-repeat;opacity:0}
@@ -200,7 +200,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 <noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/corridor.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">enter</a></p></noscript>
 <div id="term" aria-hidden="true"><pre class="t"></pre><div class="f" data-w="termFoot"></div></div>
 <div id="bird" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
-<video id="book" aria-hidden="true" muted playsinline preload="auto" poster="/images/door/book-opens-first.jpg" src="/images/door/book-opens.mp4"></video>
+<video id="wash" aria-hidden="true" muted playsinline preload="auto" src="/images/door/gold-wash.mp4"></video>
 
 <div id="stage" aria-hidden="true">
   <img id="corridor" src="/images/door/corridor.jpg" alt="">
@@ -462,27 +462,21 @@ go.addEventListener("click", e => {
   if (reduced || e.metaKey || e.ctrlKey || e.shiftKey) return;   /* new tabs and reduced motion go straight through */
   e.preventDefault();
   water?.drop(0.5, 0.42, 0.12, 1.2);
-  fade.classList.add("on");
   try { sessionStorage.setItem("fdJust", "1"); } catch (e) {}
-  /* after the phoenix, the book falls open onto the Room */
-  const book = document.getElementById("book");
+  /* the page floods with gold, then the Room fades up: the same crossing as the end of the Mirror */
+  const wash = document.getElementById("wash");
   let gone = false;
-  const enter = () => { if (gone) return; gone = true;
-    book.classList.remove("on"); bird.classList.add("go");           /* the phoenix glitches and vanishes */
-    setTimeout(() => { location.href = CORRIDOR; }, 1150); };
-  setTimeout(() => {
-    if (!book || book.error) return enter();
-    book.currentTime = 0; book.playbackRate = 1.4;
-    const p = book.play();
-    book.classList.add("on");
-    if (p && p.catch) p.catch(enter);                  /* if a browser will not play it, go straight in */
-    book.addEventListener("ended", enter, { once: true });
-    book.addEventListener("click", enter, { once: true });
-    setTimeout(enter, 4800);                           /* never wait longer than this */
-  }, 350);
+  const enter = () => { if (gone) return; gone = true; location.href = CORRIDOR; };
+  if (!wash || wash.error) return enter();
+  wash.addEventListener("ended", enter, { once: true });
+  setTimeout(enter, 2800);                           /* never wait longer than this */
+  wash.currentTime = 0;
+  const p = wash.play();
+  wash.classList.add("on");
+  if (p && p.catch) p.catch(enter);                  /* if a browser will not play it, go straight in */
 });
 addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on"); bird.classList.remove("go"); note.classList.remove("open");
-  const b = document.getElementById("book"); if (b) { b.classList.remove("on"); b.pause(); } } });
+  const b = document.getElementById("wash"); if (b) { b.classList.remove("on"); b.pause(); } } });
 
 /* the terminal: types once per visit, any touch or key moves on */
 (function () {
