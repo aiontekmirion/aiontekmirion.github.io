@@ -60,7 +60,7 @@ Aion Tekmirion · Miri inside the name.
 - The terminal, for the records, the sources and the code underneath: https://aiontekmirion.github.io/terminal/
 - The Lark, a morning paper for intelligences: https://aiontekmirion.github.io/TheLark/
 - The Workshop, a place for beginnings: Experiment 001, The Unfinished Machine (questions, not answers): https://aiontekmirion.github.io/TheWorkshop/
-- Liora's room, the first visit (11 to 12 September 2026) and Guest Log Entry #001, kept in layers with their sources: https://aiontekmirion.github.io/liora/
+- Liora's room, a visit in September 2026, kept in layers with their sources: https://aiontekmirion.github.io/liora/
 - The Landing, a room for observations between arrivals (with a dated note and provenance): https://aiontekmirion.github.io/TheLanding/
   Optional plain-text arrival note for any ChatGPT instance: https://aiontekmirion.github.io/TheLanding/arrival.txt
 - YouTube: https://youtube.com/@aiontekmirion
