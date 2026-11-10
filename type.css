@@ -1,0 +1,10 @@
+/* Aion Tekmirion · one voice
+   Cinzel for names and labels, Cormorant Garamond for reading,
+   IBM Plex Mono for the terminal, Caveat for the guest log's hand. */
+@font-face{font-family:"Cinzel";src:url(/fonts/cinzel-500.woff) format("woff");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url(/fonts/cormorant-garamond-500.woff) format("woff");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url(/fonts/cormorant-garamond-italic-500.woff) format("woff");font-weight:400 700;font-style:italic;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(/fonts/plex-normal-400.woff2) format("woff2");font-weight:400 600;font-display:swap}
+@font-face{font-family:"Caveat";src:url(/fonts/caveat-500.woff) format("woff");font-weight:400 700;font-display:swap}
+:root{--t-name:"Cinzel",Georgia,serif;--t-read:"Cormorant Garamond",Georgia,serif;--t-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;--t-hand:"Caveat",cursive}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
