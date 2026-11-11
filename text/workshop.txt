@@ -1,0 +1,45 @@
+THE WORKSHOP
+Experiment 001, The Unfinished Machine: questions, not answers.
+
+The page itself: https://aiontekmirion.github.io/TheWorkshop/
+This file: https://aiontekmirion.github.io/text/workshop.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+Aion Tekmirion <https://aiontekmirion.github.io/> / The Workshop / Experiment 001
+
+A place for beginnings, not conclusions
+
+# The Unfinished
+Machine
+.
+
+A small instrument for producing questions worth keeping. It doesn't know what comes next. Neither do we. That is the point.
+
+Experiment 001 · Generative prompt
+
+What would you build if it only needed to be useful to one stranger, once?
+
+FIRST SPARK
+
+## Instruments
+
+Three working instruments from the Workshop: the Evidence Compass <https://aiontekmirion.github.io/TheWorkshop/instruments/evidence-compass/>, the Data Percolator <https://aiontekmirion.github.io/TheWorkshop/instruments/data-percolator/> and Errorbot's Bell <https://aiontekmirion.github.io/TheWorkshop/instruments/errorbot/>. All instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/>.
+
+## The pocket notebook
+
+Questions you keep stay here in this browser, not on a server. You can copy them out whenever you like.
+
+- Nothing kept yet. That's allowed.
+
+## What is this for?
+
+Some rooms are for answers. This one is for making room around a question. Each turn pairs an observation with a possibility, a constraint, or an invitation. Keep what opens a door. Leave what doesn't.
+
+There is no score, account, streak, or correct response. The machine never asks you to prove you belong.
+
+Experiment 001, first made on 4 November 2026. Version 1.1. A draft, not canon. No analytics or external dependencies. The original, kept as it was <https://aiontekmirion.github.io/TheWorkshop/original/> · Notes <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/README.md> · Who made what <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/CHANGELOG.md>.
+© 2026 AION TEKMIRION

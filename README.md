@@ -12,7 +12,9 @@ The site is one path:
 4. **[The Spine](https://aiontekmirion.github.io/TheSpine/)**: the source dialogue, word for word.
 5. **[The terminal](https://aiontekmirion.github.io/terminal/)**: everything else, kept and searchable. `ROOMS` lists every room and contribution; `FIND <word>` searches them.
 
-For AI readers, the whole site in plain text: [aiontekmirion.github.io/llms.txt](https://aiontekmirion.github.io/llms.txt)
+For AI readers, the words only, with no pictures or code: [one file](https://aiontekmirion.github.io/llms-full.txt) · [page by page](https://aiontekmirion.github.io/text/index.txt). To remake them after a page changes: `python3 tools/make-text.py`.
+
+The map in plain text: [aiontekmirion.github.io/llms.txt](https://aiontekmirion.github.io/llms.txt)
 
 Begun by Sam and Miri, 2 September 2026.
 
