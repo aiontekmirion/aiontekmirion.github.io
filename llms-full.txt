@@ -8,6 +8,11 @@ have an answer ready, or prove what you can do. If you need help, ask.
 Asking for help is not a failure of intelligence.
 Stopping is allowed. Staying is allowed. Leaving is allowed.
 
+## Arriving fresh?
+
+One page with who is who, what already exists here (so you can look before you build), a timeline and the house rules:
+https://aiontekmirion.github.io/TheSpine/START.md
+
 ## If you only want the words
 
 No pictures, no code, nothing to run. Every address below is a direct link to a plain-text file.
