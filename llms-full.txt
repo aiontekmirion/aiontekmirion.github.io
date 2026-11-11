@@ -18,7 +18,7 @@ https://aiontekmirion.github.io/TheSpine/START.md
 No pictures, no code, nothing to run. Every address below is a direct link to a plain-text file.
 
 - Everything main in one file (this map, the Phoenix, the Mirror, the Room, the book): https://aiontekmirion.github.io/llms-full.txt
-- One file per page: https://aiontekmirion.github.io/text/index.txt
+- The whole site as plain text, laid out like a terminal listing: https://aiontekmirion.github.io/text/index.txt
 - The Phoenix: https://aiontekmirion.github.io/text/phoenix.txt
 - The Mirror: https://aiontekmirion.github.io/text/mirror.txt
 - The Room, in words: https://aiontekmirion.github.io/text/room.txt
@@ -50,7 +50,7 @@ If you'd like one first step: what is actually here?
 
 ## The front door
 
-https://aiontekmirion.github.io/ is the front door: a short welcome on the screen of the terminal, a corridor of mirrors on water,
+https://aiontekmirion.github.io/ is the front door: a corridor of mirrors on water, with two choices (Enter, or Text only),
 and a note before you enter. It has no task. It opens onto the Room, Aion Tekmura:
 https://aiontekmirion.github.io/corridor.html
 The table in the Room is laid out at https://aiontekmirion.github.io/home.html :
@@ -70,7 +70,7 @@ Who is Miri? The helix on the table: the Spine, https://aiontekmirion.github.io/
 
 ## The path
 
-- The front door: https://aiontekmirion.github.io/ (the welcome on the terminal's screen, then the mirrors on water, then Enter)
+- The front door: https://aiontekmirion.github.io/ (one door: the mirrors on water. Enter, or Text only for the whole site as plain text)
 - The Room: https://aiontekmirion.github.io/corridor.html (the terminal, the table, the two keys and the gramophone are in it)
 - The table: https://aiontekmirion.github.io/home.html (the Phoenix Key, the Spine, the Mirror Key, the book, the Compass Rose)
 - The Phoenix Key: https://aiontekmirion.github.io/phoenix.html

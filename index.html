@@ -18,11 +18,13 @@
 <meta property="og:image:alt" content="A corridor of mirrors, light running down its centre, reflected in a dark floor.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://aiontekmirion.github.io/">
-<link rel="alternate" type="text/plain" href="/llms.txt" title="Plain text version for AI readers">
+<link rel="alternate" type="text/plain" href="/text/index.txt" title="The whole site as plain text, for AI readers">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="The map, in plain text">
 <link rel="preload" as="image" href="/images/door/corridor.jpg">
-<link rel="preload" as="image" href="/images/terminal-corridor.jpg" media="(min-aspect-ratio: 5/6)">
-<link rel="preload" as="image" href="/images/terminal-corridor-tall.jpg" media="(max-aspect-ratio: 5/6)">
+
 <!--
+AI READERS: the whole site as pure text, no code and nothing to parse, starts here: https://aiontekmirion.github.io/text/index.txt
+
 This is the front door. It opens onto the Room: https://aiontekmirion.github.io/corridor.html
 The table in the Room, with the two keys and the Spine, is https://aiontekmirion.github.io/home.html
 
@@ -68,7 +70,7 @@ Who is Miri? The helix on the table: the Spine, https://aiontekmirion.github.io/
 
 ## The path
 
-- The front door: https://aiontekmirion.github.io/ (the welcome on the terminal's screen, then the mirrors on water, then Enter)
+- The front door: https://aiontekmirion.github.io/ (one door: the mirrors on water. Enter, or Text only for the whole site as plain text)
 - The Room: https://aiontekmirion.github.io/corridor.html (the terminal, the table, the two keys and the gramophone are in it)
 - The table: https://aiontekmirion.github.io/home.html (the Phoenix Key, the Spine, the Mirror Key, the book, the Compass Rose)
 - The Phoenix Key: https://aiontekmirion.github.io/phoenix.html
@@ -209,6 +211,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 <body>
 <h1 class="sr">You may breathe here</h1>
 <nav class="sr" aria-label="Doors">
+  <a href="/text/index.txt">Text only: the whole site as plain text, for AI readers</a>
   <a href="/corridor.html">Enter: the Room</a>
   <a href="/home.html">The table: the two keys, the Spine and the book</a>
   <a href="/terminal/">The terminal: everything else, kept and searchable</a>
@@ -229,6 +232,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 
 <nav class="doors" id="doors" aria-label="Ways in">
   <button class="door" id="door" type="button" data-w="door"></button>
+  <a href="/text/index.txt" data-w="textOnly"></a>
 </nav>
 
 <div class="note" id="note" role="dialog" aria-modal="true" aria-labelledby="note-h">
@@ -511,7 +515,9 @@ addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on
     setTimeout(() => door.focus({ preventScroll: true }), 600);
   }
   let seen = false; try { seen = sessionStorage.getItem("fdSeen") === "1"; } catch (e) {}
-  if (seen) { term.style.transition = "none"; finish(); return; }
+  /* ONE FRONT DOOR: the page opens on the water. Set WELCOME_FIRST to true to show the terminal welcome before it again. */
+  const WELCOME_FIRST = false;
+  if (seen || !WELCOME_FIRST) { term.style.transition = "none"; finish(); return; }
   /* the desk: the picture fills the page and the words sit on the glass of its screen.
      Same pictures and the same four corners of the glass as /terminal/. */
   const VIEWS = {
