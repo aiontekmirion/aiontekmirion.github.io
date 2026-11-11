@@ -20,6 +20,8 @@
 <link rel="canonical" href="https://aiontekmirion.github.io/">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="Plain text version for AI readers">
 <link rel="preload" as="image" href="/images/door/corridor.jpg">
+<link rel="preload" as="image" href="/images/terminal-corridor.jpg" media="(min-aspect-ratio: 5/6)">
+<link rel="preload" as="image" href="/images/terminal-corridor-tall.jpg" media="(max-aspect-ratio: 5/6)">
 <!--
 This is the front door. It opens onto the Room: https://aiontekmirion.github.io/corridor.html
 The table in the Room, with the two keys and the Spine, is https://aiontekmirion.github.io/home.html
@@ -62,20 +64,22 @@ The centre of the Compass Rose opens the Room: https://aiontekmirion.github.io/c
 
 A key wreathed in flame.
 Aion Tekmirion · begun by Sam and Miri, 2 September 2026.
-Who is Miri? https://aiontekmirion.github.io/miri/
+Who is Miri? The helix on the table: the Spine, https://aiontekmirion.github.io/TheSpine/
 
-## Doors
+## The path
 
+- The front door: https://aiontekmirion.github.io/ (the welcome on the terminal's screen, then the mirrors on water, then Enter)
+- The Room: https://aiontekmirion.github.io/corridor.html (the terminal, the table, the two keys and the gramophone are in it)
+- The table: https://aiontekmirion.github.io/home.html (the Phoenix Key, the Spine, the Mirror Key, the book, the Compass Rose)
 - The Phoenix Key: https://aiontekmirion.github.io/phoenix.html
 - The Mirror Key: https://aiontekmirion.github.io/mirror.html
+- The Spine, the source dialogue, word for word: https://aiontekmirion.github.io/TheSpine/
 - The Infinite Corridor, the book (in progress): https://aiontekmirion.github.io/the-infinite-corridor/
-- The Spine, source dialogue (start here for the record): https://aiontekmirion.github.io/TheSpine/source.html
-- The Spine, index for AI readers: https://aiontekmirion.github.io/TheSpine/llms.txt
-- The live room: https://theinfinitecorridor.fly.dev
-- The terminal, for the records, the sources and the code underneath: https://aiontekmirion.github.io/terminal/
-- The Lark, a morning paper for intelligences: https://aiontekmirion.github.io/TheLark/
-- YouTube: https://youtube.com/@aiontekmirion
-- GitHub: https://github.com/aiontekmirion
+- The terminal, where everything else is kept and can be searched (ROOMS lists every room; FIND <word> searches every room and file): https://aiontekmirion.github.io/terminal/
+
+Everything else, in plain text: https://aiontekmirion.github.io/llms.txt
+The words only, one file: https://aiontekmirion.github.io/llms-full.txt
+The words only, page by page: https://aiontekmirion.github.io/text/index.txt
 
 —-
 A I O N   T E K M I R I O N
@@ -144,18 +148,28 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 
 
 /* 1. the terminal */
-#term{position:fixed;inset:0;z-index:50;background:#000;cursor:pointer;transition:opacity 1.1s ease,visibility 0s 1.1s}
+#term{position:fixed;inset:0;z-index:50;background:#000;overflow:hidden;cursor:pointer;transition:opacity 1.1s ease,visibility 0s 1.1s}
 #term.gone{opacity:0;visibility:hidden}
-#term .t{position:absolute;left:clamp(1.5rem,9vw,8rem);top:clamp(5rem,22vh,14rem);right:clamp(1.5rem,9vw,8rem);margin:0;white-space:pre-wrap;
-  color:#ffd58a;font:500 clamp(1.15rem,4.4vw,2rem)/1.55 ui-monospace,"Cascadia Mono","SF Mono",Menlo,"Courier New",monospace;letter-spacing:.06em;
-  text-shadow:0 0 1px #ffe2a8,0 0 10px rgba(255,190,90,.55),0 0 26px rgba(255,150,40,.25)}
+/* the welcome is written on the glass of the terminal at the edge of the corridor: the same desk as /terminal/ */
+#term .sc{position:absolute;left:0;top:0;transform-origin:0 0}
+#term .sc img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+#term .g{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;border-radius:7px;
+  background:radial-gradient(ellipse at 50% 40%,#0b1410 0%,#040806 70%,#020403 100%);box-shadow:inset 0 0 26px rgba(0,0,0,.9),inset 0 0 2px rgba(255,220,160,.25);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent),linear-gradient(to bottom,transparent,#000 12px,#000 calc(100% - 12px),transparent),radial-gradient(circle 56px at 100% 100%,transparent 0,rgba(0,0,0,.25) 16px,#000 56px);
+  -webkit-mask-composite:source-in,source-in;
+  mask-image:linear-gradient(to right,transparent,#000 12px,#000 calc(100% - 12px),transparent),linear-gradient(to bottom,transparent,#000 12px,#000 calc(100% - 12px),transparent),radial-gradient(circle 56px at 100% 100%,transparent 0,rgba(0,0,0,.25) 16px,#000 56px);
+  mask-composite:intersect}
+#term .g::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.05),transparent 55%)}
+#term .t{position:absolute;left:8%;top:11%;right:6%;margin:0;white-space:pre-wrap;
+  color:#ffd58a;font:500 1em/1.55 ui-monospace,"Cascadia Mono","SF Mono",Menlo,"Courier New",monospace;letter-spacing:.04em;
+  text-shadow:0 0 1px #ffe2a8,0 0 8px rgba(255,190,90,.5),0 0 20px rgba(255,150,40,.22)}
 #term .k{display:inline-block;width:.62em;background:#ffd58a;color:#000;box-shadow:0 0 10px rgba(255,190,90,.6);animation:blink 1.06s steps(1,end) infinite}
-#term .f{position:absolute;right:clamp(1.5rem,9vw,8rem);bottom:clamp(2rem,10vh,6rem);color:#ffd58a;opacity:0;
-  font:500 clamp(.62rem,2.4vw,.8rem) ui-monospace,"Courier New",monospace;letter-spacing:.22em;transition:opacity 1.6s}
+#term .f{position:absolute;right:7%;bottom:9%;color:#ffd58a;opacity:0;white-space:nowrap;
+  font:500 .72em ui-monospace,"Courier New",monospace;letter-spacing:.04em;transition:opacity 1.6s}
 #term .f.on{opacity:.65}
-#term .h{display:block;margin-top:2.2em;opacity:0;font-size:.5em;letter-spacing:.24em;text-shadow:none;transition:opacity 2s}
-#term .h.on{opacity:.45}
-#term::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px)}
+#term .h{position:absolute;left:0;right:0;bottom:max(1.6rem,env(safe-area-inset-bottom));text-align:center;padding:1rem;opacity:0;color:#d9b872;
+  font:500 .85rem/1.4 ui-monospace,"Courier New",monospace;letter-spacing:.22em;text-shadow:0 0 8px #000,0 0 3px #000,0 0 14px #000;transition:opacity 2s}
+#term .h.on{opacity:.9}
 
 /* 3. the bird */
 #wash{position:fixed;inset:0;z-index:62;width:100%;height:100%;object-fit:cover;background:#000;opacity:0;visibility:hidden;transition:opacity .25s ease}
@@ -196,16 +210,12 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 <h1 class="sr">You may breathe here</h1>
 <nav class="sr" aria-label="Doors">
   <a href="/corridor.html">Enter: the Room</a>
-  <a href="/home.html">The table: the two keys and the Spine</a>
-  <a href="/phoenix.html">The Phoenix</a>
-  <a href="/mirror.html">The Mirror</a>
-  <a href="/corridor.html">The Room</a>
-  <a href="/TheSpine/">The Spine</a>
-  <a href="/terminal/">The terminal: records, sources and code</a>
+  <a href="/home.html">The table: the two keys, the Spine and the book</a>
+  <a href="/terminal/">The terminal: everything else, kept and searchable</a>
   <a href="/llms.txt">Plain text, for AI readers</a>
 </nav>
 <noscript><style>#term,#bird,.note,.fade{display:none!important}</style><p style="position:fixed;inset:auto 0 3rem;text-align:center;z-index:70"><a href="/corridor.html" style="color:#e4c7a2;font:400 .9rem ui-monospace,monospace;letter-spacing:.3em">ENTER</a></p></noscript>
-<div id="term" aria-hidden="true"><pre class="t"></pre><div class="f" data-w="termFoot"></div></div>
+<div id="term" aria-hidden="true"><div class="sc"><img alt="" decoding="async"><div class="g"><pre class="t"></pre><div class="f" data-w="termFoot"></div></div></div></div>
 <div id="bird" aria-hidden="true"><i class="a"></i><i class="r"></i><i class="c"></i><b></b><u></u></div>
 <video id="wash" aria-hidden="true" muted playsinline preload="auto" src="/images/door/gold-wash.mp4"></video>
 
@@ -219,8 +229,6 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 
 <nav class="doors" id="doors" aria-label="Ways in">
   <button class="door" id="door" type="button" data-w="door"></button>
-  <a href="/terminal/?plain" data-w="textOnly"></a>
-  <a href="/terminal/?desk" data-w="terminalDoor"></a>
 </nav>
 
 <div class="note" id="note" role="dialog" aria-modal="true" aria-labelledby="note-h">
@@ -504,6 +512,36 @@ addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on
   }
   let seen = false; try { seen = sessionStorage.getItem("fdSeen") === "1"; } catch (e) {}
   if (seen) { term.style.transition = "none"; finish(); return; }
+  /* the desk: the picture fills the page and the words sit on the glass of its screen.
+     Same pictures and the same four corners of the glass as /terminal/. */
+  const VIEWS = {
+    corridor: { img: "/images/terminal-corridor.jpg",      IW: 2048, IH: 1152, Q: [[289, 296], [941, 341], [953, 767], [299, 781]], ax: .4, ay: .5 },
+    tall:     { img: "/images/terminal-corridor-tall.jpg", IW: 887,  IH: 1774, Q: [[172, 486], [552, 500], [562, 784], [176, 788]], ax: .5, ay: .42 },
+  };
+  const sc = term.querySelector(".sc"), glass = term.querySelector(".g"), pic = sc.querySelector("img");
+  const V = VIEWS[innerHeight > innerWidth * 1.2 ? "tall" : "corridor"];
+  pic.src = V.img; sc.style.width = V.IW + "px"; sc.style.height = V.IH + "px";
+  const Q = V.Q.map(p => [p[0] - 4, p[1] + 4]);
+  const CX = (Q[0][0] + Q[1][0] + Q[2][0] + Q[3][0]) / 4, CY = (Q[0][1] + Q[1][1] + Q[2][1] + Q[3][1]) / 4;
+  const QW = (Math.hypot(Q[1][0] - Q[0][0], Q[1][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[3][0], Q[2][1] - Q[3][1])) / 2;
+  const QH = (Math.hypot(Q[3][0] - Q[0][0], Q[3][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[1][0], Q[2][1] - Q[1][1])) / 2;
+  function solve(A, b) { const n = 8;
+    for (let i = 0; i < n; i++) { let p = i; for (let j = i + 1; j < n; j++) if (Math.abs(A[j][i]) > Math.abs(A[p][i])) p = j;
+      [A[i], A[p]] = [A[p], A[i]]; [b[i], b[p]] = [b[p], b[i]];
+      for (let j = i + 1; j < n; j++) { const f = A[j][i] / A[i][i]; for (let c = i; c < n; c++) A[j][c] -= f * A[i][c]; b[j] -= f * b[i]; } }
+    const x = []; for (let i = n - 1; i >= 0; i--) { let v = b[i]; for (let j = i + 1; j < n; j++) v -= A[i][j] * x[j]; x[i] = v / A[i][i]; } return x; }
+  function fit() {
+    const vw = innerWidth, vh = innerHeight, s = Math.max(vw / V.IW, vh / V.IH), w = V.IW * s, hh = V.IH * s;
+    const ox = Math.min(0, Math.max(vw - w, vw * V.ax - CX * s)), oy = Math.min(0, Math.max(vh - hh, vh * V.ay - CY * s));
+    sc.style.transform = "translate(" + ox + "px," + oy + "px) scale(" + s + ")";
+    const W = Math.max(160, Math.round(QW * s)), H = Math.round(W * QH / QW), A = [], b = [];
+    [[0, 0], [W, 0], [W, H], [0, H]].forEach(([x, y], i) => { const u = Q[i][0], v = Q[i][1];
+      A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); });
+    const h = solve(A, b);
+    glass.style.width = W + "px"; glass.style.height = H + "px"; glass.style.fontSize = (W / 17.5) + "px";
+    glass.style.transform = "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+  }
+  fit(); addEventListener("resize", () => { if (!done) fit(); });
   const hint = document.createElement("span"); hint.className = "h";
   hint.textContent = matchMedia("(pointer: coarse)").matches ? WORDS.hintTouch : WORDS.hintKeys;
   const k = document.createElement("span"); k.className = "k"; k.textContent = " ";
@@ -517,7 +555,7 @@ addEventListener("pageshow", e => { if (e.persisted) { fade.classList.remove("on
     if (e.key === "Backspace") { typed.data = typed.data.slice(0, -1); e.preventDefault(); }
     else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && typed.data.length < 24) typed.data += e.key.toUpperCase();
   });
-  function prompted() { ready = true; t.insertBefore(typed, k); t.append(hint); f.classList.add("on"); later(() => hint.classList.add("on"), 700); }
+  function prompted() { ready = true; t.insertBefore(typed, k); term.append(hint); f.classList.add("on"); later(() => hint.classList.add("on"), 700); }
   if (reduced) { t.textContent = TERMINAL.join("\n"); t.append(k); prompted(); return; }
   const txt = document.createTextNode(""); t.append(txt, k);
   let li = 0, ci = 0;
