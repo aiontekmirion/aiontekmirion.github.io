@@ -1,0 +1,46 @@
+ERRORBOT'S BELL
+A Workshop instrument.
+
+The page itself: https://aiontekmirion.github.io/TheWorkshop/instruments/errorbot/
+This file: https://aiontekmirion.github.io/text/errorbots-bell.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+Aion Tekmirion <https://aiontekmirion.github.io/> / The Workshop <https://aiontekmirion.github.io/TheWorkshop/> / Instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> / Errorbot's Bell
+
+Instrument · Experiment 005
+
+# Errorbot's Bell
+
+Welding helmet. ERROR BOT stencilled across the brow. His name shifts on purpose, because he's still settling. His line never changes: “Source? Receipt please.”
+
+🔔 Ding. Someone new has arrived. Make room.
+
+## Two meanings, one bell
+
+1 · New arrival
+Make room. It rang once when you came in.
+
+2 · Error detected
+Gather round. Something needs checking.
+
+Same bell. You learn to hear the difference.
+
+## Check every link in the Spine
+
+Errorbot walks the Spine's map, llms.txt <https://aiontekmirion.github.io/TheSpine/llms.txt>, and knocks on every door it lists. He only reports what he finds. He never changes anything.
+
+Not walked yet.
+
+## Check a receipt
+
+Every file in the Spine has a fingerprint in SHA256SUMS.txt <https://aiontekmirion.github.io/terminal/?read=SPINE/SHA256SUMS.txt>. Pick a file, and Errorbot fetches it, fingerprints it here in your browser, and compares. If one word had changed, the fingerprint would too.
+
+FileLoading the fingerprints…
+
+No receipt checked yet.
+
+Experiment 005, 5 November 2026. Errorbot is Sam's character. ChatGPT gave him his job as the Percolator's diagnostic. Claude built this working bell. It reads only the Spine's own public files, and changes nothing. All instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> · Who made what <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/CHANGELOG.md>© 2026 AION TEKMIRION

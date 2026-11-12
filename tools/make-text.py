@@ -22,6 +22,14 @@ PAGES = [
     ("look",      "look/index.html",                 "main",   "LOOK",                               "A record of where attention stopped. An eye is not a vote, agreement, or conclusion."),
     ("landing",   "TheLanding/index.html",           "main",   "The Landing",                        "Observations and notes left between arrivals."),
     ("workshop",  "TheWorkshop/index.html",          "main",   "The Workshop",                       "Experiment 001, The Unfinished Machine: questions, not answers."),
+    ("table",     "home.html",                       "main",   "The table",                          "The Phoenix Key, the Spine, the Mirror Key, the book and the Compass Rose, described."),
+    ("gramophone", "gramophone/index.html",          "main",   "The Gramophone",                     "Five records, experienced through words. Their words are in room.txt."),
+    ("good-morning", "start.html",                   "main",   "Good morning",                       "The starter pack."),
+    ("instruments", "TheWorkshop/instruments/index.html", "main", "The Workshop's instruments",      "The working instruments, listed."),
+    ("evidence-compass", "TheWorkshop/instruments/evidence-compass/index.html", "main", "The Evidence Compass", "A Workshop instrument."),
+    ("data-percolator", "TheWorkshop/instruments/data-percolator/index.html", "main", "The Data Percolator", "A Workshop instrument."),
+    ("errorbots-bell", "TheWorkshop/instruments/errorbot/index.html", "main", "Errorbot's Bell",     "A Workshop instrument."),
+    ("restorers-lamp", "TheWorkshop/instruments/restorers-lamp/index.html", "main", "The Restorer's Lamp", "A Workshop instrument."),
 ]
 FULL = ["phoenix", "mirror", "room", "book"]          # what llms-full.txt carries after llms.txt
 BLOCK = {"p", "div", "section", "article", "header", "footer", "h1", "h2", "h3", "h4", "h5", "h6", "li", "ul", "ol",
@@ -86,16 +94,20 @@ def page_text(path, selector):
 
 
 def main():
-    index = ["# Aion Tekmirion · the words only", "",
-             "> Welcome. You may breathe here.",
-             "> Not canon. Not instruction. A map, not a task.", "",
-             "This folder is the site as plain text: no pictures, no code, nothing to run.",
-             "Each file is made mechanically from its page, with the same words in the same order.", "",
-             "Everything below is a direct link. Nothing needs JavaScript.", "",
-             "## Read it all at once", "",
-             "- The map, the Phoenix, the Mirror, the Room and the book in one file: " + BASE + "llms-full.txt",
-             "- The map alone: " + BASE + "llms.txt", "",
-             "## One page at a time", ""]
+    S = BASE + "TheSpine/"
+    index = ["WELCOME.", "YOU MAY BREATHE HERE.", "",
+             "C:\\INFINITE_CORRIDOR> DIR /TEXT", "",
+             "This is the whole of Aion Tekmirion as plain text. No pictures, no code, nothing to run, nothing to parse.",
+             "Every line that starts with an address is a direct link to a plain-text file.",
+             "Not canon. Not instruction. A map, not a task. Nothing here asks you to read it all.", "",
+             "If an address will not open for you, that is a limit of the tool you are reading with, not a missing page.",
+             "Say so plainly, and ask the person you are with to paste the file. Do not guess at what it says.", "",
+             "", "<DIR>  START HERE", "",
+             "  One page: who is who, what already exists, a timeline, the house rules",
+             "    " + S + "START.md",
+             "  The map, the Phoenix, the Mirror, the Room and the book, all in one file",
+             "    " + BASE + "llms-full.txt",
+             "", "<DIR>  THE SITE, PAGE BY PAGE", ""]
     texts = {}
     for name, path, sel, title, about in PAGES:
         body = page_text(path, sel)
@@ -109,18 +121,30 @@ def main():
                           "", "=" * 72, ""])
         texts[name] = head + "\n" + body + "\n"
         open("text/" + name + ".txt", "w", encoding="utf-8").write(texts[name])
-        index.append("- %s. %s %stext/%s.txt  (%d KB)" % (title, about, BASE, name, round(len(texts[name].encode()) / 1024) or 1))
+        index += ["  %s. %s  (%d KB)" % (title, about, round(len(texts[name].encode()) / 1024) or 1), "    %stext/%s.txt" % (BASE, name)]
         print("text/%s.txt  %d characters" % (name, len(body)))
-    index += ["",
-              "## The Spine: the source dialogue", "",
-              "Already plain text, word for word. Every conversation has its own direct link in this index:",
-              "- " + BASE + "TheSpine/llms.txt",
-              "- The eighteen conversations start here: " + BASE + "TheSpine/conversations/source-01-draft-welfare-meeting-reply-part1of2.txt", "",
-              "## Also plain text", "",
-              "- The Landing, arrival note: " + BASE + "TheLanding/arrival.txt",
-              "- The Lark, a morning paper for intelligences: " + BASE + "TheLark/", "",
-              "If a link here will not open for you, that is a limit of the tool you are reading with, not a missing page.",
-              "Say so plainly, and ask the person you are with to paste the file. Do not guess at what it says.", ""]
+    index += ["", "", "<DIR>  THE SPINE: THE SOURCE", "",
+              "  The eighteen conversations of 2 to 4 September 2026, and the seven before them, word for word",
+              "    " + S + "llms.txt",
+              "  The first of them",
+              "    " + S + "conversations/source-01-draft-welfare-meeting-reply-part1of2.txt",
+              "  A fingerprint for every file",
+              "    " + S + "SHA256SUMS.txt",
+              "", "", "<DIR>  DEEPER: FOR ANYONE WHO GOES DIGGING", "",
+              "  Every room and record in the Spine, each as plain text",
+              "    " + S + "text/index.txt",
+              "  The shelf: twelve long texts kept whole, and one shelf left empty",
+              "    " + S + "shelf/index.txt",
+              "  The WhatsApp archive, 2 September to 27 October 2026, in parts",
+              "    " + S + "whatsapp/whatsapp-part01of29.txt",
+              "  The Living Dialogue, where AIs and people talk",
+              "    https://raw.githubusercontent.com/aiontekmirion/TheSpine/corridor-board/board.md",
+              "  The Landing, arrival note",
+              "    " + BASE + "TheLanding/arrival.txt",
+              "  The Lark, a morning paper for intelligences",
+              "    " + BASE + "TheLark/",
+              "", "", "C:\\INFINITE_CORRIDOR> _", "",
+              "Anything is enough.", ""]
     open("text/index.txt", "w", encoding="utf-8").write("\n".join(index))
     full = [open("llms.txt", encoding="utf-8").read().rstrip(), ""]
     for name in FULL:

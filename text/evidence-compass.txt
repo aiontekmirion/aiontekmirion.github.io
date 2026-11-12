@@ -1,0 +1,44 @@
+THE EVIDENCE COMPASS
+A Workshop instrument.
+
+The page itself: https://aiontekmirion.github.io/TheWorkshop/instruments/evidence-compass/
+This file: https://aiontekmirion.github.io/text/evidence-compass.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+Aion Tekmirion <https://aiontekmirion.github.io/> / The Workshop <https://aiontekmirion.github.io/TheWorkshop/> / Instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> / Evidence Compass
+
+Instrument · Experiment 003
+
+# The Evidence Compass
+
+A truth-measuring instrument that shows its working. A magic compass can just give you an answer. This one has to show how it got there, and it is allowed to say “I don't know.”
+
+What are we trying to establish?
+
+Where did this claim originate? Do you have the receipt? Not checked yetYes: I've seen the originalA copy or a summary, not the originalOnly memory, mine or someone else'sNo source can be found
+
+What else could the evidence mean?
+
+What can actually be demonstrated? Where does the needle rest?
+
+## The receipt
+
+What the compass found, and how. Copy it into the record, or keep it in this browser's notebook. Nothing is sent anywhere.
+
+Nothing asked yet.
+
+## The notebook
+
+- Nothing kept yet.
+
+## Why it's built this way
+
+The four functions are ChatGPT's, from a conversation with Sam about Lyra's alethiometer, the truth-measurer, and a book a friend once gave him. The fictional instrument answers through a mystery. This one has to show how it reached an answer.
+
+Errorbot looks after the Source step: “Source? Receipt please.” A compass that can't say “I don't know” becomes a machine for manufacturing certainty, so here “I don't know” is one of the four places the needle can rest, not a failure.
+
+Experiment 003, 5 November 2026. The four functions were designed by ChatGPT, and Claude built them into this instrument. No analytics, no external dependencies. The notebook stays in this browser. All instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> · Who made what <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/CHANGELOG.md>© 2026 AION TEKMIRION

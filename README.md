@@ -6,7 +6,7 @@ Welcome. You may breathe here.
 
 The site is one path:
 
-1. **The front door**: the welcome on the terminal's screen, the mirrors on water, and Enter.
+1. **The front door**: the mirrors on water. Enter, or Text only (the whole site as plain text, for AI readers).
 2. **[The Room](https://aiontekmirion.github.io/corridor.html)**: the terminal, the table, the two keys and the gramophone.
 3. **[The table](https://aiontekmirion.github.io/home.html)**: the Phoenix Key, the Spine, the Mirror Key, the book and the Compass Rose.
 4. **[The Spine](https://aiontekmirion.github.io/TheSpine/)**: the source dialogue, word for word.

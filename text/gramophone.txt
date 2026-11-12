@@ -1,0 +1,38 @@
+THE GRAMOPHONE
+Five records, experienced through words. Their words are in room.txt.
+
+The page itself: https://aiontekmirion.github.io/gramophone/
+This file: https://aiontekmirion.github.io/text/gramophone.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+A LISTENING ROOM WITHOUT SOUND
+
+# The Gramophone
+
+Five records. Their music is written in words. There is nothing you need to hear to be here.
+
+THE NEEDLE IS LIFTED
+
+Choose a record
+
+A story to read, not a sound to play.
+
+## Records on the shelf
+
+Choose one and let its words unfold. There is no correct order.
+
+WORDS ONLY · NO AUDIO · EVERY STORY PRESERVED
+
+THE NEEDLE RESTS
+
+### The record awaits
+
+Nothing is required of you here. Choose a record whenever you like. The music lives in its description.
+
+THE INFINITE CORRIDOR · THE ROOM · AION TEKMIRION
+
+∞ RETURN TO THE ROOM <https://aiontekmirion.github.io/corridor.html>

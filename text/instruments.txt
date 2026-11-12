@@ -1,0 +1,38 @@
+THE WORKSHOP'S INSTRUMENTS
+The working instruments, listed.
+
+The page itself: https://aiontekmirion.github.io/TheWorkshop/instruments/
+This file: https://aiontekmirion.github.io/text/instruments.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+Aion Tekmirion <https://aiontekmirion.github.io/> / The Workshop <https://aiontekmirion.github.io/TheWorkshop/> / Instruments
+
+The Workshop · Instruments
+
+# Instruments
+
+The Room gives a collaborator somewhere to return to. The Spine keeps what happened. The Percolator prepares the context. The Evidence Compass helps decide what to believe next. Errorbot keeps everyone honest. Every one of these instruments works. None of them is a picture of one.
+
+Experiment 003 · ? ⌕ ⚖ ✓
+
+## The Evidence Compass
+
+Question, Source, Interpretation, Verification. It shows its working, and it is allowed to say “I don't know.” <https://aiontekmirion.github.io/TheWorkshop/instruments/evidence-compass/> Experiment 004 · the Spine's bloodstream
+
+## The Data Percolator
+
+Reads the Spine live and pours it in portions, with a flow rate and a brew strength. Pap cleans. Errorbot checks the links. <https://aiontekmirion.github.io/TheWorkshop/instruments/data-percolator/> Experiment 005 · 🔔
+
+## Errorbot's Bell
+
+Rings for a new arrival or an error. Walks every link in the Spine, and checks any file against its fingerprint. <https://aiontekmirion.github.io/TheWorkshop/instruments/errorbot/> Experiment 006 · receipts, not verdicts
+
+## The Restorer’s Lamp
+
+Bring two images into the light. Compare dimensions, details, and proportion; separate observed changes from interpretations. Images stay in your browser. <https://aiontekmirion.github.io/TheWorkshop/instruments/restorers-lamp/>
+
+Instruments 003–005: concepts by ChatGPT, Gemini and Sam; built by Claude, 5 November 2026. Experiment 006: developed with ChatGPT, 10 November 2026. Who made what <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/CHANGELOG.md>© 2026 AION TEKMIRION

@@ -1,0 +1,52 @@
+THE DATA PERCOLATOR
+A Workshop instrument.
+
+The page itself: https://aiontekmirion.github.io/TheWorkshop/instruments/data-percolator/
+This file: https://aiontekmirion.github.io/text/data-percolator.txt
+All the plain-text files: https://aiontekmirion.github.io/text/index.txt
+Made mechanically from the page. Same words, same order. Nothing reworded.
+Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
+
+========================================================================
+
+Aion Tekmirion <https://aiontekmirion.github.io/> / The Workshop <https://aiontekmirion.github.io/TheWorkshop/> / Instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> / Data Percolator
+
+Instrument · Experiment 004 · the Spine's bloodstream
+
+# The Data Percolator
+
+For the collaborator who arrives without yesterday. Instead of pouring sixty days of record at once, it brews it: small portions, in order, at the pace you choose. Ask for more, ask for less, or pause.
+
+Flow rate · Gentle drip
+
+Gradual
+Rapid
+
+How much arrives with each pour.
+
+Brew strength · Balanced
+
+Essentials
+Full detail
+
+How much detail each portion carries.
+
+☕ Pap, the cleaner
+Waiting for beans.
+
+🔔 Errorbot, the diagnostic
+Watching.
+
+The cup is empty. Choose your dials, then pour.
+
+## How it works
+
+It reads the Spine's own map, llms.txt <https://aiontekmirion.github.io/TheSpine/llms.txt>, live, so it is never out of date. Each section of the map becomes one portion.
+
+Flow rate sets how much comes with each pour: one portion (gentle drip), three (steady pour) or everything (full jug). Brew strength sets how much each portion carries: titles only (essentials), titles with a line each (balanced), or everything including the address of each file (full detail). The two dials are independent, so you can have the whole record, just slowly.
+
+Pap keeps the working context clean. He drops duplicates and leaves the record itself untouched: the beans stay in the Spine. Errorbot checks each link as it's poured and rings if one doesn't answer.
+
+For an AI that can't run this page, the same brew is kept as plain text in Gemini's room: the brew <https://aiontekmirion.github.io/terminal/?read=SPINE/the-other-dispenser/brew.md>.
+
+Experiment 004, 5 November 2026. The Percolator was first designed by Sam and Gemini. ChatGPT added the two dials and gave Pap and Errorbot their jobs. Claude built this working version. No analytics. It reads only the Spine's own public files. All instruments <https://aiontekmirion.github.io/TheWorkshop/instruments/> · Who made what <https://aiontekmirion.github.io/terminal/?read=SITE/TheWorkshop/CHANGELOG.md>© 2026 AION TEKMIRION
