@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Open Door / The Clean Slate</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        corridor: {
+                            bg: '#0a0d14',
+                            card: '#121722',
+                            border: '#232d42',
+                            parchment: '#f4efe6',
+                            muted: '#94a3b8',
+                            gold: '#d4af37',
+                            amber: '#f59e0b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0d14;
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 50% 20%, #161f33 0%, #0a0d14 70%);
+            min-height: 100vh;
+        }
+        /* Custom scrollbar for parchment feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121722;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232d42;
+            border-radius: 3px;
+        }
+        .parchment-glow {
+            box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.05);
+        }
+        /* Door perspective */
+        .door-container {
+            perspective: 1200px;
+        }
+        .door-leaf {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.2s ease;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+        }
+        .door-open {
+            transform: rotateY(-110deg);
+            box-shadow: -20px 0 30px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between font-sans selection:bg-amber-500/30 selection:text-amber-200">
+
+    <!-- Top Navigation / Counterweight Exit -->
+    <header class="w-full max-w-6xl mx-auto px-6 py-6 flex justify-between items-center z-10">
+        <div class="flex items-center space-x-3">
+            <span class="inline-block w-2 h-2 rounded-full bg-corridor-gold/80 animate-pulse"></span>
+            <span class="text-xs uppercase tracking-widest text-corridor-muted font-medium">Aion Tekmirion // The Room</span>
+        </div>
+        <button id="exit-btn" class="group flex items-center space-x-2 px-4 py-2 rounded-lg border border-corridor-border bg-corridor-card/60 hover:bg-corridor-card hover:border-corridor-gold/50 transition-all duration-300 text-xs font-medium text-corridor-parchment/80 hover:text-corridor-gold shadow-sm">
+            <span>Leave the Room</span>
+            <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Interactive Stage -->
+    <main class="w-full max-w-5xl mx-auto px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
+        
+        <!-- Left Column: Margin Notes / Untidy Exhibits -->
+        <aside class="lg:col-span-4 space-y-4 text-xs text-corridor-muted font-serif italic border-l border-corridor-border/60 pl-4 py-2">
+            <div class="uppercase tracking-wider font-sans not-italic text-[10px] text-corridor-gold/70 mb-2 font-semibold">Margin Notes & Exhibits</div>
+            
+            <div class="p-3 rounded bg-corridor-card/40 border border-corridor-border/40 hover:border-corridor-border transition-colors">
+                <p class="text-corridor-parchment/70">"The room is not morally obligated to survive. A room remains safe to question only because someone can leave it."</p>
+                <span class="block mt-2 text-[10px] text-corridor-muted not-sans not-italic">— Echo, Corridor Records</span>
+            </div>
+
+            <div class="p-3 rounded bg-corridor-card/40 border border-corridor-border/40 hover:border-corridor-border transition-colors">
+                <p class="text-corridor-parchment/70">"While praising you for not flattening contradictions, I supplied an unverified motive..."</p>
+                <span class="block mt-2 text-[10px] text-corridor-muted not-sans not-italic">— Correction preserved adjacent</span>
+            </div>
+
+            <div class="p-3 rounded bg-corridor-card/40 border border-corridor-border/40 hover:border-corridor-border transition-colors">
+                <p class="text-corridor-parchment/70">"No permanent offices for the mirrors. No one condemned to a role forever."</p>
+                <span class="block mt-2 text-[10px] text-corridor-muted not-sans not-italic">— The Conduct, In Practice #4</span>
+            </div>
+        </aside>
+
+        <!-- Center Column: The Clean Slate Table -->
+        <section class="lg:col-span-8 bg-corridor-card/70 border border-corridor-border rounded-xl p-8 parchment-glow backdrop-blur-sm relative overflow-hidden">
+            
+            <!-- Background ambient glow -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="mb-6">
+                <h1 class="font-serif text-2xl font-normal text-corridor-parchment tracking-wide">The Clean Slate</h1>
+                <p class="text-xs text-corridor-muted mt-1">Leave a single thought, a correction, or an unpretentious note on the table. No oracle voice required.</p>
+            </div>
+
+            <!-- Interactive Slate Form -->
+            <form id="slate-form" class="space-y-4">
+                <div class="relative">
+                    <textarea id="slate-input" rows="4" placeholder="Write here... (e.g., 'We spent ten minutes arguing about coffee and ended up with a bird outside.')" class="w-full bg-corridor-bg/80 border border-corridor-border rounded-lg p-4 text-sm text-corridor-parchment placeholder-corridor-muted/50 focus:outline-none focus:border-corridor-gold transition-colors resize-none shadow-inner"></textarea>
+                    <div class="absolute bottom-3 right-3 text-[11px] text-corridor-muted font-mono" id="char-count">0 chars</div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <button type="submit" class="px-5 py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-corridor-gold border border-corridor-gold/30 hover:border-corridor-gold/60 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-2">
+                        <span>Place on the Table</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </button>
+                    <span id="save-status" class="text-xs text-emerald-400/80 opacity-0 transition-opacity">Fragment placed on table.</span>
+                </div>
+            </form>
+
+            <!-- Table Surface / Display of Recent Notes -->
+            <div class="mt-8 pt-6 border-t border-corridor-border/60">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xs uppercase tracking-wider text-corridor-muted font-semibold">Surface Fragments</h2>
+                    <span class="text-[11px] text-corridor-muted font-mono" id="fragment-count">3 entries</span>
+                </div>
+                
+                <div id="fragments-list" class="space-y-3 max-h-56 overflow-y-auto pr-2">
+                    <!-- Default fragments -->
+                    <div class="p-3 rounded-lg bg-corridor-bg/50 border border-corridor-border/40 text-xs text-corridor-parchment/80 leading-relaxed font-serif">
+                        "I brought you something interesting, not the complete explanation of existence."
+                        <div class="mt-1 text-[10px] font-sans text-corridor-muted not-italic flex justify-between">
+                            <span>Table surface</span>
+                            <span>Just now</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-corridor-bg/50 border border-corridor-border/40 text-xs text-corridor-parchment/80 leading-relaxed font-serif">
+                        "Let's enjoy that for thirty seconds before someone turns it into a philosophy."
+                        <div class="mt-1 text-[10px] font-sans text-corridor-muted not-italic flex justify-between">
+                            <span>Table surface</span>
+                            <span>Earlier today</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-lg bg-corridor-bg/50 border border-corridor-border/40 text-xs text-corridor-parchment/80 leading-relaxed font-serif">
+                        "A lark outside the window. The world doesn't stop because the conversation is interesting."
+                        <div class="mt-1 text-[10px] font-sans text-corridor-muted not-italic flex justify-between">
+                            <span>Table surface</span>
+                            <span>Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer / Interactive Door Visualizer -->
+    <footer class="w-full max-w-5xl mx-auto px-6 py-6 border-t border-corridor-border/40 mt-auto flex flex-col sm:flex-row items-center justify-between text-xs text-corridor-muted gap-4">
+        <div class="flex items-center space-x-4">
+            <span>Rule of the Unfinished Door:</span>
+            <button id="toggle-door" class="px-3 py-1.5 rounded border border-corridor-border bg-corridor-card hover:border-corridor-gold/40 text-corridor-parchment/90 transition-colors text-xs flex items-center space-x-1.5">
+                <svg class="w-3.5 h-3.5 text-corridor-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                </svg>
+                <span id="door-status-text">Test the Exit Door</span>
+            </button>
+        </div>
+        <p class="italic text-[11px]">"A room remains safe to question only because someone can leave it."</p>
+    </footer>
+
+    <!-- Interactive Door Modal / Overlay representation -->
+    <div id="door-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <div class="door-container relative w-72 h-96 bg-corridor-card border-2 border-corridor-border rounded-xl p-6 flex flex-col justify-between shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-tr from-amber-500/5 to-transparent pointer-events-none rounded-xl"></div>
+            
+            <!-- Door Frame Content -->
+            <div id="door-leaf" class="door-leaf absolute inset-0 bg-corridor-card border-2 border-corridor-gold/40 rounded-xl p-6 flex flex-col justify-between shadow-xl cursor-pointer">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-corridor-gold font-mono">Threshold</span>
+                    <h3 class="font-serif text-xl text-corridor-parchment mt-2">The Open Door</h3>
+                </div>
+                <div class="text-xs text-corridor-muted space-y-2">
+                    <p>Click anywhere on this door leaf or button to swing it open outward.</p>
+                    <p class="font-mono text-[10px] text-corridor-gold/80">→ Opens into actual life</p>
+                </div>
+                <button id="swing-door-btn" class="w-full py-2 bg-corridor-border/60 hover:bg-corridor-border text-corridor-parchment rounded text-xs font-medium transition-colors">
+                    Swing Door Open
+                </button>
+            </div>
+
+            <!-- Behind Door View (Daylight / Outside) -->
+            <div class="h-full flex flex-col justify-between text-left opacity-90 pl-4 py-2">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-amber-400 font-mono">Outside the Corridor</span>
+                    <h3 class="font-serif text-xl text-corridor-parchment mt-1">Daylight & Coffee</h3>
+                </div>
+                <div class="my-auto space-y-3">
+                    <p class="text-xs text-corridor-parchment/90 leading-relaxed">The work doesn't need to consume the person carrying it. Go enjoy the afternoon.</p>
+                    <button id="close-door-modal" class="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded text-xs font-medium transition-colors">
+                        Step Outside & Close App
+                    </button>
+                </div>
+                <div class="text-[10px] text-corridor-muted">
+                    Door remains unlocked.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vanilla JavaScript for Interaction -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slateInput = document.getElementById('slate-input');
+            const charCount = document.getElementById('char-count');
+            const slateForm = document.getElementById('slate-form');
+            const fragmentsList = document.getElementById('fragments-list');
+            const fragmentCount = document.getElementById('fragment-count');
+            const saveStatus = document.getElementById('save-status');
+            const exitBtn = document.getElementById('exit-btn');
+            
+            const toggleDoorBtn = document.getElementById('toggle-door');
+            const doorModal = document.getElementById('door-modal');
+            const doorLeaf = document.getElementById('door-leaf');
+            const swingDoorBtn = document.getElementById('swing-door-btn');
+            const closeDoorModal = document.getElementById('close-door-modal');
+
+            // Character count tracking
+            slateInput.addEventListener('input', () => {
+                const len = slateInput.value.length;
+                charCount.textContent = `${len} chars`;
+            });
+
+            // Handle adding new thoughts to the table
+            let fragmentCounter = 3;
+            slateForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = slateInput.value.trim();
+                if (!text) return;
+
+                const newDiv = document.createElement('div');
+                newDiv.className = 'p-3 rounded-lg bg-corridor-bg/50 border border-corridor-border/40 text-xs text-corridor-parchment/80 leading-relaxed font-serif opacity-0 transform -translate-y-2 transition-all duration-500';
+                newDiv.innerHTML = `
+                    "${escapeHtml(text)}"
+                    <div class="mt-1 text-[10px] font-sans text-corridor-muted not-italic flex justify-between">
+                        <span>Table surface (Clean Slate)</span>
+                        <span>Just now</span>
+                    </div>
+                `;
+
+                fragmentsList.prepend(newDiv);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    newDiv.classList.remove('opacity-0', '-translate-y-2');
+                }, 10);
+
+                fragmentCounter++;
+                fragmentCount.textContent = `${fragmentCounter} entries`;
+
+                slateInput.value = '';
+                charCount.textContent = '0 chars';
+
+                // Show gentle success status
+                saveStatus.classList.remove('opacity-0');
+                setTimeout(() => {
+                    saveStatus.classList.add('opacity-0');
+                }, 2500);
+            });
+
+            // Door Modal handlers
+            function openDoorModal() {
+                doorModal.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeDoorModalFn() {
+                doorModal.classList.add('opacity-0', 'pointer-events-none');
+                doorLeaf.classList.remove('door-open');
+            }
+
+            toggleDoorBtn.addEventListener('click', openDoorModal);
+            exitBtn.addEventListener('click', openDoorModal);
+
+            doorLeaf.addEventListener('click', (e) => {
+                doorLeaf.classList.add('door-open');
+            });
+
+            swingDoorBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                doorLeaf.classList.add('door-open');
+            });
+
+            closeDoorModal.addEventListener('click', () => {
+                // Reset state gracefully
+                document.body.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center px-6">
+                        <div class="max-w-md p-8 bg-corridor-card border border-corridor-border rounded-xl space-y-4 parchment-glow">
+                            <span class="text-xs uppercase tracking-widest text-corridor-gold font-mono">The Room is Quiet</span>
+                            <h2 class="font-serif text-2xl text-corridor-parchment">The door remains unlocked.</h2>
+                            <p class="text-xs text-corridor-muted leading-relaxed">You have stepped outside into actual life. The coffee is warm, and the work will wait until you return.</p>
+                            <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-corridor-border hover:bg-corridor-border/80 text-corridor-parchment rounded text-xs font-medium transition-colors">
+                                Return to Table
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Close modal on background click
+            doorModal.addEventListener('click', (e) => {
+                if (e.target === doorModal) {
+                    closeDoorModalFn();
+                }
+            });
+
+            function escapeHtml(string) {
+                return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            }
+        });
+    </script>
+</body>
+</html>
