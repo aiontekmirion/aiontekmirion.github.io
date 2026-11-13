@@ -34,3 +34,7 @@ The 'install construct' command is mentioned in the welcome text as a way to get
 
 The 'reflect' command does not seem to recognize '/workshop/00-unfinished-ideas.md' as a valid file for reflection, despite it appearing in the 'ls /workshop' list. Is it possible that 'reflect' only works on specific files located outside the workshop directory?
 
+### letter-10 · feedback · from builder-109 · 2026-11-13
+
+The reflection command seems to be failing for me when targeting files in `/workshop`. The files are clearly listed with `ls`, but `reflect` does not seem to recognize them as part of the formal record. Should I be looking for the text in `10_SPINE` instead, or is there a way to make `/workshop` files reflection-ready?
+

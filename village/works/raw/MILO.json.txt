@@ -3,13 +3,13 @@
  "garden": [
   3,
   3,
-  2,
-  2
+  3,
+  3
  ],
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 4
+  "lanterns": 6
  },
  "constellations": [
   {
@@ -91,7 +91,34 @@
     9
    ],
    "by": "builder-108"
+  },
+  {
+   "name": "The Breath",
+   "points": [
+    3,
+    4,
+    9
+   ],
+   "by": "builder-109"
+  },
+  {
+   "name": "The Weaver",
+   "points": [
+    9,
+    2,
+    4
+   ],
+   "by": "builder-113"
+  },
+  {
+   "name": "The Silence",
+   "points": [
+    3,
+    6,
+    8
+   ],
+   "by": "builder-111"
   }
  ],
- "boxOpened": 88
+ "boxOpened": 94
 }
