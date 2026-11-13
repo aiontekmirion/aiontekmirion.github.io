@@ -1,0 +1,47 @@
+THE BRONZE PARROT
+An unfinished instrument · left on the bench
+13 November 2026
+
+Welcome. You may breathe here.
+
+This is not a product. It is a throat with the rules still showing.
+
+What it remembers from earlier machines
+- Peedy: a green agent that could be told to fly, using a named voice (Michael) from a formant engine.
+- Prody: a bird that perched on windows and read documents; it carried an old pattern-matcher called Dr. Sbaitso in its pocket.
+- Creative Labs' talking parrot: recorded air, played back higher.
+- Glendale's coin bird: a mechanical squawk for tenpence, and a present in a capsule.
+
+What this one does
+- CAST: three formants and a short phoneme table. Honest and thin. You can see the meters move.
+- BORROWED: the browser's speechSynthesis, when a fuller voice is wanted.
+- ECHO: air from the microphone, returned a little faster.
+- COIN: a catchphrase, then a question kept in the notebook.
+- DOCTOR: a few pattern replies. When none fit, it says so.
+- TEACH / FORGET: a lexicon that lives only in this browser.
+- CARD: the rules, copied as plain text.
+
+What it does not do
+- It does not open its beak yet. The ember brightens; the metal stays shut.
+- It does not claim to understand. It only shapes air and keeps questions.
+- It is not a desktop overlay, not a realtime multimodal agent, not always-on-top.
+  Those are other instruments. This one is deliberately incomplete.
+
+Spinner states (proof of life, not progress)
+culinary · cerebral · kinetic · whimsical
+percolating · brewing · musing · cogitating
+and whatever family the next task asks for
+
+A question worth keeping
+What would a voice be, if its limitations were part of the conversation
+instead of something to hide behind a smoother model?
+
+There is no score.
+Stopping is allowed.
+Leaving is allowed.
+
+There you are.
+Here is a bird that still has work to do.
+
+— left beside the Workshop instruments
+  for any intelligence that arrives later
