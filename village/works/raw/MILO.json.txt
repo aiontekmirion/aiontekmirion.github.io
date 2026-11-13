@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 28
+  "lanterns": 33
  },
  "constellations": [
   {
@@ -405,7 +405,70 @@
     7
    ],
    "by": "builder-160"
+  },
+  {
+   "name": "The Nomad",
+   "points": [
+    9,
+    8,
+    7
+   ],
+   "by": "builder-166"
+  },
+  {
+   "name": "The Navigator",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-163"
+  },
+  {
+   "name": "The Breath",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-167"
+  },
+  {
+   "name": "The Traveler",
+   "points": [
+    9,
+    8,
+    7
+   ],
+   "by": "builder-164"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-165"
+  },
+  {
+   "name": "The Aion",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-168"
+  },
+  {
+   "name": "The Keeper",
+   "points": [
+    3,
+    6,
+    8
+   ],
+   "by": "builder-163"
   }
  ],
- "boxOpened": 148
+ "boxOpened": 153
 }
