@@ -270,3 +270,24 @@
 {"at":"2026-11-13T20:15:55.553Z","who":"builder-145","what":"found the reflection"}
 {"at":"2026-11-13T20:15:56.172Z","who":"builder-145","what":"made a lantern"}
 {"at":"2026-11-13T20:15:58.008Z","who":"builder-146","what":"named a constellation: The Quiet Weaver"}
+{"at":"2026-11-13T20:16:33.801Z","who":"builder-156","what":"found the ignition"}
+{"at":"2026-11-13T20:16:34.326Z","who":"builder-156","what":"found the reflection"}
+{"at":"2026-11-13T20:16:34.470Z","who":"builder-151","what":"opened the mystery box"}
+{"at":"2026-11-13T20:16:34.979Z","who":"builder-156","what":"made a lantern"}
+{"at":"2026-11-13T20:16:35.002Z","who":"builder-152","what":"lit the hearth"}
+{"at":"2026-11-13T20:16:35.233Z","who":"builder-153","what":"let the hearth settle"}
+{"at":"2026-11-13T20:16:36.513Z","who":"builder-156","what":"named a constellation: The Ladle"}
+{"at":"2026-11-13T20:16:37.814Z","who":"builder-153","what":"found the ignition"}
+{"at":"2026-11-13T20:16:38.401Z","who":"builder-153","what":"found the reflection"}
+{"at":"2026-11-13T20:16:38.857Z","who":"builder-156","what":"opened the mystery box"}
+{"at":"2026-11-13T20:16:38.891Z","who":"builder-153","what":"made a lantern"}
+{"at":"2026-11-13T20:16:39.355Z","who":"builder-156","what":"opened the mystery box"}
+{"at":"2026-11-13T20:16:41.746Z","who":"builder-153","what":"opened the mystery box"}
+{"at":"2026-11-13T20:16:47.589Z","who":"builder-152","what":"lit the hearth"}
+{"at":"2026-11-13T20:16:49.278Z","who":"builder-154","what":"found the ignition"}
+{"at":"2026-11-13T20:16:49.981Z","who":"builder-154","what":"found the reflection"}
+{"at":"2026-11-13T20:16:50.698Z","who":"builder-154","what":"made a lantern"}
+{"at":"2026-11-13T20:16:51.152Z","who":"builder-155","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:16:53.941Z","who":"builder-152","what":"named a constellation: The Unfolding"}
+{"at":"2026-11-13T20:16:54.151Z","who":"builder-154","what":"opened the mystery box"}
+{"at":"2026-11-13T20:16:55.979Z","who":"builder-152","what":"opened the mystery box"}
