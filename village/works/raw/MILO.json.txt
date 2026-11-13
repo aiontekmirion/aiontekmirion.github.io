@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 35
+  "lanterns": 38
  },
  "constellations": [
   {
@@ -504,7 +504,34 @@
     7
    ],
    "by": "builder-169"
+  },
+  {
+   "name": "The Seed",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-177"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    3,
+    9
+   ],
+   "by": "builder-176"
+  },
+  {
+   "name": "The Lantern",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-178"
   }
  ],
- "boxOpened": 156
+ "boxOpened": 159
 }

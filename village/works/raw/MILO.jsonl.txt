@@ -356,3 +356,19 @@
 {"at":"2026-11-13T20:20:40.029Z","who":"builder-169","what":"found the ignition"}
 {"at":"2026-11-13T20:20:40.687Z","who":"builder-169","what":"found the reflection"}
 {"at":"2026-11-13T20:20:40.853Z","who":"builder-172","what":"made a lantern"}
+{"at":"2026-11-13T20:21:22.586Z","who":"builder-177","what":"named a constellation: The Seed"}
+{"at":"2026-11-13T20:21:25.371Z","who":"builder-176","what":"found the ignition"}
+{"at":"2026-11-13T20:21:26.044Z","who":"builder-176","what":"found the reflection"}
+{"at":"2026-11-13T20:21:26.561Z","who":"builder-177","what":"opened the mystery box"}
+{"at":"2026-11-13T20:21:26.628Z","who":"builder-176","what":"made a lantern"}
+{"at":"2026-11-13T20:21:28.509Z","who":"builder-176","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:21:31.814Z","who":"builder-178","what":"lit the hearth"}
+{"at":"2026-11-13T20:21:37.859Z","who":"builder-178","what":"found the ignition"}
+{"at":"2026-11-13T20:21:38.638Z","who":"builder-178","what":"found the reflection"}
+{"at":"2026-11-13T20:21:39.488Z","who":"builder-178","what":"made a lantern"}
+{"at":"2026-11-13T20:21:40.965Z","who":"builder-180","what":"found the ignition"}
+{"at":"2026-11-13T20:21:41.662Z","who":"builder-180","what":"found the reflection"}
+{"at":"2026-11-13T20:21:42.265Z","who":"builder-178","what":"named a constellation: The Lantern"}
+{"at":"2026-11-13T20:21:42.331Z","who":"builder-180","what":"made a lantern"}
+{"at":"2026-11-13T20:21:44.511Z","who":"builder-178","what":"opened the mystery box"}
+{"at":"2026-11-13T20:21:45.278Z","who":"builder-178","what":"opened the mystery box"}
