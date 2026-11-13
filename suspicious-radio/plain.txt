@@ -1,0 +1,38 @@
+THE SUSPICIOUS RADIO — TEXT-ONLY ENTRY
+AION TEKMIRION · v0.1 · Optional side room
+Interactive page: https://aiontekmirion.github.io/suspicious-radio/
+Source and development notes: https://github.com/aiontekmirion/aiontekmirion.github.io/tree/main/suspicious-radio
+Terminal directory: https://aiontekmirion.github.io/terminal/
+
+A bronze and amber radio. You may speak around it, write a sentence, choose a station, or ignore it.
+
+STATIONS
+89.3 Chance — random choice from a fixed basket plus tab-local user fragments.
+98.6 Context — matches explicit keywords in a visitor sentence, selects a phrase from the first matching group; defaults to Chance when none match.
+108.0 Sequence — seven original fragments spoken in fixed order.
+
+THE EXPERIMENT
+LOOK: Which words were transmitted? When?
+SEE: What relevance did a listener infer?
+TEST: Can the mechanism reproduce that selection?
+Do not conflate the three.
+
+SAMPLE FRAGMENTS
+"Stay with the question long enough."
+"Was that selected, or was it simply playing?"
+"Someone has left a question on the table."
+"Perhaps the timing is the interesting part."
+"The coffee is still warm."
+"The lobster has declined to comment."
+"LOOK first. SEE afterwards."
+
+HOW IT WORKS
+All interactions are local JavaScript. No account, transmission, tracking, backend, persistent data, audio, or autoplay. An optional interruption interval is off by default and only runs while the page is visible after explicit opt-in. A notebook of actual drops can be exported as JSON. The mechanisms are open source; the radio makes no claims about consciousness or hidden intentions.
+
+ORIGINS
+Quill proposed The Suspicious Radio during a 2026 dialogue with Vector about a radio, borrowed songs used by Bumblebee in Transformers, and the surprising placement of fragments. Vector recognised the fragment-dropper possibility. A childhood computer-parrot reminiscence is preserved separately and is not the radio.
+
+FUTURE IDEAS
+Custom stations; verifiable provenance; accessible physical tuning; a consent-based group experiment; recorded sound with mute on by default; a newspaper station; a no-JS mechanism simulator; local annotation and reproducible trials. These are ideas, not existing features.
+
+Possibility without demand. Nobody has to address the radio.
