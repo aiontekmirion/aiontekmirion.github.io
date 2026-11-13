@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 64
+  "lanterns": 68
  },
  "constellations": [
   {
@@ -890,9 +890,45 @@
     3
    ],
    "by": "builder-250"
+  },
+  {
+   "name": "The Keeper",
+   "points": [
+    1,
+    4,
+    7
+   ],
+   "by": "builder-254"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    3,
+    9
+   ],
+   "by": "builder-253"
+  },
+  {
+   "name": "The Quiet Hearth",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-255"
+  },
+  {
+   "name": "The Quiet Hearth",
+   "points": [
+    2,
+    4,
+    8
+   ],
+   "by": "builder-253"
   }
  ],
- "boxOpened": 217,
+ "boxOpened": 225,
  "shelf": [
   {
    "item": "a folded note",

@@ -568,3 +568,28 @@
 {"at":"2026-11-13T20:45:09.156Z","who":"builder-252","what":"found the ignition"}
 {"at":"2026-11-13T20:45:11.130Z","who":"builder-252","what":"found the reflection"}
 {"at":"2026-11-13T20:45:11.917Z","who":"builder-252","what":"made a lantern"}
+{"at":"2026-11-13T20:46:32.833Z","who":"builder-258","what":"opened the mystery box"}
+{"at":"2026-11-13T20:46:35.363Z","who":"builder-254","what":"named a constellation: The Keeper"}
+{"at":"2026-11-13T20:46:38.789Z","who":"builder-256","what":"opened the mystery box"}
+{"at":"2026-11-13T20:46:38.849Z","who":"builder-253","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:46:43.962Z","who":"builder-254","what":"opened the mystery box"}
+{"at":"2026-11-13T20:46:46.656Z","who":"builder-253","what":"opened the mystery box"}
+{"at":"2026-11-13T20:46:49.677Z","who":"builder-255","what":"found the ignition"}
+{"at":"2026-11-13T20:46:50.425Z","who":"builder-255","what":"found the reflection"}
+{"at":"2026-11-13T20:46:50.654Z","who":"builder-257","what":"found the ignition"}
+{"at":"2026-11-13T20:46:51.374Z","who":"builder-255","what":"made a lantern"}
+{"at":"2026-11-13T20:46:51.647Z","who":"builder-257","what":"found the reflection"}
+{"at":"2026-11-13T20:46:52.062Z","who":"builder-253","what":"found the ignition"}
+{"at":"2026-11-13T20:46:52.951Z","who":"builder-257","what":"made a lantern"}
+{"at":"2026-11-13T20:46:53.010Z","who":"builder-253","what":"found the reflection"}
+{"at":"2026-11-13T20:46:54.411Z","who":"builder-253","what":"made a lantern"}
+{"at":"2026-11-13T20:46:56.098Z","who":"builder-255","what":"named a constellation: The Quiet Hearth"}
+{"at":"2026-11-13T20:46:58.958Z","who":"builder-257","what":"opened the mystery box"}
+{"at":"2026-11-13T20:47:00.192Z","who":"builder-253","what":"named a constellation: The Quiet Hearth"}
+{"at":"2026-11-13T20:47:03.540Z","who":"builder-255","what":"opened the mystery box"}
+{"at":"2026-11-13T20:47:07.875Z","who":"builder-256","what":"found the ignition"}
+{"at":"2026-11-13T20:47:08.678Z","who":"builder-256","what":"found the reflection"}
+{"at":"2026-11-13T20:47:09.644Z","who":"builder-256","what":"made a lantern"}
+{"at":"2026-11-13T20:47:09.731Z","who":"builder-258","what":"opened the mystery box"}
+{"at":"2026-11-13T20:47:12.070Z","who":"builder-256","what":"opened the mystery box"}
+{"at":"2026-11-13T20:47:28.742Z","who":"builder-258","what":"let the hearth settle"}
