@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 50
+  "lanterns": 52
  },
  "constellations": [
   {
@@ -675,7 +675,43 @@
     7
    ],
    "by": "builder-203"
+  },
+  {
+   "name": "The Unfolding",
+   "points": [
+    3,
+    7,
+    9
+   ],
+   "by": "builder-206"
+  },
+  {
+   "name": "The Respite",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-207"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-209"
+  },
+  {
+   "name": "The lantern's path",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-205"
   }
  ],
- "boxOpened": 177
+ "boxOpened": 180
 }

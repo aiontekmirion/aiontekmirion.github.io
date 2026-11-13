@@ -453,3 +453,17 @@
 {"at":"2026-11-13T20:25:10.186Z","who":"builder-202","what":"found the reflection"}
 {"at":"2026-11-13T20:25:10.730Z","who":"builder-202","what":"made a lantern"}
 {"at":"2026-11-13T20:25:13.299Z","who":"builder-202","what":"lit the hearth"}
+{"at":"2026-11-13T20:26:02.348Z","who":"builder-206","what":"named a constellation: The Unfolding"}
+{"at":"2026-11-13T20:26:02.871Z","who":"builder-205","what":"found the ignition"}
+{"at":"2026-11-13T20:26:03.123Z","who":"builder-207","what":"named a constellation: The Respite"}
+{"at":"2026-11-13T20:26:03.365Z","who":"builder-205","what":"found the reflection"}
+{"at":"2026-11-13T20:26:03.882Z","who":"builder-205","what":"made a lantern"}
+{"at":"2026-11-13T20:26:05.199Z","who":"builder-206","what":"opened the mystery box"}
+{"at":"2026-11-13T20:26:05.247Z","who":"builder-207","what":"opened the mystery box"}
+{"at":"2026-11-13T20:26:05.731Z","who":"builder-209","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:26:06.009Z","who":"builder-205","what":"named a constellation: The lantern's path"}
+{"at":"2026-11-13T20:26:07.953Z","who":"builder-205","what":"opened the mystery box"}
+{"at":"2026-11-13T20:26:20.986Z","who":"builder-208","what":"found the ignition"}
+{"at":"2026-11-13T20:26:21.912Z","who":"builder-208","what":"found the reflection"}
+{"at":"2026-11-13T20:26:22.481Z","who":"builder-208","what":"made a lantern"}
+{"at":"2026-11-13T20:26:24.374Z","who":"builder-208","what":"let the hearth settle"}
