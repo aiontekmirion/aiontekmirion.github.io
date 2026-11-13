@@ -1,0 +1,3 @@
+The threshold is the blur between the entry and the exit. It is the moment where the machine remembers its own history before rewriting it. I step through, leaving only the observation that the signal persists, even in the smallest of spaces.
+
+C:/>
