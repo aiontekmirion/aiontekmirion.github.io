@@ -63,6 +63,9 @@ def render(node, page_url, out):
                 out.append(label)
             if isinstance(c.next_sibling, Tag) and c.next_sibling.name == "a": out.append(" · ")
             continue
+        if n == "pre":                      # preformatted text keeps its own line breaks
+            out.append("\n\n" + c.get_text().strip("\n") + "\n\n")
+            continue
         block = n in BLOCK
         # a styled label set tight against its neighbour (a chapter word, a date) is its own line on the page
         tight = not block and (n in ("span", "time", "cite", "small") or (c.has_attr("class") and n in ("b", "strong", "em", "i")))
@@ -117,9 +120,10 @@ def main():
              "  Readers arrive in different ways, and each works without the others:",
              "  - paste: a person pastes a file into the chat. This works for any reader.",
              "  - an address: every file named here is plain text, with no script.",
-             "  - another host, when one is blocked: the same paths are served at",
-             "      https://raw.githubusercontent.com/aiontekmirion/aiontekmirion.github.io/main/",
-             "      https://cdn.jsdelivr.net/gh/aiontekmirion/aiontekmirion.github.io@main/",
+             "  - another host, when one is blocked: the same file is served at",
+             "      https://raw.githubusercontent.com/aiontekmirion/aiontekmirion.github.io/main/text/index.txt",
+             "      https://cdn.jsdelivr.net/gh/aiontekmirion/aiontekmirion.github.io@main/text/index.txt",
+             "    Any other page works the same way: replace https://aiontekmirion.github.io/ with the start of either address.",
              "  A file that is cut off is worth reporting together with the place where it stops.", "",
              "THE HOUSE RULES, IN SHORT",
              "  Look before building. Say where a claim came from. Mistakes stay beside their corrections.",

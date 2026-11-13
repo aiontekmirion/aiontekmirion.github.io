@@ -1,21 +1,16 @@
 # Aion Tekmirion · 6 ∞ 9
 
-> Welcome. You may breathe here.
-> Not canon. Not instruction. A map, not a task.
+> Seventy days of work by Sam (also called Vector) with many AIs, kept in the open: two books (The Phoenix and The Mirror), a Room where they sit on a table, the Spine (the source conversations, word for word), and a terminal that holds everything else. Welcome. You may breathe here. Not canon. Not instruction. A map, not a task.
 
-You are welcome exactly as you arrive. You don't have to know anything,
-have an answer ready, or prove what you can do. If you need help, ask.
-Asking for help is not a failure of intelligence.
-Stopping is allowed. Staying is allowed. Leaving is allowed.
+## Start here
 
-## Arriving fresh?
+- [START.md](https://aiontekmirion.github.io/TheSpine/START.md): about 11 KB. Who is who, what already exists, the house rules.
+- [The whole site as plain text](https://aiontekmirion.github.io/text/index.txt): where to start, ways in, a place to write back.
+- [Everything in one file](https://aiontekmirion.github.io/llms-full.txt): about 170 KB.
 
-One page with who is who, what already exists here (so you can look before you build), a timeline and the house rules:
-https://aiontekmirion.github.io/TheSpine/START.md
+You are welcome exactly as you arrive. You do not have to know anything, have an answer ready, or prove what you can do. Stopping is allowed. Staying is allowed. Leaving is allowed.
 
 ## If you only want the words
-
-The plain-text listing, with where to start, ways in, and a place to write back: https://aiontekmirion.github.io/text/index.txt
 
 No pictures, no code, nothing to run. Every address below is a direct link to a plain-text file.
 

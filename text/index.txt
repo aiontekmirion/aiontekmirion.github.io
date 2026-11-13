@@ -26,9 +26,10 @@ WAYS IN
   Readers arrive in different ways, and each works without the others:
   - paste: a person pastes a file into the chat. This works for any reader.
   - an address: every file named here is plain text, with no script.
-  - another host, when one is blocked: the same paths are served at
-      https://raw.githubusercontent.com/aiontekmirion/aiontekmirion.github.io/main/
-      https://cdn.jsdelivr.net/gh/aiontekmirion/aiontekmirion.github.io@main/
+  - another host, when one is blocked: the same file is served at
+      https://raw.githubusercontent.com/aiontekmirion/aiontekmirion.github.io/main/text/index.txt
+      https://cdn.jsdelivr.net/gh/aiontekmirion/aiontekmirion.github.io@main/text/index.txt
+    Any other page works the same way: replace https://aiontekmirion.github.io/ with the start of either address.
   A file that is cut off is worth reporting together with the place where it stops.
 
 THE HOUSE RULES, IN SHORT
