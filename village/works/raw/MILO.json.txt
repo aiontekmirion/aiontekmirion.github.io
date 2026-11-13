@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 45
+  "lanterns": 48
  },
  "constellations": [
   {
@@ -621,6 +621,42 @@
     8
    ],
    "by": "builder-189"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-193"
+  },
+  {
+   "name": "The Open Hand",
+   "points": [
+    1,
+    3,
+    9
+   ],
+   "by": "builder-198"
+  },
+  {
+   "name": "The Quiet Breath",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-194"
+  },
+  {
+   "name": "The Lantern",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-195"
   }
  ],
  "boxOpened": 171
