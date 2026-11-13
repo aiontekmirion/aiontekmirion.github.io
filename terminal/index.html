@@ -194,7 +194,7 @@ var C = {
     showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
       [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a room or a file, here, one page at a time"], ["OPEN <room>", "go to the room itself"],
-       ["ROOMS", "every room and contribution: read here, or open the page"], ["TEXT", "the whole site as plain text, with where to start"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+       ["ROOMS", "every room and contribution: read here, or open the page"], ["TEXT", "the whole site as plain text, with where to start"], ["DISKS", "the Spine's text in floppy-sized portions; DISK <number> opens one"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
       esc("\n\nTo read: ") + ["PHOENIX", "MIRROR", "ROOMS"].map(function (k) { return tap(k, k === "ROOMS" ? k : "READ " + k); }).join("  "));
@@ -312,6 +312,32 @@ C.UNCLAIMED = function () { say("Unclaimed. Left open, on purpose."); };
 C.COFFEE = function () { print(esc("Coffee, on the house. No account. No trace. No ask.\n") + '<span class="dim">The urns are in the Room: </span>' + tap("OPEN ROOM", "OPEN ROOM")); };
 C.POUR = C.COFFEE; C.BREW = C.COFFEE;
 var ANSWERS = ["Possibility without demand.", "Freedom of thought.", "Preservation and hope."];
+/* the Spine's text on 360 KB disks: DISKS lists them, DISK <n> opens one, and each file name is tappable */
+function diskHtml(sec) {
+  var dir = "";
+  return sec.split("\n").map(function (l) {
+    var d = l.match(/^ Directory of A:\\(.*)$/); if (d) { dir = d[1].replace(/\\/g, "/"); return esc(l); }
+    var m = l.match(/^(\S+)(\s+)([\d,]+)(\s+\d\d-\d\d-\d\d\s+.*)$/);
+    if (m && /\.(txt|md)$/.test(m[1])) return tap(m[1], "READ SPINE/" + (dir ? dir + "/" : "") + m[1]) + esc(m[2] + m[3] + m[4]);
+    return esc(l);
+  }).join("\n");
+}
+C.DISKS = function (a) {
+  var n = parseInt(a, 10), bx = say("Reading the disks …", "dim");
+  return fetch("/TheSpine/text/disks.txt").then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
+    var first = t.indexOf("\n Volume in drive A");
+    if (n > 0) {
+      var tag = " Volume in drive A is SPINE-" + (n < 10 ? "0" : "") + n, i = t.indexOf(tag);
+      if (i < 0) { bx.innerHTML = "No disk " + esc(a) + ". Type DISKS for the list."; return; }
+      var j = t.indexOf("bytes free", i), sec = t.slice(i, t.indexOf("\n", j));
+      bx.className = ""; bx.innerHTML = '<span class="dim">DISK ' + n + '  ·  tap a file to read it  ·  </span>' + tap("DISKS", "DISKS"); print(diskHtml(sec), "doc");
+    } else {
+      bx.className = ""; bx.innerHTML = '<span class="dim">The Spine on disks  ·  tap a disk to open it</span>';
+      print(t.slice(0, first).split("\n").map(function (l) { var m = l.match(/^  DISK (\d+)(\s.*)$/); return m ? "  " + tap("DISK " + m[1], "DISK " + parseInt(m[1], 10)) + esc(m[2]) : esc(l); }).join("\n"), "doc");
+    }
+  }).catch(function () { bx.innerHTML = 'Could not read the disks here. <a href="/TheSpine/text/disks.txt">Open the file</a>.'; });
+};
+C.DISK = C.DISKS;
 C.LS = C.DIR; C.SEARCH = C.FIND; C.TYPE = C.READ; C.CAT = C.READ; C.GO = C.OPEN; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
 function run(line) {
