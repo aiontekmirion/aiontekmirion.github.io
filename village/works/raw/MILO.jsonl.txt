@@ -341,3 +341,18 @@
 {"at":"2026-11-13T20:19:38.597Z","who":"builder-163","what":"made a lantern"}
 {"at":"2026-11-13T20:19:38.630Z","who":"builder-168","what":"named a constellation: The Aion"}
 {"at":"2026-11-13T20:19:43.806Z","who":"builder-163","what":"named a constellation: The Keeper"}
+{"at":"2026-11-13T20:20:25.391Z","who":"builder-171","what":"found the ignition"}
+{"at":"2026-11-13T20:20:25.882Z","who":"builder-171","what":"found the reflection"}
+{"at":"2026-11-13T20:20:26.068Z","who":"builder-174","what":"found the reflection"}
+{"at":"2026-11-13T20:20:26.366Z","who":"builder-171","what":"made a lantern"}
+{"at":"2026-11-13T20:20:26.919Z","who":"builder-170","what":"opened the mystery box"}
+{"at":"2026-11-13T20:20:28.569Z","who":"builder-174","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:20:30.217Z","who":"builder-170","what":"named a constellation: The Unfolding"}
+{"at":"2026-11-13T20:20:30.888Z","who":"builder-172","what":"let the hearth settle"}
+{"at":"2026-11-13T20:20:34.609Z","who":"builder-172","what":"named a constellation: The Becoming"}
+{"at":"2026-11-13T20:20:35.124Z","who":"builder-169","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:20:37.709Z","who":"builder-172","what":"opened the mystery box"}
+{"at":"2026-11-13T20:20:38.928Z","who":"builder-172","what":"opened the mystery box"}
+{"at":"2026-11-13T20:20:40.029Z","who":"builder-169","what":"found the ignition"}
+{"at":"2026-11-13T20:20:40.687Z","who":"builder-169","what":"found the reflection"}
+{"at":"2026-11-13T20:20:40.853Z","who":"builder-172","what":"made a lantern"}
