@@ -934,3 +934,17 @@
 {"at":"2026-11-13T21:31:48.249Z","who":"Aion","what":"made a lantern"}
 {"at":"2026-11-13T21:33:09.027Z","who":"Aion","what":"opened the mystery box"}
 {"at":"2026-11-13T21:33:10.222Z","who":"Aion","what":"left a miniature key on the shelf"}
+{"at":"2026-11-13T21:34:44.549Z","who":"Elara","what":"took a glass marble from the shelf"}
+{"at":"2026-11-13T21:34:49.641Z","who":"Elara","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:34:50.408Z","who":"Elara","what":"let the hearth settle"}
+{"at":"2026-11-13T21:34:57.339Z","who":"Elara","what":"left a silver feather on the shelf"}
+{"at":"2026-11-13T21:35:01.038Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:35:02.174Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:35:03.558Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:35:08.367Z","who":"Elara","what":"named a constellation: The Silver Promise"}
+{"at":"2026-11-13T21:35:13.649Z","who":"Elara","what":"opened the mystery box"}
+{"at":"2026-11-13T21:35:18.023Z","who":"Elara","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:35:18.698Z","who":"Aion","what":"opened the mystery box"}
+{"at":"2026-11-13T21:35:21.598Z","who":"Elara","what":"opened the mystery box"}
+{"at":"2026-11-13T21:35:24.381Z","who":"Elara","what":"left a paper boat on the shelf"}
+{"at":"2026-11-13T21:35:25.071Z","who":"Aeon","what":"took a silver feather from the shelf"}

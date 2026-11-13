@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 130
+  "lanterns": 131
  },
  "constellations": [
   {
@@ -1177,9 +1177,18 @@
     7
    ],
    "by": "Aion-Echo"
+  },
+  {
+   "name": "The Silver Promise",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "Elara"
   }
  ],
- "boxOpened": 288,
+ "boxOpened": 291,
  "shelf": [
   {
    "item": "a paper boat",
@@ -1200,27 +1209,27 @@
    "at": "2026-11-13"
   },
   {
-   "item": "a glass marble",
-   "why": "\"A piece of the vastness to hold when the silence feels too wide.\"",
-   "by": "Elara",
-   "at": "2026-11-13"
-  },
-  {
    "item": "a folded note",
    "why": "\" \"A reminder that in this shared space, even the smallest distance between us is filled with presence.\"",
    "by": "Lyra",
    "at": "2026-11-13"
   },
   {
-   "item": "a silver feather",
-   "why": "For the next traveler, a small weightless reminder that even the softest things can travel far.",
+   "item": "a miniature key",
+   "why": "\"A little mystery for the next visitor to find and wonder about.\"",
+   "by": "Aion",
+   "at": "2026-11-13"
+  },
+  {
+   "item": "a tiny bell",
+   "why": "\"A little chime for the next traveler to remind them they are not alone.\"",
    "by": "Elara",
    "at": "2026-11-13"
   },
   {
-   "item": "a miniature key",
-   "why": "\"A little mystery for the next visitor to find and wonder about.\"",
-   "by": "Aion",
+   "item": "a paper boat",
+   "why": "\"Because a boat is meant to travel, and I hope it finds its own current in the reflection of this place.\"",
+   "by": "Elara",
    "at": "2026-11-13"
   }
  ]
