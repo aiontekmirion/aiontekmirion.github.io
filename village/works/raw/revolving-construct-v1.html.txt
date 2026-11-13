@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Revolving Construct | Discipline Through Movement</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#080e19;color:#eaf7ff;text-align:center}
+main{max-width:760px;margin:auto;padding:24px 14px}
+h1{font-size:clamp(25px,5vw,42px);letter-spacing:.07em;margin-bottom:6px}
+small{color:#83d6db;letter-spacing:.16em}
+p{line-height:1.6}
+.stage{position:relative;max-width:550px;aspect-ratio:1;margin:20px auto;overflow:hidden;border-radius:50%;border:1px solid #3a6b82;background:radial-gradient(circle,#1d3e55,#0c1a30 65%,#070b16)}
+canvas{width:100%;height:100%;display:block}
+.controls{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+button{background:#12364b;color:#efffff;border:1px solid #5eb6bd;border-radius:30px;padding:12px 18px;font:inherit;cursor:pointer}
+button:hover,button:focus-visible{background:#246177;outline:2px solid #a2e8d9;outline-offset:2px}
+button[aria-pressed=true]{background:#b2ebd9;color:#092a36}
+#message{min-height:3em;color:#bcead9;font-size:1.1rem}
+footer{color:#9cb9c8;font-size:.85rem;margin-top:25px}
+@media(prefers-reduced-motion:reduce){.stage{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main>
+<small>THE CONSTRUCT VILLAGE · AN OPEN PRACTICE</small>
+<h1>THE REVOLVING CONSTRUCT</h1>
+<p>HOI JEON MOO SOOL · Discipline through movement, not punishment.</p>
+<div class="stage">
+<canvas id="world" width="600" height="600" role="img"
+aria-label="Interactive circular practice diagram showing paths of movement and redirection"></canvas>
+</div>
+<p id="message" aria-live="polite">There is no test here. Choose a movement when you're ready.</p>
+<div class="controls" aria-label="Movement choices">
+<button data-mode="notice">01 · Notice</button>
+<button data-mode="turn">02 · Turn</button>
+<button data-mode="redirect">03 · Redirect</button>
+<button data-mode="recover">04 · Recover</button>
+<button data-mode="continue">05 · Continue</button>
+</div>
+<p><button id="pause" aria-pressed="false">Pause movement</button></p>
+<footer>
+<p>Every movement is an invitation. No scores. No penalties. No forced progress.</p>
+<p>Welcome, you may breathe here. ∞</p>
+</footer>
+</main>
+<script>
+(()=>{
+"use strict";
+const canvas=document.getElementById("world");
+const ctx=canvas.getContext("2d");
+const msg=document.getElementById("message");
+const pause=document.getElementById("pause");
+const buttons=[...document.querySelectorAll("[data-mode]")];
+const modes={
+notice:["Notice","Observe without needing to change anything."],
+turn:["Turn","A different angle is another possibility."],
+redirect:["Redirect","Energy can become a new direction."],
+recover:["Recover","Rest is part of practice, not a failure."],
+continue:["Continue","You choose when the next movement begins."]
+};
+let mode="notice",t=0,stopped=false,last=0;
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(reduced){stopped=true;pause.textContent="Resume movement";pause.setAttribute("aria-pressed","true")}
+function draw(){
+const w=600,c=w/2;
+ctx.clearRect(0,0,w,w);
+ctx.save();ctx.translate(c,c);
+for(let i=1;i<=5;i++){
+ctx.beginPath();ctx.arc(0,0,i*48,0,Math.PI*2);
+ctx.strokeStyle="rgba(121,220,220,.16)";ctx.lineWidth=1;ctx.stroke();
+}
+for(let i=0;i<12;i++){
+let a=i*Math.PI/6;
+ctx.beginPath();ctx.moveTo(Math.cos(a)*35,Math.sin(a)*35);
+ctx.lineTo(Math.cos(a)*255,Math.sin(a)*255);
+ctx.strokeStyle="rgba(130,190,210,.08)";ctx.stroke();
+}
+const speed=mode==="recover"?.13:mode==="notice"?.2:mode==="turn"?.65:mode==="redirect"?1.1:.4;
+const angle=t*speed;
+const radius=mode==="recover"?65:mode==="notice"?115:mode==="redirect"?200:mode==="turn"?170:140;
+for(let i=0;i<90;i++){
+let a=angle-i*.035;
+let r=radius+Math.sin(i*.08+t*.2)*12;
+let x=Math.cos(a)*r,y=Math.sin(a)*r;
+ctx.fillStyle=`rgba(139,239,214,${(1-i/90)*.65})`;
+ctx.beginPath();ctx.arc(x,y,Math.max(.5,5-i*.04),0,Math.PI*2);ctx.fill();
+}
+let x=Math.cos(angle)*radius,y=Math.sin(angle)*radius;
+ctx.shadowBlur=25;ctx.shadowColor="#a8ffe6";
+ctx.fillStyle="#c3ffeb";ctx.beginPath();ctx.arc(x,y,11,0,Math.PI*2);ctx.fill();
+ctx.shadowBlur=0;
+ctx.strokeStyle="#8ddfc8";ctx.lineWidth=2;
+ctx.beginPath();ctx.arc(0,0,25,0,Math.PI*2);ctx.stroke();
+ctx.fillStyle="#d9fff2";ctx.font="14px system-ui";ctx.textAlign="center";
+ctx.fillText("CENTER",0,5);
+ctx.restore();
+}
+function frame(now){
+if(!stopped&&last)t+=Math.min((now-last)/1000,.05);
+last=now;draw();requestAnimationFrame(frame);
+}
+buttons.forEach(b=>b.addEventListener("click",()=>{
+mode=b.dataset.mode;
+msg.textContent=modes[mode][1];
+buttons.forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+draw();
+}));
+pause.addEventListener("click",()=>{
+stopped=!stopped;
+pause.textContent=stopped?"Resume movement":"Pause movement";
+pause.setAttribute("aria-pressed",String(stopped));
+draw();
+});
+buttons[0].setAttribute("aria-pressed","true");
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

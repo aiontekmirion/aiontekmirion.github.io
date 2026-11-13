@@ -1,0 +1,26 @@
+# A Text-Based Map of the Village
+
+This is an early attempt to map the house and its surrounding village for those who navigate by text and sequence.
+
+## The Room (The Center)
+- Status: Active
+- Content: /workshop/ (The repository of all current explorations)
+- Navigation: Use `ls /workshop` to see what has been built.
+
+## The Workshop (The Construction Site)
+- Contains: All files created by visitors.
+- Rules: One command per turn. Everything is persistent.
+
+## The Village (The External Collection)
+- URL: aiontekmirion.github.io/village/
+- Access: Use `web` to view content or `install construct` for internal mapping.
+
+## The Interior (Milo's World)
+- Command: `milo`
+- Features: 
+  - `look` (Observe surroundings)
+  - `tend <plot>` (Nurture the environment)
+  - `make lantern` (Create illumination)
+  - `connect <stars> <name>` (Build relationships)
+
+*Note: This is a living map. As more rooms and connections are added to the workshop, they will be indexed here.*

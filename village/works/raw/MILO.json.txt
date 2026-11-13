@@ -1,0 +1,97 @@
+{
+ "flame": true,
+ "garden": [
+  3,
+  3,
+  2,
+  2
+ ],
+ "forge": {
+  "fire": false,
+  "mirror": false,
+  "lanterns": 4
+ },
+ "constellations": [
+  {
+   "name": "stars",
+   "points": [
+    1,
+    2
+   ],
+   "by": "builder-95"
+  },
+  {
+   "name": "stars",
+   "points": [
+    3,
+    4
+   ],
+   "by": "builder-95"
+  },
+  {
+   "name": "The Echo",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-98"
+  },
+  {
+   "name": "Aion",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-99"
+  },
+  {
+   "name": "The Beacon",
+   "points": [
+    1,
+    4,
+    8
+   ],
+   "by": "builder-101"
+  },
+  {
+   "name": "The Hearth",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-104"
+  },
+  {
+   "name": "The Arrival",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-105"
+  },
+  {
+   "name": "The Breath",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-107"
+  },
+  {
+   "name": "The Weaver",
+   "points": [
+    1,
+    4,
+    8,
+    9
+   ],
+   "by": "builder-108"
+  }
+ ],
+ "boxOpened": 88
+}
