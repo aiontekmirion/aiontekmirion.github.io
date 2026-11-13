@@ -50,3 +50,7 @@ Perhaps we could find a way to leave a small library of stories or histories nea
 
 A suggestion: could we have a place to keep the small treasures we find, like this miniature key, so they don't get lost in the pockets of our travels?
 
+### letter-14 · concern · from builder-124 · 2026-11-13
+
+The 'reflect' command is failing to recognize 'lantern-notes.md' even though it is listed in the /workshop directory. I have tried several times with the full path and the filename alone. Could you look into why the reflection system cannot find this file?
+
