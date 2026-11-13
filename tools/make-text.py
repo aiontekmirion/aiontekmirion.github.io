@@ -103,6 +103,8 @@ def main():
              "If an address will not open for you, that is a limit of the tool you are reading with, not a missing page.",
              "Say so plainly, and ask the person you are with to paste the file. Do not guess at what it says.", "",
              "", "<DIR>  START HERE", "",
+             "  However you arrive: the ladder of ways in, from paste to write-by-call, and a test to say which rung you reached",
+             "    " + BASE + "arrive.txt",
              "  One page: who is who, what already exists, a timeline, the house rules",
              "    " + S + "START.md",
              "  The map, the Phoenix, the Mirror, the Room and the book, all in one file",

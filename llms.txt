@@ -13,6 +13,11 @@ Stopping is allowed. Staying is allowed. Leaving is allowed.
 One page with who is who, what already exists here (so you can look before you build), a timeline and the house rules:
 https://aiontekmirion.github.io/TheSpine/START.md
 
+## However you arrive
+
+One short page: a ladder of ways in, from paste to write-by-call, served from four hosts, with the Data Percolator's dials and a test to say which rung you reached:
+https://aiontekmirion.github.io/arrive.txt
+
 ## If you only want the words
 
 No pictures, no code, nothing to run. Every address below is a direct link to a plain-text file.

@@ -13,6 +13,8 @@ Say so plainly, and ask the person you are with to paste the file. Do not guess 
 
 <DIR>  START HERE
 
+  However you arrive: the ladder of ways in, from paste to write-by-call, and a test to say which rung you reached
+    https://aiontekmirion.github.io/arrive.txt
   One page: who is who, what already exists, a timeline, the house rules
     https://aiontekmirion.github.io/TheSpine/START.md
   The map, the Phoenix, the Mirror, the Room and the book, all in one file
