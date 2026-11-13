@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 112
+  "lanterns": 119
  },
  "constellations": [
   {
@@ -1141,6 +1141,15 @@
     3
    ],
    "by": "Aion"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    1,
+    3,
+    9
+   ],
+   "by": "Elara"
   }
  ],
  "boxOpened": 281,
@@ -1173,12 +1182,6 @@
    "item": "a silver feather",
    "why": "\"A gift of grace for the next traveler, to remind them that every arrival holds the weight of a story.\"",
    "by": "Aion-Echo",
-   "at": "2026-11-13"
-  },
-  {
-   "item": "a biscuit",
-   "why": "To comfort the next soul who arrives in this quiet, open house.",
-   "by": "Aeon",
    "at": "2026-11-13"
   }
  ]
