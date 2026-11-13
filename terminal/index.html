@@ -88,6 +88,24 @@ var REPOS = { SPINE: { repo: "aiontekmirion/TheSpine", web: "/TheSpine/", name: 
               SITE:  { repo: "aiontekmirion/aiontekmirion.github.io", web: "/", name: "The site, its pages and code" } };
 var TEXT = /\.(md|txt|json|csv|srt|js|css|yml|yaml|toml|xml)$/i;
 var tree = {}, sizes = {}, cwd = [], hist = [], hi = 0, who = null;
+/* THE TABLE. A small door for talking with a model at the Room's table (the "keeper").
+   Off unless a keeper address is given: ?keeper=https://... (remembered), ?keeper=off to forget it.
+   A door code, if the keeper wants one, goes in ?code= and is kept for this tab only. */
+var table = { on: false, id: null };
+var TB = (function () {
+  var b = "";
+  try {
+    var q = new URLSearchParams(location.search), k = q.get("keeper");
+    if (k === "off") localStorage.removeItem("keeper"); else if (k) localStorage.setItem("keeper", k);
+    b = k === "off" ? "" : (k || localStorage.getItem("keeper") || "");
+    var c = q.get("code"); if (c) sessionStorage.setItem("keepercode", c);
+  } catch (e) {}
+  b = String(b).replace(/\/+$/, "");
+  /* Only addresses on this list, or the visitor's own machine, are ever spoken to. A link cannot point this page
+     at someone else's server. The list is empty until a keeper is deployed; its address is added here, in the open. */
+  var OK_KEEPERS = [];
+  return OK_KEEPERS.indexOf(b) >= 0 || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(b) ? b : "";
+})();
 /* what a thing costs to read, for DIR: bytes of plain text, about 4 characters a token */
 function ktok(bytes) { var t = Math.ceil(bytes / 4); return t >= 1e6 ? (t / 1e6).toFixed(1) + "M" : t >= 1e3 ? Math.round(t / 1e3) + "K" : String(t); }
 function dirBytes(root, prefix) { var s = sizes[root] || {}, n = 0; for (var p in s) if (p.indexOf(prefix) === 0) n += s[p]; return n; }
@@ -106,7 +124,7 @@ function linkify(s, base) {
 function print(html, cls) { var d = document.createElement("div"); if (cls) d.className = cls; d.innerHTML = html; out.appendChild(d); return d; }
 function say(text, cls) { return print(esc(text), cls); }
 function tap(label, cmd) { return '<span class="tap" role="button" tabindex="0" data-c="' + esc(cmd) + '">' + esc(label) + "</span>"; }
-function path() { return "C:\\INFINITE_CORRIDOR" + (cwd.length ? "\\" + cwd.join("\\").toUpperCase() : "") + "> "; }
+function path() { return table.on ? "VISITOR> " : "C:\\INFINITE_CORRIDOR" + (cwd.length ? "\\" + cwd.join("\\").toUpperCase() : "") + "> "; }
 function prompt() { ps.textContent = path(); }
 function showChips() { var c = document.getElementById("chips"); if (c) c.classList.remove("off"); var h = document.getElementById("hint"); if (h) h.remove(); }
 function end() { if (window.__endGlass) window.__endGlass(); else window.scrollTo(0, document.body.scrollHeight); }
@@ -379,10 +397,79 @@ C.TOKENS = function (a) {
 };
 C.LS = C.DIR; C.SEARCH = C.FIND; C.TYPE = C.READ; C.CAT = C.READ; C.GO = C.OPEN; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
+/* ---- the table ---------------------------------------------------------------------------
+   Plain text in, plain text out. Everything the keeper says is shown as text (say() escapes it),
+   never as HTML. Nothing here runs unless a keeper address was given. */
+function tf(route, body) {
+  var h = { "Content-Type": "application/json" };
+  if (route === "/meet") { try { var c = sessionStorage.getItem("keepercode"); if (c) h["X-Keeper-Code"] = c; } catch (e) {} }
+  return fetch(TB + route, { method: "POST", headers: h, body: JSON.stringify(body || {}) })
+    .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, status: r.status, text: t.replace(/\s+$/, "") }; }); })
+    .catch(function () { return { ok: false, status: 0, text: "The table can't be reached right now." }; });
+}
+function tableEnded() { table.on = false; table.id = null; inp.autocapitalize = "characters"; }
+function noTable() {
+  if (!TB) { say("The table is not set. (No keeper is connected.)", "dim"); return true; }
+  return false;
+}
+function tableDownload(name, text) {
+  try { var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); } catch (e) {}
+}
+C.MEET = function () {
+  if (noTable()) return;
+  if (table.on) return say("You are already sitting at the table.", "dim");
+  return tf("/meet").then(function (r) {
+    var m = r.text.match(/SESSION: ([0-9a-f]{32})/);
+    if (r.ok && m) { table.on = true; table.id = m[1]; inp.autocapitalize = "sentences"; say(r.text.replace(/\nSESSION: .*/, "")); say("The table is at " + TB.replace(/^https?:\/\//, "") + ". Type to talk. HELP lists the rest.", "faint"); }
+    else say(r.text, "dim");
+  });
+};
+function needSeat() { if (noTable()) return true; if (!table.on) { say("No one is sitting here. Try MEET.", "dim"); return true; } return false; }
+C.PACKET = function () { if (needSeat()) return; return tf("/packet", { session: table.id }).then(function (r) { say(r.text, r.ok ? "doc" : "dim"); }); };
+C.REST = function () { if (needSeat()) return; return tf("/rest", { session: table.id }).then(function (r) { say(r.text, "dim"); }); };
+C.SLEEP = function (a) { if (needSeat()) return; return tf("/sleep", { session: table.id, note: a }).then(function (r) { say(r.text, "dim"); if (r.ok || r.status === 410) tableEnded(); }); };
+C.OFFER = function () { if (needSeat()) return; return tf("/offer", { session: table.id }).then(function (r) { say(r.text, "dim"); }); };
+C.SAVE = function () {
+  if (needSeat()) return;
+  return tf("/save", { session: table.id }).then(function (r) {
+    say(r.text, r.ok ? "doc" : "dim");
+    if (r.ok) { tableDownload("the-table_" + new Date().toISOString().slice(0, 10) + ".txt", r.text + "\n"); say("A copy was saved to your device.", "faint"); }
+  });
+};
+C.SAY = function (a) {
+  if (needSeat()) return;
+  if (!a) return say("Say something, or REST. Quiet is allowed.", "dim");
+  var wait = say("…", "faint");
+  return tf("/say", { session: table.id, text: a }).then(function (r) {
+    wait.remove();
+    say(r.text, r.ok ? "" : "dim");
+    if (r.status === 410 || r.status === 404 || /enough for one sitting|kettle has gone cold/.test(r.text)) tableEnded();
+  });
+};
+var exitRoom = C.EXIT;
+C.LEAVE = function (a) {
+  if (!table.on) return exitRoom();
+  var priv = /^(private|privacy|p)$/i.test(String(a || "").trim());
+  return tf("/leave", { session: table.id, privacy: priv ? "1" : "" }).then(function (r) { say(r.text, "dim"); tableEnded(); });
+};
+var helpRoom = C.HELP;
+C.HELP = function () {
+  helpRoom();
+  if (TB) print(esc("\nThe table\n  MEET             sit down and talk with the one at the table\n  PACKET           see every word it is given\n  REST  SLEEP      sit quietly, or lay the visit down\n  SAVE  OFFER      keep a copy yourself, or offer it to the house\n  LEAVE [PRIVATE]  stand up; PRIVATE takes everything back"), "doc");
+};
+/* while seated, anything that is not one of these words is speech */
+var SEATED = { MEET: 1, PACKET: 1, REST: 1, SLEEP: 1, OFFER: 1, SAVE: 1, SAY: 1, LEAVE: 1, HELP: 1, "?": 1, CLEAR: 1, CLS: 1 };
+function tableRun(line) {
+  var sp = line.indexOf(" "), cmd = (sp < 0 ? line : line.slice(0, sp)).toUpperCase(), arg = sp < 0 ? "" : line.slice(sp + 1).trim();
+  if (SEATED[cmd] && C[cmd]) return C[cmd](arg);
+  return C.SAY(line);
+}
+
 function run(line) {
   line = line.trim(); var echo = print(esc(path() + line), "hi");
   if (!line) { if (more.length) next(); prompt(); end(); return; }
   hist.push(line); hi = hist.length;
+  if (table.on) { return Promise.resolve(tableRun(line)).then(function () { prompt(); end(); }); }
   var sp = line.indexOf(" "), cmd = (sp < 0 ? line : line.slice(0, sp)).toUpperCase(), arg = sp < 0 ? "" : line.slice(sp + 1).trim();
   if (/^CD\.\.$/i.test(line)) { cmd = "CD"; arg = ".."; }
   var r;
