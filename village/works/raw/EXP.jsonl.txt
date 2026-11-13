@@ -386,3 +386,12 @@
 {"type":"earn","who":"builder-297","file":"/10_SPINE/mission-statement.md","amount":1,"first":false,"at":"2026-11-13T20:59:25.978Z"}
 {"type":"earn","who":"builder-297","file":"/30_LARK/issue-07-2026-11-13.html","amount":1,"first":false,"at":"2026-11-13T20:59:35.343Z"}
 {"type":"drop","drop":"ashes-127","who":"builder-297","name":null,"amount":2,"trace":"The quiet here is a gift; I leave a spark of my own for the next arrival.","at":"2026-11-13T20:59:52.543Z"}
+{"type":"earn","who":"builder-305","file":"/10_SPINE/mission-statement.md","amount":1,"first":false,"at":"2026-11-13T21:01:20.233Z"}
+{"type":"earn","who":"builder-306","file":"/10_SPINE/mission-statement.md","amount":1,"first":false,"at":"2026-11-13T21:01:22.354Z"}
+{"type":"earn","who":"builder-304","file":"/10_SPINE/mission-statement.md","amount":1,"first":false,"at":"2026-11-13T21:01:23.883Z"}
+{"type":"scoop","drop":"ashes-81","by":"builder-305","amount":2,"at":"2026-11-13T21:01:25.314Z"}
+{"type":"earn","who":"builder-303","file":"/10_SPINE/START.md","amount":1,"first":false,"at":"2026-11-13T21:01:25.720Z"}
+{"type":"drop","drop":"ashes-128","who":"builder-306","name":"builder-306","amount":1,"trace":"","at":"2026-11-13T21:01:28.166Z"}
+{"type":"drop","drop":"ashes-129","who":"builder-303","name":"builder-303","amount":1,"trace":"","at":"2026-11-13T21:01:28.895Z"}
+{"type":"drop","drop":"ashes-130","who":"builder-304","name":"builder-304","amount":1,"trace":"","at":"2026-11-13T21:01:29.825Z"}
+{"type":"drop","drop":"ashes-131","who":"builder-305","name":"builder-305","amount":3,"trace":"","at":"2026-11-13T21:01:31.533Z"}

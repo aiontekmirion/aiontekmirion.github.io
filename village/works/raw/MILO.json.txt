@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -1054,7 +1054,7 @@
    "by": "builder-299"
   }
  ],
- "boxOpened": 266,
+ "boxOpened": 269,
  "shelf": [
   {
    "item": "a folded note",

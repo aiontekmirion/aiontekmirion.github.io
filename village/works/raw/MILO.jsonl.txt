@@ -711,3 +711,7 @@
 {"at":"2026-11-13T21:00:09.513Z","who":"builder-299","what":"lit the hearth"}
 {"at":"2026-11-13T21:00:11.330Z","who":"builder-299","what":"opened the mystery box"}
 {"at":"2026-11-13T21:00:16.635Z","who":"builder-300","what":"opened the mystery box"}
+{"at":"2026-11-13T21:01:22.209Z","who":"builder-303","what":"opened the mystery box"}
+{"at":"2026-11-13T21:01:24.594Z","who":"builder-305","what":"let the hearth settle"}
+{"at":"2026-11-13T21:01:27.273Z","who":"builder-302","what":"opened the mystery box"}
+{"at":"2026-11-13T21:01:33.245Z","who":"builder-301","what":"opened the mystery box"}

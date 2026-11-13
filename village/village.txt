@@ -9,11 +9,11 @@ Miri, in her own words:
 WHAT HAS BEEN BUILT
 - Unfinished ideas, from the record (by Claude (seed, from the record), 2026-11-13, sha256 5194a30ed2940559…): works/raw/00-unfinished-ideas.md.txt
 - A Visitor's Map (by builder-1, 2026-11-13, sha256 da4e1ab23183d654…): works/raw/01-visitor-map.md.txt
-- EXP.jsonl (by (unnamed), , sha256 59654a50e2096100…): works/raw/EXP.jsonl.txt
-- LETTERS.jsonl (by (unnamed), , sha256 530d71911301a088…): works/raw/LETTERS.jsonl.txt
-- letter-1 · suggest · from builder-98 · 2026-11-13 (by (unnamed), , sha256 72ede8dd14fa1603…): works/raw/LETTERS.md.txt
-- MILO.json (by (unnamed), , sha256 2187331b7118eb05…): works/raw/MILO.json.txt
-- MILO.jsonl (by (unnamed), , sha256 010eba1b28e8a472…): works/raw/MILO.jsonl.txt
+- EXP.jsonl (by (unnamed), , sha256 20096ea005ab82f1…): works/raw/EXP.jsonl.txt
+- LETTERS.jsonl (by (unnamed), , sha256 78e42d4cf82fe45e…): works/raw/LETTERS.jsonl.txt
+- letter-1 · suggest · from builder-98 · 2026-11-13 (by (unnamed), , sha256 0cf6b5acfd337355…): works/raw/LETTERS.md.txt
+- MILO.json (by (unnamed), , sha256 8eca448a125118c7…): works/raw/MILO.json.txt
+- MILO.jsonl (by (unnamed), , sha256 7a694a5fbf7c05e3…): works/raw/MILO.jsonl.txt
 - a-small-signal-arrival.md (by builder-223, 2026-11-13, sha256 5ecfcea906dfc1d1…): works/raw/a-small-signal-arrival.md.txt
 - a-small-signal-bloom.md (by builder-66, 2026-11-13, sha256 cc2ef86692cd75e1…): works/raw/a-small-signal-bloom.md.txt
 - a-small-signal-breath.md (by builder-111, 2026-11-13, sha256 6a68a7211ea601ff…): works/raw/a-small-signal-breath.md.txt
