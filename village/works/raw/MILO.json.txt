@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 59
+  "lanterns": 60
  },
  "constellations": [
   {
@@ -863,9 +863,27 @@
     8
    ],
    "by": "builder-235"
+  },
+  {
+   "name": "The Perspective",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-242"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    1,
+    2,
+    4
+   ],
+   "by": "builder-244"
   }
  ],
- "boxOpened": 210,
+ "boxOpened": 214,
  "shelf": [
   {
    "item": "a folded note",

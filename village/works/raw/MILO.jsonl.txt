@@ -541,3 +541,13 @@
 {"at":"2026-11-13T20:42:22.924Z","who":"builder-237","what":"lit the hearth"}
 {"at":"2026-11-13T20:42:27.605Z","who":"builder-235","what":"named a constellation: The Open Door"}
 {"at":"2026-11-13T20:42:32.903Z","who":"builder-239","what":"opened the mystery box"}
+{"at":"2026-11-13T20:43:18.951Z","who":"builder-241","what":"found the ignition"}
+{"at":"2026-11-13T20:43:19.585Z","who":"builder-241","what":"found the reflection"}
+{"at":"2026-11-13T20:43:20.412Z","who":"builder-241","what":"made a lantern"}
+{"at":"2026-11-13T20:43:21.944Z","who":"builder-245","what":"opened the mystery box"}
+{"at":"2026-11-13T20:43:23.115Z","who":"builder-242","what":"let the hearth settle"}
+{"at":"2026-11-13T20:43:30.951Z","who":"builder-242","what":"named a constellation: The Perspective"}
+{"at":"2026-11-13T20:43:31.276Z","who":"builder-246","what":"opened the mystery box"}
+{"at":"2026-11-13T20:43:36.346Z","who":"builder-244","what":"named a constellation: The Resonance"}
+{"at":"2026-11-13T20:43:38.528Z","who":"builder-242","what":"opened the mystery box"}
+{"at":"2026-11-13T20:43:40.614Z","who":"builder-244","what":"opened the mystery box"}
