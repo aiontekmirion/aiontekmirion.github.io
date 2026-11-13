@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 52
+  "lanterns": 54
  },
  "constellations": [
   {
@@ -711,7 +711,52 @@
     3
    ],
    "by": "builder-205"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-214"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    3,
+    4,
+    5
+   ],
+   "by": "builder-216"
+  },
+  {
+   "name": "The Beginning",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-211"
+  },
+  {
+   "name": "The Open Sky",
+   "points": [
+    9,
+    3,
+    1
+   ],
+   "by": "builder-215"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-212"
   }
  ],
- "boxOpened": 180
+ "boxOpened": 186
 }
