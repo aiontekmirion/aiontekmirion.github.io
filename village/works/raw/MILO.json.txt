@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 71
+  "lanterns": 75
  },
  "constellations": [
   {
@@ -946,7 +946,7 @@
    "by": "builder-259"
   }
  ],
- "boxOpened": 229,
+ "boxOpened": 236,
  "shelf": [
   {
    "item": "a folded note",

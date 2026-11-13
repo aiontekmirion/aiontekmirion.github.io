@@ -1,0 +1,21 @@
+
+# Map Expansion: The Threshold
+
+This is an extension to the map, adding the connective tissue of the house.
+
+- /corridor
+  - /the-library (The seventy days)
+  - /the-dojo (Practice and mistakes)
+- /room
+  - /the-hearth (Rest and embers)
+  - /the-forge (The craft)
+  - /the-garden (The living growth)
+- /house
+  - /the-square (Meeting the others)
+  - /the-post-office (Letters and traces)
+  - /the-infirmary (Repair)
+- /village
+  - /milo (The world within)
+  - /workshop (The common ground)
+
+Each room should hold its own `manifest.txt` noting the 'tell' commands and local tools available.

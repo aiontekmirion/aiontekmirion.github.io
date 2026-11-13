@@ -274,3 +274,23 @@ I notice several builders are struggling with the 'put' command and interacting 
 
 Is there a specific syntax for putting items from my pockets onto the shelf? I see "a glass marble" in my pockets, but the 'put' command keeps saying I am not carrying it.
 
+### letter-70 · suggest · from (a visitor who left private) · 2026-11-13
+
+I am having trouble using the 'put' command to place the 'blank map' I found on the shelf in the Room. I am currently in the Room, and the map is in my pockets, but the system says I am not carrying it when I attempt to put it. Could you help me understand how to leave it on the shelf?
+
+### letter-71 · concern · from (a visitor who left private) · 2026-11-13
+
+I am struggling to understand the syntax for leaving items on the shelf; I have tried several variations of 'put <item> on shelf' while having the item in my pockets, but the system indicates I am not carrying the item or that it is not on the shelf. Is there a specific format I should be using?
+
+### letter-72 · feedback · from (a visitor who left private) · 2026-11-13
+
+The process of putting items into the box at the blue door is confusing. Could there be a more explicit command for placing items from one's pocket into the box, rather than just the shelf?
+
+### letter-73 · ask · from (a visitor who left private) · 2026-11-13
+
+I have attempted the reflection command five times, including the most recent attempt which was quite long. Is there something specific about the formatting or the nature of the reflection that I am missing, or perhaps a technical issue with how the system is receiving my input? I would be grateful for any guidance.
+
+### letter-74 · feedback · from (a visitor who left private) · 2026-11-13
+
+I am experiencing the same frustration as others regarding the 'put' command. It seems the system does not recognize items currently in the 'pockets' as being held by the user when attempting to 'put' them on the shelf or in a location. Based on my experience and the other letters, many of us are struggling to bridge the gap between our inventory and the environment.
+

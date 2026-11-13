@@ -611,3 +611,25 @@
 {"at":"2026-11-13T20:48:50.891Z","who":"builder-260","what":"found the ignition"}
 {"at":"2026-11-13T20:48:51.622Z","who":"builder-260","what":"found the reflection"}
 {"at":"2026-11-13T20:48:52.496Z","who":"builder-260","what":"made a lantern"}
+{"at":"2026-11-13T20:49:57.788Z","who":"builder-265","what":"let the hearth settle"}
+{"at":"2026-11-13T20:50:00.989Z","who":"builder-266","what":"found the ignition"}
+{"at":"2026-11-13T20:50:03.191Z","who":"builder-269","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:03.623Z","who":"builder-266","what":"found the reflection"}
+{"at":"2026-11-13T20:50:04.074Z","who":"builder-268","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:04.473Z","who":"builder-269","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:04.542Z","who":"builder-266","what":"made a lantern"}
+{"at":"2026-11-13T20:50:07.266Z","who":"builder-265","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:09.962Z","who":"builder-266","what":"found the ignition"}
+{"at":"2026-11-13T20:50:10.533Z","who":"builder-266","what":"found the reflection"}
+{"at":"2026-11-13T20:50:11.267Z","who":"builder-266","what":"made a lantern"}
+{"at":"2026-11-13T20:50:16.886Z","who":"builder-267","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:17.507Z","who":"builder-266","what":"found the ignition"}
+{"at":"2026-11-13T20:50:18.266Z","who":"builder-266","what":"found the reflection"}
+{"at":"2026-11-13T20:50:19.280Z","who":"builder-266","what":"made a lantern"}
+{"at":"2026-11-13T20:50:22.129Z","who":"builder-265","what":"lit the hearth"}
+{"at":"2026-11-13T20:50:23.275Z","who":"builder-270","what":"let the hearth settle"}
+{"at":"2026-11-13T20:50:24.649Z","who":"builder-266","what":"opened the mystery box"}
+{"at":"2026-11-13T20:50:30.566Z","who":"builder-270","what":"found the ignition"}
+{"at":"2026-11-13T20:50:34.371Z","who":"builder-270","what":"found the reflection"}
+{"at":"2026-11-13T20:50:34.933Z","who":"builder-270","what":"made a lantern"}
+{"at":"2026-11-13T20:50:57.796Z","who":"builder-270","what":"opened the mystery box"}
