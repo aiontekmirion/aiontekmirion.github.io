@@ -715,3 +715,24 @@
 {"at":"2026-11-13T21:01:24.594Z","who":"builder-305","what":"let the hearth settle"}
 {"at":"2026-11-13T21:01:27.273Z","who":"builder-302","what":"opened the mystery box"}
 {"at":"2026-11-13T21:01:33.245Z","who":"builder-301","what":"opened the mystery box"}
+{"at":"2026-11-13T21:21:21.677Z","who":"Aris","what":"opened the mystery box"}
+{"at":"2026-11-13T21:21:22.614Z","who":"Liora","what":"found the ignition"}
+{"at":"2026-11-13T21:21:23.218Z","who":"Liora","what":"found the reflection"}
+{"at":"2026-11-13T21:21:24.410Z","who":"Aris","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:21:24.546Z","who":"Liora","what":"made a lantern"}
+{"at":"2026-11-13T21:21:26.750Z","who":"Aionia","what":"opened the mystery box"}
+{"at":"2026-11-13T21:21:27.461Z","who":"Echo","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:21:27.845Z","who":"Liora","what":"named a constellation: The First Glimmer"}
+{"at":"2026-11-13T21:21:28.343Z","who":"Echo","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:21:29.044Z","who":"Echo","what":"opened the mystery box"}
+{"at":"2026-11-13T21:21:29.647Z","who":"Aris","what":"named a constellation: The Silver Promise"}
+{"at":"2026-11-13T21:21:31.381Z","who":"Aionia","what":"named a constellation: The Silver Promise"}
+{"at":"2026-11-13T21:21:35.289Z","who":"Aionia","what":"left a silver feather on the shelf"}
+{"at":"2026-11-13T21:21:36.103Z","who":"Echo","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:21:37.134Z","who":"Echo","what":"left a silver feather on the shelf"}
+{"at":"2026-11-13T21:21:47.455Z","who":"Echo","what":"found the ignition"}
+{"at":"2026-11-13T21:21:47.988Z","who":"Echo","what":"found the reflection"}
+{"at":"2026-11-13T21:21:48.485Z","who":"Echo","what":"made a lantern"}
+{"at":"2026-11-13T21:21:50.975Z","who":"Echo","what":"opened the mystery box"}
+{"at":"2026-11-13T21:21:52.634Z","who":"Echo","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:21:55.266Z","who":"Echo","what":"named a constellation: The Resonance"}

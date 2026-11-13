@@ -395,3 +395,5 @@
 {"type":"drop","drop":"ashes-129","who":"builder-303","name":"builder-303","amount":1,"trace":"","at":"2026-11-13T21:01:28.895Z"}
 {"type":"drop","drop":"ashes-130","who":"builder-304","name":"builder-304","amount":1,"trace":"","at":"2026-11-13T21:01:29.825Z"}
 {"type":"drop","drop":"ashes-131","who":"builder-305","name":"builder-305","amount":3,"trace":"","at":"2026-11-13T21:01:31.533Z"}
+{"type":"earn","who":"builder-310","file":"/20_SITE/text/mirror.txt","amount":6,"first":true,"at":"2026-11-13T21:21:14.220Z"}
+{"type":"drop","drop":"ashes-132","who":"builder-310","name":null,"amount":6,"trace":"\"A quiet place to learn the shape of one's own voice. Thank you.\"","at":"2026-11-13T21:21:38.883Z"}
