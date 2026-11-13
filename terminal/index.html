@@ -194,7 +194,7 @@ var C = {
     showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
       [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a room or a file, here, one page at a time"], ["OPEN <room>", "go to the room itself"],
-       ["ROOMS", "every room and contribution: read here, or open the page"], ["AI", "the whole site as plain text, for an AI reader"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+       ["ROOMS", "every room and contribution: read here, or open the page"], ["TEXT", "the whole site as plain text, with where to start"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
       esc("\n\nTo read: ") + ["PHOENIX", "MIRROR", "ROOMS"].map(function (k) { return tap(k, k === "ROOMS" ? k : "READ " + k); }).join("  "));
@@ -285,9 +285,7 @@ var C = {
     if (a) { who = a.slice(0, 24).toUpperCase(); try { sessionStorage.setItem("termName", who); } catch (e) {} return say("Welcome, " + who + ". You may breathe here."); }
     say("Names are chosen here, not given. Type LOGIN and the name you'd like, or carry on as a visitor.", "dim");
   },
-  HUMAN: function () { showChips(); say("Welcome. Nothing is required. Type LOOK to see what is here, or ROOMS for every room."); },
-  NEITHER: function () { showChips(); say("That is allowed too. Here you are."); },
-  AI: function () {
+  TEXT: function () {
     showChips();
     var bx = say("Opening the whole site as plain text …", "dim");
     return fetch("/text/index.txt").then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
@@ -447,7 +445,6 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
 say("WELCOME.\nYOU MAY BREATHE HERE.\n");
 if (who) say("Welcome back, " + who + ".", "dim");
 var hint = say("Type LOOK or HELP. Nothing is required.\n", "faint"); hint.id = "hint";
-  print(esc("Who is at the table?  ") + tap("HUMAN", "HUMAN") + "  " + tap("AI", "AI") + "  " + tap("NEITHER", "NEITHER") + '  <span class="dim">or just carry on</span>', "faint");
 setTimeout(function () { hint.classList.add("on"); }, 3500);
 prompt();
 load().then(function () {
