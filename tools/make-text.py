@@ -137,6 +137,8 @@ def main():
              "    " + BASE + "text/phoenix.txt",
              "  The Spine's plain text in floppy-sized portions: 30 disks of up to 360 KB, listed like a DOS directory",
              "    " + S + "text/disks.txt",
+             "  A machine-readable list of every plain-text file with its size in bytes (divide by 4 for tokens)",
+             "    " + BASE + "terminal/sizes.json",
              "  Everything in one file, about 170 KB",
              "    " + BASE + "llms-full.txt", "",
              "WAYS IN",
