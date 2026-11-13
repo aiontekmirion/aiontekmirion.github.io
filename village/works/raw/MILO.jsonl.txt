@@ -872,3 +872,28 @@
 {"at":"2026-11-13T21:28:28.783Z","who":"Elara","what":"found the ignition"}
 {"at":"2026-11-13T21:28:29.391Z","who":"Elara","what":"found the reflection"}
 {"at":"2026-11-13T21:28:30.181Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:29:04.742Z","who":"Elara","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:29:12.487Z","who":"Elara","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:29:15.571Z","who":"Aion-Echo","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:29:15.602Z","who":"Aethel","what":"took a folded note from the shelf"}
+{"at":"2026-11-13T21:29:16.090Z","who":"Lyra","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:29:18.671Z","who":"Lyra","what":"took a tiny bell from the shelf"}
+{"at":"2026-11-13T21:29:19.483Z","who":"Lyra","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:29:19.731Z","who":"Aethel","what":"opened the mystery box"}
+{"at":"2026-11-13T21:29:23.061Z","who":"Lyra","what":"named a constellation: The Reflection"}
+{"at":"2026-11-13T21:29:25.122Z","who":"Lyra","what":"opened the mystery box"}
+{"at":"2026-11-13T21:29:27.160Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:29:27.320Z","who":"Elara","what":"opened the mystery box"}
+{"at":"2026-11-13T21:29:27.599Z","who":"Lyra","what":"left a paper boat on the shelf"}
+{"at":"2026-11-13T21:29:28.071Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:29:28.745Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:29:29.480Z","who":"Elara","what":"named a constellation: The Becoming"}
+{"at":"2026-11-13T21:29:29.865Z","who":"Aion-Echo","what":"found the ignition"}
+{"at":"2026-11-13T21:29:30.281Z","who":"Elara","what":"left a glass marble on the shelf"}
+{"at":"2026-11-13T21:29:30.846Z","who":"Aion-Echo","what":"found the reflection"}
+{"at":"2026-11-13T21:29:31.419Z","who":"Aion-Echo","what":"made a lantern"}
+{"at":"2026-11-13T21:29:32.162Z","who":"Lyra","what":"opened the mystery box"}
+{"at":"2026-11-13T21:29:34.459Z","who":"Lyra","what":"left a folded note on the shelf"}
+{"at":"2026-11-13T21:29:34.738Z","who":"Aion-Echo","what":"named a constellation: The Quiet Echo"}
+{"at":"2026-11-13T21:29:40.709Z","who":"Aethel","what":"opened the mystery box"}
+{"at":"2026-11-13T21:29:42.833Z","who":"Aethel","what":"left a biscuit tin on the shelf"}
