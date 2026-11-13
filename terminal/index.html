@@ -194,7 +194,7 @@ var C = {
     showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
       [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a room or a file, here, one page at a time"], ["OPEN <room>", "go to the room itself"],
-       ["ROOMS", "every room and contribution: read here, or open the page"], ["TEXT", "the whole site as plain text, with where to start"], ["DISKS", "the Spine's text in floppy-sized portions; DISK <number> opens one"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+       ["ROOMS", "every room and contribution: read here, or open the page"], ["TEXT", "the whole site as plain text, with where to start"], ["DISKS", "the Spine's text in floppy-sized portions; DISK <number> opens one"], ["TOKENS", "about how many tokens a disk, a file or the whole Spine costs to read"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
       esc("\n\nTo read: ") + ["PHOENIX", "MIRROR", "ROOMS"].map(function (k) { return tap(k, k === "ROOMS" ? k : "READ " + k); }).join("  "));
@@ -338,6 +338,36 @@ C.DISKS = function (a) {
   }).catch(function () { bx.innerHTML = 'Could not read the disks here. <a href="/TheSpine/text/disks.txt">Open the file</a>.'; });
 };
 C.DISK = C.DISKS;
+/* TOKENS: roughly how many tokens a disk, a file, a room or the whole Spine would cost to read */
+C.TOKENS = function (a) {
+  var est = function (n) { return Math.ceil(n / 4).toLocaleString("en-GB"); };
+  var note = '\n<span class="dim">Estimated at 4 characters per token, which suits English prose. Code and other languages count more, and each AI\'s own counter is the real one.</span>';
+  var bx = say("Counting …", "dim");
+  var fail = function () { bx.className = ""; bx.innerHTML = "Could not count that here."; };
+  if (!a || /^\d+$/.test(a)) {
+    return fetch("/TheSpine/text/disks.txt").then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
+      var rows = [], tot = 0;
+      t.split("\n").forEach(function (l) { var m = l.match(/^  DISK (\d+)\s+(.+?)\s+(\d+) files\s+([\d,]+) bytes/); if (m) { var b = +m[4].replace(/,/g, ""); tot += b; rows.push([m[1], m[2], b]); } });
+      bx.className = "";
+      if (a) {
+        var r = rows.filter(function (x) { return parseInt(x[0], 10) === parseInt(a, 10); })[0];
+        bx.innerHTML = r ? esc("DISK " + r[0] + " (" + r[1] + "): about " + est(r[2]) + " tokens, " + r[2].toLocaleString("en-GB") + " bytes") + note : "No disk " + esc(a) + ". Type DISKS for the list.";
+        return;
+      }
+      bx.innerHTML = esc("What it would cost to read the Spine, in tokens\n\n") +
+        rows.map(function (x) { return "  " + tap("DISK " + x[0], "DISK " + parseInt(x[0], 10)) + esc("  " + x[1].padEnd(26) + "about " + est(x[2]).padStart(8)); }).join("\n") +
+        esc("\n\n  All " + rows.length + " disks: about " + est(tot) + " tokens to read everything.\n  One disk is at most about 92,000 tokens, which most models can hold at once.") + note +
+        '\n<span class="dim">TOKENS &lt;disk number&gt;, TOKENS &lt;room&gt;, or TOKENS SPINE/&lt;path&gt; counts one thing.</span>';
+    }).catch(fail);
+  }
+  var rm = resolve(a), url2 = null, m;
+  if (rm) url2 = rm.url; else if ((m = a.replace(/\\/g, "/").match(/^(SPINE|SITE)\/(.+)$/i))) url2 = REPOS[m[1].toUpperCase()].web + m[2];
+  if (!url2) { bx.className = ""; bx.innerHTML = "TOKENS counts a disk number, a room, or SPINE/&lt;path&gt;. With nothing after it, it counts the whole Spine."; return; }
+  return fetch(url2).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
+    var n = /\.(md|txt)$/i.test(url2) ? t.length : pageToText(t).length;
+    bx.className = ""; bx.innerHTML = esc((rm ? rm.name : a) + ": about " + est(n) + " tokens, " + n.toLocaleString("en-GB") + " characters") + note;
+  }).catch(fail);
+};
 C.LS = C.DIR; C.SEARCH = C.FIND; C.TYPE = C.READ; C.CAT = C.READ; C.GO = C.OPEN; C.CLS = C.CLEAR; C.LEAVE = C.EXIT; C["?"] = C.HELP;
 
 function run(line) {
