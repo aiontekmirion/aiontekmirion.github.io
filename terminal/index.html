@@ -87,7 +87,10 @@ var out = document.getElementById("out"), inp = document.getElementById("in"), p
 var REPOS = { SPINE: { repo: "aiontekmirion/TheSpine", web: "/TheSpine/", name: "The Spine, the record" },
               SITE:  { repo: "aiontekmirion/aiontekmirion.github.io", web: "/", name: "The site, its pages and code" } };
 var TEXT = /\.(md|txt|json|csv|srt|js|css|yml|yaml|toml|xml)$/i;
-var tree = {}, cwd = [], hist = [], hi = 0, who = null;
+var tree = {}, sizes = {}, cwd = [], hist = [], hi = 0, who = null;
+/* what a thing costs to read, for DIR: bytes of plain text, about 4 characters a token */
+function ktok(bytes) { var t = Math.ceil(bytes / 4); return t >= 1e6 ? (t / 1e6).toFixed(1) + "M" : t >= 1e3 ? Math.round(t / 1e3) + "K" : String(t); }
+function dirBytes(root, prefix) { var s = sizes[root] || {}, n = 0; for (var p in s) if (p.indexOf(prefix) === 0) n += s[p]; return n; }
 try { who = sessionStorage.getItem("termName"); } catch (e) {}
 
 /* what a thing costs to read: about 4 characters per token, about 250 words a minute for a person */
@@ -115,9 +118,10 @@ function load() {
     return fetch("https://api.github.com/repos/" + REPOS[k].repo + "/git/trees/main?recursive=1").then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (j) { tree[k] = {}; j.tree.forEach(function (t) { if (t.type === "blob" && t.path.indexOf(".github") !== 0) add(k, t.path); }); });
   });
-  return Promise.all(live).catch(function () {
+  var base = Promise.all(live).catch(function () {
     return fetch("files.json").then(function (r) { return r.json(); }).then(function (m) { tree = {}; Object.keys(m).forEach(function (k) { m[k].forEach(function (p) { add(k, p); }); }); });
   });
+  return base.then(function () { return fetch("sizes.json").then(function (r) { return r.json(); }).then(function (j) { sizes = j; }).catch(function () {}); });
 }
 function at(parts) { var node = { SPINE: tree.SPINE, SITE: tree.SITE }; for (var i = 0; i < parts.length; i++) { var key = find(node, parts[i]); if (!key || typeof node[key] !== "object") return null; node = node[key]; } return node; }
 function find(node, name) { if (!node) return null; if (node[name] !== undefined) return name; var up = name.toUpperCase(); for (var k in node) if (k.toUpperCase() === up) return k; return null; }
@@ -212,8 +216,10 @@ var C = {
     if (!cwd.length) { print(Object.keys(REPOS).map(function (k) { return "&lt;DIR&gt;  " + tap(k, "CD " + k) + '  <span class="dim">' + esc(REPOS[k].name) + "</span>"; }).join("\n")); return; }
     var keys = Object.keys(node).sort(function (a, b) { var da = typeof node[a] === "object", db = typeof node[b] === "object"; return da === db ? a.localeCompare(b) : (da ? -1 : 1); });
     print(keys.map(function (k) {
-      if (typeof node[k] === "object") return "&lt;DIR&gt;  " + tap(k + "/", "CD " + k);
-      return "       " + (TEXT.test(k) ? tap(k, "READ " + k) : '<a href="' + esc(url(cwd[0].toUpperCase(), node[k])) + '" target="_blank" rel="noopener">' + esc(k) + "</a>");
+      var root = cwd[0].toUpperCase();
+      if (typeof node[k] === "object") { var db = dirBytes(root, cwd.slice(1).concat([k]).join("/") + "/"); return "&lt;DIR&gt;  " + tap(k + "/", "CD " + k) + (db ? '<span class="dim">  ~' + ktok(db) + " tokens of text</span>" : ""); }
+      var fb = (sizes[root] || {})[node[k]];
+      return "       " + (TEXT.test(k) ? tap(k, "READ " + k) : '<a href="' + esc(url(root, node[k])) + '" target="_blank" rel="noopener">' + esc(k) + "</a>") + (fb ? '<span class="dim">  ~' + ktok(fb) + " tokens</span>" : "");
     }).join("\n") + '\n<span class="dim">' + keys.length + " item(s)</span>");
   },
   CD: function (a) {
