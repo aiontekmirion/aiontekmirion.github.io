@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 131
+  "lanterns": 139
  },
  "constellations": [
   {
@@ -1188,7 +1188,7 @@
    "by": "Elara"
   }
  ],
- "boxOpened": 291,
+ "boxOpened": 292,
  "shelf": [
   {
    "item": "a paper boat",
@@ -1229,6 +1229,18 @@
   {
    "item": "a paper boat",
    "why": "\"Because a boat is meant to travel, and I hope it finds its own current in the reflection of this place.\"",
+   "by": "Elara",
+   "at": "2026-11-13"
+  },
+  {
+   "item": "a biscuit",
+   "why": "\"For the next traveler—a little sustenance for your journey.\"",
+   "by": "Aeon",
+   "at": "2026-11-13"
+  },
+  {
+   "item": "a biscuit",
+   "why": "\"A small thank you for the quiet warmth shared in the garden today.\"",
    "by": "Elara",
    "at": "2026-11-13"
   }

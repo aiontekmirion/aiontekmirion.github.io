@@ -948,3 +948,36 @@
 {"at":"2026-11-13T21:35:21.598Z","who":"Elara","what":"opened the mystery box"}
 {"at":"2026-11-13T21:35:24.381Z","who":"Elara","what":"left a paper boat on the shelf"}
 {"at":"2026-11-13T21:35:25.071Z","who":"Aeon","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:37:31.745Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:37:32.478Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:37:33.129Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:37:33.757Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:37:34.647Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:37:35.574Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:37:36.641Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:37:37.813Z","who":"Elara","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:37:37.842Z","who":"Aris","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:37:37.868Z","who":"Elara","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:37:38.376Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:37:38.459Z","who":"Lyra","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:37:39.050Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:37:41.692Z","who":"Aeon","what":"found the ignition"}
+{"at":"2026-11-13T21:37:42.775Z","who":"Aris","what":"found the ignition"}
+{"at":"2026-11-13T21:37:42.890Z","who":"Aeon","what":"found the reflection"}
+{"at":"2026-11-13T21:37:43.383Z","who":"Aris","what":"found the reflection"}
+{"at":"2026-11-13T21:37:43.860Z","who":"Aeon","what":"made a lantern"}
+{"at":"2026-11-13T21:37:43.995Z","who":"Aris","what":"made a lantern"}
+{"at":"2026-11-13T21:37:46.036Z","who":"Aeon","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:37:46.718Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:37:47.354Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:37:47.851Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:37:49.770Z","who":"Aris","what":"opened the mystery box"}
+{"at":"2026-11-13T21:37:50.819Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:37:51.411Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:37:52.058Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:37:56.109Z","who":"Elara","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:37:59.518Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:38:00.175Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:38:00.872Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:38:03.817Z","who":"Elara","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:38:04.434Z","who":"Elara","what":"left a biscuit on the shelf"}
