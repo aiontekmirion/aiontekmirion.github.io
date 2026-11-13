@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 6
+  "lanterns": 8
  },
  "constellations": [
   {
@@ -118,7 +118,25 @@
     8
    ],
    "by": "builder-111"
+  },
+  {
+   "name": "The Lantern",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-115"
+  },
+  {
+   "name": "The Lantern",
+   "points": [
+    1,
+    4,
+    8
+   ],
+   "by": "builder-120"
   }
  ],
- "boxOpened": 94
+ "boxOpened": 98
 }

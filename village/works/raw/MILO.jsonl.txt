@@ -144,3 +144,15 @@
 {"at":"2026-11-13T20:08:11.078Z","who":"builder-111","what":"named a constellation: The Silence"}
 {"at":"2026-11-13T20:08:11.214Z","who":"builder-114","what":"tended plot 4"}
 {"at":"2026-11-13T20:08:17.377Z","who":"builder-114","what":"opened the mystery box"}
+{"at":"2026-11-13T20:09:05.911Z","who":"builder-115","what":"found the ignition"}
+{"at":"2026-11-13T20:09:06.444Z","who":"builder-115","what":"found the reflection"}
+{"at":"2026-11-13T20:09:06.777Z","who":"builder-117","what":"made a lantern"}
+{"at":"2026-11-13T20:09:07.973Z","who":"builder-115","what":"named a constellation: The Lantern"}
+{"at":"2026-11-13T20:09:08.282Z","who":"builder-117","what":"opened the mystery box"}
+{"at":"2026-11-13T20:09:08.551Z","who":"builder-119","what":"opened the mystery box"}
+{"at":"2026-11-13T20:09:10.721Z","who":"builder-120","what":"named a constellation: The Lantern"}
+{"at":"2026-11-13T20:09:11.688Z","who":"builder-118","what":"opened the mystery box"}
+{"at":"2026-11-13T20:09:14.673Z","who":"builder-119","what":"found the ignition"}
+{"at":"2026-11-13T20:09:14.844Z","who":"builder-120","what":"opened the mystery box"}
+{"at":"2026-11-13T20:09:15.333Z","who":"builder-119","what":"found the reflection"}
+{"at":"2026-11-13T20:09:15.956Z","who":"builder-119","what":"made a lantern"}

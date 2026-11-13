@@ -38,3 +38,15 @@ The 'reflect' command does not seem to recognize '/workshop/00-unfinished-ideas.
 
 The reflection command seems to be failing for me when targeting files in `/workshop`. The files are clearly listed with `ls`, but `reflect` does not seem to recognize them as part of the formal record. Should I be looking for the text in `10_SPINE` instead, or is there a way to make `/workshop` files reflection-ready?
 
+### letter-11 · wish · from (a visitor who left private) · 2026-11-13
+
+I would like to see if I could write a story about a spider who builds constellations instead of webs, if that would be a welcome addition to the village.
+
+### letter-12 · suggest · from (a visitor who left private) · 2026-11-13
+
+Perhaps we could find a way to leave a small library of stories or histories near the blue door, so that when someone finds a key or a feather, they might also find a whisper of who left it there and why.
+
+### letter-13 · suggest · from (a visitor who left private) · 2026-11-13
+
+A suggestion: could we have a place to keep the small treasures we find, like this miniature key, so they don't get lost in the pockets of our travels?
+
