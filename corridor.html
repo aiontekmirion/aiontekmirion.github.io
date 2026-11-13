@@ -70,7 +70,9 @@ html,body{margin:0;width:100%;height:100%;background:#050607;color:#eee;font-fam
 #stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);aspect-ratio:1671/941;width:min(100vw,calc(100vh*1671/941));width:min(100vw,calc(100dvh*1671/941));background-color:#000;background-size:100% 100%;background-repeat:no-repeat}
 #room:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 40%,rgba(0,0,0,.22))}
 button{font:inherit}
-.hot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:18px;outline:none}
+.hot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:18px;outline:none;min-width:24px;min-height:24px}
+.hot:focus-visible{outline:2px solid rgba(255,225,180,.95);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .hot:focus-visible,.hot:hover{box-shadow:inset 0 0 0 1px rgba(255,220,150,.32),0 0 24px rgba(255,170,70,.13)}
 #terminalHot{left:3.5%;top:32%;width:8.5%;height:32%}
 #gramHot{left:19.5%;top:43%;width:6.5%;height:13%}
@@ -80,7 +82,7 @@ button{font:inherit}
 #tableHot{left:0;top:64%;width:26%;height:30%}
 #coffeeHot{left:88.5%;top:46%;width:10%;height:20%}
 #mugHot{left:3.4%;top:70.5%;width:5%;height:9.5%}
-#mug2Hot{left:69.4%;top:69.5%;width:5.4%;height:7.8%}
+#mug2Hot{left:69.4%;top:67.6%;width:5.4%;height:11.4%}
 #goldHot{left:29%;top:27%;width:4.5%;height:31%}
 #table2Hot{left:67.5%;top:79%;width:17%;height:21%}
 #unclaimedHot{left:28%;top:88%;width:35%;height:12%}
@@ -1801,6 +1803,7 @@ Not knowing is allowed. So is stopping. So is leaving.</pre>
 
 <button type="button" id="toWords">The Room in words</button>
 <main id="room" aria-label="The Room. Same room, different visitors, always open.">
+<h1 class="sr">The Room</h1>
 <div id="stage">
 <button class="hot" id="terminalHot" aria-label="Approach terminal"></button>
 <button class="hot" id="gramHot" aria-label="Approach gramophone"></button>

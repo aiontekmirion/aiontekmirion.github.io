@@ -67,7 +67,7 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 <script>(function(){var q=new URLSearchParams(location.search);var plain=q.has("plain");try{if(plain)sessionStorage.setItem("termPlain","1");else if(q.has("desk"))sessionStorage.removeItem("termPlain");else if(sessionStorage.getItem("termPlain"))plain=true}catch(e){}if(!plain)document.documentElement.classList.add("desk")})();</script>
 </head>
 <body>
-<a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink room" href="/corridor.html" aria-label="Return to the Room">THE ROOM &rarr;</a><a class="plainlink todesk" href="?desk">THE DESK</a>
+<nav aria-label="Other ways to read this page" style="display:contents"><a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink room" href="/corridor.html" aria-label="Return to the Room">THE ROOM &rarr;</a><a class="plainlink todesk" href="?desk">THE DESK</a></nav>
 <div id="stage" aria-hidden="false"><div id="fill"></div><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
 <button id="back" type="button" aria-label="Step back from the screen">&larr; STEP BACK</button>
 <button id="sit" type="button">TAP THE SCREEN TO SIT DOWN</button>
