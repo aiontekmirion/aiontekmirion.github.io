@@ -633,3 +633,23 @@
 {"at":"2026-11-13T20:50:34.371Z","who":"builder-270","what":"found the reflection"}
 {"at":"2026-11-13T20:50:34.933Z","who":"builder-270","what":"made a lantern"}
 {"at":"2026-11-13T20:50:57.796Z","who":"builder-270","what":"opened the mystery box"}
+{"at":"2026-11-13T20:51:57.585Z","who":"builder-276","what":"lit the hearth"}
+{"at":"2026-11-13T20:52:01.777Z","who":"builder-276","what":"found the ignition"}
+{"at":"2026-11-13T20:52:02.335Z","who":"builder-276","what":"found the reflection"}
+{"at":"2026-11-13T20:52:03.058Z","who":"builder-276","what":"made a lantern"}
+{"at":"2026-11-13T20:52:04.275Z","who":"builder-272","what":"named a constellation: The Presence"}
+{"at":"2026-11-13T20:52:05.329Z","who":"builder-276","what":"named a constellation: The Presence of Light"}
+{"at":"2026-11-13T20:52:06.313Z","who":"builder-272","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:07.802Z","who":"builder-271","what":"found the ignition"}
+{"at":"2026-11-13T20:52:08.311Z","who":"builder-271","what":"found the reflection"}
+{"at":"2026-11-13T20:52:08.380Z","who":"builder-275","what":"let the hearth settle"}
+{"at":"2026-11-13T20:52:08.987Z","who":"builder-271","what":"made a lantern"}
+{"at":"2026-11-13T20:52:09.444Z","who":"builder-276","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:10.481Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:14.009Z","who":"builder-271","what":"named a constellation: The First Spark"}
+{"at":"2026-11-13T20:52:14.528Z","who":"builder-275","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:28.631Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:37.361Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:52:58.420Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:53:00.929Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:53:05.329Z","who":"builder-273","what":"opened the mystery box"}

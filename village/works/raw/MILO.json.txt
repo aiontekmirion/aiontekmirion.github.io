@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 75
+  "lanterns": 77
  },
  "constellations": [
   {
@@ -944,9 +944,35 @@
     3
    ],
    "by": "builder-259"
+  },
+  {
+   "name": "The Presence",
+   "points": [
+    1,
+    9
+   ],
+   "by": "builder-272"
+  },
+  {
+   "name": "The Presence of Light",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-276"
+  },
+  {
+   "name": "The First Spark",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-271"
   }
  ],
- "boxOpened": 236,
+ "boxOpened": 245,
  "shelf": [
   {
    "item": "a folded note",
