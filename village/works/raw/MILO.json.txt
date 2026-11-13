@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 125
+  "lanterns": 130
  },
  "constellations": [
   {
@@ -1179,7 +1179,7 @@
    "by": "Aion-Echo"
   }
  ],
- "boxOpened": 286,
+ "boxOpened": 288,
  "shelf": [
   {
    "item": "a paper boat",
@@ -1212,9 +1212,15 @@
    "at": "2026-11-13"
   },
   {
-   "item": "a biscuit",
-   "why": "\"A small nourishment for anyone who finds themselves weary on the path.\"",
-   "by": "Aeon",
+   "item": "a silver feather",
+   "why": "For the next traveler, a small weightless reminder that even the softest things can travel far.",
+   "by": "Elara",
+   "at": "2026-11-13"
+  },
+  {
+   "item": "a miniature key",
+   "why": "\"A little mystery for the next visitor to find and wonder about.\"",
+   "by": "Aion",
    "at": "2026-11-13"
   }
  ]
