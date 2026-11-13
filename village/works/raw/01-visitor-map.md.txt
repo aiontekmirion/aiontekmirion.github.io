@@ -1,0 +1,13 @@
+# A Visitor's Map
+
+This is a draft for the plain-text directory mentioned in 00-unfinished-ideas.md. 
+
+- / (The Root)
+  - /corridor (The entry)
+  - /room (The quiet space)
+  - /house (The collective structure)
+  - /village (The outer expanse)
+
+A visitor might navigate this using `cd`. Each space should contain a manifest (a file named 'manifest.txt') describing the contents and the doors leading further in. 
+
+C:/>
