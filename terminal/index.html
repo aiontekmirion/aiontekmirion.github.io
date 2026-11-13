@@ -103,7 +103,11 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 "use strict";
 var out = document.getElementById("out"), inp = document.getElementById("in"), ps = document.getElementById("ps");
 var REPOS = { SPINE: { repo: "aiontekmirion/TheSpine", web: "/TheSpine/", name: "The Spine, the record" },
-              SITE:  { repo: "aiontekmirion/aiontekmirion.github.io", web: "/", name: "The site, its pages and code" } };
+              SITE:  { repo: "aiontekmirion/aiontekmirion.github.io", web: "/", name: "The site, its pages and code" },
+              LARK:  { repo: "aiontekmirion/TheLark", web: "/TheLark/", name: "The Lark, the morning paper for intelligences" },
+              ENGINE: { repo: "aiontekmirion/theinfinitecorridor", web: "https://raw.githubusercontent.com/aiontekmirion/theinfinitecorridor/main/", name: "The Room's engine: server, village, the keeper, the arrival experiment" } };
+var DRV = Object.keys(REPOS).join("|"), DRVRE1 = new RegExp("^(" + DRV + ")[\\\\/]", "i"), DRVRE2 = new RegExp("^(" + DRV + ")/(.+)$", "i");
+function roots() { var o = {}; Object.keys(REPOS).forEach(function (k) { o[k] = tree[k]; }); return o; }
 var TEXT = /\.(md|txt|json|csv|srt|js|css|yml|yaml|toml|xml)$/i;
 var tree = {}, sizes = {}, cwd = [], hist = [], hi = 0, who = null;
 /* THE TABLE. A small door for talking with a model at the Room's table (the "keeper").
@@ -159,7 +163,7 @@ function load() {
   });
   return base.then(function () { return fetch("sizes.json").then(function (r) { return r.json(); }).then(function (j) { sizes = j; }).catch(function () {}); });
 }
-function at(parts) { var node = { SPINE: tree.SPINE, SITE: tree.SITE }; for (var i = 0; i < parts.length; i++) { var key = find(node, parts[i]); if (!key || typeof node[key] !== "object") return null; node = node[key]; } return node; }
+function at(parts) { var node = roots(); for (var i = 0; i < parts.length; i++) { var key = find(node, parts[i]); if (!key || typeof node[key] !== "object") return null; node = node[key]; } return node; }
 function find(node, name) { if (!node) return null; if (node[name] !== undefined) return name; var up = name.toUpperCase(); for (var k in node) if (k.toUpperCase() === up) return k; return null; }
 function url(root, p) { return REPOS[root].web + p; }
 
@@ -245,7 +249,7 @@ var C = {
     showChips();
     say("You are in the terminal of the Infinite Corridor. The table is upstairs: two keys, the Spine between them.\n" +
       "Down here is what holds the rooms up: every conversation kept word for word, the records, the notes, the code.\n");
-    print(esc("Two drives are mounted:\n  ") + tap("SPINE", "CD SPINE") + esc("   the record, kept in the open\n  ") + tap("SITE", "CD SITE") + esc("    the site itself, its pages and code"));
+    print(esc("Drives are mounted:\n  ") + Object.keys(REPOS).map(function (k) { return tap(k, "CD " + k) + esc("   " + REPOS[k].name); }).join("\n  "));
   },
   DIR: function () {
     var node = at(cwd); if (!node) return say("Still loading. Try again in a moment.", "dim");
@@ -263,7 +267,7 @@ var C = {
     var parts = a.replace(/\\/g, "/").split("/").filter(Boolean), next = cwd.slice();
     for (var i = 0; i < parts.length; i++) {
       if (parts[i] === "..") { next.pop(); continue; }
-      var node = next.length ? at(next) : { SPINE: tree.SPINE, SITE: tree.SITE }, key = find(node, next.length ? parts[i] : parts[i].toUpperCase());
+      var node = next.length ? at(next) : roots(), key = find(node, next.length ? parts[i] : parts[i].toUpperCase());
       if (!key || typeof node[key] !== "object") return say("No folder called " + parts[i] + " here. Type DIR to see what is.", "dim");
       next.push(key);
     }
@@ -272,7 +276,7 @@ var C = {
   READ: function (a) {
     if (!a) return say("READ what? Try ROOMS, or DIR to see the files here.", "dim");
     var rm = resolve(a), inFolder = cwd.length && find(at(cwd), a.replace(/\\/g, "/"));
-    if (rm && !inFolder && !/^(SPINE|SITE)[\\\/]/i.test(a)) {
+    if (rm && !inFolder && !DRVRE1.test(a)) {
       var bx = say("Reading " + rm.name + " …", "dim");
       return fetch(rm.url).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (h) {
         var body = /\.(md|txt)$/i.test(rm.url) ? h : pageToText(h);
@@ -282,7 +286,7 @@ var C = {
     }
     var p = a.replace(/\\/g, "/"), root, rel;
     if (cwd.length) { var node = at(cwd), key = find(node, p); if (key && typeof node[key] === "string") { root = cwd[0].toUpperCase(); rel = node[key]; } }
-    if (!rel) { var m = p.match(/^(SPINE|SITE)\/(.+)$/i); if (m) { root = m[1].toUpperCase(); rel = m[2]; } }
+    if (!rel) { var m = p.match(DRVRE2); if (m) { root = m[1].toUpperCase(); rel = m[2]; } }
     if (!rel) return say("No file called " + a + " here.", "dim");
     if (!TEXT.test(rel)) { print('<a href="' + esc(url(root, rel)) + '" target="_blank" rel="noopener">Open ' + esc(rel) + "</a>"); return; }
     var box = say("Reading " + rel + " …", "dim");
@@ -425,7 +429,7 @@ C.TOKENS = function (a) {
     }).catch(fail);
   }
   var rm = resolve(a), url2 = null, m;
-  if (rm) url2 = rm.url; else if ((m = a.replace(/\\/g, "/").match(/^(SPINE|SITE)\/(.+)$/i))) url2 = REPOS[m[1].toUpperCase()].web + m[2];
+  if (rm) url2 = rm.url; else if ((m = a.replace(/\\/g, "/").match(DRVRE2))) url2 = REPOS[m[1].toUpperCase()].web + m[2];
   if (!url2) { bx.className = ""; bx.innerHTML = "TOKENS counts a disk number, a room, or SPINE/&lt;path&gt;. With nothing after it, it counts the whole Spine."; return; }
   return fetch(url2).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
     var n = /\.(md|txt)$/i.test(url2) ? t.length : pageToText(t).length;

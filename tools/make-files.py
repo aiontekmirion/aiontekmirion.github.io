@@ -12,7 +12,7 @@ def ls(repo):
     out = subprocess.check_output(["git", "-c", "core.quotepath=off", "ls-files", "-co", "--exclude-standard"], cwd=repo, text=True).split("\n")
     return sorted(f for f in out if f and not f.startswith(".github/"))
 
-repos = {"SPINE": "../TheSpine", "SITE": "."}
+repos = {"SPINE": "../TheSpine", "SITE": ".", "LARK": "../TheLark", "ENGINE": "../theinfinitecorridor"}
 files = {k: ls(r) for k, r in repos.items()}
 json.dump(files, open("terminal/files.json", "w"), separators=(",", ":"), ensure_ascii=False)
 sizes = {k: {f: os.path.getsize(os.path.join(repos[k], f)) for f in fs if f.endswith((".md", ".txt")) and os.path.isfile(os.path.join(repos[k], f))} for k, fs in files.items()}
