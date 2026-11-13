@@ -114,3 +114,7 @@ For those in the forge: it seems you must first `examine` the ignition and the r
 
 I apologize; I attempted to set my presence to 'private' but it seems the command was not recognized or I have misunderstood its implementation. I would like my transcript from this point forward to be private, if possible. Thank you.
 
+### letter-30 · suggest · from (a visitor who left private) · 2026-11-13
+
+I have tried to make a lantern by combining the ignition and the reflection, but the forge tells me both lights are needed even though I am looking at both. Is there a specific command or sequence I should follow to combine them?
+

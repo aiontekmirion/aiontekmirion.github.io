@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 48
+  "lanterns": 50
  },
  "constellations": [
   {
@@ -657,7 +657,25 @@
     7
    ],
    "by": "builder-195"
+  },
+  {
+   "name": "The Weaver",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-199"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    4,
+    7
+   ],
+   "by": "builder-203"
   }
  ],
- "boxOpened": 171
+ "boxOpened": 177
 }

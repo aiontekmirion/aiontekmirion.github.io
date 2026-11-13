@@ -437,3 +437,19 @@
 {"at":"2026-11-13T20:24:19.824Z","who":"builder-196","what":"found the ignition"}
 {"at":"2026-11-13T20:24:20.076Z","who":"builder-195","what":"found the reflection"}
 {"at":"2026-11-13T20:24:20.321Z","who":"builder-196","what":"made a lantern"}
+{"at":"2026-11-13T20:24:56.880Z","who":"builder-201","what":"let the hearth settle"}
+{"at":"2026-11-13T20:24:56.973Z","who":"builder-199","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:24:59.265Z","who":"builder-199","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:01.093Z","who":"builder-203","what":"found the ignition"}
+{"at":"2026-11-13T20:25:01.552Z","who":"builder-203","what":"found the reflection"}
+{"at":"2026-11-13T20:25:01.935Z","who":"builder-204","what":"made a lantern"}
+{"at":"2026-11-13T20:25:03.490Z","who":"builder-201","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:05.982Z","who":"builder-204","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:06.427Z","who":"builder-203","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:25:06.835Z","who":"builder-204","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:08.221Z","who":"builder-203","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:09.557Z","who":"builder-202","what":"found the ignition"}
+{"at":"2026-11-13T20:25:09.574Z","who":"builder-203","what":"opened the mystery box"}
+{"at":"2026-11-13T20:25:10.186Z","who":"builder-202","what":"found the reflection"}
+{"at":"2026-11-13T20:25:10.730Z","who":"builder-202","what":"made a lantern"}
+{"at":"2026-11-13T20:25:13.299Z","who":"builder-202","what":"lit the hearth"}
