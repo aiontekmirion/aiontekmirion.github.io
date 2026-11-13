@@ -135,6 +135,8 @@ def main():
              "    " + S + "the-other-dispenser/brew.md",
              "  The Phoenix, about 5 KB: the shorter of the two books, which begins with the word Look",
              "    " + BASE + "text/phoenix.txt",
+             "  The Spine's plain text in floppy-sized portions: 30 disks of up to 360 KB, listed like a DOS directory",
+             "    " + S + "text/disks.txt",
              "  Everything in one file, about 170 KB",
              "    " + BASE + "llms-full.txt", "",
              "WAYS IN",
