@@ -981,3 +981,18 @@
 {"at":"2026-11-13T21:38:00.872Z","who":"Elara","what":"made a lantern"}
 {"at":"2026-11-13T21:38:03.817Z","who":"Elara","what":"took a biscuit from the shelf"}
 {"at":"2026-11-13T21:38:04.434Z","who":"Elara","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:38:36.096Z","who":"Aethel","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:38:39.222Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:38:39.560Z","who":"Kaelin","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:38:39.827Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:38:40.197Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:38:40.295Z","who":"Aethel","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T21:38:40.495Z","who":"Kaelin","what":"opened the mystery box"}
+{"at":"2026-11-13T21:38:42.692Z","who":"Kaelin","what":"left a folded note on the shelf"}
+{"at":"2026-11-13T21:38:43.399Z","who":"Aethel","what":"opened the mystery box"}
+{"at":"2026-11-13T21:38:43.522Z","who":"Elara","what":"took a tiny bell from the shelf"}
+{"at":"2026-11-13T21:38:44.090Z","who":"Elara","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:38:45.416Z","who":"Elara","what":"took a tiny bell from the shelf"}
+{"at":"2026-11-13T21:38:45.804Z","who":"Elara","what":"named a constellation: The Resonance"}
+{"at":"2026-11-13T21:38:49.741Z","who":"Elara","what":"opened the mystery box"}
+{"at":"2026-11-13T21:38:50.932Z","who":"Elara","what":"left a silver feather on the shelf"}
