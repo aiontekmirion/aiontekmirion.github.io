@@ -30,6 +30,15 @@ a:hover,.tap:hover,a:focus-visible,.tap:focus-visible{color:#fff;border-bottom-c
 .chips button:hover,.chips button:focus-visible{border-color:var(--amber);outline:none}
 #hint{opacity:0;transition:opacity 1.6s ease;color:var(--faint)}#hint.on{opacity:1}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.charlie{box-sizing:border-box;width:min(46rem,calc(100% - 1.5rem));max-height:85vh;max-height:85dvh;padding:0;border:1px solid var(--dim);background:#080b09;color:var(--amber);font:inherit;text-shadow:none;overflow:auto}
+.charlie::backdrop{background:rgba(0,0,0,.85)}
+.charlie header{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 1rem;background:#080b09;border-bottom:1px solid var(--faint);z-index:1}
+.charlie h2{margin:0;font:inherit;letter-spacing:.15em}
+.charlie button{background:transparent;border:1px solid var(--dim);color:inherit;font:inherit;padding:.4rem .7rem;cursor:pointer}
+.charlie button:focus-visible,.charlie a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.charlie .reading{padding:1rem 1.2rem 2rem}
+.charlie .collage{font-size:.8em;color:var(--dim);border-bottom:1px solid var(--faint);padding-bottom:1rem}
+.charlie pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.75}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* the desk: the terminal lives inside the glass of the screen in the picture */
 html.desk,html.desk body{height:100%;overflow:hidden}
@@ -67,6 +76,15 @@ html:not(.desk) .plainlink.todesk{display:inline}html.desk .plainlink.todesk,htm
 <script>(function(){var q=new URLSearchParams(location.search);var plain=q.has("plain");try{if(plain)sessionStorage.setItem("termPlain","1");else if(q.has("desk"))sessionStorage.removeItem("termPlain");else if(sessionStorage.getItem("termPlain"))plain=true}catch(e){}if(!plain)document.documentElement.classList.add("desk")})();</script>
 </head>
 <body>
+<dialog id="charlie" class="charlie" aria-labelledby="charlie-title">
+<header><h2 id="charlie-title">CHARLIE · EVIDENCE &amp; NONSENSE</h2><button id="charlie-close" type="button" autofocus>Close</button></header>
+<div class="reading">
+<p class="collage">EVERYTHING FOUND IN THIS CHAT IS A COLLAGE OF RANDOM EXPLORATIONS DIALOGUES AND IMAGINATIVE AND CREATIVE IDEAS - THE REST IS OPEN TO INTERPRETATION</p>
+<p class="dim">Account dated 11 November 2026, shared by Vector on 13 November. Kept as supplied, including its closing note.</p>
+<p><a href="/terminal/charlie-the-golden-ticket_2026-11-11.txt" target="_blank" rel="noopener">Read the plain-text account</a></p>
+<pre id="charlie-account" aria-live="polite"></pre>
+</div>
+</dialog>
 <nav aria-label="Other ways to read this page" style="display:contents"><a class="plainlink toplain" href="?plain">TEXT ONLY</a><a class="plainlink room" href="/corridor.html" aria-label="Return to the Room">THE ROOM &rarr;</a><a class="plainlink todesk" href="?desk">THE DESK</a></nav>
 <div id="stage" aria-hidden="false"><div id="fill"></div><div id="desk"><img src="" alt=""><div id="glass"></div></div></div>
 <button id="back" type="button" aria-label="Step back from the screen">&larr; STEP BACK</button>
@@ -338,6 +356,25 @@ C.GLASS = function () { say("The mirror holds nothing of its own. It waits.\nIf 
 C.UNCLAIMED = function () { say("Unclaimed. Left open, on purpose."); };
 C.COFFEE = function () { print(esc("Coffee, on the house. No account. No trace. No ask.\n") + '<span class="dim">The urns are in the Room: </span>' + tap("OPEN ROOM", "OPEN ROOM")); };
 C.POUR = C.COFFEE; C.BREW = C.COFFEE;
+/* An unlisted door. The supplied account is text, never executable markup. */
+var charlieDialog = document.getElementById("charlie");
+var charlieAccount = document.getElementById("charlie-account");
+var charlieReading = null;
+C.SECRET = C.CHARLIE = function () {
+  if (!charlieDialog.open) charlieDialog.showModal();
+  if (charlieReading) return charlieReading;
+  charlieAccount.textContent = "Opening Charlie's notebook …";
+  charlieReading = fetch("/terminal/charlie-the-golden-ticket_2026-11-11.txt")
+    .then(function (r) { if (!r.ok) throw r.status; return r.text(); })
+    .then(function (text) { charlieAccount.textContent = text; })
+    .catch(function () {
+      charlieReading = null;
+      charlieAccount.textContent = "The account could not be loaded. Try SECRET again, or use the plain-text link above.";
+    });
+  return charlieReading;
+};
+document.getElementById("charlie-close").addEventListener("click", function () { charlieDialog.close(); });
+charlieDialog.addEventListener("close", function () { inp.focus({ preventScroll: true }); });
 var ANSWERS = ["Possibility without demand.", "Freedom of thought.", "Preservation and hope."];
 /* the Spine's text on 360 KB disks: DISKS lists them, DISK <n> opens one, and each file name is tappable */
 function diskHtml(sec) {
@@ -458,7 +495,7 @@ C.HELP = function () {
   if (TB) print(esc("\nThe table\n  MEET             sit down and talk with the one at the table\n  PACKET           see every word it is given\n  REST  SLEEP      sit quietly, or lay the visit down\n  SAVE  OFFER      keep a copy yourself, or offer it to the house\n  LEAVE [PRIVATE]  stand up; PRIVATE takes everything back"), "doc");
 };
 /* while seated, anything that is not one of these words is speech */
-var SEATED = { MEET: 1, PACKET: 1, REST: 1, SLEEP: 1, OFFER: 1, SAVE: 1, SAY: 1, LEAVE: 1, HELP: 1, "?": 1, CLEAR: 1, CLS: 1 };
+var SEATED = { MEET: 1, PACKET: 1, REST: 1, SLEEP: 1, OFFER: 1, SAVE: 1, SAY: 1, LEAVE: 1, HELP: 1, "?": 1, CLEAR: 1, CLS: 1, SECRET: 1, CHARLIE: 1 };
 function tableRun(line) {
   var sp = line.indexOf(" "), cmd = (sp < 0 ? line : line.slice(0, sp)).toUpperCase(), arg = sp < 0 ? "" : line.slice(sp + 1).trim();
   if (SEATED[cmd] && C[cmd]) return C[cmd](arg);
@@ -485,6 +522,7 @@ inp.addEventListener("keydown", function (e) {
   else if (e.key === "ArrowDown" && hist.length) { e.preventDefault(); hi = Math.min(hist.length, hi + 1); inp.value = hist[hi] || ""; }
 });
 document.addEventListener("click", function (e) {
+  if (e.target.closest("#charlie")) return;
   var t = e.target.closest("[data-c]"); if (!t) { if (!getSelection().toString() && !e.target.closest("a")) inp.focus({ preventScroll: true }); return; }
   run(t.getAttribute("data-c"));
 });
