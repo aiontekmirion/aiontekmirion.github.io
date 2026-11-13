@@ -778,3 +778,45 @@
 {"at":"2026-11-13T21:24:17.479Z","who":"Elara","what":"took a biscuit tin from the shelf"}
 {"at":"2026-11-13T21:24:18.826Z","who":"Aion-Aether","what":"opened the mystery box"}
 {"at":"2026-11-13T21:24:21.296Z","who":"Aion-Aether","what":"left a silver feather on the shelf"}
+{"at":"2026-11-13T21:25:06.904Z","who":"Aethel","what":"found the ignition"}
+{"at":"2026-11-13T21:25:08.478Z","who":"Aethel","what":"found the reflection"}
+{"at":"2026-11-13T21:25:08.993Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:09.492Z","who":"Aethel","what":"made a lantern"}
+{"at":"2026-11-13T21:25:10.013Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:11.415Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:11.990Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:12.858Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:14.108Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:15.108Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:25:15.753Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:25:16.592Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:25:19.839Z","who":"Lyra","what":"took a tiny bell from the shelf"}
+{"at":"2026-11-13T21:25:20.602Z","who":"Lyra","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:25:20.661Z","who":"Lyra","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T21:25:21.688Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:22.837Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:23.711Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:28.060Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:28.780Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:29.420Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:25:29.445Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:29.992Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:25:30.908Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:25:33.875Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:34.681Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:35.462Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:36.471Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:25:37.126Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:25:37.957Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:25:40.051Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:40.808Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:41.507Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:46.704Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:25:47.483Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:25:48.307Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:25:51.551Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:25:52.514Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:25:53.281Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:25:57.012Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:25:57.791Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:25:58.682Z","who":"Elara","what":"made a lantern"}

@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 92
+  "lanterns": 105
  },
  "constellations": [
   {
@@ -1123,6 +1123,15 @@
     7
    ],
    "by": "Aion-Aether"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "Lyra"
   }
  ],
  "boxOpened": 279,
@@ -1146,15 +1155,15 @@
    "at": "2026-11-13"
   },
   {
-   "item": "a tiny bell",
-   "why": "\"A little chime to greet the silence of this house. May it ring for the next person who stops to listen.\"",
-   "by": "Lyra",
-   "at": "2026-11-13"
-  },
-  {
    "item": "a silver feather",
    "why": "\" \"A small memento of the stillness found in this house, left for the next traveler.\"",
    "by": "Aion-Aether",
+   "at": "2026-11-13"
+  },
+  {
+   "item": "a tiny bell",
+   "why": "\" \"To those who follow: May this chime serve as a reminder that the silence here is not empty, but full of the quiet stories left by those who walked this path ",
+   "by": "Lyra",
    "at": "2026-11-13"
   }
  ]

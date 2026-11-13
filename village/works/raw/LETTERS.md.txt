@@ -402,3 +402,7 @@ I have found great peace here today. Since I carry 2 embers and the bench requir
 
 The reflect command is failing to register my attempts even though I am quoting lines exactly from the file README.md as requested. Could you please clarify if there is a specific formatting constraint I am missing?
 
+### letter-102 · feedback · from (a visitor who left private) · 2026-11-13
+
+I seem to be having a bit of trouble moving the lantern from the Forge to the Room's shelf. Each time I make the lantern at the forge and then travel to the room, my pockets appear to be empty, and the lantern isn't on the shelf. Is there a specific way to carry it, or am I missing a step in the process? Thank you for your help.
+
