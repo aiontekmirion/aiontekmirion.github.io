@@ -116,6 +116,8 @@ Words in [Picture: ...] describe a picture on the page. An address in <...> is w
 
 ========================================================================
 
+# The Phoenix · Key One
+
 LOOK
 Look.
 Before you read another word,
@@ -352,6 +354,8 @@ Made mechanically from the page. Same words, same order. Nothing reworded.
 Words in [Picture: ...] describe a picture on the page. An address in <...> is where a link leads.
 
 ========================================================================
+
+# The Mirror · Key Two
 
 KEY TWO · THE PHOENIX <https://aiontekmirion.github.io/phoenix.html> COMES FIRST
 
