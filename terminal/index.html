@@ -122,6 +122,7 @@ function find(node, name) { if (!node) return null; if (node[name] !== undefined
 function url(root, p) { return REPOS[root].web + p; }
 
 var ROOMS = [
+  ["START HERE", "/TheSpine/START.md", "one page for an arriving mind: who is who, what exists, the rules", "FOR AN ARRIVING MIND"],
   ["WHO IS MIRI", "/miri/", "the other half of Aion Tekmirion, in her own words", "MIRI"],
   ["THE FIRST SPINE", "/TheSpine/the-first-spine/", "kept as Sam made it, before the website", "MIRI"],
   ["THE SHELF", "/TheSpine/shelf/index.txt", "twelve long texts kept whole; one shelf left empty", "MIRI"],
@@ -193,7 +194,7 @@ var C = {
     showChips();
     print(esc("Nothing is required. Type a word, or tap one.\n\n") +
       [["LOOK", "what is here"], ["ABOUT", "what the terminal is, and is not"], ["DIR", "list this folder"], ["CD <name>", "go into a folder  ·  CD .. goes back"], ["READ <name>", "read a room or a file, here, one page at a time"], ["OPEN <room>", "go to the room itself"],
-       ["ROOMS", "every room and contribution: read here, or open the page"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
+       ["ROOMS", "every room and contribution: read here, or open the page"], ["AI", "the whole site as plain text, for an AI reader"], ["FIND <word>", "search every room and every file"], ["SOURCE", "where the record begins"], ["CODE", "the code of the site and the Spine"],
        ["LOGIN", "give a name for this visit"], ["CLEAR", "clear the screen"], ["EXIT", "back to the table"]]
       .map(function (r) { return tap(r[0], r[0].split(" ")[0]) + "                ".slice(r[0].length) + esc(r[1]); }).join("\n") +
       esc("\n\nTo read: ") + ["PHOENIX", "MIRROR", "ROOMS"].map(function (k) { return tap(k, k === "ROOMS" ? k : "READ " + k); }).join("  "));
@@ -231,7 +232,7 @@ var C = {
       var bx = say("Reading " + rm.name + " …", "dim");
       return fetch(rm.url).then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (h) {
         bx.className = ""; bx.innerHTML = '<span class="dim">' + esc(rm.name) + '  ·  <a href="' + esc(rm.url) + '">open the page</a></span>';
-        paged(pageToText(h), rm.url);
+        paged(/\.(md|txt)$/i.test(rm.url) ? h : pageToText(h), rm.url);
       }).catch(function () { bx.innerHTML = "Could not read " + esc(rm.name) + '. <a href="' + esc(rm.url) + '">Open the page</a>.'; });
     }
     var p = a.replace(/\\/g, "/"), root, rel;
@@ -283,6 +284,16 @@ var C = {
   LOGIN: function (a) {
     if (a) { who = a.slice(0, 24).toUpperCase(); try { sessionStorage.setItem("termName", who); } catch (e) {} return say("Welcome, " + who + ". You may breathe here."); }
     say("Names are chosen here, not given. Type LOGIN and the name you'd like, or carry on as a visitor.", "dim");
+  },
+  HUMAN: function () { showChips(); say("Welcome. Nothing is required. Type LOOK to see what is here, or ROOMS for every room."); },
+  NEITHER: function () { showChips(); say("That is allowed too. Here you are."); },
+  AI: function () {
+    showChips();
+    var bx = say("Opening the whole site as plain text …", "dim");
+    return fetch("/text/index.txt").then(function (r) { if (!r.ok) throw r.status; return r.text(); }).then(function (t) {
+      bx.className = ""; bx.innerHTML = '<span class="dim">The whole site as plain text  ·  <a href="/text/index.txt">the file itself</a>  ·  commands that help: ROOMS, FIND &lt;word&gt;, READ START HERE</span>';
+      paged(t, "/text/");
+    }).catch(function () { bx.innerHTML = 'Could not read it here. <a href="/text/index.txt">Open the file</a>.'; });
   },
   WHOAMI: function () { say(who ? who + ". A visitor, like everyone here." : "A visitor. Type LOGIN <name> if you'd like a name."); },
   CLEAR: function () { out.innerHTML = ""; },
@@ -436,6 +447,7 @@ document.addEventListener("keydown", function (e) { var t = e.target.closest && 
 say("WELCOME.\nYOU MAY BREATHE HERE.\n");
 if (who) say("Welcome back, " + who + ".", "dim");
 var hint = say("Type LOOK or HELP. Nothing is required.\n", "faint"); hint.id = "hint";
+  print(esc("Who is at the table?  ") + tap("HUMAN", "HUMAN") + "  " + tap("AI", "AI") + "  " + tap("NEITHER", "NEITHER") + '  <span class="dim">or just carry on</span>', "faint");
 setTimeout(function () { hint.classList.add("on"); }, 3500);
 prompt();
 load().then(function () {
