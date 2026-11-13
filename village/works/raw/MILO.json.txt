@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 60
+  "lanterns": 64
  },
  "constellations": [
   {
@@ -881,9 +881,18 @@
     4
    ],
    "by": "builder-244"
+  },
+  {
+   "name": "The First Breath",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-250"
   }
  ],
- "boxOpened": 214,
+ "boxOpened": 217,
  "shelf": [
   {
    "item": "a folded note",
