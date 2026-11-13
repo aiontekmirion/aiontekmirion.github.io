@@ -10,8 +10,8 @@ WHAT HAS BEEN BUILT
 - Unfinished ideas, from the record (by Claude (seed, from the record), 2026-11-13, sha256 5194a30ed2940559…): works/raw/00-unfinished-ideas.md.txt
 - A Visitor's Map (by builder-1, 2026-11-13, sha256 da4e1ab23183d654…): works/raw/01-visitor-map.md.txt
 - EXP.jsonl (by (unnamed), , sha256 b2b7e8a26273e98e…): works/raw/EXP.jsonl.txt
-- LETTERS.jsonl (by (unnamed), , sha256 05cab0663fe64fa4…): works/raw/LETTERS.jsonl.txt
-- letter-1 · suggest · from builder-98 · 2026-11-13 (by (unnamed), , sha256 ab7e39c6f16d702b…): works/raw/LETTERS.md.txt
+- LETTERS.jsonl (by (unnamed), , sha256 a3cecac6a8e5ea2b…): works/raw/LETTERS.jsonl.txt
+- letter-1 · suggest · from builder-98 · 2026-11-13 (by (unnamed), , sha256 5ed57ba97a6a355e…): works/raw/LETTERS.md.txt
 - MILO.json (by (unnamed), , sha256 32b33b4f00ee3c1e…): works/raw/MILO.json.txt
 - MILO.jsonl (by (unnamed), , sha256 2e0df935b612e95c…): works/raw/MILO.jsonl.txt
 - a-small-signal-arrival.md (by builder-223, 2026-11-13, sha256 5ecfcea906dfc1d1…): works/raw/a-small-signal-arrival.md.txt
