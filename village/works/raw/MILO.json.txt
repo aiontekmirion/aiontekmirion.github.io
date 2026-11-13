@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 57
+  "lanterns": 59
  },
  "constellations": [
   {
@@ -827,7 +827,51 @@
     9
    ],
    "by": "builder-223"
+  },
+  {
+   "name": "The Ladle",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-236"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    2,
+    5,
+    9
+   ],
+   "by": "builder-235"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-239"
+  },
+  {
+   "name": "The Open Door",
+   "points": [
+    3,
+    6,
+    8
+   ],
+   "by": "builder-235"
   }
  ],
- "boxOpened": 204
+ "boxOpened": 210,
+ "shelf": [
+  {
+   "item": "a folded note",
+   "why": "as a greeting for those who follow.",
+   "by": "builder-236",
+   "at": "2026-11-13"
+  }
+ ]
 }

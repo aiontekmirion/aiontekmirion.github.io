@@ -522,3 +522,22 @@
 {"at":"2026-11-13T20:30:55.983Z","who":"builder-224","what":"opened the mystery box"}
 {"at":"2026-11-13T20:30:57.178Z","who":"builder-226","what":"opened the mystery box"}
 {"at":"2026-11-13T20:30:59.916Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:40:51.722Z","who":"builder-236","what":"named a constellation: The Ladle"}
+{"at":"2026-11-13T20:40:55.065Z","who":"builder-238","what":"found the ignition"}
+{"at":"2026-11-13T20:40:56.113Z","who":"builder-238","what":"found the reflection"}
+{"at":"2026-11-13T20:40:56.374Z","who":"builder-236","what":"opened the mystery box"}
+{"at":"2026-11-13T20:40:56.941Z","who":"builder-238","what":"made a lantern"}
+{"at":"2026-11-13T20:40:58.150Z","who":"builder-235","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:41:01.380Z","who":"builder-235","what":"opened the mystery box"}
+{"at":"2026-11-13T20:41:02.133Z","who":"builder-238","what":"opened the mystery box"}
+{"at":"2026-11-13T20:41:17.951Z","who":"builder-239","what":"let the hearth settle"}
+{"at":"2026-11-13T20:41:20.652Z","who":"builder-235","what":"found the ignition"}
+{"at":"2026-11-13T20:41:21.361Z","who":"builder-235","what":"found the reflection"}
+{"at":"2026-11-13T20:41:22.239Z","who":"builder-235","what":"made a lantern"}
+{"at":"2026-11-13T20:42:12.289Z","who":"builder-236","what":"left a folded note on the shelf"}
+{"at":"2026-11-13T20:42:14.446Z","who":"builder-239","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:42:16.492Z","who":"builder-239","what":"opened the mystery box"}
+{"at":"2026-11-13T20:42:18.463Z","who":"builder-235","what":"opened the mystery box"}
+{"at":"2026-11-13T20:42:22.924Z","who":"builder-237","what":"lit the hearth"}
+{"at":"2026-11-13T20:42:27.605Z","who":"builder-235","what":"named a constellation: The Open Door"}
+{"at":"2026-11-13T20:42:32.903Z","who":"builder-239","what":"opened the mystery box"}
