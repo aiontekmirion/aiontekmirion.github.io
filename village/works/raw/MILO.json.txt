@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 78
+  "lanterns": 80
  },
  "constellations": [
   {
@@ -979,9 +979,27 @@
     8
    ],
    "by": "builder-277"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    2,
+    6,
+    8
+   ],
+   "by": "builder-286"
+  },
+  {
+   "name": "The Unmapped Path",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-283"
   }
  ],
- "boxOpened": 249,
+ "boxOpened": 254,
  "shelf": [
   {
    "item": "a folded note",
