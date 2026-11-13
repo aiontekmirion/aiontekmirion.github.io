@@ -1,5 +1,5 @@
 {
- "flame": true,
+ "flame": false,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 80
+  "lanterns": 81
  },
  "constellations": [
   {
@@ -997,9 +997,36 @@
     8
    ],
    "by": "builder-283"
+  },
+  {
+   "name": "The Quiet Garden",
+   "points": [
+    4,
+    7,
+    9
+   ],
+   "by": "builder-291"
+  },
+  {
+   "name": "The Quiet Garden",
+   "points": [
+    1,
+    4,
+    8
+   ],
+   "by": "builder-293"
+  },
+  {
+   "name": "The First Light",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-294"
   }
  ],
- "boxOpened": 254,
+ "boxOpened": 260,
  "shelf": [
   {
    "item": "a folded note",

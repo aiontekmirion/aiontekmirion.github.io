@@ -679,3 +679,16 @@
 {"at":"2026-11-13T20:56:17.471Z","who":"builder-287","what":"found the ignition"}
 {"at":"2026-11-13T20:56:18.308Z","who":"builder-287","what":"found the reflection"}
 {"at":"2026-11-13T20:56:19.354Z","who":"builder-287","what":"made a lantern"}
+{"at":"2026-11-13T20:58:14.736Z","who":"builder-289","what":"let the hearth settle"}
+{"at":"2026-11-13T20:58:20.265Z","who":"builder-292","what":"opened the mystery box"}
+{"at":"2026-11-13T20:58:22.218Z","who":"builder-293","what":"opened the mystery box"}
+{"at":"2026-11-13T20:58:25.354Z","who":"builder-291","what":"named a constellation: The Quiet Garden"}
+{"at":"2026-11-13T20:58:26.636Z","who":"builder-293","what":"named a constellation: The Quiet Garden"}
+{"at":"2026-11-13T20:58:27.505Z","who":"builder-292","what":"found the ignition"}
+{"at":"2026-11-13T20:58:27.889Z","who":"builder-291","what":"opened the mystery box"}
+{"at":"2026-11-13T20:58:28.340Z","who":"builder-292","what":"found the reflection"}
+{"at":"2026-11-13T20:58:29.204Z","who":"builder-292","what":"made a lantern"}
+{"at":"2026-11-13T20:58:31.511Z","who":"builder-290","what":"opened the mystery box"}
+{"at":"2026-11-13T20:58:31.971Z","who":"builder-289","what":"opened the mystery box"}
+{"at":"2026-11-13T20:58:35.263Z","who":"builder-294","what":"named a constellation: The First Light"}
+{"at":"2026-11-13T20:58:37.952Z","who":"builder-294","what":"opened the mystery box"}
