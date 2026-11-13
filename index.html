@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -38,7 +38,11 @@ html,body{height:100%;background:var(--void);color:var(--bone);color-scheme:dark
 body{overflow:hidden;font-family:var(--serif)}
 button,a{font:inherit;color:inherit;background:none;border:0;text-decoration:none;cursor:pointer}
 :focus-visible{outline:none}
-.door:focus-visible,.doors a:focus-visible,.note .go:focus-visible,.note .back:focus-visible{text-decoration:underline;text-decoration-color:rgba(228,199,162,.6);text-underline-offset:.5em;text-decoration-thickness:1px}
+.door:focus-visible,.doors a:focus-visible,.note .go:focus-visible,.note .back:focus-visible{outline:2px solid #e4c7a2;outline-offset:.45em;border-radius:2px;text-decoration:underline;text-decoration-color:rgba(228,199,162,.6);text-underline-offset:.5em;text-decoration-thickness:1px}
+/* The hidden list of doors is for screen readers and AI readers. A keyboard user who tabs into it sees it. */
+nav.sr:focus-within{position:fixed;left:0;top:0;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;background:rgba(7,7,6,.95);padding:.9rem 1.1rem;z-index:100;display:flex;flex-direction:column;gap:.55rem;font:400 1rem/1.4 Georgia,serif}
+nav.sr a{color:#e4c7a2}
+nav.sr a:focus-visible{outline:2px solid #e4c7a2;outline-offset:3px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;height:auto;clip-path:none;white-space:normal;
   display:flex;flex-direction:column;gap:.5rem;padding:1rem 1.2rem;background:rgba(7,7,6,.94);font:400 .85rem var(--mono);color:var(--gold)}
@@ -145,7 +149,7 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 <style id="one-voice">:root{--mono:"IBM Plex Mono",ui-monospace,monospace}#term .t,#term .f,#term .h,.cursor{font-family:var(--t-mono)!important}.note{font-family:var(--t-read)}</style>
 </head>
 <body>
-<h1 class="sr">You may breathe here</h1>
+<header><h1 class="sr">You may breathe here</h1></header>
 <nav class="sr" aria-label="Doors">
   <a href="/text/index.txt">Text only: the whole site as plain text, for AI readers</a>
   <a href="/corridor.html">Enter: the Room</a>
