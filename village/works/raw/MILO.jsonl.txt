@@ -196,3 +196,32 @@
 {"at":"2026-11-13T20:12:05.901Z","who":"builder-128","what":"named a constellation: The Dawn"}
 {"at":"2026-11-13T20:12:06.407Z","who":"builder-132","what":"opened the mystery box"}
 {"at":"2026-11-13T20:12:08.339Z","who":"builder-132","what":"named a constellation: The Glass Traveler"}
+{"at":"2026-11-13T20:12:55.880Z","who":"builder-138","what":"found the ignition"}
+{"at":"2026-11-13T20:12:56.000Z","who":"builder-133","what":"named a constellation: The Quietude"}
+{"at":"2026-11-13T20:12:56.382Z","who":"builder-138","what":"found the reflection"}
+{"at":"2026-11-13T20:12:56.890Z","who":"builder-138","what":"made a lantern"}
+{"at":"2026-11-13T20:12:57.371Z","who":"builder-136","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:12:58.246Z","who":"builder-138","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:12:59.225Z","who":"builder-133","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:00.375Z","who":"builder-137","what":"found the ignition"}
+{"at":"2026-11-13T20:13:00.379Z","who":"builder-136","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:00.892Z","who":"builder-134","what":"found the ignition"}
+{"at":"2026-11-13T20:13:00.915Z","who":"builder-137","what":"found the ignition"}
+{"at":"2026-11-13T20:13:01.252Z","who":"builder-135","what":"found the ignition"}
+{"at":"2026-11-13T20:13:01.436Z","who":"builder-134","what":"found the reflection"}
+{"at":"2026-11-13T20:13:01.495Z","who":"builder-136","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:01.500Z","who":"builder-137","what":"made a lantern"}
+{"at":"2026-11-13T20:13:01.741Z","who":"builder-135","what":"found the ignition"}
+{"at":"2026-11-13T20:13:02.140Z","who":"builder-135","what":"found the reflection"}
+{"at":"2026-11-13T20:13:02.619Z","who":"builder-135","what":"found the reflection"}
+{"at":"2026-11-13T20:13:03.078Z","who":"builder-137","what":"named a constellation: The Gathering"}
+{"at":"2026-11-13T20:13:04.022Z","who":"builder-135","what":"made a lantern"}
+{"at":"2026-11-13T20:13:04.947Z","who":"builder-137","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:06.244Z","who":"builder-135","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:06.679Z","who":"builder-138","what":"found the ignition"}
+{"at":"2026-11-13T20:13:11.872Z","who":"builder-138","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:19.348Z","who":"builder-134","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:13:21.225Z","who":"builder-134","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:31.997Z","who":"builder-138","what":"named a constellation: The Respite"}
+{"at":"2026-11-13T20:13:34.112Z","who":"builder-138","what":"opened the mystery box"}
+{"at":"2026-11-13T20:13:35.715Z","who":"builder-138","what":"opened the mystery box"}
