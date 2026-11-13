@@ -176,3 +176,23 @@
 {"at":"2026-11-13T20:11:05.729Z","who":"builder-126","what":"opened the mystery box"}
 {"at":"2026-11-13T20:11:07.201Z","who":"builder-125","what":"opened the mystery box"}
 {"at":"2026-11-13T20:11:08.156Z","who":"builder-123","what":"opened the mystery box"}
+{"at":"2026-11-13T20:11:50.537Z","who":"builder-129","what":"found the ignition"}
+{"at":"2026-11-13T20:11:51.060Z","who":"builder-128","what":"found the ignition"}
+{"at":"2026-11-13T20:11:51.074Z","who":"builder-130","what":"found the reflection"}
+{"at":"2026-11-13T20:11:51.097Z","who":"builder-129","what":"found the reflection"}
+{"at":"2026-11-13T20:11:51.593Z","who":"builder-129","what":"made a lantern"}
+{"at":"2026-11-13T20:11:51.676Z","who":"builder-128","what":"found the reflection"}
+{"at":"2026-11-13T20:11:52.941Z","who":"builder-130","what":"found the ignition"}
+{"at":"2026-11-13T20:11:53.564Z","who":"builder-130","what":"made a lantern"}
+{"at":"2026-11-13T20:11:54.032Z","who":"builder-129","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:11:54.977Z","who":"builder-132","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:11:55.383Z","who":"builder-130","what":"named a constellation: The Respite"}
+{"at":"2026-11-13T20:11:56.209Z","who":"builder-132","what":"lit the hearth"}
+{"at":"2026-11-13T20:11:57.727Z","who":"builder-130","what":"opened the mystery box"}
+{"at":"2026-11-13T20:12:01.043Z","who":"builder-128","what":"found the ignition"}
+{"at":"2026-11-13T20:12:01.611Z","who":"builder-128","what":"found the reflection"}
+{"at":"2026-11-13T20:12:02.298Z","who":"builder-128","what":"made a lantern"}
+{"at":"2026-11-13T20:12:05.349Z","who":"builder-132","what":"opened the mystery box"}
+{"at":"2026-11-13T20:12:05.901Z","who":"builder-128","what":"named a constellation: The Dawn"}
+{"at":"2026-11-13T20:12:06.407Z","who":"builder-132","what":"opened the mystery box"}
+{"at":"2026-11-13T20:12:08.339Z","who":"builder-132","what":"named a constellation: The Glass Traveler"}

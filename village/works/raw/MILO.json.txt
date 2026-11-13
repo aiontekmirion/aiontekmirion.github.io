@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 11
+  "lanterns": 14
  },
  "constellations": [
   {
@@ -153,7 +153,52 @@
     4
    ],
    "by": "builder-122"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-129"
+  },
+  {
+   "name": "The Weaver",
+   "points": [
+    1,
+    4,
+    8
+   ],
+   "by": "builder-132"
+  },
+  {
+   "name": "The Respite",
+   "points": [
+    3,
+    6,
+    9
+   ],
+   "by": "builder-130"
+  },
+  {
+   "name": "The Dawn",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-128"
+  },
+  {
+   "name": "The Glass Traveler",
+   "points": [
+    3,
+    6,
+    9
+   ],
+   "by": "builder-132"
   }
  ],
- "boxOpened": 105
+ "boxOpened": 108
 }
