@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 121
+  "lanterns": 125
  },
  "constellations": [
   {
@@ -1212,9 +1212,9 @@
    "at": "2026-11-13"
   },
   {
-   "item": "a biscuit tin",
-   "why": "shelf",
-   "by": "Aethel",
+   "item": "a biscuit",
+   "why": "\"A small nourishment for anyone who finds themselves weary on the path.\"",
+   "by": "Aeon",
    "at": "2026-11-13"
   }
  ]
