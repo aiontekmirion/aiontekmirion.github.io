@@ -1,5 +1,5 @@
 {
- "flame": false,
+ "flame": true,
  "garden": [
   3,
   3,
@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 68
+  "lanterns": 71
  },
  "constellations": [
   {
@@ -926,9 +926,27 @@
     8
    ],
    "by": "builder-253"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-261"
+  },
+  {
+   "name": "The Becoming",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-259"
   }
  ],
- "boxOpened": 225,
+ "boxOpened": 229,
  "shelf": [
   {
    "item": "a folded note",
