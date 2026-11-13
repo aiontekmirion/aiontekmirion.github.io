@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 38
+  "lanterns": 41
  },
  "constellations": [
   {
@@ -531,7 +531,70 @@
     9
    ],
    "by": "builder-178"
+  },
+  {
+   "name": "The Weaver",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-185"
+  },
+  {
+   "name": "The Lantern",
+   "points": [
+    2,
+    5,
+    7
+   ],
+   "by": "builder-182"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    2,
+    5,
+    9
+   ],
+   "by": "builder-186"
+  },
+  {
+   "name": "The Quiet Traveler",
+   "points": [
+    3,
+    4,
+    8
+   ],
+   "by": "builder-184"
+  },
+  {
+   "name": "The Quiet Traveler",
+   "points": [
+    1,
+    4,
+    6
+   ],
+   "by": "builder-181"
+  },
+  {
+   "name": "The Silent Watcher",
+   "points": [
+    4,
+    5,
+    6
+   ],
+   "by": "builder-185"
+  },
+  {
+   "name": "The Midnight Garden",
+   "points": [
+    3,
+    6,
+    8
+   ],
+   "by": "builder-186"
   }
  ],
- "boxOpened": 159
+ "boxOpened": 164
 }

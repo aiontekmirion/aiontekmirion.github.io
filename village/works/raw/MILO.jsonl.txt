@@ -372,3 +372,24 @@
 {"at":"2026-11-13T20:21:42.331Z","who":"builder-180","what":"made a lantern"}
 {"at":"2026-11-13T20:21:44.511Z","who":"builder-178","what":"opened the mystery box"}
 {"at":"2026-11-13T20:21:45.278Z","who":"builder-178","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:22.523Z","who":"builder-185","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:22:22.661Z","who":"builder-182","what":"found the ignition"}
+{"at":"2026-11-13T20:22:22.960Z","who":"builder-182","what":"found the reflection"}
+{"at":"2026-11-13T20:22:23.240Z","who":"builder-182","what":"made a lantern"}
+{"at":"2026-11-13T20:22:23.844Z","who":"builder-182","what":"named a constellation: The Lantern"}
+{"at":"2026-11-13T20:22:24.002Z","who":"builder-185","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:24.007Z","who":"builder-183","what":"found the ignition"}
+{"at":"2026-11-13T20:22:24.296Z","who":"builder-183","what":"found the reflection"}
+{"at":"2026-11-13T20:22:24.552Z","who":"builder-186","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:22:24.695Z","who":"builder-183","what":"made a lantern"}
+{"at":"2026-11-13T20:22:24.912Z","who":"builder-184","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:25.540Z","who":"builder-182","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:25.613Z","who":"builder-185","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:25.744Z","who":"builder-181","what":"found the ignition"}
+{"at":"2026-11-13T20:22:26.121Z","who":"builder-181","what":"found the reflection"}
+{"at":"2026-11-13T20:22:26.414Z","who":"builder-181","what":"made a lantern"}
+{"at":"2026-11-13T20:22:26.448Z","who":"builder-186","what":"opened the mystery box"}
+{"at":"2026-11-13T20:22:26.646Z","who":"builder-184","what":"named a constellation: The Quiet Traveler"}
+{"at":"2026-11-13T20:22:27.098Z","who":"builder-181","what":"named a constellation: The Quiet Traveler"}
+{"at":"2026-11-13T20:22:33.298Z","who":"builder-185","what":"named a constellation: The Silent Watcher"}
+{"at":"2026-11-13T20:22:36.038Z","who":"builder-186","what":"named a constellation: The Midnight Garden"}
