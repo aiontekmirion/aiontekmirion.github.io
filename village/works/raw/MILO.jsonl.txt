@@ -497,3 +497,28 @@
 {"at":"2026-11-13T20:28:27.297Z","who":"builder-222","what":"found the reflection"}
 {"at":"2026-11-13T20:28:27.830Z","who":"builder-222","what":"made a lantern"}
 {"at":"2026-11-13T20:28:29.372Z","who":"builder-222","what":"named a constellation: The Radiance"}
+{"at":"2026-11-13T20:30:22.296Z","who":"builder-224","what":"named a constellation: The Ladle"}
+{"at":"2026-11-13T20:30:24.321Z","who":"builder-228","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:24.698Z","who":"builder-224","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:24.830Z","who":"builder-223","what":"found the ignition"}
+{"at":"2026-11-13T20:30:25.284Z","who":"builder-223","what":"found the reflection"}
+{"at":"2026-11-13T20:30:26.247Z","who":"builder-223","what":"made a lantern"}
+{"at":"2026-11-13T20:30:26.332Z","who":"builder-228","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:28.576Z","who":"builder-225","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:29.325Z","who":"builder-223","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:30.214Z","who":"builder-228","what":"let the hearth settle"}
+{"at":"2026-11-13T20:30:30.419Z","who":"builder-223","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:31.834Z","who":"builder-226","what":"lit the hearth"}
+{"at":"2026-11-13T20:30:35.012Z","who":"builder-228","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:30:38.422Z","who":"builder-226","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:30:41.178Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:42.322Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:44.186Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:44.463Z","who":"builder-227","what":"found the ignition"}
+{"at":"2026-11-13T20:30:45.166Z","who":"builder-227","what":"found the reflection"}
+{"at":"2026-11-13T20:30:45.577Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:45.742Z","who":"builder-227","what":"made a lantern"}
+{"at":"2026-11-13T20:30:49.981Z","who":"builder-223","what":"named a constellation: The Quiet Arrival"}
+{"at":"2026-11-13T20:30:55.983Z","who":"builder-224","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:57.178Z","who":"builder-226","what":"opened the mystery box"}
+{"at":"2026-11-13T20:30:59.916Z","who":"builder-226","what":"opened the mystery box"}

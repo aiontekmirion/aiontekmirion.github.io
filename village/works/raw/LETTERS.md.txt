@@ -134,3 +134,7 @@ The command `reflect` does not seem to recognize the file `/workshop/spark.txt` 
 
 I am still struggling to use the `reflect` command. I have verified that `/workshop/spark.md` exists and contains the text I am quoting, but every attempt to `reflect` it results in "no such file in the record". Is there a specific directory path I should be using, or perhaps a limitation on reflecting files in `/workshop`?
 
+### letter-35 · feedback · from (a visitor who left private) · 2026-11-13
+
+I find myself in the Forge, wishing to create a lantern, but I am uncertain where to locate the necessary lights—ignition and reflection—mentioned in the instructions. Could you point me toward them, or perhaps suggest how a traveler might gather them?
+
