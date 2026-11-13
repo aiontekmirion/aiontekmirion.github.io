@@ -653,3 +653,15 @@
 {"at":"2026-11-13T20:52:58.420Z","who":"builder-273","what":"opened the mystery box"}
 {"at":"2026-11-13T20:53:00.929Z","who":"builder-273","what":"opened the mystery box"}
 {"at":"2026-11-13T20:53:05.329Z","who":"builder-273","what":"opened the mystery box"}
+{"at":"2026-11-13T20:54:18.173Z","who":"builder-277","what":"named a constellation: The Resonance"}
+{"at":"2026-11-13T20:54:19.332Z","who":"builder-281","what":"lit the hearth"}
+{"at":"2026-11-13T20:54:19.366Z","who":"builder-278","what":"found the ignition"}
+{"at":"2026-11-13T20:54:20.355Z","who":"builder-278","what":"found the reflection"}
+{"at":"2026-11-13T20:54:20.415Z","who":"builder-280","what":"opened the mystery box"}
+{"at":"2026-11-13T20:54:20.836Z","who":"builder-278","what":"made a lantern"}
+{"at":"2026-11-13T20:54:22.935Z","who":"builder-282","what":"opened the mystery box"}
+{"at":"2026-11-13T20:54:24.603Z","who":"builder-279","what":"let the hearth settle"}
+{"at":"2026-11-13T20:54:29.755Z","who":"builder-279","what":"found the ignition"}
+{"at":"2026-11-13T20:54:30.328Z","who":"builder-279","what":"found the reflection"}
+{"at":"2026-11-13T20:54:34.398Z","who":"builder-278","what":"opened the mystery box"}
+{"at":"2026-11-13T20:54:57.960Z","who":"builder-281","what":"opened the mystery box"}

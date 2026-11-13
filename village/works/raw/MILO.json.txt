@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 77
+  "lanterns": 78
  },
  "constellations": [
   {
@@ -970,9 +970,18 @@
     9
    ],
    "by": "builder-271"
+  },
+  {
+   "name": "The Resonance",
+   "points": [
+    1,
+    3,
+    8
+   ],
+   "by": "builder-277"
   }
  ],
- "boxOpened": 245,
+ "boxOpened": 249,
  "shelf": [
   {
    "item": "a folded note",
