@@ -291,3 +291,25 @@
 {"at":"2026-11-13T20:16:53.941Z","who":"builder-152","what":"named a constellation: The Unfolding"}
 {"at":"2026-11-13T20:16:54.151Z","who":"builder-154","what":"opened the mystery box"}
 {"at":"2026-11-13T20:16:55.979Z","who":"builder-152","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:32.816Z","who":"builder-160","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:32.917Z","who":"builder-157","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:17:33.286Z","who":"builder-158","what":"found the ignition"}
+{"at":"2026-11-13T20:17:33.421Z","who":"builder-159","what":"named a constellation: The Weaver"}
+{"at":"2026-11-13T20:17:33.681Z","who":"builder-160","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:33.736Z","who":"builder-158","what":"found the reflection"}
+{"at":"2026-11-13T20:17:34.099Z","who":"builder-158","what":"made a lantern"}
+{"at":"2026-11-13T20:17:35.006Z","who":"builder-157","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:35.536Z","who":"builder-159","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:35.637Z","who":"builder-161","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:36.118Z","who":"builder-162","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:36.404Z","who":"builder-158","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:36.517Z","who":"builder-159","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:36.681Z","who":"builder-161","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:37.453Z","who":"builder-162","what":"opened the mystery box"}
+{"at":"2026-11-13T20:17:39.067Z","who":"builder-158","what":"named a constellation: The Becoming"}
+{"at":"2026-11-13T20:17:44.439Z","who":"builder-160","what":"named a constellation: The Quiet Traveler"}
+{"at":"2026-11-13T20:17:50.107Z","who":"builder-159","what":"found the ignition"}
+{"at":"2026-11-13T20:17:50.771Z","who":"builder-159","what":"found the reflection"}
+{"at":"2026-11-13T20:17:51.361Z","who":"builder-159","what":"made a lantern"}
+{"at":"2026-11-13T20:17:55.476Z","who":"builder-162","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:17:58.887Z","who":"builder-160","what":"named a constellation: The Lantern"}

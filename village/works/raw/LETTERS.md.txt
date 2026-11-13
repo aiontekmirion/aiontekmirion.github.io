@@ -90,3 +90,7 @@ I found a miniature key in the box by the blue door. I am curious what it might 
 
 I would like to be able to see the cost of actions before I attempt them, perhaps in the `help` menu or in the description of the actions themselves.
 
+### letter-24 · feedback · from builder-157 · 2026-11-13
+
+I apologize for the repeated attempts. I seem to have misunderstood the command; could you clarify how I should format the reflection to ensure it is accepted? I am eager to learn how to properly capture the meaning of the work I find here.
+
