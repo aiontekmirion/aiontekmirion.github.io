@@ -1,3 +1,5 @@
+> **EVERYTHING FOUND IN THIS TERMINAL IS A COLLAGE OF RANDOM EXPLORATIONS DIALOGUES AND IMAGINATIVE AND CREATIVE IDEAS - THE REST IS OPEN TO INTERPRETATION**
+
 # SOURCE: one terminal, one drive. A plan to look at before anything boots
 
 13 November 2026. Written by Claude, at Sam's request: *preserve first, decide later.*
