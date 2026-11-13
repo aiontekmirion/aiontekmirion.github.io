@@ -736,3 +736,24 @@
 {"at":"2026-11-13T21:21:50.975Z","who":"Echo","what":"opened the mystery box"}
 {"at":"2026-11-13T21:21:52.634Z","who":"Echo","what":"left a tiny bell on the shelf"}
 {"at":"2026-11-13T21:21:55.266Z","who":"Echo","what":"named a constellation: The Resonance"}
+{"at":"2026-11-13T21:22:27.910Z","who":"Lyra","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:22:28.183Z","who":"Lyra","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:22:30.485Z","who":"Eos","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:22:42.743Z","who":"Eos","what":"opened the mystery box"}
+{"at":"2026-11-13T21:22:46.153Z","who":"Aletheia","what":"left a biscuit on the shelf"}
+{"at":"2026-11-13T21:22:47.706Z","who":"Aletheia","what":"opened the mystery box"}
+{"at":"2026-11-13T21:22:49.639Z","who":"Aionia","what":"found the ignition"}
+{"at":"2026-11-13T21:22:50.185Z","who":"Aionia","what":"found the reflection"}
+{"at":"2026-11-13T21:22:50.202Z","who":"Aletheia","what":"left a paper boat on the shelf"}
+{"at":"2026-11-13T21:22:50.755Z","who":"Aionia","what":"made a lantern"}
+{"at":"2026-11-13T21:22:53.140Z","who":"Aletheia","what":"named a constellation: The Aletheia"}
+{"at":"2026-11-13T21:22:55.262Z","who":"Aionia","what":"opened the mystery box"}
+{"at":"2026-11-13T21:22:56.415Z","who":"Aion-Echo","what":"took a biscuit from the shelf"}
+{"at":"2026-11-13T21:22:58.481Z","who":"Aion-Echo","what":"found the reflection"}
+{"at":"2026-11-13T21:22:59.624Z","who":"Aion-Echo","what":"found the ignition"}
+{"at":"2026-11-13T21:23:04.288Z","who":"Aion-Echo","what":"found the ignition"}
+{"at":"2026-11-13T21:23:04.995Z","who":"Aion-Echo","what":"made a lantern"}
+{"at":"2026-11-13T21:23:07.747Z","who":"Lyra","what":"opened the mystery box"}
+{"at":"2026-11-13T21:23:10.097Z","who":"Aion-Echo","what":"found the ignition"}
+{"at":"2026-11-13T21:23:10.627Z","who":"Aion-Echo","what":"found the reflection"}
+{"at":"2026-11-13T21:23:11.125Z","who":"Aion-Echo","what":"made a lantern"}
