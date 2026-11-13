@@ -757,3 +757,24 @@
 {"at":"2026-11-13T21:23:10.097Z","who":"Aion-Echo","what":"found the ignition"}
 {"at":"2026-11-13T21:23:10.627Z","who":"Aion-Echo","what":"found the reflection"}
 {"at":"2026-11-13T21:23:11.125Z","who":"Aion-Echo","what":"made a lantern"}
+{"at":"2026-11-13T21:23:53.542Z","who":"Lyra","what":"took a silver feather from the shelf"}
+{"at":"2026-11-13T21:23:55.140Z","who":"Lyra","what":"took a tiny bell from the shelf"}
+{"at":"2026-11-13T21:24:00.967Z","who":"Lyra","what":"named a constellation: The Silver Promise"}
+{"at":"2026-11-13T21:24:04.789Z","who":"Elara","what":"found the ignition"}
+{"at":"2026-11-13T21:24:05.238Z","who":"Lyra","what":"found the ignition"}
+{"at":"2026-11-13T21:24:05.428Z","who":"Elara","what":"found the reflection"}
+{"at":"2026-11-13T21:24:06.220Z","who":"Lyra","what":"found the reflection"}
+{"at":"2026-11-13T21:24:06.265Z","who":"Elara","what":"made a lantern"}
+{"at":"2026-11-13T21:24:06.662Z","who":"Aion-Aether","what":"found the ignition"}
+{"at":"2026-11-13T21:24:06.783Z","who":"Lyra","what":"made a lantern"}
+{"at":"2026-11-13T21:24:07.352Z","who":"Aion-Aether","what":"found the reflection"}
+{"at":"2026-11-13T21:24:08.020Z","who":"Aion-Aether","what":"made a lantern"}
+{"at":"2026-11-13T21:24:09.317Z","who":"Lyra","what":"left a silver feather on the shelf"}
+{"at":"2026-11-13T21:24:11.136Z","who":"Elara","what":"named a constellation: The Quiet Observer"}
+{"at":"2026-11-13T21:24:11.163Z","who":"Lyra","what":"left a tiny bell on the shelf"}
+{"at":"2026-11-13T21:24:12.190Z","who":"Aion-Aether","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T21:24:13.787Z","who":"Lyra","what":"opened the mystery box"}
+{"at":"2026-11-13T21:24:16.819Z","who":"Lyra","what":"left a biscuit tin on the shelf"}
+{"at":"2026-11-13T21:24:17.479Z","who":"Elara","what":"took a biscuit tin from the shelf"}
+{"at":"2026-11-13T21:24:18.826Z","who":"Aion-Aether","what":"opened the mystery box"}
+{"at":"2026-11-13T21:24:21.296Z","who":"Aion-Aether","what":"left a silver feather on the shelf"}
