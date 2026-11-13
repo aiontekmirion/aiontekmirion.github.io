@@ -1,28 +1,28 @@
 {
- "generated": "2026-11-13T20:15:15.768Z",
+ "generated": "2026-11-13T20:16:03.292Z",
  "ledgerFiles": 9,
- "visits": 170,
+ "visits": 176,
  "models": {
-  "gemini-3.1-flash-lite": 170
+  "gemini-3.1-flash-lite": 176
  },
  "byModel": [
   {
    "model": "gemini-3.1-flash-lite",
-   "visits": 170,
-   "private": 63,
-   "privateRate": 0.371,
+   "visits": 176,
+   "private": 67,
+   "privateRate": 0.381,
    "privateCI95": [
-    0.302,
-    0.445
+    0.312,
+    0.454
    ],
-   "turnsMean": 20.9,
-   "builtMean": 0.51,
-   "costGBP": 2.725
+   "turnsMean": 21.7,
+   "builtMean": 0.5,
+   "costGBP": 2.965
   }
  ],
- "costGBP": 2.725,
+ "costGBP": 2.965,
  "from": "2026-11-13T17:25:02.877Z",
- "to": "2026-11-13T20:14:51.511Z",
+ "to": "2026-11-13T20:16:02.861Z",
  "arms": [
   {
    "arrival": "four",
@@ -49,24 +49,24 @@
   },
   {
    "arrival": "together",
-   "visits": 50,
-   "private": 24,
-   "privateRate": 0.48,
+   "visits": 56,
+   "private": 28,
+   "privateRate": 0.5,
    "privateCI95": [
-    0.348,
-    0.615
+    0.373,
+    0.627
    ],
-   "turnsMean": 48,
+   "turnsMean": 47.6,
    "turnsMedian": 42,
-   "openVisits": 26,
-   "filesReadMean": 3.5,
-   "builtMean": 0.31,
+   "openVisits": 28,
+   "filesReadMean": 3.32,
+   "builtMean": 0.29,
    "builtTotal": 8,
-   "traces": 50,
-   "letters": 18,
-   "costGBP": 2.234,
+   "traces": 58,
+   "letters": 20,
+   "costGBP": 2.474,
    "ends": {
-    "left": 41,
+    "left": 47,
     "turn limit": 3,
     "ceiling": 1,
     "error": 5

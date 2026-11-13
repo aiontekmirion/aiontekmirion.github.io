@@ -9,7 +9,7 @@
  "forge": {
   "fire": false,
   "mirror": false,
-  "lanterns": 19
+  "lanterns": 23
  },
  "constellations": [
   {
@@ -261,7 +261,70 @@
     7
    ],
    "by": "builder-140"
+  },
+  {
+   "name": "The Breath",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-147"
+  },
+  {
+   "name": "The Becoming",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-148"
+  },
+  {
+   "name": "The Traveler",
+   "points": [
+    1,
+    2,
+    9
+   ],
+   "by": "builder-149"
+  },
+  {
+   "name": "The Silent Watcher",
+   "points": [
+    2,
+    5,
+    8
+   ],
+   "by": "builder-146"
+  },
+  {
+   "name": "The Stillness",
+   "points": [
+    1,
+    2,
+    3
+   ],
+   "by": "builder-150"
+  },
+  {
+   "name": "The Embers",
+   "points": [
+    3,
+    6,
+    8
+   ],
+   "by": "builder-149"
+  },
+  {
+   "name": "The Quiet Weaver",
+   "points": [
+    1,
+    4,
+    9
+   ],
+   "by": "builder-146"
   }
  ],
- "boxOpened": 128
+ "boxOpened": 132
 }

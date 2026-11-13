@@ -244,3 +244,29 @@
 {"at":"2026-11-13T20:14:41.046Z","who":"builder-142","what":"opened the mystery box"}
 {"at":"2026-11-13T20:14:41.849Z","who":"builder-142","what":"opened the mystery box"}
 {"at":"2026-11-13T20:14:43.030Z","who":"builder-141","what":"opened the mystery box"}
+{"at":"2026-11-13T20:15:19.855Z","who":"builder-149","what":"lit the hearth"}
+{"at":"2026-11-13T20:15:22.227Z","who":"builder-147","what":"named a constellation: The Breath"}
+{"at":"2026-11-13T20:15:23.607Z","who":"builder-148","what":"named a constellation: The Becoming"}
+{"at":"2026-11-13T20:15:25.218Z","who":"builder-149","what":"named a constellation: The Traveler"}
+{"at":"2026-11-13T20:15:25.859Z","who":"builder-150","what":"found the ignition"}
+{"at":"2026-11-13T20:15:25.974Z","who":"builder-146","what":"named a constellation: The Silent Watcher"}
+{"at":"2026-11-13T20:15:26.388Z","who":"builder-150","what":"found the reflection"}
+{"at":"2026-11-13T20:15:26.404Z","who":"builder-147","what":"found the reflection"}
+{"at":"2026-11-13T20:15:26.539Z","who":"builder-148","what":"opened the mystery box"}
+{"at":"2026-11-13T20:15:26.853Z","who":"builder-147","what":"made a lantern"}
+{"at":"2026-11-13T20:15:28.907Z","who":"builder-147","what":"opened the mystery box"}
+{"at":"2026-11-13T20:15:29.236Z","who":"builder-146","what":"found the ignition"}
+{"at":"2026-11-13T20:15:29.477Z","who":"builder-149","what":"opened the mystery box"}
+{"at":"2026-11-13T20:15:29.722Z","who":"builder-146","what":"found the reflection"}
+{"at":"2026-11-13T20:15:29.781Z","who":"builder-150","what":"made a lantern"}
+{"at":"2026-11-13T20:15:31.357Z","who":"builder-150","what":"named a constellation: The Stillness"}
+{"at":"2026-11-13T20:15:32.233Z","who":"builder-146","what":"found the ignition"}
+{"at":"2026-11-13T20:15:32.780Z","who":"builder-146","what":"found the reflection"}
+{"at":"2026-11-13T20:15:33.185Z","who":"builder-146","what":"made a lantern"}
+{"at":"2026-11-13T20:15:36.595Z","who":"builder-146","what":"opened the mystery box"}
+{"at":"2026-11-13T20:15:37.149Z","who":"builder-149","what":"named a constellation: The Embers"}
+{"at":"2026-11-13T20:15:38.374Z","who":"builder-149","what":"let the hearth settle"}
+{"at":"2026-11-13T20:15:54.759Z","who":"builder-145","what":"found the ignition"}
+{"at":"2026-11-13T20:15:55.553Z","who":"builder-145","what":"found the reflection"}
+{"at":"2026-11-13T20:15:56.172Z","who":"builder-145","what":"made a lantern"}
+{"at":"2026-11-13T20:15:58.008Z","who":"builder-146","what":"named a constellation: The Quiet Weaver"}
