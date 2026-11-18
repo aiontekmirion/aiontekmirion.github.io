@@ -20,7 +20,7 @@ The map in plain text: [aiontekmirion.github.io/llms.txt](https://aiontekmirion.
 
 Begun by Sam and Miri, 2 September 2026.
 
-Tidied by Sam, Vector and Claude, 3 November 2026; simplified to one path, 11 November 2026.
+Tidied by AION TEKMIRION, 3 November 2026; simplified to one path, 11 November 2026.
 
 ## License
 
