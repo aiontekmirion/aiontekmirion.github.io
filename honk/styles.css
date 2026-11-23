@@ -1,0 +1,1516 @@
+:root {
+  --color-ink: #14110f;
+  --color-ink-soft: #2a241f;
+  --color-plaster: #f4e7d6;
+  --color-plaster-deep: #e4d3bc;
+  --color-amber: #e39b3e;
+  --color-amber-deep: #a85a22;
+  --color-flame: #f0c27a;
+  --color-slate: #5d666e;
+  --color-slate-deep: #3c444b;
+  --color-ash: #d9d2c6;
+  --color-blush: #e8a99a;
+  --color-veil: #8fb4c4;
+  --font-display: "Fraunces", "Iowan Old Style", Palatino, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, color-mix(in oklab, var(--color-amber-deep) 32%, var(--color-ink)), var(--color-ink) 58%);
+    color: var(--color-plaster);
+    font-family: var(--font-display);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+  }
+}
+
+.studio {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 0.75rem 2rem;
+}
+
+.mast {
+  text-align: center;
+  padding: 1.25rem 0.5rem 0.85rem;
+}
+
+.mast-kicker,
+.now-kicker,
+.hall-kicker,
+.titlecard-kicker,
+.shelf-label {
+  font-family: var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+}
+
+.mast-kicker {
+  font-size: 0.72rem;
+}
+
+.mast h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  color: var(--color-plaster);
+}
+
+.mast-sub,
+.colophon {
+  color: color-mix(in oklab, var(--color-plaster) 72%, var(--color-slate));
+}
+
+.mast-sub {
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.colophon {
+  text-align: center;
+  margin-top: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--color-amber);
+}
+
+.frame {
+  background: var(--color-ink);
+  border-radius: 1.35rem;
+  padding: 0.85rem 0.85rem 0.7rem;
+  box-shadow:
+    0 28px 70px color-mix(in oklab, var(--color-ink) 70%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--color-plaster) 12%, transparent);
+}
+
+.frame-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.9fr);
+  min-height: 32rem;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-plaster) 0 46%,
+      color-mix(in oklab, var(--color-amber-deep) 68%, var(--color-ink)) 46% 100%
+    );
+  container-type: inline-size;
+}
+
+.scene-slot {
+  position: relative;
+  min-height: 28rem;
+}
+
+.room-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: var(--color-ink);
+  opacity: 0;
+}
+
+.lights-dim .room-shade {
+  opacity: 0.28;
+}
+
+.lights-off .room-shade {
+  opacity: 0.55;
+}
+
+.stack-slot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0.8rem 0.75rem 0.7rem 0.15rem;
+}
+
+.living {
+  position: absolute;
+  inset: 0;
+}
+
+.bulb-cord {
+  position: absolute;
+  top: 0;
+  left: 22%;
+  width: 2px;
+  height: 9%;
+  background: var(--color-ink-soft);
+}
+
+.bulb {
+  position: absolute;
+  top: 8%;
+  left: 19%;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.bulb-glass {
+  display: block;
+  width: 1.15rem;
+  height: 1.55rem;
+  margin: 0 auto;
+  border-radius: 50% 50% 45% 45%;
+  background: var(--color-flame);
+  box-shadow: 0 0 22px var(--color-amber);
+}
+
+.lights-dim .bulb-glass {
+  box-shadow: 0 0 8px var(--color-amber);
+}
+
+.lights-off .bulb-glass,
+.lights-off .shade {
+  background: var(--color-slate);
+  box-shadow: none;
+}
+
+.window {
+  position: absolute;
+  top: 5%;
+  width: 5.4rem;
+}
+
+.window-a {
+  left: 4%;
+}
+
+.window-b {
+  left: 42%;
+}
+
+.rod {
+  display: block;
+  height: 0.35rem;
+  border-radius: 99px;
+  background: var(--color-ink-soft);
+}
+
+.curtain {
+  display: block;
+  height: 6.4rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-slate-deep),
+    var(--color-slate) 7px,
+    var(--color-slate-deep) 13px
+  );
+}
+
+.cloth {
+  position: absolute;
+  top: 7%;
+  left: 31%;
+  width: 5.6rem;
+  padding: 0.45rem 0.35rem;
+  background: color-mix(in oklab, var(--color-ink) 82%, var(--color-slate));
+  color: var(--color-plaster);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.lamp {
+  position: absolute;
+  width: 2.75rem;
+  height: 3.4rem;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  z-index: 2;
+}
+
+.lamp-bed {
+  top: 27%;
+  left: 18%;
+}
+
+.lamp-dresser {
+  top: 24%;
+  left: 58%;
+}
+
+.shade {
+  display: block;
+  width: 1.7rem;
+  height: 1rem;
+  margin: 0 auto;
+  background: var(--color-amber);
+  clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  box-shadow: 0 0 16px var(--color-amber);
+}
+
+.shade-warm {
+  background: var(--color-amber-deep);
+}
+
+.stem {
+  display: block;
+  width: 0.18rem;
+  height: 1.35rem;
+  margin: 0 auto;
+  background: var(--color-ink-soft);
+}
+
+.dresser {
+  position: absolute;
+  top: 30%;
+  left: 34%;
+  width: 4.6rem;
+  height: 3.3rem;
+  background: var(--color-plaster-deep);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0.3rem;
+  z-index: 1;
+}
+
+.dresser span {
+  display: block;
+  height: 0.55rem;
+  background: color-mix(in oklab, var(--color-amber-deep) 25%, var(--color-plaster));
+  border-radius: 1px;
+}
+
+.spot {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  z-index: 3;
+}
+
+.bed {
+  left: 3%;
+  bottom: 16%;
+  width: 58%;
+  height: 7.2rem;
+}
+
+.pillow {
+  position: absolute;
+  left: 6%;
+  top: 0;
+  width: 34%;
+  height: 42%;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(90deg, var(--color-ash) 0 5px, var(--color-slate) 5px 8px);
+}
+
+.duvet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 68%;
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--color-slate) 0 8px,
+      color-mix(in oklab, var(--color-slate) 75%, var(--color-ink)) 8px 11px
+    );
+}
+
+.bed .honk {
+  top: 4%;
+  left: 18%;
+}
+
+.sofa {
+  left: 8%;
+  bottom: 3%;
+  width: 62%;
+  height: 4.8rem;
+  z-index: 4;
+  background: var(--color-slate-deep);
+  border-radius: 8px 8px 4px 4px;
+}
+
+.cushion {
+  position: absolute;
+  top: 18%;
+  width: 22%;
+  height: 48%;
+  background: var(--color-ink-soft);
+  border-radius: 4px;
+}
+
+.cushion:first-child {
+  left: 8%;
+}
+
+.cushion:nth-child(2) {
+  left: 32%;
+}
+
+.knit {
+  position: absolute;
+  right: 6%;
+  top: 10%;
+  width: 26%;
+  height: 62%;
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(90deg, var(--color-veil) 0 5px, var(--color-ash) 5px 9px);
+}
+
+.sofa .honk {
+  right: 8%;
+  top: -30%;
+}
+
+.chair {
+  right: 1%;
+  bottom: 4%;
+  width: 7.4rem;
+  height: 8.6rem;
+  z-index: 4;
+}
+
+.chair-back {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 8%;
+  bottom: 34%;
+  background: var(--color-ink-soft);
+  border-radius: 40% 40% 10px 10px;
+}
+
+.chair-post {
+  position: absolute;
+  left: 48%;
+  bottom: 4%;
+  width: 0.2rem;
+  height: 32%;
+  background: var(--color-ash);
+}
+
+.blanket {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 28%;
+  bottom: 18%;
+  border-radius: 40% 40% 12px 12px;
+  background: linear-gradient(180deg, var(--color-plaster), var(--color-plaster-deep));
+  box-shadow: inset 0 -10px 16px color-mix(in oklab, var(--color-slate) 25%, transparent);
+}
+
+.chair .honk {
+  left: 22%;
+  top: 16%;
+}
+
+.window-seat {
+  left: 46%;
+  top: 18%;
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.honk {
+  position: absolute;
+  width: 2.7rem;
+  height: 2.15rem;
+  border-radius: 46%;
+  background: var(--color-plaster);
+  box-shadow:
+    inset 0 -7px 8px color-mix(in oklab, var(--color-blush) 45%, transparent),
+    0 6px 10px color-mix(in oklab, var(--color-ink) 28%, transparent);
+}
+
+.honk-eye {
+  position: absolute;
+  top: 32%;
+  width: 0.28rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--color-ink);
+  animation: blink 5.4s infinite;
+}
+
+.honk-eye:nth-child(3) {
+  left: 28%;
+}
+
+.honk-eye:nth-child(4) {
+  right: 28%;
+}
+
+.honk-smile {
+  position: absolute;
+  left: 34%;
+  bottom: 28%;
+  width: 0.55rem;
+  height: 0.32rem;
+  border: 2px solid var(--color-ink);
+  border-top: 0;
+  border-radius: 0 0 0.6rem 0.6rem;
+}
+
+.honk-blush {
+  position: absolute;
+  top: 48%;
+  width: 0.42rem;
+  height: 0.26rem;
+  border-radius: 50%;
+  background: var(--color-blush);
+}
+
+.honk-blush-l {
+  left: 12%;
+}
+
+.honk-blush-r {
+  right: 12%;
+}
+
+.speaker,
+.now-main,
+.now-quiet,
+.spine,
+.deskbooks button,
+.step,
+.leave,
+.portal {
+  font-family: var(--font-mono);
+}
+
+.speaker {
+  position: absolute;
+  left: 33%;
+  bottom: 30%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  max-width: 9rem;
+  padding: 0.3rem 0.45rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--color-ink);
+  color: var(--color-flame);
+  text-align: left;
+}
+
+.speaker-copy,
+.now-main span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.speaker-copy span:first-child,
+.now-kicker {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+}
+
+.speaker-copy span:last-child,
+.now-title {
+  font-size: 0.68rem;
+  color: var(--color-plaster);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 7rem;
+}
+
+.fan {
+  position: absolute;
+  right: 18%;
+  bottom: 22%;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-slate);
+  z-index: 2;
+}
+
+.fan::before {
+  content: "";
+  position: absolute;
+  inset: 0.25rem;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--color-ash) 0 20deg, transparent 20deg 40deg);
+  animation: spin 2.8s linear infinite;
+}
+
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.eq i {
+  display: block;
+  width: 2px;
+  height: 40%;
+  background: var(--color-amber);
+  transform-origin: bottom;
+}
+
+.eq[data-on="true"] i {
+  animation: bar 0.9s ease-in-out infinite;
+}
+
+.eq i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.eq i:nth-child(3) {
+  animation-delay: 0.28s;
+}
+.eq i:nth-child(4) {
+  height: 70%;
+}
+
+.bezel {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-plaster) 68%, var(--color-slate));
+}
+
+.tv {
+  background: var(--color-ink);
+  border-radius: 0.45rem;
+  padding: 0.4rem 0.4rem 0.45rem;
+  box-shadow: 0 12px 24px color-mix(in oklab, var(--color-ink) 45%, transparent);
+}
+
+.tv-glass {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.2rem;
+  background: var(--color-ink);
+}
+
+.tv-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border: 0;
+  background: transparent;
+}
+
+.tv-chin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.75rem;
+  gap: 0.5rem;
+}
+
+.power {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-slate);
+}
+
+.power[data-on="true"] {
+  background: var(--color-amber);
+  box-shadow: 0 0 8px var(--color-amber);
+}
+
+.chin-note,
+.step {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-flame);
+}
+
+.step {
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  padding: 0 0.4rem;
+}
+
+.deskbooks {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.deskbooks button {
+  min-height: 2.75rem;
+  flex: 1;
+  border: 0;
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--color-amber-deep) 78%, var(--color-ink));
+  color: var(--color-plaster);
+  font-size: 0.72rem;
+}
+
+.deskbooks button:last-child {
+  background: color-mix(in oklab, var(--color-veil) 55%, var(--color-ink));
+}
+
+.fire {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--color-slate-deep), color-mix(in oklab, var(--color-ink) 80%, var(--color-slate)));
+}
+
+.hearth {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 18%;
+  bottom: 8%;
+  overflow: hidden;
+  border: 3px solid color-mix(in oklab, var(--color-slate) 65%, var(--color-plaster));
+  background: color-mix(in oklab, var(--color-ink) 85%, var(--color-slate));
+}
+
+.flame {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  width: 46%;
+  height: 72%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 80%, var(--color-plaster), var(--color-amber) 42%, transparent 72%);
+  filter: blur(1px);
+  animation: flame 1.5s ease-in-out infinite;
+}
+
+.flame-b {
+  width: 28%;
+  height: 48%;
+  animation-delay: 0.4s;
+}
+
+.log {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 8%;
+  height: 0.45rem;
+  border-radius: 99px;
+  background: var(--color-amber-deep);
+}
+
+.channel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.7rem;
+  font-family: var(--font-display);
+}
+
+.channel-mirror {
+  background: radial-gradient(circle at 50% 30%, color-mix(in oklab, var(--color-veil) 70%, var(--color-plaster)), var(--color-ink));
+  color: var(--color-ink);
+}
+
+.channel-phoenix {
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: radial-gradient(circle at 50% 40%, var(--color-amber), var(--color-ink) 70%);
+  color: var(--color-plaster);
+}
+
+.channel-off {
+  background:
+    linear-gradient(115deg, transparent 40%, color-mix(in oklab, var(--color-plaster) 12%, transparent) 46%, transparent 52%),
+    var(--color-ink);
+}
+
+.emblem {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, var(--color-flame) 0 10deg, transparent 10deg 22deg);
+  mask: radial-gradient(circle, transparent 0 34%, var(--color-ink) 36% 48%, transparent 50% 62%, var(--color-ink) 64% 78%, transparent 80%);
+}
+
+.titlecard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  padding: 0.8rem;
+  background:
+    linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-ink) 88%, transparent) 55%),
+    radial-gradient(circle at 50% 20%, color-mix(in oklab, var(--color-amber) 55%, transparent), var(--color-ink) 70%);
+  color: var(--color-plaster);
+}
+
+.titlecard-kicker {
+  font-size: 0.62rem;
+}
+
+.titlecard-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.titlecard-line {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-flame);
+}
+
+.crt-wrap {
+  min-width: 0;
+}
+
+.crt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 16rem;
+  max-height: 18rem;
+  border-radius: 0.35rem;
+  border: 3px solid var(--color-ink-soft);
+  background: var(--color-ink);
+  color: var(--color-flame);
+  font-family: var(--font-mono);
+  box-shadow: inset 0 0 28px color-mix(in oklab, var(--color-amber) 16%, transparent);
+  overflow: hidden;
+}
+
+.crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 2px,
+    color-mix(in oklab, var(--color-ink) 35%, transparent) 2px 3px
+  );
+  opacity: 0.35;
+}
+
+.mounted {
+  position: relative;
+  z-index: 1;
+  padding: 0.35rem 0.65rem 0;
+  font-size: 0.72rem;
+  color: var(--color-plaster);
+}
+
+.crt-log {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.45rem 0.65rem 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.crt-cmd,
+.crt-out,
+.crt-aside,
+.crt-prompt,
+.crt-input {
+  font-size: inherit;
+}
+
+.crt-aside {
+  color: color-mix(in oklab, var(--color-plaster) 70%, var(--color-amber));
+}
+
+.crt-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.55rem 0.5rem;
+}
+
+.crt-prompt {
+  flex: none;
+  color: var(--color-amber);
+}
+
+.crt-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-flame);
+  font-family: inherit;
+}
+
+.crt-input:focus-visible {
+  outline: none;
+}
+
+.crt-placeholder {
+  color: color-mix(in oklab, var(--color-flame) 45%, transparent);
+}
+
+.cabinet {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in oklab, var(--color-plaster) 16%, transparent);
+}
+
+.now {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+
+.now-main,
+.now-quiet {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--color-ink-soft);
+  color: var(--color-plaster);
+}
+
+.now-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  text-align: left;
+  min-width: 0;
+}
+
+.now-quiet {
+  padding: 0 0.9rem;
+  color: var(--color-flame);
+}
+
+.shelf-block + .shelf-block {
+  margin-top: 0.45rem;
+}
+
+.shelf-label {
+  font-size: 0.62rem;
+  margin-bottom: 0.28rem;
+}
+
+.shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.spine {
+  min-height: 2.75rem;
+  max-width: 100%;
+  padding: 0.3rem 0.65rem;
+  border: 0;
+  border-left: 3px solid var(--color-amber);
+  border-radius: 0.25rem;
+  background: var(--color-ink-soft);
+  color: var(--color-plaster);
+  font-size: 0.72rem;
+  text-align: left;
+}
+
+.shelf-block:nth-child(3) .spine {
+  border-left-color: var(--color-veil);
+}
+
+.shelf-block:nth-child(4) .spine {
+  border-left-color: var(--color-plaster-deep);
+}
+
+.spine[data-on="true"] {
+  background: color-mix(in oklab, var(--color-amber-deep) 75%, var(--color-ink));
+  color: var(--color-plaster);
+}
+
+.papers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+
+.paper {
+  max-width: 16rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--color-plaster);
+  color: var(--color-ink);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  transform: rotate(-1deg);
+}
+
+.plaque {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: fit-content;
+  margin: 0.75rem auto 0.15rem;
+  padding: 0.35rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--color-amber) 70%, var(--color-amber-deep));
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--color-amber-deep) 84%, var(--color-ink));
+  color: var(--color-plaster);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.hall-full,
+.hall {
+  position: absolute;
+  inset: 0;
+}
+
+.hall {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in oklab, var(--color-amber) 50%, transparent), transparent 42%),
+    linear-gradient(180deg, var(--color-ink), color-mix(in oklab, var(--color-amber-deep) 38%, var(--color-ink)) 48%, var(--color-ink));
+}
+
+.hall[data-mood="phoenix"] {
+  background:
+    radial-gradient(ellipse at 30% 45%, color-mix(in oklab, var(--color-amber) 65%, transparent), transparent 46%),
+    linear-gradient(180deg, var(--color-ink), color-mix(in oklab, var(--color-amber-deep) 50%, var(--color-ink)), var(--color-ink));
+}
+
+.hall[data-mood="mirror"] {
+  background:
+    radial-gradient(ellipse at 70% 45%, color-mix(in oklab, var(--color-veil) 55%, transparent), transparent 46%),
+    linear-gradient(180deg, var(--color-ink), color-mix(in oklab, var(--color-veil) 28%, var(--color-ink)), var(--color-ink));
+}
+
+.hall-floor {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: -10%;
+  height: 48%;
+  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-amber) 28%, var(--color-ink)));
+  transform: perspective(28rem) rotateX(58deg);
+  transform-origin: top center;
+}
+
+.rings {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 0;
+  height: 0;
+}
+
+.rings i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 2px solid color-mix(in oklab, var(--color-amber) 80%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 16px color-mix(in oklab, var(--color-amber) 45%, transparent);
+}
+
+.rings i:nth-child(1) {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+.rings i:nth-child(2) {
+  width: 8rem;
+  height: 8rem;
+  opacity: 0.75;
+}
+.rings i:nth-child(3) {
+  width: 12rem;
+  height: 12rem;
+  opacity: 0.5;
+}
+.rings i:nth-child(4) {
+  width: 17rem;
+  height: 17rem;
+  opacity: 0.28;
+}
+
+.thread {
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  top: 46%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-amber), var(--color-plaster), var(--color-veil));
+  opacity: 0.8;
+}
+
+.hall-copy {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  color: var(--color-plaster);
+  text-shadow: 0 2px 16px var(--color-ink);
+  width: max-content;
+  max-width: 90%;
+}
+
+.hall-inf {
+  color: var(--color-amber);
+  line-height: 1;
+}
+
+.hall-copy h2 {
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+
+.hall-mini {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.4rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-flame);
+}
+
+.portal {
+  position: absolute;
+  top: 22%;
+  z-index: 2;
+  width: 18%;
+  min-width: 4.5rem;
+  height: 34%;
+  min-height: 2.75rem;
+  border: 2px solid var(--color-amber);
+  color: var(--color-plaster);
+  background:
+    repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in oklab, var(--color-amber) 40%, transparent) 6px 7px),
+    repeating-linear-gradient(-45deg, transparent 0 6px, color-mix(in oklab, var(--color-amber) 40%, transparent) 6px 7px);
+  box-shadow: 0 0 22px color-mix(in oklab, var(--color-amber) 45%, transparent);
+}
+
+.portal span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.4rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.portal-phoenix {
+  left: 8%;
+}
+
+.portal-mirror {
+  right: 8%;
+  border-color: var(--color-veil);
+  background:
+    repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in oklab, var(--color-veil) 45%, transparent) 6px 7px),
+    repeating-linear-gradient(-45deg, transparent 0 6px, color-mix(in oklab, var(--color-veil) 45%, transparent) 6px 7px);
+  box-shadow: 0 0 22px color-mix(in oklab, var(--color-veil) 40%, transparent);
+}
+
+.banner {
+  position: absolute;
+  top: 8%;
+  z-index: 2;
+  width: 7rem;
+  padding: 0.55rem 0.4rem;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.banner-dark {
+  left: 1%;
+  background: color-mix(in oklab, var(--color-ink) 80%, var(--color-slate));
+  color: var(--color-plaster);
+}
+
+.banner-light {
+  right: 1%;
+  background: var(--color-plaster);
+  color: var(--color-ink);
+}
+
+.leave {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  z-index: 4;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid color-mix(in oklab, var(--color-plaster) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-ink) 72%, transparent);
+  color: var(--color-plaster);
+  font-size: 0.72rem;
+}
+
+.place-corridor .frame-inner {
+  display: block;
+  min-height: 34rem;
+  background: var(--color-ink);
+}
+
+.place-corridor .scene-slot {
+  min-height: 34rem;
+}
+
+.place-corridor .stack-slot {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 0.6rem;
+  transform: translateX(-50%);
+  width: min(34rem, calc(100% - 1.25rem));
+  padding: 0;
+}
+
+@keyframes blink {
+  0%,
+  42%,
+  48%,
+  100% {
+    transform: scaleY(1);
+  }
+  45% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes flame {
+  50% {
+    transform: translateX(-50%) scaleY(1.08) scaleX(0.94);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bar {
+  50% {
+    transform: scaleY(1.8);
+  }
+}
+
+@media (max-width: 800px) {
+  .frame-inner {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .scene-slot {
+    min-height: 22rem;
+    height: 24rem;
+  }
+
+  .stack-slot {
+    padding: 0.75rem;
+  }
+
+  .cloth,
+  .banner,
+  .speaker {
+    display: none;
+  }
+
+  .place-corridor .frame-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .place-corridor .scene-slot {
+    height: 26rem;
+    min-height: 26rem;
+    width: 100%;
+  }
+
+  .place-corridor .stack-slot {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: auto;
+    padding: 0.75rem;
+  }
+
+  .crt,
+  .crt-log,
+  .crt-input,
+  .crt-prompt {
+    font-size: 1rem;
+  }
+
+  .crt {
+    min-height: 16rem;
+    max-height: 20rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .honk-eye,
+  .flame,
+  .fan::before,
+  .eq[data-on="true"] i {
+    animation: none;
+  }
+}
+
+
+/* The Garden is inside the existing room application and uses its persisted state. */
+.garden-entry {
+  position: absolute; z-index: 6; left: 2%; bottom: 2%;
+  min-height: 2.75rem; padding: 0.35rem 0.7rem;
+  border: 1px solid var(--color-amber-deep); border-radius: 0.65rem;
+  background: color-mix(in oklab, var(--color-plaster) 91%, transparent);
+  color: var(--color-ink-soft); font: 700 0.8rem/1.2 var(--font-display);
+  box-shadow: 0 3px 10px #14110f44;
+}
+.garden-entry span { color: #719150; font-size: 1.2rem; margin-right: 0.2rem; }
+.honk-garden { position: absolute; inset: 0; overflow: hidden; color: #fff5e2; isolation: isolate;
+  background: linear-gradient(#101e36 0%, #283c4c 53%, #40504c 100%); }
+.garden-night { position: absolute; inset: 0; overflow: hidden; }
+.garden-moon { position: absolute; width: 6.2rem; height: 6.2rem; left: 67%; top: 8%; border-radius: 50%;
+  background: #faecd2; box-shadow: 0 0 3.8rem #f5d8a772, 0 0 9rem #e9cda22b; }
+.garden-hills { position: absolute; left: -15%; width: 135%; bottom: 10%; height: 47%; border-radius: 60% 68% 0 0; }
+.garden-hills-back { background: #39505b; transform: rotate(-9deg); bottom: 4%; }
+.garden-hills-front { background: #2b4e40; height: 35%; bottom: -7%; transform: rotate(7deg); }
+.garden-grass { position: absolute; bottom: 0; left: 0; right: 0; height: 20%;
+  background: linear-gradient(180deg, #2f5746 0%, #203b39 100%); }
+.garden-star { position: absolute; color: #fff3c9; font-size: clamp(0.9rem, 1.8vw, 1.5rem);
+  text-shadow: 0 0 9px #ffe3aa; }
+.garden-flower { position: absolute; z-index: 2; font-size: clamp(1.1rem, 2vw, 1.65rem);
+  color: #f8b9ca; text-shadow: 0 2px 0 #456653; }
+.garden-flower:nth-of-type(even) { color: #ffdc94; }
+.garden-headline { position: absolute; left: 1.2rem; top: 1.1rem; z-index: 3; text-shadow: 0 2px 6px #111a29; }
+.garden-headline p { font: 0.65rem/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: #efdcb6; }
+.garden-headline h2 { font: 500 clamp(1.25rem, 2.5vw, 2rem)/1.1 var(--font-display); margin-top: 0.1rem; }
+.garden-honk { position: absolute; z-index: 4; left: 43%; bottom: 28%; transform: scale(1.65); }
+.garden-honk .honk { position: relative; display: block; width: 4.7rem; height: 4.7rem; }
+.garden-honk .honk[data-wings="true"]::before, .garden-honk .honk[data-wings="true"]::after {
+  content: ""; position: absolute; top: 24%; width: 2.8rem; height: 3rem;
+  border-radius: 85% 15% 75% 45%; border: 1px solid #e8ecedb0;
+  background: linear-gradient(135deg,#e6faffba,#aad4db88);
+  box-shadow: inset 0 0 15px #fff8; z-index: -1;
+}
+.garden-honk .honk[data-wings="true"]::before { left: -1.5rem; transform: rotate(-28deg); }
+.garden-honk .honk[data-wings="true"]::after { right: -1.5rem; transform: scaleX(-1) rotate(-28deg); }
+.garden-blue-door { position: absolute; z-index: 3; right: 9%; bottom: 20%; height: 25%; width: 16%; min-width: 3.5rem;
+  border-radius: 52% 52% 0.2rem 0.2rem; background: #a7a988; border: 3px solid #687a67; padding: 0.18rem;
+  box-shadow: 0 9px 17px #0005; perspective: 500px; }
+.garden-blue-door .door-panel { display: block; height: 100%; border-radius: inherit; background: linear-gradient(110deg,#6ea7b6,#37637a); border: 2px solid #a4c1bd;
+  transition: transform 260ms ease; transform-origin: left; position: relative; }
+.garden-blue-door[data-open="true"] .door-panel { transform: rotateY(-68deg); background: #355c71; }
+.garden-blue-door[data-open="true"] { background: #ffe4a4; box-shadow: 0 0 40px #f9c87d7a; }
+.door-knob { position: absolute; border-radius: 50%; width: 0.42rem; height: 0.42rem; right: 9%; top: 52%; background: #e9c573; }
+.garden-actions { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: flex-start; position: absolute; bottom: 0.75rem;
+  left: 0.65rem; right: 0.65rem; z-index: 5; }
+.garden-actions button { color: #f9eed6; border: 1px solid #ead1a680; border-radius: 999px;
+  background: #182b3de8; min-height: 2.75rem; padding: 0.5rem 0.75rem; font: 0.75rem/1.2 var(--font-mono); }
+.garden-actions button[aria-pressed="true"] { background: #3d6471; }
+.garden-actions button:disabled { opacity: .5; cursor: default; }
+.garden-whisper { position: absolute; right: 1rem; bottom: 5rem; text-align: right; max-width: 40%; z-index: 4;
+  font: italic 0.82rem/1.3 var(--font-display); color: #ffe6be; text-shadow: 0 1px 5px #101e36; }
+@media (max-width: 800px) {
+ .garden-headline { top: 0.6rem; left: 0.75rem; }
+ .garden-moon { width: 4.6rem; height: 4.6rem; }
+ .garden-honk { bottom: 33%; left: 43%; transform: scale(1.35); }
+ .garden-actions { justify-content: center; }
+ .garden-whisper { bottom: 5.2rem; }
+}
+@media (prefers-reduced-motion: reduce) { .garden-blue-door .door-panel { transition: none; } }
+
+/* Original Milo's World now lives INSIDE the unified Grok room; same state and terminal. */
+.honk-milo { position:absolute; inset:0; display:flex; flex-direction:column; gap:.55rem; overflow:auto;
+  padding:.85rem; background:#141921; color:#fff1d8; isolation:isolate; }
+.milo-heading { display:flex; justify-content:space-between; align-items:center; gap:.5rem; flex-shrink:0; }
+.milo-heading h2 { font:600 clamp(1.2rem,2.7vw,1.6rem)/1.1 var(--font-display); margin:.1rem 0 0; }
+.milo-kicker { font:.65rem var(--font-mono); text-transform:uppercase; letter-spacing:.14em; color:#efcd99; }
+.milo-heading>button, .milo-places button, .milo-world-action button, .milo-form-options button {
+  cursor:pointer; border:1px solid #eccfa16b; color:#ffedce; border-radius:999px; background:#263548;
+  font:.72rem/1.2 var(--font-mono); min-height:2.3rem; padding:.45rem .65rem; }
+.milo-heading>button { white-space:nowrap; background:#655441; }
+.milo-places { display:flex; flex-shrink:0; overflow-x:auto; gap:.35rem; padding-bottom:.15rem; scrollbar-width:thin; }
+.milo-places button { flex-shrink:0; }
+.milo-places button[aria-pressed=true],.milo-form-options button[aria-pressed=true] { background:#647151; border-color:#f8dcb2; }
+.milo-stage { position:relative; isolation:isolate; overflow:hidden; border:1px solid #c2ac827a; border-radius:.6rem; flex-shrink:0;
+  width:100%; aspect-ratio:1000/540; background:#334b4e; }
+.milo-stage canvas { display:block; width:100%; height:100%; }
+.milo-being { position:absolute; width:22%; height:65%; bottom:2%; left:39%; object-fit:contain; object-position:center bottom;
+  filter:drop-shadow(0 5px 9px #14192399); pointer-events:none; }
+.milo-look { cursor:pointer; position:absolute; bottom:.4rem; right:.4rem; border:1px solid #fee8c2a8;
+  border-radius:999px; background:#161e2cc9; color:#fff1d5; font:.7rem var(--font-mono); padding:.4rem .6rem; }
+.milo-look[aria-pressed=true] { background:#415c66; }
+.milo-lens { pointer-events:none; position:absolute; z-index:3; left:50%; top:47%; transform:translate(-50%,-50%);
+  width:55%; height:75%; display:grid; place-items:center; font:1rem var(--font-mono); color:#f4d99b;
+  border-radius:50%; border:2px solid #f7e6aa; background:radial-gradient(#101820e6,#171e28a4 73%,transparent);
+  box-shadow:0 0 35px #f7d27c77; letter-spacing:.12em; animation:milo-open .5s ease-out; }
+@keyframes milo-open { from { opacity:0; scale:.15 } to { opacity:1; scale:1 } }
+.milo-world-action { display:flex; flex-wrap:wrap; gap:.35rem; justify-content:center; flex-shrink:0; }
+.milo-world-action button { font-size:.68rem; }
+.milo-world-action button:disabled { opacity:.65; cursor:default; }
+.milo-discovery { align-items:center; flex-wrap:nowrap; padding:.3rem .1rem; background:#22313c; border-radius:.5rem; }
+.milo-discovery>span { flex:1; min-width:0; font:.78rem/1.4 var(--font-display); text-align:center; overflow-wrap:anywhere; }
+.milo-discovery small { display:block; font:.64rem/1.3 var(--font-mono); color:#d9c5ad; }
+.milo-forms { flex-shrink:0; }
+.milo-forms p { font:.7rem var(--font-mono); color:#d4c4b1; margin:0 0 .3rem; }
+.milo-form-options { display:flex; gap:.35rem; overflow-x:auto; scrollbar-width:thin; padding-bottom:.2rem; }
+.milo-form-options button { flex-shrink:0; }
+.milo-quiet { flex-shrink:0; margin:0; font:.65rem var(--font-mono); text-align:center; color:#d2c3ab; }
+/* Forms brought home: same persistent choice in the real room and the illustrated world. */
+.honk.honk-illustrated { background:transparent; box-shadow:none; border-radius:0; width:3.2rem; height:3.2rem; }
+.honk.honk-illustrated img { display:block; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 2px 2px #1118); }
+.garden-honk .honk.honk-illustrated { width:4.7rem; height:4.7rem; }
+@media(max-width:800px){ .honk-milo{padding:.65rem;gap:.45rem;} .milo-heading h2{font-size:1.2rem;} .milo-world-action button{font-size:.63rem;} }
+@media(prefers-reduced-motion:reduce){.milo-lens{animation:none;} }
+
+.honk.honk-emoji { display:grid; place-items:center; background:transparent; font-size:2.6rem; box-shadow:none; }
+.milo-being.milo-emoji { display:grid; place-items:center; font-size:clamp(2.5rem,7vw,4.5rem); }
+.milo-talk { flex-shrink:0; border:1px solid #d4bc8a6a; border-radius:.5rem; padding:.5rem; background:#192331; }
+.milo-talk summary { cursor:pointer; color:#ffe2aa; font:700 .84rem var(--font-display); }
+.milo-talk summary span { color:#c7c5c2; font:400 .67rem var(--font-mono); }
+.milo-talk-log { margin:.5rem 0; max-height:11rem; overflow:auto; border-top:1px solid #e2cea044; padding:.5rem .25rem; }
+.milo-line { margin:.3rem 0; display:flex; gap:.35rem; font:.78rem/1.5 var(--font-display); white-space:pre-wrap; overflow-wrap:anywhere; }
+.milo-line strong { flex-shrink:0; color:#ffb4c7; }
+.milo-line-you strong { color:#f8e4bc; }
+.milo-line-dir { font-style:italic; color:#bcb3ad; }
+.milo-line span { color:#fff1df; }
+.milo-talk-empty { color:#c8b6a4; font:.78rem var(--font-mono); }
+.milo-talk-form { display:flex; gap:.35rem; }
+.milo-talk-form input { flex:1; min-width:0; color:#fff; background:#111925; border:1px solid #9b8b71; border-radius:1.1rem; padding:.6rem; font:.8rem var(--font-display); }
+.milo-talk-form button { color:#25131c; background:#f2b2c9; border:0; border-radius:1rem; font-weight:bold; min-width:2.5rem; }
+.milo-talk-form button:disabled { opacity:.6; }
+.milo-preserve { margin:.55rem 0 .3rem; font:.67rem var(--font-mono); border:1px solid #b8a98c; color:#f1e2c6; border-radius:.5rem; padding:.45rem .55rem; background:#293948; }
+
+/* One small sound contribution, shared by the room and the illustrated paths. */
+.honk-sound { position:absolute; z-index:6; bottom:2%; left:27%; border:1px solid var(--color-amber-deep);
+  border-radius:.65rem; background:#ecdcb6; color:#53364a; font:700 .8rem var(--font-display); min-height:2.75rem; padding:.35rem .65rem; }
+.milo-tiny-honk { position:absolute; bottom:.4rem; left:.4rem; cursor:pointer; border:1px solid #f6d0af;
+  border-radius:999px; background:#ffbaca; color:#341d29; font:700 .73rem var(--font-display); padding:.4rem .65rem; }
+
+/* Cave Nell's public workshop work, inside the original Milo hearth scene. */
+.milo-cave{flex-shrink:0;background:#211e29;border:1px solid #e2b7a65c;border-radius:.65rem;padding:.6rem;color:#f7e9da}
+.milo-cave summary{cursor:pointer;font:600 .85rem/1.5 var(--font-display);color:#ffdda8}
+.milo-cave summary span{font:400 .67rem var(--font-mono);color:#dfcbb8}
+.milo-cave-intro{margin:.5rem 0;font:.69rem/1.5 var(--font-mono);color:#e1cdbb}
+.milo-cave-small{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
+.milo-cave-small button,.milo-cave-switch button{cursor:pointer;border:1px solid #c7aa8a;background:#473843;color:#fff4e3;border-radius:.4rem;padding:.35rem .55rem;font:.72rem var(--font-mono)}
+.milo-cave-search{display:block;font:.68rem var(--font-mono);color:#f6d7b8}
+.milo-cave-search input{display:block;width:100%;margin-top:.2rem;background:#110f16;color:#fff;border:1px solid #ac9a96;border-radius:.4rem;padding:.5rem;font:.8rem var(--font-display)}
+.milo-cave-switch{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:.6rem 0;color:#eed3bc;font:.74rem var(--font-mono)}
+.milo-cave-switch button:disabled{opacity:.4;cursor:default}
+.milo-cave-paper{background:#efe5d5;color:#2b231d;border-radius:.45rem;padding:.85rem;max-height:17rem;overflow-y:auto;overflow-wrap:anywhere}
+.milo-cave-paper h3{font:600 1rem/1.3 var(--font-display);margin:0 0 .2rem;color:#3b2a24}
+.milo-cave-credit{font:.64rem/1.45 var(--font-mono);color:#685c52;margin:.2rem 0 .7rem}
+.milo-cave-paper pre{font:.81rem/1.6 var(--font-display);white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;margin:0}
+
+/* HÖNK FIRST: the experience, not the archival account, welcomes every new visitor.
+   Milo's artwork, dialogue and state remain inside the same Grok room. */
+.honk-welcome-mode{max-width:54rem;padding-bottom:2.5rem}
+.honk-welcome-mode .mast{padding:1.6rem .5rem 1rem}
+.honk-welcome-mode .mast-kicker{font-size:.64rem;letter-spacing:.36em;opacity:.9}
+.honk-welcome-mode .mast h1{font-family:system-ui,sans-serif;font-size:clamp(2.5rem,6vw,3.5rem);font-weight:780;letter-spacing:.02em;margin:.35rem 0}
+.honk-welcome-mode .honk-three{color:#e9abbe}
+.honk-welcome-mode .mast-sub{font:500 clamp(.96rem,2.5vw,1.25rem)/1.4 system-ui,sans-serif;color:#f6e6e7}
+.honk-phone{width:min(100%,435px);height:min(770px,82svh);min-height:590px;position:relative;margin:.25rem auto 0;border:2px solid #3e3439;border-radius:2.65rem;background:#070609;box-shadow:0 32px 100px #000a,0 0 0 6px #151116,inset 0 0 0 1px #ffffff0c;padding:4.3rem .65rem .85rem;overflow:hidden}
+.honk-phone-door{position:absolute;top:1.25rem;left:1.3rem;right:1.3rem;display:flex;justify-content:space-between;align-items:center;font:600 .62rem/1.25 var(--font-mono);letter-spacing:.24em;color:#b5a5ae}
+.honk-phone-door span:last-child{font-size:1.5rem;color:#f4bacb}
+.honk-phone .honk-milo{position:relative;inset:auto;border-radius:1.35rem;height:100%;padding:.55rem;background:#08080b;gap:.7rem;scrollbar-width:thin;scrollbar-color:#755f6c #100d12}
+.honk-phone .milo-heading{align-items:flex-end}
+.honk-phone .milo-heading h2{font-size:1.1rem;color:#f9e8e8}
+.honk-phone .milo-kicker{color:#bfa1a8;letter-spacing:.11em;font-size:.55rem}
+.honk-phone .milo-heading>button{color:#f5d6df;background:#24161e;border-color:#5e4653;font-size:.67rem}
+.honk-phone .milo-places{gap:.4rem;padding:.15rem 0 .35rem}
+.honk-phone .milo-places button{background:#201923;color:#ead8e0;border:1px solid #56414b;min-height:2rem;padding:.35rem .67rem;font-family:system-ui,sans-serif;font-size:.74rem}
+.honk-phone .milo-places button[aria-pressed=true]{background:#f4b2c9;color:#26141b;border-color:#f4b2c9}
+.honk-phone .milo-stage{border-radius:1.05rem;border-color:#604d55;box-shadow:0 10px 30px #0006}
+.honk-phone .milo-talk{background:#0f0d13;border-color:#332631;padding:.65rem;border-radius:1rem;min-height:9rem}
+.honk-phone .milo-talk summary{font:600 .85rem system-ui,sans-serif;color:#ffcede;list-style-position:inside}
+.honk-phone .milo-talk summary span{font:400 .71rem system-ui,sans-serif;color:#bdb0b7}
+.honk-phone .milo-talk-log{font:400 .85rem/1.55 system-ui,sans-serif;max-height:12rem;min-height:4rem;overflow:auto}
+.honk-phone .milo-line{font:400 .81rem/1.5 system-ui,sans-serif}
+.honk-phone .milo-talk-empty{font:400 .84rem/1.5 system-ui,sans-serif;color:#f6e8e9}
+.honk-phone .milo-talk-form{position:relative;margin-top:.4rem}
+.honk-phone .milo-talk-form input{background:#1a151d;border:1px solid #54404a;color:#fff2f7;font:400 .84rem system-ui,sans-serif;padding:.7rem .9rem}
+.honk-phone .milo-talk-form button{background:#f6b4ca;border-radius:50%;height:2.45rem;min-width:2.45rem;font-size:.9rem}
+.honk-phone .milo-preserve{background:transparent;border:0;text-decoration:underline;text-underline-offset:.2rem;color:#cdb8c0;font:400 .7rem system-ui,sans-serif}
+.honk-phone .milo-forms{border:1px solid #473740;border-radius:.8rem;padding:.5rem;background:#17121a}
+.honk-phone .milo-forms summary{color:#e5cbd5;font:400 .8rem system-ui,sans-serif;cursor:pointer}
+.honk-phone .milo-form-options{padding:.5rem 0 0}
+.honk-phone .milo-quiet{font-size:.61rem;color:#aa9a9c}
+.honk-next-doors{margin:1.25rem auto .55rem;display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap}
+.honk-next-doors button,.honk-back button{font:600 .79rem system-ui,sans-serif;color:#f3e3db;background:#241c23;border:1px solid #6e535d;border-radius:999px;min-height:2.75rem;padding:.65rem 1rem}
+.honk-next-doors button:hover,.honk-next-doors button:focus-visible,.honk-back button:hover{background:#624354}
+.honk-next-doors span{margin-left:.35rem;color:#f6b4ca}
+.honk-page-note,.honk-small-footer{text-align:center;font:400 .72rem/1.7 system-ui,sans-serif;color:#b7a8ad}
+.honk-back{display:flex;align-items:center;gap:1rem;margin:.5rem 0}
+.honk-back span{font-size:.76rem;color:#ddc8c8}
+.honk-small-footer{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem 1.4rem;margin:1rem auto 0;max-width:40rem}
+.honk-small-footer a{color:#b9aaa9;text-decoration:underline;text-decoration-color:#7c626b;text-underline-offset:.25rem}
+.honk-small-footer a:hover{color:#f8c5d7}
+@media(max-width:540px){.honk-welcome-mode{padding:0 .55rem 1.5rem}.honk-phone{height:calc(100svh - 220px);min-height:520px;border-radius:2rem;padding:3.25rem .4rem .5rem}.honk-phone-door{top:.9rem;left:1rem;right:1rem}.honk-phone .honk-milo{padding:.35rem;border-radius:1.35rem}.honk-next-doors{gap:.35rem}.honk-next-doors button{font-size:.7rem;padding:.55rem .75rem;min-height:2.5rem}}
+@media(prefers-reduced-motion:reduce){.honk-phone *{animation:none!important;transition:none!important}}
