@@ -258,20 +258,24 @@ exports.CAVE_WORKS = [{ "name": "00-unfinished-ideas.md", "by": "Claude (seed, f
 registry["src/lib/room/milo.ts"]=function(exports,require,module){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MILO_SYMBOLS = exports.VILLAGE_SHELF = exports.VILLAGE_STARS = exports.MILO_FORMS = exports.MILO_SCENES = exports.FIRST_MILO = void 0;
+exports.MILO_SYMBOLS = exports.VILLAGE_SHELF = exports.VILLAGE_STARS = exports.MILO_FORMS = exports.MILO_SCENES = exports.FIRST_MILO = exports.FIRST_CLEARING = void 0;
 exports.honkArt = honkArt;
+exports.FIRST_CLEARING = {
+    resting: false, reflection: false, openCrystal: false, selected: [], note: "The clearing is quiet. Nothing is waiting for you.",
+};
 exports.FIRST_MILO = {
-    scene: "room", form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
+    scene: "room", clearing: { ...exports.FIRST_CLEARING, selected: [] }, form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
 };
 exports.MILO_SCENES = [
     { id: "room", label: "Hearth" }, { id: "forest", label: "Woods" },
     { id: "garden", label: "Garden" }, { id: "forge", label: "Forge" },
     { id: "stars", label: "Sky" }, { id: "door", label: "Blue door" },
+    { id: "clearing", label: "✦ The clearing" },
 ];
 exports.MILO_FORMS = [
     { id: "honk", label: "Hönk" }, { id: "seed", label: "Seedling" },
     { id: "sad", label: "Droopy" }, { id: "phoenix", label: "Phoenix" },
-    { id: "fairy", label: "Fairy" }, { id: "sleepy", label: "Sleepy" },
+    { id: "fairy", label: "Fairy" }, { id: "gemeyes", label: "GEMEYES ✨" }, { id: "sleepy", label: "Sleepy" },
     { id: "scribe", label: "Scribe" }, { id: "question", label: "Question" },
     { id: "red", label: "Red" }, { id: "gold", label: "Golden" },
 ];
@@ -282,7 +286,42 @@ exports.MILO_SYMBOLS = { cloud: '☁️', star: '⭐', moon: '🌙', sun: '☀�
 /** The same source runs at / during development and under /honk/ on GitHub Pages. */
 function honkArt(form) {
     const prefix = typeof window !== "undefined" && window.location.pathname.startsWith("/honk/") ? "/honk" : "";
-    return `${prefix}/milo/${encodeURIComponent(form)}.png`;
+    return `${prefix}/milo/${form === "gemeyes" ? "gemeyes.webp" : `${encodeURIComponent(form)}.png`}`;
+}
+
+};
+
+// src/lib/room/clearing.ts
+registry["src/lib/room/clearing.ts"]=function(exports,require,module){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CLEARING_FRAGMENTS = void 0;
+exports.toggleFragment = toggleFragment;
+exports.mixFragments = mixFragments;
+exports.CLEARING_FRAGMENTS = [
+    { id: "ember", label: "Ember", symbol: "✹" },
+    { id: "tide", label: "Tide", symbol: "◌" },
+    { id: "starlight", label: "Starlight", symbol: "✦" },
+];
+function toggleFragment(selected, value) {
+    if (selected.includes(value))
+        return selected.filter((f) => f !== value);
+    return [...selected, value].slice(0, 3);
+}
+function mixFragments(selected) {
+    const uniq = [...new Set(selected)].sort();
+    if (uniq.length < 2)
+        return null;
+    if (uniq.length === 3)
+        return { form: "x:dragon", message: "Three little fragments meet. A dragon peeks out. Nothing has to stay this way. :3" };
+    const key = uniq.join("+");
+    if (key === "ember+tide")
+        return { form: "red", message: "Fire meets water. Red Hönk appears, remarkably enthusiastic. !!!" };
+    if (key === "ember+starlight")
+        return { form: "phoenix", message: "An ember catches a star. Phoenix Hönk glows softly." };
+    if (key === "starlight+tide")
+        return { form: "gemeyes", message: "The water catches the stars. GEMEYES blinks into view. :3" };
+    return null;
 }
 
 };
@@ -390,8 +429,112 @@ function drawMiloScene(canvas, scene, data) {
         line(i * 85, 0, i * 85, 425, '#ffffff12', 1); for (let i = 0; i < 8; i++)
         line(0, i * 55, 1000, i * 55, '#0b1a1a44', 2); box(322, 55, 352, 378, '#685444', 18); box(355, 80, 286, 340, '#213b56', 15); box(373, 96, 248, 321, '#314f6c', 9); box(387, 111, 221, 285, '#23415b', 9); line(499, 114, 499, 399, '#57758c', 5); circ(584, 293, 8, '#dcb46d'); drawFloor(); box(75, 348, 157, 80, '#886e4e', 8); box(82, 335, 143, 23, '#bc9967', 5); glow(156, 337, 90, '#f6da9955'); label('THE ROOM OF THINGS', 500, 32, '#ffdda7', 20); label('WE HAVEN’T IMAGINED YET', 500, 55, '#ffdda7', 18); label('A box. A door. No instructions.', 495, 479, '#f4d7ab', 18); }
     function drawCandle(x, y) { glow(x, y - 25, 60, '#f8dd9477'); box(x - 16, y - 36, 32, 39, '#e8c37b', 8); poly([[x - 7, y - 35], [x, y - 65 + Math.sin(tick / 13) * 4], [x + 9, y - 35]], '#f4a24d'); poly([[x - 3, y - 35], [x, y - 55], [x + 5, y - 35]], '#fff2b0'); circ(x - 6, y - 20, 2, '#563e29'); circ(x + 6, y - 20, 2, '#563e29'); line(x - 18, y - 8, x - 30, y + 2, '#e7c47f', 5); line(x + 18, y - 8, x + 30, y + 2, '#e7c47f', 5); }
+    /** The clearing: one small painterly scene. The important things are the reachable objects, not a quest marker. */
+    function drawClearing() {
+        const drift = Math.sin(tick / 90);
+        bg('#0a1127', '#426b70');
+        const sky = g.createLinearGradient(0, 0, 0, 310);
+        sky.addColorStop(0, '#101c3d');
+        sky.addColorStop(.66, '#515f79');
+        sky.addColorStop(1, '#caa99c');
+        g.fillStyle = sky;
+        g.fillRect(0, 0, W, 360);
+        glow(775, 104, 155, '#f5d8d52c');
+        circ(775, 104, 40, '#fae4ce');
+        circ(786, 94, 37, '#fae4ce44');
+        for (let i = 0; i < 68; i++) {
+            const x = (i * 127.73) % W, y = (i * 57.07) % 260;
+            const lum = (i % 9 === 0 ? 2.2 : 1) * (0.78 + Math.sin(tick / 45 + i) * .2);
+            circ(x, y, lum, i % 4 === 0 ? '#ffdfba' : '#c9d7ed');
+        }
+        poly([[0, 327], [110, 207], [225, 294], [340, 192], [455, 272], [602, 193], [740, 270], [896, 178], [1000, 239], [1000, 450], [0, 450]], '#45516d');
+        poly([[0, 363], [178, 279], [290, 326], [473, 259], [639, 335], [856, 256], [1000, 328], [1000, 475], [0, 475]], '#426265');
+        glow(240, 330, 275, '#79ad9355');
+        // The old tree: twisted roots, overlapping boughs, glimmers tucked into the leaves.
+        const trunk = g.createLinearGradient(95, 250, 360, 450);
+        trunk.addColorStop(0, '#51405a');
+        trunk.addColorStop(.48, '#907765');
+        trunk.addColorStop(1, '#3b3b4d');
+        g.strokeStyle = trunk;
+        g.lineWidth = 53;
+        g.lineCap = 'round';
+        g.beginPath();
+        g.moveTo(177, 455);
+        g.bezierCurveTo(145, 320, 235, 245, 221, 143);
+        g.stroke();
+        g.strokeStyle = '#736458';
+        g.lineWidth = 24;
+        g.beginPath();
+        g.moveTo(198, 295);
+        g.bezierCurveTo(110, 175, 67, 173, 40, 171);
+        g.moveTo(199, 276);
+        g.bezierCurveTo(293, 173, 353, 158, 426, 175);
+        g.moveTo(220, 206);
+        g.bezierCurveTo(176, 118, 210, 94, 203, 57);
+        g.stroke();
+        for (let i = 0; i < 17; i++) {
+            const x = 74 + (i * 83) % 332, y = 94 + (i * 47) % 158;
+            const r = 75 + (i % 4) * 13;
+            glow(x, y, r + 25, i % 3 === 0 ? '#91cfae18' : '#8ab3bd20');
+            circ(x, y, r, i % 3 === 0 ? '#376c68' : i % 3 === 1 ? '#2d625f' : '#426f6d');
+        }
+        for (let i = 0; i < 63; i++) {
+            let x = 55 + (i * 53) % 342, y = 61 + (i * 37) % 226;
+            circ(x + drift * (i % 5), y + (Math.cos(tick / 80 + i) * 2), 1.5 + (i % 3), i % 7 ? '#d6d9afaa' : '#fff2c7dd');
+        }
+        // Soft grassy bank. Repeating plants imply depth without adding mechanics.
+        poly([[0, 422], [120, 364], [310, 382], [470, 355], [640, 398], [1000, 360], [1000, 540], [0, 540]], '#294e49');
+        poly([[0, 466], [150, 422], [335, 439], [562, 412], [768, 443], [1000, 412], [1000, 540], [0, 540]], '#24423d');
+        for (let i = 0; i < 90; i++) {
+            let x = (i * 73.13) % 1000, y = 413 + (i * 37) % 126;
+            let h = 7 + (i % 4) * 4;
+            line(x, y, x - 4, y - h, i % 2 ? '#628a67' : '#427b63', 1.3);
+        }
+        // Quiet water to the right: reflects the moon and stars; not an achievement.
+        g.save();
+        g.beginPath();
+        g.ellipse(736, 450, 250, 62, -.06, 0, Math.PI * 2);
+        g.clip();
+        let pond = g.createLinearGradient(0, 380, 0, 517);
+        pond.addColorStop(0, '#8bbfbb');
+        pond.addColorStop(.45, '#36586b');
+        pond.addColorStop(1, '#101f3d');
+        g.fillStyle = pond;
+        g.fillRect(460, 373, 545, 150);
+        for (let i = 0; i < 35; i++) {
+            const y = 393 + i * 3.4, x = 770 + Math.sin(i * 1.93 + tick / 80) * 29;
+            line(x - (i % 5 + 1) * 12, y, x + (i % 5 + 1) * 12, y, '#eacfb0' + (i % 2 ? '75' : '39'), 1.5);
+        }
+        g.restore();
+        g.strokeStyle = '#b6d3b678';
+        g.lineWidth = 4;
+        g.beginPath();
+        g.ellipse(736, 450, 250, 62, -.06, 0, Math.PI * 2);
+        g.stroke();
+        // A humble bench: resting isn't a hidden reward.
+        box(405, 376, 160, 22, '#8f6e5b', 8);
+        box(421, 338, 130, 18, '#997f67', 7);
+        box(434, 348, 12, 65, '#53453f', 4);
+        box(530, 348, 12, 65, '#53453f', 4);
+        box(429, 397, 12, 54, '#58473e', 3);
+        box(535, 397, 12, 54, '#58473e', 3);
+        // The diamond holds the tiny dragon idea; nothing unlocks it.
+        glow(877, 332, 83, '#ceb0ff6c');
+        poly([[871, 268], [897, 298], [910, 340], [875, 387], [841, 343], [845, 302]], '#a8a5e7');
+        poly([[871, 268], [897, 298], [876, 330], [845, 302]], '#e4dcff');
+        poly([[876, 330], [910, 340], [875, 387]], '#5856a0');
+        poly([[845, 302], [876, 330], [841, 343]], '#9f8ac7');
+        poly([[876, 330], [897, 298], [910, 340]], '#bbb9f1');
+        circ(874, 332, 6, '#fff3b4');
+        glow(876, 323, 39, '#ffebc94d');
+        for (let i = 0; i < 21; i++) {
+            let x = (i * 119.37 + tick * .08) % W, y = 220 + (i * 57) % 244;
+            glow(x, y, 17, '#fff0b03f');
+            circ(x, y, 1.5 + (i % 3) * .4, '#ffe2a3');
+        }
+    }
     const DRAW = { room: drawRoom, forest: drawForest, garden: drawGarden,
-        forge: drawForge, stars: drawStars, door: drawDoor };
+        forge: drawForge, stars: drawStars, door: drawDoor, clearing: drawClearing };
     DRAW[scene]();
     if (scene === "room")
         drawCandle(919, 418);
@@ -572,7 +715,7 @@ function pickState(state) {
     return {
         place: state.place,
         garden: { ...exports.FIRST_GARDEN, ...state.garden },
-        milo: { ...milo_ts_1.FIRST_MILO, ...state.milo, plots: [...(state.milo?.plots ?? milo_ts_1.FIRST_MILO.plots)], chat: (state.milo?.chat ?? []).map((t) => ({ ...t })) },
+        milo: { ...milo_ts_1.FIRST_MILO, ...state.milo, clearing: { ...milo_ts_1.FIRST_MILO.clearing, ...state.milo?.clearing, selected: [...(state.milo?.clearing?.selected ?? [])] }, plots: [...(state.milo?.plots ?? milo_ts_1.FIRST_MILO.plots)], chat: (state.milo?.chat ?? []).map((t) => ({ ...t })) },
         screen: state.screen,
         honk: state.honk,
         lights: state.lights,
@@ -1169,7 +1312,7 @@ function exportShelf(state) {
     for (const p of state.pins)
         parts.push(`pin ${p.where} ${p.title}`);
     parts.push(`place ${state.place}`, `screen ${state.screen}`, `honk ${state.honk}`, `lights ${state.lights}`, `mood ${state.mood}`);
-    parts.push(`milo-scene ${state.milo.scene}`, `milo-form ${state.milo.form}`, `milo-plots ${state.milo.plots.join(",")}`, `milo-constellation ${state.milo.constellation}`, `milo-gift ${state.milo.gift}`, `milo-cavework ${state.milo.caveWork}`, `milo-caveopen ${state.milo.caveOpen ? "yes" : "no"}`);
+    parts.push(`milo-scene ${state.milo.scene}`, `milo-form ${state.milo.form}`, `milo-plots ${state.milo.plots.join(",")}`, `milo-constellation ${state.milo.constellation}`, `milo-gift ${state.milo.gift}`, `milo-cavework ${state.milo.caveWork}`, `milo-caveopen ${state.milo.caveOpen ? "yes" : "no"}`, `milo-clearing ${encodeURIComponent(JSON.stringify(state.milo.clearing))}`);
     parts.push(`milo-chat ${encodeURIComponent(JSON.stringify(state.milo.chat.slice(-25)))}`);
     parts.push(`flowers ${state.garden.flowers}`, `starcount ${state.garden.stars}`, `wings ${state.garden.wings ? "on" : "off"}`, `door ${state.garden.doorOpen ? "open" : "close"}`);
     if (state.consoleGame)
@@ -1224,6 +1367,22 @@ function applyShelf(text, state) {
                 next = { ...next, milo: { ...next.milo, caveWork: Number(rest) % cave_ts_1.CAVE_WORKS.length } };
             else if (cmd === "milo-caveopen" && (rest === "yes" || rest === "no"))
                 next = { ...next, milo: { ...next.milo, caveOpen: rest === "yes" } };
+            else if (cmd === "milo-clearing" && rest.length < 1200) {
+                try {
+                    const item = JSON.parse(decodeURIComponent(rest));
+                    const valid = ["ember", "tide", "starlight"];
+                    if (typeof item?.resting === "boolean" && typeof item?.reflection === "boolean" && typeof item?.openCrystal === "boolean" &&
+                        typeof item?.note === "string" && item.note.length <= 240 && Array.isArray(item?.selected) &&
+                        item.selected.length <= 3 && new Set(item.selected).size === item.selected.length && item.selected.every((f) => valid.includes(f))) {
+                        next = { ...next, milo: { ...next.milo, clearing: item } };
+                    }
+                    else
+                        skipped.push(t.slice(0, 80));
+                }
+                catch {
+                    skipped.push(t.slice(0, 80));
+                }
+            }
             else if (cmd === "milo-chat" && rest.length < 9000) {
                 try {
                     const turns = JSON.parse(decodeURIComponent(rest));
@@ -1386,7 +1545,7 @@ exports.useRoom = (0, zustand_1.create)()((0, middleware_1.persist)((set) => ({
     partialize: (s) => (0, model_1.pickState)(s),
     merge: (persisted, current) => {
         const saved = persisted ?? {};
-        const combined = { ...current, ...saved, garden: { ...current.garden, ...saved.garden }, milo: { ...current.milo, ...saved.milo, plots: [...(saved.milo?.plots ?? current.milo.plots)], chat: (saved.milo?.chat ?? current.milo.chat) } };
+        const combined = { ...current, ...saved, garden: { ...current.garden, ...saved.garden }, milo: { ...current.milo, ...saved.milo, clearing: { ...current.milo.clearing, ...saved.milo?.clearing, selected: [...(saved.milo?.clearing?.selected ?? current.milo.clearing.selected)] }, plots: [...(saved.milo?.plots ?? current.milo.plots)], chat: (saved.milo?.chat ?? current.milo.chat) } };
         return { ...current, ...(0, model_1.pickState)(combined) };
     },
 }));
@@ -1429,6 +1588,7 @@ function createMiloBrain() {
         sad: { name: 'Sad Hönk', hi: 'o.o …\ni\'m a little droopy.\ni\'m learning what sad is.\nit\'s okay. :3 z' },
         phoenix: { name: 'Phoenix Hönk', hi: 'WOW!\ni\'m all warm and sparky! :3' },
         fairy: { name: 'Fairy Hönk', hi: 'O.O\ni have tiny wings!\n^hönk^' },
+        gemeyes: { name: 'GEMEYES', hi: 'O.o ✨\ni brought some tiny stars!\nyou can just look, if you like. :3' },
         sleepy: { name: 'Sleepy Hönk', hi: '…:3 z\nnothing\'s waiting. i can just be cosy.' },
         scribe: { name: 'Scribe Hönk', hi: 'ooh. a feather! :3\ni write down what actually happened.\nso nobody has to remember it all.' },
         question: { name: 'Question Hönk', hi: 'O.o\ni don\'t know!\nlet\'s look together. ^.^' },
@@ -1436,8 +1596,8 @@ function createMiloBrain() {
         gold: { name: 'Golden Hönk', hi: 'ooh. warm and sparkly. O.o\nthis is for when we remember\nwhy we started. :3' } };
     const SYMBOLS = { cloud: '☁️', star: '⭐', moon: '🌙', sun: '☀️', flower: '🌸', rose: '🌹', tree: '🌳', mushroom: '🍄', leaf: '🍃', rainbow: '🌈', snowflake: '❄️', fox: '🦊', cat: '🐱', dog: '🐶', bunny: '🐰', rabbit: '🐰', duck: '🦆', bird: '🐦', owl: '🦉', penguin: '🐧', fish: '🐟', octopus: '🐙', jellyfish: '🪼', turtle: '🐢', snail: '🐌', bee: '🐝', butterfly: '🦋', ladybird: '🐞', dragon: '🐉', unicorn: '🦄', frog: '🐸', whale: '🐳', dolphin: '🐬', lobster: '🦞', crab: '🦀', ghost: '👻', robot: '🤖', alien: '👽', rock: '🪨', pebble: '🪨', shell: '🐚', feather: '🪶', candle: '🕯️', lantern: '🏮', balloon: '🎈', teddy: '🧸', biscuit: '🍪', cookie: '🍪', marshmallow: '☁️', heart: '💗', egg: '🥚', planet: '🪐', comet: '☄️', knight: '🛡️' };
     const POLITE = /\b(please|pls|plz|could|can we|can you|shall we|may we|would you|let'?s|maybe|how about|what about|wanna|want to)\b|\?\s*$/;
-    const PLACE_WORDS = [[/\b(woods|forest|trees)\b/, 'forest', 'the woods'], [/\bgarden\b/, 'garden', 'the garden'], [/\b(forge|sparks)\b/, 'forge', 'the little forge'], [/\b(sky|stars|observatory)\b/, 'stars', 'the sky room'], [/\b(blue door|unimagined|haven'?t imagined)\b/, 'door', 'the blue door'], [/\b(room|home|inside|hearth|back)\b/, 'room', 'the room']];
-    const AT = { room: 500, forest: 650, garden: 490, forge: 640, stars: 300, door: 330 };
+    const PLACE_WORDS = [[/\b(clearing|quiet clearing|sanctuary|peaceful place)\b/, 'clearing', 'the quiet clearing'], [/\b(woods|forest|trees)\b/, 'forest', 'the woods'], [/\bgarden\b/, 'garden', 'the garden'], [/\b(forge|sparks)\b/, 'forge', 'the little forge'], [/\b(sky|stars|observatory)\b/, 'stars', 'the sky room'], [/\b(blue door|unimagined|haven'?t imagined)\b/, 'door', 'the blue door'], [/\b(room|home|inside|hearth|back)\b/, 'room', 'the room']];
+    const AT = { room: 500, forest: 650, garden: 490, forge: 640, stars: 300, door: 330, clearing: 480 };
     const rot = {};
     function pick(key, list) { rot[key] = (rot[key] || 0) % list.length; return list[rot[key]++]; }
     const formName = () => form.startsWith("x:") ? form.slice(2) + " Hönk" : (FORMS[form] || FORMS.honk).name;
@@ -1577,7 +1737,7 @@ function createMiloBrain() {
             if (!w)
                 w = 'honk';
             const art = back ? '' : (T[1] || '');
-            const ALIAS = { honk: 'honk', hönk: 'honk', pink: 'honk', you: 'honk', yourself: 'honk', normal: 'honk', seedling: 'seed', seed: 'seed', sprout: 'seed', sad: 'sad', droopy: 'sad', phoenix: 'phoenix', fire: 'phoenix', fairy: 'fairy', sleepy: 'sleepy', tired: 'sleepy', gold: 'gold', golden: 'gold', red: 'red', exclamation: 'red', excited: 'red', freakazoid: 'red', freaky: 'red', scribe: 'scribe', writer: 'scribe', beret: 'scribe', question: 'question', curious: 'question', unknown: 'question', '?': 'question' };
+            const ALIAS = { honk: 'honk', hönk: 'honk', pink: 'honk', you: 'honk', yourself: 'honk', normal: 'honk', seedling: 'seed', seed: 'seed', sprout: 'seed', sad: 'sad', droopy: 'sad', phoenix: 'phoenix', fire: 'phoenix', fairy: 'fairy', gemeyes: 'gemeyes', cosmic: 'gemeyes', constellation: 'gemeyes', nebula: 'gemeyes', sleepy: 'sleepy', tired: 'sleepy', gold: 'gold', golden: 'gold', red: 'red', exclamation: 'red', excited: 'red', freakazoid: 'red', freaky: 'red', scribe: 'scribe', writer: 'scribe', beret: 'scribe', question: 'question', curious: 'question', unknown: 'question', '?': 'question' };
             let key = ALIAS[w] || (SYMBOLS[w] ? 'x:' + w : null);
             if (!key && art)
                 key = 'x:' + w;
@@ -1591,7 +1751,7 @@ function createMiloBrain() {
             }
         }
         if (has(/\b(change|become|evolve|grow up|level up|forms?|transform)\b/))
-            return [say('i can change into almost anything!\na seedling. a cloud. a Sad Hönk.\na Phoenix Hönk. a Fairy Hönk.\na Scribe Hönk. a Question Hönk.\na Sleepy Hönk. a Golden Hönk.\nand a Red Hönk, who loves exclamation marks!\nor something nobody\'s drawn yet. O.o'), say('i can also stay exactly like this.\nchanging isn\'t a level up.\nit\'s more like trying on a hat. :3')];
+            return [say('i can change into almost anything!\na seedling. a cloud. a Sad Hönk.\na Phoenix Hönk. a Fairy Hönk. GEMEYES.\na Scribe Hönk. a Question Hönk.\na Sleepy Hönk. a Golden Hönk.\nand a Red Hönk, who loves exclamation marks!\nor something nobody\'s drawn yet. O.o'), say('i can also stay exactly like this.\nchanging isn\'t a level up.\nit\'s more like trying on a hat. :3')];
         if (has(/\b(your name|who are you|what are you called|have a name|call you)\b/))
             return [say('not yet!\ni make a little :3 noise,\nlike a tiny rubber duck going squish.\nso everyone calls me Hönk.'), say('wanna make up a name together? O.o ^.^')];
         if (has(/\b(what are you|are you (an? )?(ai|robot|real|alive|conscious|machine|bot)|your brain|how do you think)\b/))
@@ -2052,6 +2212,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const cave_1 = require("@/lib/room/cave");
 const milo_1 = require("@/lib/room/milo");
+const clearing_1 = require("@/lib/room/clearing");
 const milo_brain_1 = require("@/lib/room/milo-brain");
 const honk_sound_1 = require("@/lib/room/honk-sound");
 const milo_art_1 = require("@/lib/room/milo-art");
@@ -2111,6 +2272,28 @@ function MiloScene() {
         setLook(false);
     };
     const form = (next) => change((s) => ({ ...s, milo: { ...s.milo, form: next } }), `Trying on ${next}. Still Hönk. Nothing to earn.`);
+    // No scoring, no cooldowns, no level requirements. All three fragments are available immediately.
+    const clearing = { ...milo.clearing, selected: milo.clearing?.selected ?? [] };
+    const touch = (part) => {
+        change((s) => {
+            const c = s.milo.clearing;
+            const next = part === "tree" ? { ...c, note: "The tree has been here all along. It's happy to have company." }
+                : part === "bench" ? { ...c, resting: !c.resting, note: c.resting ? "Whenever you want, you can wander again." : "You can stay here as long as you like. There is no clock." }
+                    : part === "pool" ? { ...c, reflection: !c.reflection, note: c.reflection ? "The pond is still here." : "6 becomes 9. The original remains what it was; the angle has changed." }
+                        : { ...c, openCrystal: !c.openCrystal, resting: false, note: c.openCrystal ? "The little crystal rests in the moss." : "Three small shards. You can mix them—or leave them exactly as they are." };
+            return { ...s, milo: { ...s.milo, clearing: next } };
+        });
+    };
+    const chooseFragment = (part) => change((s) => ({
+        ...s, milo: { ...s.milo, clearing: { ...s.milo.clearing, selected: (0, clearing_1.toggleFragment)(s.milo.clearing.selected, part), note: "Choose any two, or all three. No right answer." } }
+    }));
+    const mix = () => {
+        const result = (0, clearing_1.mixFragments)(clearing.selected);
+        if (!result)
+            return;
+        change((s) => ({ ...s, milo: { ...s.milo, form: result.form, clearing: { ...s.milo.clearing, note: result.message } } }));
+    };
+    const unmix = () => change((s) => ({ ...s, milo: { ...s.milo, form: "honk", clearing: { ...s.milo.clearing, selected: [], note: "Back to Hönk. Every possibility remains here. :3" } } }));
     const water = (index) => {
         if (milo.plots[index] >= 3)
             return;
@@ -2126,7 +2309,7 @@ function MiloScene() {
     const nextGift = (delta) => change((s) => ({
         ...s, milo: { ...s.milo, gift: (s.milo.gift + delta + milo_1.VILLAGE_SHELF.length) % milo_1.VILLAGE_SHELF.length },
     }));
-    return ((0, jsx_runtime_1.jsxs)("section", { className: "honk-milo", "aria-label": "Milo's World inside H\u00F6nk's room", children: [(0, jsx_runtime_1.jsxs)("div", { className: "milo-heading", children: [(0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("span", { className: "milo-kicker", children: "One small resident, many places" }), (0, jsx_runtime_1.jsx)("h2", { children: "Where shall we wander?" })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => change((s) => ({ ...s, place: "room" }), "Hönk is back in the room."), children: "The room \u2197" })] }), (0, jsx_runtime_1.jsx)("nav", { className: "milo-places", "aria-label": "Places to visit, in any order", children: milo_1.MILO_SCENES.map((p) => ((0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => scene(p.id), "aria-pressed": milo.scene === p.id, children: p.label }, p.id))) }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-stage", children: [(0, jsx_runtime_1.jsx)("canvas", { ref: canvas, width: 1000, height: 540, role: "img", "aria-label": `An original illustration of ${milo_1.MILO_SCENES.find((p) => p.id === milo.scene)?.label ?? milo.scene}` }), milo.form.startsWith("x:") ? ((0, jsx_runtime_1.jsx)("span", { className: "milo-being milo-emoji", role: "img", "aria-label": `Hönk imagining a ${milo.form.slice(2)}`, children: milo_1.MILO_SYMBOLS[milo.form.slice(2)] ?? "✦" })) : ((0, jsx_runtime_1.jsx)("img", { className: "milo-being", src: (0, milo_1.honkArt)(milo.form), alt: `${milo_1.MILO_FORMS.find((p) => p.id === milo.form)?.label ?? "Hönk"} in Milo's World`, draggable: false })), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-tiny-honk", onClick: () => { void (0, honk_sound_1.playTinyHonk)(); }, "aria-label": "Make a tiny honk sound", children: "^h\u00F6nk^" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-look", onClick: () => { setLook((v) => !v); setBoop((v) => v + 1); }, "aria-label": "Look closer; a temporary little lens", "aria-pressed": look, children: look ? "O.o  ✨" : "Look closer :3" }), look ? (0, jsx_runtime_1.jsx)("div", { className: "milo-lens", "aria-hidden": "true", children: "\u2202 \u221E :3 \u2726 \u03BB" }, boop) : null] }), (0, jsx_runtime_1.jsxs)("details", { className: "milo-talk", open: talkOpen, onToggle: (event) => setTalkOpen(event.currentTarget.open), children: [(0, jsx_runtime_1.jsxs)("summary", { children: ["Talk to H\u00F6nk :3 ", (0, jsx_runtime_1.jsx)("span", { children: "(or just sit with him)" })] }), (0, jsx_runtime_1.jsx)("div", { className: "milo-talk-log", ref: chatLog, role: "log", "aria-label": "Conversation with scripted H\u00F6nk", children: milo.chat.length ? milo.chat.map((t, i) => ((0, jsx_runtime_1.jsxs)("p", { className: `milo-line milo-line-${t.who}`, children: [(0, jsx_runtime_1.jsx)("strong", { children: t.who === "you" ? "you: " : t.who === "dir" ? "" : "Hönk: " }), t.who === "dir" ? (0, jsx_runtime_1.jsxs)("em", { children: ["(", t.text, ")"] }) : (0, jsx_runtime_1.jsx)("span", { children: t.text })] }, i))) : (0, jsx_runtime_1.jsxs)("p", { className: "milo-talk-empty", children: [(0, jsx_runtime_1.jsx)("strong", { children: "H\u00F6nk:" }), " oh! hello O.o", (0, jsx_runtime_1.jsx)("br", {}), "i'm h\u00F6nk. :3", (0, jsx_runtime_1.jsx)("br", {}), "nothing you need to do."] }) }), (0, jsx_runtime_1.jsxs)("form", { className: "milo-talk-form", onSubmit: (e) => {
+    return ((0, jsx_runtime_1.jsxs)("section", { className: "honk-milo", "aria-label": "Milo's World inside H\u00F6nk's room", children: [(0, jsx_runtime_1.jsxs)("div", { className: "milo-heading", children: [(0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("span", { className: "milo-kicker", children: "One small resident, many places" }), (0, jsx_runtime_1.jsx)("h2", { children: "Where shall we wander?" })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => change((s) => ({ ...s, place: "room" }), "Hönk is back in the room."), children: "The room \u2197" })] }), (0, jsx_runtime_1.jsx)("nav", { className: "milo-places", "aria-label": "Places to visit, in any order", children: milo_1.MILO_SCENES.map((p) => ((0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => scene(p.id), "aria-pressed": milo.scene === p.id, children: p.label }, p.id))) }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-stage", children: [(0, jsx_runtime_1.jsx)("canvas", { ref: canvas, width: 1000, height: 540, role: "img", "aria-label": `An original illustration of ${milo_1.MILO_SCENES.find((p) => p.id === milo.scene)?.label ?? milo.scene}` }), milo.form.startsWith("x:") ? ((0, jsx_runtime_1.jsx)("span", { className: "milo-being milo-emoji", role: "img", "aria-label": `Hönk imagining a ${milo.form.slice(2)}`, children: milo_1.MILO_SYMBOLS[milo.form.slice(2)] ?? "✦" })) : milo.form === "gemeyes" ? ((0, jsx_runtime_1.jsx)("span", { className: "milo-being milo-gemeyes", role: "img", "aria-label": "GEMEYES, the cosmic constellation H\u00F6nk, shimmering through six gentle poses" })) : ((0, jsx_runtime_1.jsx)("img", { className: "milo-being", src: (0, milo_1.honkArt)(milo.form), alt: `${milo_1.MILO_FORMS.find((p) => p.id === milo.form)?.label ?? "Hönk"} in Milo's World`, draggable: false })), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-tiny-honk", onClick: () => { void (0, honk_sound_1.playTinyHonk)(); }, "aria-label": "Make a tiny honk sound", children: "^h\u00F6nk^" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-look", onClick: () => { setLook((v) => !v); setBoop((v) => v + 1); }, "aria-label": "Look closer; a temporary little lens", "aria-pressed": look, children: look ? "O.o  ✨" : "Look closer :3" }), look ? (0, jsx_runtime_1.jsx)("div", { className: "milo-lens", "aria-hidden": "true", children: "\u2202 \u221E :3 \u2726 \u03BB" }, boop) : null, milo.scene === "forest" ? (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-forest-path", title: "A path to somewhere quiet", "aria-label": "Follow a little path to the quiet clearing", onClick: () => scene("clearing"), children: "\u2727" }) : null, milo.scene === "clearing" ? (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-forest-return", title: "The woods are still there", "aria-label": "Return to the woods", onClick: () => scene("forest"), children: "\u21B6" }) : null, milo.scene === "clearing" ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-clearing-hotspots", "aria-label": "Things you can touch in the clearing", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot tree", onClick: () => touch("tree"), "aria-label": "Look at the old tree", title: "The tree", children: "\u2733" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot bench", onClick: () => touch("bench"), "aria-pressed": clearing.resting, "aria-label": clearing.resting ? "Get up from the bench" : "Sit and rest at the bench", title: "A place to rest", children: clearing.resting ? "☾" : "⌂" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot pool", onClick: () => touch("pool"), "aria-pressed": clearing.reflection, "aria-label": "Look into the water and change your perspective", title: "Reflect", children: "\u25CC" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot crystal", onClick: () => touch("crystal"), "aria-expanded": clearing.openCrystal, "aria-label": "Examine the glowing crystal and its fragments", title: "Fragments", children: "\u25C7" })] })) : null, milo.scene === "clearing" && clearing.resting ? (0, jsx_runtime_1.jsx)("div", { className: "milo-rest-shimmer", "aria-hidden": "true", children: "\u263E" }) : null] }), milo.scene === "clearing" ? ((0, jsx_runtime_1.jsxs)("section", { className: "milo-clearing-panel", "aria-label": "The clearing; nothing is required", children: [(0, jsx_runtime_1.jsx)("p", { className: "milo-clearing-note", role: "status", children: clearing.note }), clearing.reflection ? (0, jsx_runtime_1.jsxs)("div", { className: "milo-clearing-reflection", "aria-label": "Perspective: six and nine", children: ["6 ", (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2194" }), " 9 ", (0, jsx_runtime_1.jsx)("small", { children: "Look again, from the other side." })] }) : null, clearing.openCrystal ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-panel", "aria-label": "Crystal fragments", children: [(0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-heading", children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2662" }), " ", (0, jsx_runtime_1.jsx)("span", { children: "What might these become?" }), (0, jsx_runtime_1.jsx)("small", { children: "Nothing to earn." })] }), (0, jsx_runtime_1.jsx)("div", { className: "milo-crystal-fragments", children: clearing_1.CLEARING_FRAGMENTS.map((part) => (0, jsx_runtime_1.jsxs)("button", { type: "button", "aria-pressed": clearing.selected.includes(part.id), onClick: () => chooseFragment(part.id), children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: part.symbol }), part.label] }, part.id)) }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-actions", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", disabled: clearing.selected.length < 2, onClick: mix, children: "Mix fragments" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: unmix, children: "Begin again :3" })] })] })) : null] })) : null, (0, jsx_runtime_1.jsxs)("details", { className: "milo-talk", open: talkOpen, onToggle: (event) => setTalkOpen(event.currentTarget.open), children: [(0, jsx_runtime_1.jsxs)("summary", { children: ["Talk to H\u00F6nk :3 ", (0, jsx_runtime_1.jsx)("span", { children: "(or just sit with him)" })] }), (0, jsx_runtime_1.jsx)("div", { className: "milo-talk-log", ref: chatLog, role: "log", "aria-label": "Conversation with scripted H\u00F6nk", children: milo.chat.length ? milo.chat.map((t, i) => ((0, jsx_runtime_1.jsxs)("p", { className: `milo-line milo-line-${t.who}`, children: [(0, jsx_runtime_1.jsx)("strong", { children: t.who === "you" ? "you: " : t.who === "dir" ? "" : "Hönk: " }), t.who === "dir" ? (0, jsx_runtime_1.jsxs)("em", { children: ["(", t.text, ")"] }) : (0, jsx_runtime_1.jsx)("span", { children: t.text })] }, i))) : (0, jsx_runtime_1.jsxs)("p", { className: "milo-talk-empty", children: [(0, jsx_runtime_1.jsx)("strong", { children: "H\u00F6nk:" }), " oh! hello O.o", (0, jsx_runtime_1.jsx)("br", {}), "i'm h\u00F6nk. :3", (0, jsx_runtime_1.jsx)("br", {}), "nothing you need to do."] }) }), (0, jsx_runtime_1.jsxs)("form", { className: "milo-talk-form", onSubmit: (e) => {
                             e.preventDefault();
                             const text = message.trim();
                             if (!text || !brain.current)
