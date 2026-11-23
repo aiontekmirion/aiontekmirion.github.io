@@ -1514,3 +1514,36 @@
 .honk-small-footer a:hover{color:#f8c5d7}
 @media(max-width:540px){.honk-welcome-mode{padding:0 .55rem 1.5rem}.honk-phone{height:calc(100svh - 220px);min-height:520px;border-radius:2rem;padding:3.25rem .4rem .5rem}.honk-phone-door{top:.9rem;left:1rem;right:1rem}.honk-phone .honk-milo{padding:.35rem;border-radius:1.35rem}.honk-next-doors{gap:.35rem}.honk-next-doors button{font-size:.7rem;padding:.55rem .75rem;min-height:2.5rem}}
 @media(prefers-reduced-motion:reduce){.honk-phone *{animation:none!important;transition:none!important}}
+
+/* HÖNK:3 original working scribe: the phone stays put, only its transcript scrolls. */
+.honk-phone-door{z-index:12;gap:.6rem}
+.honk-scribe-trigger{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 3rem;width:3rem;height:3rem;border:0;background:none;cursor:pointer;padding:0}
+.honk-scribe-trigger img{width:2.45rem;height:2.45rem;object-fit:contain;filter:drop-shadow(0 1px 5px #0009)}
+.honk-scribe-trigger>span{position:absolute;right:0;bottom:.1rem;transform:rotate(12deg);font-size:1.2rem;color:#d8b46a}
+.honk-scribe-trigger:focus-visible,.honk-script-overlay button:focus-visible{outline:2px solid #f6aec8;outline-offset:2px}
+.honk-phone .milo-talk-log{overscroll-behavior:contain;scrollbar-width:thin}
+.honk-script-overlay{position:absolute;inset:3.65rem .45rem .45rem;z-index:11;display:flex;flex-direction:column;background:#08080b;color:#ecebef;border:1px solid #473840;border-radius:1.2rem;padding:1.15rem .8rem .75rem;box-shadow:0 8px 35px #000b;min-height:0}
+.honk-script-heading{display:flex;align-items:center;justify-content:space-between;color:#f2d4de;font:600 1.1rem system-ui,sans-serif;margin:0 .4rem .6rem}
+.honk-script-heading button{background:transparent;border:0;color:#f8dbe2;font-size:1.75rem;cursor:pointer;min-height:2rem;min-width:2rem}
+.honk-script-overlay textarea{flex:1;min-height:0;width:100%;resize:none;background:transparent;border:1px solid #44353e;border-width:1px 0;outline:0;color:#f3eced;font:400 .85rem/1.7 system-ui,sans-serif;padding:1rem .35rem;white-space:pre-wrap;overscroll-behavior:contain}
+.honk-script-actions{display:flex;align-items:center;justify-content:center;gap:2rem;margin-top:.8rem}
+.honk-script-actions button{display:flex;align-items:center;flex-direction:column;gap:.1rem;background:none;border:0;color:#edc7d1;font:600 .65rem/1.3 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:.15rem .4rem}
+.honk-script-actions img{width:3rem;height:3rem;object-fit:contain}
+.honk-script-confirm{margin-top:.7rem;border:1px solid #d47d75;border-radius:.7rem;padding:.6rem;font:.78rem/1.4 system-ui,sans-serif}
+.honk-script-confirm p{margin:0 0 .5rem}
+.honk-script-confirm button{border:1px solid #9b6870;border-radius:999px;color:#f9e6e6;background:#3a2530;padding:.4rem .9rem;margin-right:.5rem;cursor:pointer}
+.honk-phone .honk-milo{overscroll-behavior:contain}
+@media(max-width:540px){.honk-script-overlay{inset:3rem .4rem .4rem;padding:.8rem .6rem .6rem}.honk-scribe-trigger{width:2.3rem;height:2.3rem;flex-basis:2.3rem}.honk-scribe-trigger img{width:2rem;height:2rem}}
+
+/* On phones the outside page is stationary; overflowing discoveries remain inside Hönk's phone. */
+@media(max-width:540px){
+  body:has(.honk-welcome-mode){overflow:hidden}
+  .studio.honk-welcome-mode{box-sizing:border-box;display:flex;flex-direction:column;height:100dvh;min-height:0;overflow:hidden;padding:0 .45rem .35rem}
+  .honk-welcome-mode .mast{flex:0 0 auto;padding:.32rem .3rem .28rem}
+  .honk-welcome-mode .mast-kicker{margin:0;font-size:.52rem}
+  .honk-welcome-mode .mast h1{font-size:1.75rem;line-height:1.12;margin:.05rem 0}
+  .honk-welcome-mode .mast-sub{margin:0;font-size:.8rem}
+  .honk-welcome-mode .honk-phone{flex:1 1 auto;height:auto;min-height:0;margin:.1rem auto 0;width:100%;max-width:440px;padding-top:3rem}
+  .honk-welcome-mode .honk-next-doors{flex:0 0 auto;margin:.35rem auto .05rem}
+  .honk-welcome-mode .honk-page-note,.honk-welcome-mode .colophon,.honk-welcome-mode .honk-small-footer{display:none}
+}
