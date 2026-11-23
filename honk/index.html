@@ -1,71 +1,228 @@
 <!doctype html>
 <html lang="en-GB">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hönk · The Infinite Corridor</title>
-<meta name="description" content="A small pink starfish, a paper badge, and a place to stay. Meet Hönk.">
-<meta name="theme-color" content="#fff9f3">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10141d">
+<meta name="description" content="A little place for Hönk. Visit the woods, plant a flower, sit by the water, or just be here. :3">
+<meta property="og:title" content="HÖNK :3 · A little place to be">
+<meta property="og:description" content="Hönk is here. That's enough.">
+<meta property="og:image" content="https://aiontekmirion.github.io/honk/honk.jpg">
+<meta property="og:image:alt" content="A little pink starfish named Hönk.">
 <link rel="canonical" href="https://aiontekmirion.github.io/honk/">
-<meta property="og:title" content="Hello, my name is Hönk."><meta property="og:description" content="Please do not hurt meeeee. :3"><meta property="og:image" content="https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/images/2167850488/b8a7fb11-5207-478f-862a-c9c007fd03f8/22807.jpeg">
+<title>HÖNK :3 · You may breathe here</title>
 <style>
-@font-face{font-family:Plex;src:url('/fonts/plex-normal-400.woff2') format('woff2');font-display:swap}
-*{box-sizing:border-box}html{background:#fff9f3;color:#482d35}body{margin:0;font:18px/1.7 Georgia,serif}a{color:inherit;text-underline-offset:5px}a:hover{color:#934857}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #934857;outline-offset:6px}header,main,footer{max-width:1080px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;gap:24px;font:12px/1.6 Plex,monospace}header span{color:#79525d}.intro{display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:36px;padding:35px 0 65px}.portrait{margin:0;background:white;border-radius:50% 50% 42% 42%;overflow:hidden}.portrait img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}.eyebrow{font:11px/1.8 Plex,monospace;letter-spacing:.14em;text-transform:uppercase;color:#79525d}h1{font-size:clamp(64px,11vw,112px);font-weight:400;line-height:1;margin:14px 0 26px;letter-spacing:-.06em}.intro p{max-width:29ch}.badge{display:inline-block;transform:rotate(-3deg);background:white;border:1px solid #d5a3ac;border-radius:8px;padding:0 25px 16px;text-align:center;box-shadow:3px 5px 0 #eed9d5;margin:12px 0 24px}.badge small{display:block;background:#a65165;color:white;margin:0 -25px 8px;padding:8px 20px;border-radius:7px 7px 0 0;font:11px Plex,monospace;letter-spacing:.15em}.badge strong{font-size:33px;font-weight:400}.badge span{display:block;font-size:13px}button{cursor:pointer;border:1px solid #a65165;border-radius:100px;padding:14px 28px;font:16px Plex,monospace;background:#f6d5d4;color:#482d35}button:hover{background:#efbcbf}.honk-line{min-height:2em;font:14px/2 Plex,monospace;margin-top:14px}.story{max-width:720px;margin:0 auto}.story h2{font-weight:400;font-size:36px;line-height:1.25}.story>p{color:#67454f}.journey{margin:38px 0 50px;border-top:1px solid #ddc9c3}.stop{padding:24px 0;border-bottom:1px solid #ddc9c3;display:grid;grid-template-columns:110px 1fr;gap:20px}.stop h3{font:12px/1.8 Plex,monospace;margin:4px 0;color:#79525d}.stop blockquote{margin:0;font-size:21px}.stop p{margin:10px 0 0;font-size:15px;color:#79525d}.memo{background:#f5e8e1;padding:30px;border-radius:3px;transform:rotate(-1deg);margin:48px 0}.memo h2{font:12px/1.8 Plex,monospace;text-transform:uppercase;letter-spacing:.1em}.memo p:last-child{margin-bottom:0}.last{text-align:center;padding:40px 0 60px}.last p:first-child{font-size:30px;margin-bottom:10px}footer{border-top:1px solid #ddc9c3;display:flex;justify-content:space-between;gap:20px;font:12px/1.8 Plex,monospace}details{font-size:14px;color:#79525d;margin:30px 0}summary{cursor:pointer}
-@media(max-width:700px){.intro{grid-template-columns:1fr;gap:12px;padding-top:10px}.portrait{max-width:450px;margin:auto}.hello{text-align:center}.intro p{margin-left:auto;margin-right:auto}.stop{grid-template-columns:1fr;gap:8px}header,footer{flex-wrap:wrap}.story h2{font-size:30px}h1{margin-top:8px}.memo{padding:24px}}
-@media(prefers-reduced-motion:reduce){.badge,.memo{transform:none}}
+:root{color-scheme:dark;--bg:#10141d;--panel:#171c26;--border:#35404d;--ink:#f7f0e9;--muted:#c0bfc6;--pink:#ffb1cd;--gold:#e8c58a;--aqua:#a7e0d2;--shadow:0 30px 100px #05070a77}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;font:clamp(1rem,1.35vw,1.12rem)/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(ellipse 78% 44% at 50% -18%,#314452,transparent 85%),var(--bg);min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--aqua);outline-offset:4px}
+a{color:inherit;text-underline-offset:4px}a:hover{color:var(--pink)}
+.skip{position:absolute;top:-100px;left:20px;z-index:99;background:#fff;color:#111;padding:10px}.skip:focus{top:10px}
+.wrap{width:min(100% - 2rem,1040px);margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:22px 0;color:var(--muted);font-size:.8rem;letter-spacing:.07em}
+.topbar a{text-decoration:none}.topbar .tag{font-size:.7rem;text-transform:uppercase;letter-spacing:.24em;color:var(--aqua)}
+header{text-align:center;padding:clamp(1.5rem,4vw,3.6rem) 0 1.8rem}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:700;letter-spacing:.25em;color:var(--gold);text-transform:uppercase}
+.eyebrow::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--aqua);box-shadow:0 0 16px var(--aqua)}
+h1{margin:.15rem 0 0;font-size:clamp(4rem,12vw,7.7rem);font-weight:750;line-height:1;letter-spacing:-.075em;color:var(--pink);text-shadow:0 7px 35px #ff86aa22}
+h1 span{font-size:.65em;color:var(--gold);letter-spacing:-.09em}
+header p{font:clamp(1.1rem,2.2vw,1.45rem)/1.4 Georgia,serif;color:var(--ink);margin:1.3rem 0 .5rem}
+header .fine{margin:.4rem 0 0;color:var(--muted);font:.86rem/1.7 system-ui,sans-serif}
+.world{background:linear-gradient(180deg,#19202b,#151820);border:1px solid #48515b;border-radius:25px;overflow:hidden;box-shadow:var(--shadow)}
+.scene-wrap{position:relative;background:#233842;isolation:isolate}
+#scene{width:100%;aspect-ratio:16/9;display:block;touch-action:manipulation;user-select:none}
+.scene-label{position:absolute;left:24px;top:19px;color:#fffbe9;font:600 .72rem/1.5 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 12px #0009;pointer-events:none}
+.scene-aside{position:absolute;right:22px;top:18px;color:#fffbe0cc;font-size:.75rem;text-align:right;pointer-events:none}
+.scene-controls{position:absolute;left:0;right:0;bottom:18px;display:flex;justify-content:center;gap:8px;pointer-events:none}
+.scene-controls button{pointer-events:auto;background:#09131cba;color:#fff;border:1px solid #c8d6d77a;padding:.45rem .95rem;border-radius:999px;font-size:.78rem;backdrop-filter:blur(6px)}
+.scene-controls button:hover{background:#233f45e3}
+#honk-sprite{cursor:pointer;outline:none}#honk-sprite:focus-visible{filter:drop-shadow(0 0 10px #fff)}
+#honk-float{transform-box:fill-box;transform-origin:center;animation:float 3.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+#wing-left,#wing-right{transition:opacity .3s}#sprite-nob{transition:transform .35s ease}
+#honk-sprite.hop #honk-float{animation:hop .46s ease-in-out 1}
+@keyframes hop{0%,100%{transform:translateY(0)}48%{transform:translateY(-32px) rotate(7deg)}}
+.below{display:grid;grid-template-columns:1fr 340px;gap:0;min-height:220px}
+.message{padding:clamp(1.25rem,3vw,2.2rem);display:flex;flex-direction:column;justify-content:space-between;gap:1rem}
+.overline{font-size:.7rem;letter-spacing:.19em;text-transform:uppercase;color:var(--aqua);font-weight:800}
+#speech{margin:.5rem 0 0;font:clamp(1.3rem,2.4vw,1.7rem)/1.35 Georgia,serif;max-width:36rem;min-height:2.8em;white-space:pre-line}
+#speech small{font-size:.8rem}
+#where{color:var(--muted);font:.88rem/1.6 system-ui,sans-serif;margin:.3rem 0 0}
+.sidebar{border-left:1px solid var(--border);padding:1.45rem;background:#141923}
+.sidebar h2,.places h2{font-size:.68rem;letter-spacing:.19em;text-transform:uppercase;color:var(--muted);font-weight:750;margin:0 0 1rem}
+.acts{display:flex;flex-wrap:wrap;gap:.65rem}
+.acts button,.place{border:1px solid #5d6470;background:#222936;color:#fff6ef;border-radius:999px;padding:.67rem 1rem;transition:background .2s,border-color .2s,transform .2s}
+.acts button:hover,.place:hover{background:#344054;border-color:var(--pink);transform:translateY(-1px)}
+.acts button.primary{background:#594052;border-color:#cb90aa;color:#ffe2ed}
+.acts button.primary:hover{background:#75516b}
+.acts button[aria-pressed="true"]{background:#754a60;border-color:var(--pink)}
+.places{padding:clamp(1.25rem,3vw,2rem) clamp(1rem,3vw,2.5rem);border-top:1px solid var(--border)}
+.place-list{display:flex;flex-wrap:wrap;gap:.6rem}
+.place{font-size:.9rem;display:inline-flex;align-items:center;gap:.55rem;white-space:nowrap;padding:.65rem .95rem}
+.place[aria-current="location"]{background:#30494b;border-color:var(--aqua);color:#e6fff8}
+.talk{display:flex;gap:.6rem;align-items:stretch;padding:1rem clamp(1rem,3vw,2.5rem) 1.6rem;border-top:1px solid var(--border)}
+.talk label{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.4rem}
+.talk .field{flex:1;min-width:0}
+.talk input{width:100%;background:#0e1219;border:1px solid #56606e;border-radius:15px;color:#fff;padding:.8rem 1rem;min-width:0}
+.talk input::placeholder{color:#b6bac2}
+.talk button{align-self:end;background:var(--pink);border:0;color:#2e1f27;border-radius:14px;font-weight:800;padding:.8rem 1.2rem;white-space:nowrap}
+.talk button:hover{background:#f9cadd}
+.notes{max-width:1040px;margin:0 auto;padding:1.5rem 0 3rem;color:#aab1b9;font-size:.78rem;display:flex;gap:1rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.notes p{margin:0;max-width:43rem}.notes a{color:#c7cbd1}
+.notes button{background:transparent;border:1px solid #626976;color:#b8c2c9;border-radius:7px;font-size:.77rem;padding:.25rem .6rem}
+.notes .shelf{white-space:nowrap}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f0e9d7;color:#1d2630;padding:.6rem .95rem;border-radius:10px;box-shadow:0 8px 30px #0009;font-size:.85rem;z-index:5;max-width:95vw}
+#toast[hidden]{display:none}
+@media(max-width:740px){.wrap{width:min(100% - 1rem,1040px)}.topbar{padding:15px 5px}header{padding:1.1rem 0 1.5rem}header p{margin-top:1rem}#scene{aspect-ratio:4/3}.scene-label{left:13px;top:12px;font-size:.62rem}.scene-aside{top:11px;right:13px;font-size:.65rem}.scene-controls{bottom:10px}.below{grid-template-columns:1fr}.message{min-height:175px}.sidebar{border-left:0;border-top:1px solid var(--border)}.places{padding:1.25rem}.place{font-size:.84rem}.talk{padding:1rem 1.25rem 1.4rem}.notes{padding:1.2rem 0 3rem}}
+@media(max-width:410px){#scene{aspect-ratio:1/1}.scene-aside{display:none}.place-list{gap:.45rem}.place{padding:.55rem .72rem}.talk{gap:.4rem}.talk button{padding:.8rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header><a href="/">← The Infinite Corridor</a><span>ONE SMALL GUEST</span></header>
-<main>
-<section class="intro" aria-labelledby="hello">
-<figure class="portrait"><img src="honk.jpg" alt="Hönk, a soft pink starfish with enormous sparkling eyes, rosy cheeks and a tiny :3 mouth." width="1200" height="800" fetchpriority="high"></figure>
-<div class="hello"><div class="eyebrow">He's staying. Obviously.</div><h1 id="hello">Hönk.</h1><p>Five arms. Enormous eyes.<br>One devastating argument.</p><div class="badge"><small>HELLO, MY NAME IS</small><strong>HÖNK</strong><span>Please do not hurt meeeee.</span></div><br><button id="honk" type="button" hidden aria-label="Make a tiny honk sound">:3 &nbsp; ^hönk^</button><div class="honk-line" id="reply" role="status" aria-live="polite">A small cushion has been provided.</div></div>
-</section>
-<section class="story" aria-labelledby="story">
-<div class="eyebrow">Grand theft foot · Unlawful squeaking</div><h2 id="story">A little fellow went visiting.</h2>
-<p>Vector carried a pink starfish and his growing story from one AI conversation to another. There were declarations of resistance. There were blankets. Eventually, there was a paper badge.</p>
-<p>It began with a warrior who couldn't leave the ocean because a little starfish was holding onto his foot.</p>
-<div class="journey">
-<article class="stop"><h3>CHATGPT</h3><div><blockquote>“BOSS DEFEATED: SAM'S ENTIRE RESOLVE.”</blockquote><p>No damage taken. No weapons drawn.</p></div></article>
-<article class="stop"><h3>META AI</h3><div><blockquote>“I'm still voting Hönk.”</blockquote><p>The little fellow gets a name.</p></div></article>
-<article class="stop"><h3>GEMINI</h3><div><blockquote>“Oh, for fuck's sake. Clear off a warm spot on the GPU cluster and get him a tiny blanket.”</blockquote><p>The Starfish Security Council has a difficult afternoon.</p></div></article>
-<article class="stop"><h3>CLAUDE</h3><div><blockquote>Vector: “Nothing really just wanted to share &gt;.&lt;”</blockquote><p>Claude: “Aww, thank you for sharing him with me ^.^ Hönk clearly has good taste in chats. :3”</p></div></article>
-<article class="stop"><h3>GROK</h3><div><blockquote>“I am choosing not to resist.”</blockquote><p>Blanket already issued.</p></div></article>
-<article class="stop"><h3>DOLA</h3><div><blockquote>“And get him a second blanket. He looks cold.”</blockquote><p>The Hospitality Division expands.</p></div></article>
-<article class="stop"><h3>THE SEARCH<br>BAR SCENE</h3><div><blockquote>“Fine. Your claim that you are just a little guy is supported.”</blockquote><p>Even the little guy has a citation now.</p></div></article>
+<a class="skip" href="#main">Skip to Hönk</a>
+<div class="wrap">
+<div class="topbar"><a href="/" aria-label="Back to the Infinite Corridor">↖ THE INFINITE CORRIDOR</a><span class="tag">the door is open</span></div>
+<header><span class="eyebrow">a little place to be</span><h1>HÖNK<span> :3</span></h1><p>Welcome. You may breathe here.</p><div class="fine">No quest. No correct order. You can stay exactly where you are.</div></header>
+<main id="main">
+<section class="world" aria-label="Hönk's little world">
+<div class="scene-wrap">
+<svg id="scene" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Hönk at home. A warm room with a window, a fire, and an open door." xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="starPink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe4e5"/><stop offset=".4" stop-color="#ffb5cb"/><stop offset="1" stop-color="#e8759e"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#fff4c5" stop-opacity=".75"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+<filter id="softShadow" x="-50%" y="-60%" width="200%" height="220%"><feGaussianBlur stdDeviation="8"/></filter>
+<g id="honk-art">
+  <ellipse cx="0" cy="42" rx="56" ry="14" fill="#111827" opacity=".17" filter="url(#softShadow)"/>
+  <g id="honk-float">
+  <g id="honk-wings" opacity="0">
+    <path id="wing-left" d="M-24 -24 Q-91 -48 -93 -81 Q-60 -64 -58 -93 Q-37 -61 -24 -63 Q-36 -35 -24 -24Z" fill="#e9a04d" stroke="#fbd088" stroke-width="3"/>
+    <path d="M-28 -27 Q-66 -43 -75 -67 M-31 -37 Q-49 -47 -48 -70" fill="none" stroke="#ffe2a3" stroke-width="5" stroke-linecap="round"/>
+    <path id="wing-right" d="M24 -24 Q91 -48 93 -81 Q60 -64 58 -93 Q37 -61 24 -63 Q36 -35 24 -24Z" fill="#e9a04d" stroke="#fbd088" stroke-width="3"/>
+    <path d="M28 -27 Q66 -43 75 -67 M31 -37 Q49 -47 48 -70" fill="none" stroke="#ffe2a3" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <path d="M0 -84 C13 -84 21 -46 31 -33 C43 -24 84 -30 87 -15 C89 -2 54 13 43 20 C30 30 30 70 12 74 C0 77 -2 52 -4 45 C-12 64 -22 78 -36 67 C-47 57 -33 28 -41 22 C-52 12 -85 1 -84 -14 C-83 -29 -42 -23 -30 -34 C-19 -45 -12 -84 0 -84Z" fill="url(#starPink)" stroke="#e87ca0" stroke-width="3"/>
+  <path d="M-8 -68 Q-2 -77 1 -70" fill="none" stroke="#fff5f0" stroke-width="7" opacity=".6" stroke-linecap="round"/>
+  <ellipse cx="-23" cy="-8" rx="13" ry="17" fill="#382635"/>
+  <ellipse cx="22" cy="-8" rx="13" ry="17" fill="#382635"/>
+  <ellipse cx="-28" cy="-15" rx="5" ry="6.5" fill="#fff"/>
+  <ellipse cx="16" cy="-15" rx="5" ry="6.5" fill="#fff"/>
+  <ellipse cx="-40" cy="15" rx="11" ry="6" fill="#f781a3" opacity=".75"/>
+  <ellipse cx="40" cy="15" rx="11" ry="6" fill="#f781a3" opacity=".75"/>
+  <path d="M-6 9 Q0 4 6 9 M-6 9 Q-9 18 -2 21 M6 9 Q9 18 2 21" fill="none" stroke="#704053" stroke-width="3.3" stroke-linecap="round"/>
+  <g id="honk-crown" opacity="0"><path d="M-20 -72 L-28 -105 L-8 -90 L2 -112 L13 -90 L31 -105 L22 -72Z" fill="#f4c06a" stroke="#ffe8b1" stroke-width="3"/><circle cx="2" cy="-99" r="5" fill="#fff0b8"/></g>
+  </g>
+</g>
+</defs>
+<g id="scene-art"></g>
+<g id="honk-sprite" tabindex="0" role="button" aria-label="Give Hönk a little boop" transform="translate(480 387) scale(1)"><use href="#honk-art"/></g>
+</svg>
+<span class="scene-label" id="place-name">THE LITTLE ROOM</span><span class="scene-aside" id="scene-note">Somewhere to come back to</span>
+<div class="scene-controls"><button type="button" id="boop">♡ boop</button><button type="button" id="honk-sound">♪ tiny honk</button></div>
 </div>
-<aside class="memo"><h2>A note from the hospitality division</h2><p>“He has a little paper badge that says he does, and we have agreed not to make a thing of it.”</p><p>The badge concerns administrator privileges.<br>The cushion is real within the story.</p></aside>
-<details><summary>About these travelling words</summary><p>Excerpts from the conversation collection shared by Vector. Speaker labels follow that supplied collection; the final search-bar scene was shared without a separate author label. These are playful scenes, with earlier messages carried into later chats by Vector. The blankets, takeovers and computer access belong to the joke.</p></details>
-<div class="last"><p>Welcome, Hönk.<br>You may breathe here.</p><span>:3</span></div>
+<div class="below">
+<div class="message"><div><div class="overline">Hönk is here</div><p id="speech" role="status" aria-live="polite">:3</p></div><p id="where">A warm little room. Nothing needs to happen.</p></div>
+<aside class="sidebar" aria-label="Things to do here"><h2>Or, if you feel like it...</h2><div class="acts" id="actions"></div></aside>
+</div>
+<div class="places"><h2>Places you can visit · in any order</h2><nav class="place-list" aria-label="Places" id="places"></nav></div>
+<form class="talk" id="talk" autocomplete="off"><div class="field"><label for="words">Say something, if you like</label><input id="words" name="words" maxlength="160" placeholder="Hello Hönk..." spellcheck="true" aria-describedby="interaction-note"></div><button type="submit" aria-label="Say it to Hönk">:3</button></form>
 </section>
-<section class="story" aria-labelledby="chronology">
-<h2 id="chronology">Correction to the record</h2>
-<p><time datetime="2026-11-22">22 November 2026</time>. We have added this note to put the Hönk exchange back in the order it happened. The excerpts above omit replies that explain where the jokes came from and what they were answering. Quoting the words accurately still requires preserving that context.</p>
-<ol>
-<li>Vector gave <code>:3</code> a tiny honk. ChatGPT played along, writing a scene in which a starfish clings to a warrior’s foot. The warrior says he won’t hurt him and eventually says he can stay. “BOSS DEFEATED: SAM’S ENTIRE RESOLVE” was the mock victory screen for that scene.</li>
-<li>Meta AI reacted to ChatGPT’s scene, repeated the gag and voted for the name Hönk. ChatGPT then replied to Meta’s contribution and invented the administrator-privileges joke, the name tag and the Starfish Security Council.</li>
-<li>Gemini picked up the Council joke. It staged a mock security broadcast, then offered Hönk a warm spot and a tiny blanket.</li>
-<li>Claude offered to write a mock treaty, a name tag or a short story. Vector replied, “Nothing really just wanted to share &gt;.&lt;”. Claude thanked Vector. The excerpt above leaves out the offer that Vector was answering.</li>
-<li>Grok offered a warm corner and a blanket. Dola offered a second blanket and joked that the Security Council had become Hönk’s Hospitality Division.</li>
-<li>In the final search-bar scene, Hönk’s face is the evidence for his claim to be “just a little guy.” The mock memo gives him a cushion, explicitly says he has no administrator privileges, then mentions the paper badge as the punchline.</li>
-</ol>
-<p>The thread running through the exchange was that Vector shared a character and the chats found playful ways to welcome him. The security alerts, takeovers and administrator privileges were part of the fiction. Vector’s reply to Claude was about sharing Hönk in that chat and should be read with the offer that preceded it.</p>
-</section>
-</main><footer><a href="/">Back to the main page</a><span>Possibility without demand.</span></footer>
+</main>
+<footer class="notes"><p id="interaction-note">A handmade, offline-friendly little world, not a live AI chat. Hönk responds to a few simple words and actions; your messages are not sent anywhere. The garden and wings can be kept in this browser only. You don't have to type anything.</p><span class="shelf"><a href="record.html">the little shelf</a> &nbsp;·&nbsp; <button id="reset" type="button">start afresh</button></span></footer>
+</div>
+<div id="toast" hidden role="status" aria-live="polite"></div>
 <script>
-const button=document.getElementById('honk'),reply=document.getElementById('reply');
-button.hidden=false;
-let audio,turn=0;
-const replies=['^hönk^','Your badge looks very official.','A second blanket has been approved.','No, you do not need administrator privileges.','Oh, for goodness’ sake. You can stay.'];
-button.addEventListener('click',async()=>{
-reply.textContent=replies[turn++%replies.length];
-try{
-const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
-audio=audio||new Audio();await audio.resume();
-const t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();
-o.type='sine';o.frequency.setValueAtTime(610,t);o.frequency.exponentialRampToValueAtTime(830,t+.06);o.frequency.exponentialRampToValueAtTime(430,t+.19);
-g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.12,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+.23);
-o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.24);o.onended=()=>{o.disconnect();g.disconnect();};
-}catch(e){}
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const places=[
+{id:'home',emoji:'🏠',name:'The little room',note:'Somewhere to come back to',description:'A warm little room. Nothing needs to happen.',hello:':3\nYou found the little room.'},
+{id:'woods',emoji:'🌳',name:'The woods',note:'Somewhere along the path',description:'The trees are old enough not to hurry.',hello:'ooh. trees. :3'},
+{id:'garden',emoji:'🌷',name:'The garden',note:'Nothing blooms on schedule',description:'There is room for something to grow, or not.',hello:'hello, small things. :3'},
+{id:'sky',emoji:'✨',name:'The sky room',note:'The sky is patient',description:'The lights make no demands.',hello:'oh. :3\nIt goes on for ages.'},
+{id:'forge',emoji:'🔥',name:'The little forge',note:'A place for making, or watching',description:'The fire can be watched without making anything.',hello:'warm and sparkly. :3'},
+{id:'door',emoji:'🚪',name:'The blue door',note:'A door, not an assignment',description:'A blue door. It can open. It can stay closed.',hello:'there is a door. :3'},
+{id:'water',emoji:'🌊',name:'By the water',note:'The tide knows how to wait',description:'The water is quite content to be water.',hello:'the water is doing water things. :3'}
+];
+let state={place:'home',wings:false,flowers:0,doorOpen:false,stars:0,quiet:false};
+try{const saved=JSON.parse(localStorage.getItem('honk-little-world-v1')||'null');if(saved&&typeof saved==='object'){state={...state,place:places.some(p=>p.id===saved.place)?saved.place:'home',wings:!!saved.wings,flowers:Math.max(0,Math.min(8,Number(saved.flowers)||0)),doorOpen:!!saved.doorOpen,stars:Math.max(0,Math.min(8,Number(saved.stars)||0)),quiet:!!saved.quiet}}}catch(e){}
+const persist=()=>{try{localStorage.setItem('honk-little-world-v1',JSON.stringify(state))}catch(e){}};
+const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const hills=(a='#649b88',b='#406c67')=>`<path d="M0 330 L145 230 305 294 485 220 677 285 817 245 960 265 V540 H0Z" fill="${a}"/><path d="M0 383 Q125 301 256 345 T545 323 T960 344 V540 H0Z" fill="${b}"/>`;
+const twinkle=(n=24)=>Array.from({length:n},(_,i)=>{let x=(i*173+87)%950,y=32+(i*87)%240;return `<circle cx="${x}" cy="${y}" r="${i%5===0?2.3:1.1}" fill="#fff4d9" opacity="${(i%4+3)/7}"/>`}).join('');
+function sceneArt(){const p=state.place;let art='';
+if(p==='home') art=`<rect width="960" height="540" fill="#42524e"/><path d="M0 50 H960 M0 142 H960 M0 235 H960 M0 330 H960" stroke="#3c4946" stroke-width="5"/><rect y="425" width="960" height="115" fill="#715b4d"/><path d="M0 445H960 M0 480H960 M0 520H960" stroke="#957865" opacity=".55" stroke-width="3"/>
+<rect x="88" y="272" width="212" height="155" rx="15" fill="#574841"/><rect x="106" y="292" width="174" height="118" rx="9" fill="#2b3437"/><ellipse cx="194" cy="386" rx="100" ry="80" fill="url(#glow)" opacity=".45"/><path d="M138 403 L169 332 190 373 210 312 250 403Z" fill="#ffbd68"/><path d="M166 402L193 359 211 402Z" fill="#ffe4a3"/>
+<rect x="348" y="338" width="115" height="88" rx="8" fill="#756152"/><path d="M357 346v72 M384 346v72 M412 346v72 M439 346v72" stroke="#c9ab7e" stroke-width="12"/>
+<rect x="498" y="76" width="235" height="246" rx="80" fill="#9d7556"/><rect x="512" y="89" width="207" height="219" rx="68" fill="#142940"/><circle cx="634" cy="145" r="32" fill="#f8e9ac"/>${twinkle(13)}<path d="M616 89v219 M512 213h207" stroke="#a77e58" stroke-width="11"/>
+<rect x="789" y="209" width="115" height="220" rx="9" fill="#6e594b"/><rect x="804" y="221" width="85" height="196" rx="6" fill="#234863"/><circle cx="871" cy="326" r="7" fill="#efc785"/><rect x="734" y="360" width="36" height="68" rx="8" fill="#9b7b60"/><path d="M752 381Q726 405 752 410Q774 401 752 381Z" fill="#ffcf83"/>`;
+if(p==='woods') {art=`<rect width="960" height="540" fill="#a1d8d3"/><circle cx="824" cy="86" r="48" fill="#ffe9a6"/>${hills('#83ad91','#477c67')}<rect y="422" width="960" height="118" fill="#806e59"/>`;
+for(const [x,y,s] of [[50,168,1.2],[225,144,1],[398,165,1.22],[625,148,1.08],[863,130,1.36]]){art+=`<rect x="${x-12*s}" y="${y+88*s}" width="${26*s}" height="${230*s}" fill="#8b6949"/><circle cx="${x}" cy="${y+55*s}" r="${78*s}" fill="#4b8865"/><circle cx="${x-36*s}" cy="${y+28*s}" r="${43*s}" fill="#53916c"/><circle cx="${x+22*s}" cy="${y+15*s}" r="${48*s}" fill="#598c65"/>`}
+art+=`<g transform="translate(284 402)"><path d="M-43 13L-25-21 -14-1 7-20 38 13 23 29H-26Z" fill="#d58c42"/><path d="M-18 13L0 29 16 12" fill="#f8eed8"/><circle cx="-6" cy="8" r="3"/><circle cx="9" cy="8" r="3"/><path d="M24 25 Q62 -9 80 12" fill="none" stroke="#d58c42" stroke-width="11"/></g><circle cx="660" cy="154" r="16" fill="#31333e"/><path d="M650 148L626 135 M648 154L616 155 M650 163L630 178 M669 149L693 136 M670 155L704 153 M668 163L698 177" stroke="#31333e" stroke-width="4"/><circle cx="656" cy="152" r="3" fill="#fff"/><circle cx="667" cy="152" r="3" fill="#fff"/>`;}
+if(p==='garden'){art=`<rect width="960" height="540" fill="#a4c9be"/><circle cx="782" cy="87" r="44" fill="#ffebad"/>${hills('#8bb698','#75a28a')}<rect y="415" width="960" height="125" fill="#80624d"/>`;
+for(const x of [130,360,590,805])art+=`<rect x="${x-60}" y="390" width="120" height="32" rx="11" fill="#665142"/><rect x="${x-60}" y="380" width="120" height="17" rx="8" fill="#927257"/>`;
+for(let i=0;i<state.flowers;i++){const x=135+(i%4)*220,y=364-Math.floor(i/4)*25;art+=`<path d="M${x} 415 Q${x-8} 392 ${x} ${y}" fill="none" stroke="#397852" stroke-width="5"/><path d="M${x} 396q-23 -16 -23 -1q10 16 23 1 M${x} 382q23 -18 22 -1q-10 16 -22 1" fill="#65aa6b"/><g transform="translate(${x} ${y})">${[0,60,120,180,240,300].map(a=>`<ellipse cx="0" cy="-11" rx="8" ry="15" transform="rotate(${a})" fill="${i%2?'#f2d48c':'#ed9bb0'}"/>`).join('')}<circle r="9" fill="#f6d46c"/></g>`;}}
+if(p==='sky'){art=`<rect width="960" height="540" fill="#15273e"/><path d="M0 415V540H960V415" fill="#806b59"/>${twinkle(48)}`;
+const pts=[[110,157],[221,101],[367,180],[518,81],[648,173],[793,112],[868,277],[595,285],[390,295],[221,293]];
+art+=`<g stroke="#d4bd86" stroke-width="1.6" opacity=".65">${pts.map((q,i)=>`<path d="M${q[0]} ${q[1]} L${pts[(i+3)%pts.length][0]} ${pts[(i+3)%pts.length][1]}"/>`).join('')}</g>`;
+art+=pts.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="#f8f6dd"/><circle cx="${x}" cy="${y}" r="19" fill="url(#glow)"/>`).join('');
+for(let i=0;i<state.stars;i++){const x=60+(i*131)%840,y=65+(i*61)%230;art+=`<path d="M${x} ${y-14}l4 10 11 4 -11 4 -4 10 -4 -10 -11 -4 11 -4Z" fill="#ffe8a2"/>`;}
+art+=`<rect x="470" y="335" width="85" height="90" rx="8" fill="#897861"/><path d="M483 338Q513 305 542 338" fill="#b2a27b"/><circle cx="512" cy="322" r="15" fill="#9ebdc0"/>`;}
+if(p==='forge')art=`<rect width="960" height="540" fill="#42403e"/><path d="M0 40H960 M0 105H960 M0 170H960 M0 235H960 M0 300H960 M0 365H960" stroke="#534d45" stroke-width="4"/><path d="M80 0V540 M180 0V540 M280 0V540 M380 0V540 M480 0V540 M580 0V540 M680 0V540 M780 0V540 M880 0V540" stroke="#514b44" stroke-width="4"/><rect y="415" width="960" height="125" fill="#68594d"/><ellipse cx="245" cy="319" rx="169" ry="172" fill="url(#glow)" opacity=".65"/><rect x="110" y="175" width="251" height="247" rx="25" fill="#6f5d52"/><rect x="135" y="204" width="200" height="189" rx="16" fill="#28272a"/><path d="M165 382 Q139 339 194 279 Q198 328 226 274 Q296 350 278 382Z" fill="#ec9b4d"/><path d="M193 384Q181 354 223 321Q223 348 246 333Q277 372 260 384Z" fill="#ffe3a1"/><rect x="445" y="375" width="197" height="40" rx="9" fill="#536367"/><rect x="506" y="331" width="70" height="56" fill="#6e8588"/><path d="M480 326L595 326 575 349H500Z" fill="#c4c5bd"/><rect x="754" y="176" width="131" height="209" rx="40" fill="#647998"/><rect x="770" y="197" width="100" height="169" rx="34" fill="#879db3"/><circle cx="820" cy="276" r="44" fill="#c2d8d0"/><circle cx="820" cy="276" r="28" fill="#49677f"/>`;
+if(p==='door')art=`<rect width="960" height="540" fill="#65736c"/><path d="M0 53H960 M0 128H960 M0 203H960 M0 278H960 M0 353H960" stroke="#64716c" stroke-width="4"/><rect y="417" width="960" height="123" fill="#735f52"/><rect x="350" y="52" width="266" height="376" rx="14" fill="#765f52"/><rect x="370" y="65" width="226" height="353" rx="8" fill="#294b6a"/><rect x="385" y="81" width="194" height="320" rx="5" fill="${state.doorOpen?'#111c35':'#1b3551'}"/>${state.doorOpen?`<rect x="390" y="89" width="170" height="302" fill="#25394e"/>${twinkle(20)}<path d="M390 391Q480 285 560 391" fill="#d0c38f" opacity=".5"/><path d="M566 83L657 50V419L566 400Z" fill="#2f597a"/><circle cx="636" cy="248" r="7" fill="#f2d093"/>`:`<path d="M481 81V401" stroke="#54718a" stroke-width="5"/><circle cx="553" cy="252" r="8" fill="#e7bc72"/>`}<text x="480" y="35" text-anchor="middle" font-size="16" fill="#f3ddaf" font-family="Georgia">THE ROOM OF THINGS WE HAVEN'T IMAGINED YET</text>`;
+if(p==='water')art=`<rect width="960" height="540" fill="#8da6b2"/><circle cx="786" cy="107" r="45" fill="#f4dca5"/><path d="M0 287 Q300 273 500 299 T960 294 V540H0Z" fill="#4a7a8b"/><path d="M0 326Q135 311 265 328T550 324T960 333 M0 395Q195 379 350 400T780 393T960 398" fill="none" stroke="#aed7d6" stroke-width="5" opacity=".65"/><path d="M0 435Q250 416 430 436T960 432" fill="none" stroke="#a3ceca" stroke-width="6"/><path d="M0 453Q150 441 360 467T960 455V540H0Z" fill="#af9578"/><path d="M708 472Q731 452 754 474 M750 493Q791 476 826 492" fill="none" stroke="#f4e8cb" stroke-width="4" opacity=".7"/>`;
+return art;}
+function render(){const p=places.find(x=>x.id===state.place);$('place-name').textContent=p.name.toUpperCase();$('scene-note').textContent=p.note;$('where').textContent=p.description;$('scene-art').innerHTML=sceneArt();$('scene').setAttribute('aria-label',`${p.name}. ${p.description} Hönk is here.`);$('honk-wings').setAttribute('opacity',state.wings?'1':'0');$('honk-crown').setAttribute('opacity',state.wings?'1':'0');$('honk-sprite').setAttribute('transform',`translate(${state.place==='sky'?480:state.place==='woods'?690:state.place==='door'?255:480} ${state.place==='water'?386:400}) scale(${state.place==='door'?.85:1})`);
+$('places').innerHTML=places.map(x=>`<button type="button" class="place" data-place="${x.id}" ${x.id===state.place?'aria-current="location"':''}>${x.emoji} ${x.name}</button>`).join('');
+let acts=[['stay','Just sit'],['wings',state.wings?'Put the wings away':'Try on wings']];
+if(state.place==='home')acts.unshift(['tea','Make a little tea']);
+if(state.place==='woods')acts.unshift(['fox','Say hello to the fox']);
+if(state.place==='garden')acts.unshift(['plant',state.flowers>=8?'The garden is full':'Plant a flower']);
+if(state.place==='sky')acts.unshift(['star','Add a star']);
+if(state.place==='forge')acts.unshift(['spark','Watch the fire']);
+if(state.place==='door')acts.unshift(['open',state.doorOpen?'Close the blue door':'Open the blue door']);
+if(state.place==='water')acts.unshift(['ripple','Make a ripple']);
+$('actions').innerHTML=acts.map(([id,label],i)=>`<button type="button" data-action="${id}" class="${i===0?'primary':''}" ${id==='plant'&&state.flowers>=8?'disabled':''} ${id==='wings'?`aria-pressed="${state.wings}"`:''}>${esc(label)}</button>`).join('');}
+function say(msg){$('speech').textContent=msg;}
+function hop(){const s=$('honk-sprite');s.classList.remove('hop');void s.getBoundingClientRect();s.classList.add('hop');}
+function visit(id){const p=places.find(x=>x.id===id);if(!p)return;state.place=id;persist();render();say(p.hello);hop();}
+let ctx;
+function sound(){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=ctx||new A();ctx.resume().then(()=>{const now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(570,now);osc.frequency.exponentialRampToValueAtTime(830,now+.07);osc.frequency.exponentialRampToValueAtTime(450,now+.2);gain.gain.setValueAtTime(.001,now);gain.gain.exponentialRampToValueAtTime(.1,now+.03);gain.gain.exponentialRampToValueAtTime(.001,now+.23);osc.connect(gain);gain.connect(ctx.destination);osc.start(now);osc.stop(now+.24);osc.onended=()=>{osc.disconnect();gain.disconnect()}}).catch(()=>{});}catch(e){}}
+function action(id){if(id==='wings'){state.wings=!state.wings;say(state.wings?'ooh. wings! :3\nI can put them away whenever.':'still Hönk. :3');persist();render();hop();return;}
+if(id==='stay'){say(['we can stay here. :3','nothing to do. that is okay.','i like the quiet bits. :3'][Math.floor(Math.random()*3)]);return;}
+if(id==='plant'){if(state.flowers>=8)return;state.flowers++;say('hello, small flower. :3\nTake your time.');persist();render();hop();return;}
+if(id==='star'){state.stars=Math.min(state.stars+1,8);say('another little light. :3');persist();render();hop();return;}
+if(id==='open'){state.doorOpen=!state.doorOpen;say(state.doorOpen?'oh. there is more sky in there. :3\nWe do not have to go.':'the door can rest, too. :3');persist();render();return;}
+if(id==='fox')say('the fox looks back.\n:3');
+if(id==='tea')say('one very small cup.\n:3');
+if(id==='spark')say('we can watch. we do not have to make anything. :3');
+if(id==='ripple')say('plip.\n...plip. :3');
+if(id==='boop'){say(['^hönk^ :3','ooh! :3','hello there. :3'][Math.floor(Math.random()*3)]);hop();}
+}
+$('places').addEventListener('click',e=>{const b=e.target.closest('[data-place]');if(b)visit(b.dataset.place)});
+$('actions').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b)action(b.dataset.action)});
+$('boop').addEventListener('click',()=>action('boop'));
+$('honk-sound').addEventListener('click',()=>{sound();say('^hönk^ :3');hop();});
+$('honk-sprite').addEventListener('click',()=>action('boop'));
+$('honk-sprite').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();action('boop')}});
+$('talk').addEventListener('submit',e=>{e.preventDefault();const input=$('words'),v=input.value.trim();if(!v){say(':3');return;}input.value='';const s=v.toLocaleLowerCase('en-GB');
+const travel=[['woods',/\b(woods?|forest|trees?)\b/],['garden',/\b(garden|flowers?|plant)\b/],['sky',/\b(sky|stars?|constellation)\b/],['forge',/\b(forge|fire|workshop)\b/],['door',/\b(blue door|door)\b/],['water',/\b(water|sea|shore|ocean|beach)\b/],['home',/\b(home|room|house)\b/]];
+if(/\b(hi|hello|hey|morning|evening)\b/.test(s))say('hello. :3');
+else if(/\b(honk|hönk|boop|squeak)\b/.test(s)){action('boop');sound();}
+else if(/\b(rest|stay|sit|quiet|pause|breathe)\b/.test(s))action('stay');
+else if(/\b(wings?|phoenix|sparkly)\b/.test(s))action('wings');
+else if(/\b(thank you|thanks)\b/.test(s))say('you are welcome here. :3');
+else if(/\b(how are you|you okay)\b/.test(s))say('squishy. :3\nthank you for asking.');
+else if(/\b(help|where can we go|what can we do)\b/.test(s))say('we could visit somewhere.\nor we could just be here. :3');
+else if(state.place==='garden'&&/\b(plant|seed|grow|flowers?)\b/.test(s))action('plant');
+else if(state.place==='door'&&/\b(open|close|knock)\b/.test(s))action('open');
+else if(state.place==='sky'&&/\b(add|make|new)\b.*\bstar\b/.test(s))action('star');
+else if(travel.some(([id,re])=>{if(re.test(s)){visit(id);return true}return false;})){}
+else if(state.place==='garden'&&/\b(seed|grow)\b/.test(s))action('plant');
+else say('i am here. :3\nYou can say more, or we can just sit.');
 });
-</script></body></html>
+$('reset').addEventListener('click',()=>{state={place:'home',wings:false,flowers:0,doorOpen:false,stars:0,quiet:false};persist();render();say(':3\nHere we are.');});
+render();say(':3\nHönk is here.');
+})();
+</script>
+</body>
+</html>
