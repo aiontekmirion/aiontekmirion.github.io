@@ -64,8 +64,6 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 .doors.show{pointer-events:auto;animation:arrive 1.4s ease .4s forwards}
 .doors .door,.doors a{font:400 .84rem var(--t-name,Georgia,serif);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);padding:.9rem .9rem .9rem 1.1rem;white-space:nowrap}
 .doors .door{color:var(--bone)}
-.doors .stay-water{color:var(--gold);font-size:.74rem;letter-spacing:.17em}
-.doors.resting{opacity:0;pointer-events:none;animation:none}
 .doors>*+*::before{content:"";}
 .doors a{position:relative}
 .doors a::before{content:"";position:absolute;left:0;top:50%;height:.9em;width:1px;background:rgba(228,199,162,.35);transform:translateY(-50%)}
@@ -174,7 +172,6 @@ nav.sr:focus-within{position:fixed;z-index:80;top:1rem;left:1rem;width:auto;heig
 
 <nav class="doors" id="doors" aria-label="Ways in">
   <button class="door" id="door" type="button" data-w="door"></button>
-  <button class="door stay-water" id="stay-water" type="button" data-w="stay"></button>
 </nav>
 
 <div class="note" id="note" role="dialog" aria-modal="true" aria-labelledby="note-h">
@@ -403,8 +400,6 @@ function placeHeart() {
 }
 placeHeart(); addEventListener("resize", placeHeart);
 function onTap(cx, cy) {
-  const choices = document.getElementById("doors");
-  if (choices.classList.contains("resting")) { choices.classList.remove("resting"); return; }
   if (note.classList.contains("open")) return;
   const p = imagePoint(cx, cy);
   if (((p.x - HEART.x) / HEART.rx) ** 2 + ((p.y - HEART.y) / HEART.ry) ** 2 <= 1) openNote();
@@ -420,10 +415,6 @@ function openNote() {
 function closeNote() { note.classList.remove("open"); door.focus({ preventScroll: true }); }
 
 door.addEventListener("click", openNote);
-document.getElementById("stay-water").addEventListener("click", e => {
-  e.currentTarget.blur();
-  document.getElementById("doors").classList.add("resting");
-});
 back.addEventListener("click", closeNote);
 addEventListener("keydown", e => { if (e.key === "Escape" && note.classList.contains("open")) closeNote(); });
 note.addEventListener("keydown", e => {            /* keep Tab inside the note */
