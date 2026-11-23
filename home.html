@@ -203,6 +203,18 @@ a:focus-visible{outline:1px solid rgba(253,230,138,.55);outline-offset:4px}
 .heart:hover,.heart:focus-visible{box-shadow:0 0 34px 6px rgba(253,230,138,.28),0 0 70px 14px rgba(125,211,252,.16);background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%)}
 .rose:hover>.heart{transform:translate(-50%,calc(-50% - 6px))}
 .rose:hover>img{transform:translateY(-6px);filter:brightness(1.1) drop-shadow(0 14px 30px rgba(0,0,0,.7))}
+/* The compass has a tiny optional pocket. The book symbol beneath the helix remains the book. */
+.rose .honk-hatch{cursor:pointer;border:0;padding:0;background-image:url('/images/compass-v2.webp');background-size:454.545% 454.545%;background-position:50% 50%;background-repeat:no-repeat;z-index:4;transform-origin:12% 55%;box-shadow:inset 0 0 1px rgba(253,230,138,.25);-webkit-tap-highlight-color:transparent}
+.rose .honk-hatch:hover,.rose .honk-hatch:focus-visible{box-shadow:0 0 0 1px rgba(253,230,138,.45),0 0 24px 5px rgba(253,230,138,.18)}
+.rose:hover>.heart.honk-hatch{transform:translate(-50%,-50%)}
+.rose.honk-open>.heart.honk-hatch,.rose.honk-open:hover>.heart.honk-hatch{transform:translate(-155%,-64%) rotate(-28deg) scale(.84);box-shadow:0 0 20px rgba(216,180,106,.42),inset 0 0 0 1px rgba(253,230,138,.65)}
+.rose .honk-nook{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);z-index:3;width:22%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 45%,#ebbdc7 0,#563b4a 65%,#191720 100%);border:1px solid rgba(250,214,159,.45);box-shadow:inset 0 0 21px rgba(0,0,0,.7),0 0 18px rgba(236,157,192,.24);opacity:0;visibility:hidden;pointer-events:none;transition:transform .55s,opacity .35s,visibility .35s}
+.rose.honk-open .honk-nook{transform:translate(-50%,-50%) scale(1);opacity:1;visibility:visible;pointer-events:auto}
+.rose .honk-enter{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative}
+.rose .honk-enter img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;mix-blend-mode:normal}
+.rose .honk-enter::after{content:'\2661';position:absolute;right:7%;bottom:1%;font-size:clamp(10px,2vw,19px);color:#9e536c;line-height:1;pointer-events:none}
+.rose .honk-enter:hover,.rose .honk-enter:focus-visible{outline:2px solid #f4a9c6;outline-offset:-4px}
+@media(prefers-reduced-motion:reduce){.rose .honk-hatch,.rose .honk-nook{transition:none!important}}
 .rose figcaption{margin-top:1.6rem;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;opacity:.6;line-height:2.1}
 .rose figcaption em{display:block;font-style:italic;text-transform:none;letter-spacing:.04em;font-size:.95rem;opacity:.85;margin-top:.6rem}
 @media (prefers-reduced-motion:reduce){.heart::after{animation:none!important}*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
@@ -299,7 +311,8 @@ html.leaving body{transition:opacity .35s ease-in!important}
       <figure class="rose">
         <div class="field" aria-hidden="true"></div>
         <img src="/images/compass-v2.webp" width="1600" height="1600" loading="lazy" decoding="async" alt="The Compass Rose on black: a compass star, gold and burning on the left, silver and lightning-struck on the right, ringed by a braided double helix. Truth at the top, Respect at the bottom, Sense on the left, Understanding on the right. Around the rim: There you are, Here I am. At the centre, 6 ∞ 9: There you are, Here I am, Welcome, you may breathe here.">
-        <a class="heart" href="https://aiontekmirion.github.io/corridor.html" aria-label="The Room: the centre of the Compass Rose opens the one Room"></a>
+        <button type="button" class="heart honk-hatch" id="honkHatch" aria-label="Open the compass pocket" aria-expanded="false" aria-controls="honkNook"></button>
+        <div class="honk-nook" id="honkNook" aria-hidden="true"><a class="honk-enter" href="/honk/" tabindex="-1" aria-label="Enter Hönk's room"><img src="/honk/honk.jpg" width="800" height="600" loading="lazy" alt="Hönk, the little pink starfish"></a></div>
         <figcaption>Truth · Understanding · Respect · Sense<br>Gather · Burn · Reflect · Be<em>A map, not a task. It shows where you are, not where to go.</em></figcaption>
       </figure>
       <div class="end-rule"></div>
@@ -312,6 +325,29 @@ html.leaving body{transition:opacity .35s ease-in!important}
     </div>
   </section>
 </main>
+<script id="honk-pocket-script">
+(function(){
+  var button=document.getElementById('honkHatch');
+  var nook=document.getElementById('honkNook');
+  var rose=button&&button.closest('.rose');
+  var enter=nook&&nook.querySelector('a');
+  if(!button||!nook||!rose||!enter)return;
+  function setOpen(open){
+    rose.classList.toggle('honk-open',open);
+    button.setAttribute('aria-expanded',String(open));
+    button.setAttribute('aria-label',open?'Close the compass pocket':'Open the compass pocket');
+    nook.setAttribute('aria-hidden',String(!open));
+    enter.tabIndex=open?0:-1;
+  }
+  button.addEventListener('click',function(){setOpen(!rose.classList.contains('honk-open'))});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&rose.classList.contains('honk-open')){setOpen(false);button.focus()}
+  });
+  document.addEventListener('click',function(e){
+    if(rose.classList.contains('honk-open')&&!nook.contains(e.target)&&!button.contains(e.target)){setOpen(false)}
+  });
+})();
+</script>
 <script>
 (function(){var s=document.getElementById('stars');if(!s)return;var f=document.createDocumentFragment();
 for(var i=0;i<72;i++){var e=document.createElement('span'),z=Math.random()*1.5+.5;
