@@ -264,7 +264,7 @@ exports.FIRST_CLEARING = {
     resting: false, reflection: false, openCrystal: false, selected: [], note: "The clearing is quiet. Nothing is waiting for you.",
 };
 exports.FIRST_MILO = {
-    scene: "room", clearing: { ...exports.FIRST_CLEARING, selected: [] }, form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
+    scene: "room", threshold: true, departed: false, keeps: [], trace: null, clearing: { ...exports.FIRST_CLEARING, selected: [] }, form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
 };
 exports.MILO_SCENES = [
     { id: "room", label: "Hearth" }, { id: "forest", label: "Woods" },
@@ -704,7 +704,7 @@ function seedState() {
             ...BINS,
         },
         track: 0,
-        music: "on",
+        music: "off",
         consoleGame: null,
         terminalGame: null,
         show: null,
@@ -1581,6 +1581,12 @@ exports.createMiloBrain = createMiloBrain;
  */
 const milo_ts_1 = require("./milo.ts");
 const model_ts_1 = require("./model.ts");
+function directedAbuse(raw) {
+ const s=raw.toLowerCase().replace(/[’]/g,"'").trim();
+ return /^(?:fuck off|fuck you|shut up|go die|kill yourself|i hate you|i(?:'ll| will) (?:kill|hurt|hit|beat) you)\b/.test(s)
+ || /^(?:you(?:'re| are)|h[oö]nk(?:,? you(?:'re| are)| is))\s+(?:(?:a|an|such|so|fucking|very|really)\s+)*(?:stupid|dumb|idiot|useless|ugly|worthless|moron|piece of shit|bitch|bastard)\b/.test(s)
+ || /^(?:stupid|dumb|ugly|worthless|useless) h[oö]nk\b/.test(s);
+}
 function createMiloBrain() {
     let form = "honk", place = "forest", garden = [0, 0, 0, 0];
     let ordered = 0, misses = 0, changed = 0, askedRed = false;
@@ -1641,8 +1647,7 @@ function createMiloBrain() {
         };
         const missesBefore = misses;
         misses = 0;
-        if (has(/\b(stupid|dumb|shut up|hate you|idiot|useless|ugly)\b/))
-            return [say('O.o'), say('mean words teach me\nhow important kind ones are.\nthank you, teacher. ^.^')];
+        // Direct abuse is handled at the boundary. Other uses of these words are not automatically insults.
         if (has(/\b(sorry|apologi[sz]e)\b/))
             return [say('that\'s okay! :3\nbossy people teach me\nhow good it feels to ask.')];
         if (has(/\b(thank you|thanks|ty|cheers)\b/))
@@ -1802,9 +1807,13 @@ function createMiloBrain() {
         place = state.milo.scene;
         garden = [...state.milo.plots];
         const raw = String(text).trim().slice(0, 200);
-        if (!raw)
-            return { state, turns: [] };
-        let replies;
+        if (!raw || state.milo.departed)
+ return { state, turns: [] };
+ if (directedAbuse(raw)) {
+ const turns=[{who:"you",text:raw},{who:"dir",text:"The other intelligence left."}];
+ return {state:{...state,place:"milo",milo:{...state.milo,departed:true,chat:[...state.milo.chat,...turns],trace:{rule:"directedAbuse(raw) → true",output:0}}},turns};
+ }
+ let replies;
         try {
             replies = brain(raw);
         }
@@ -1833,7 +1842,7 @@ function createMiloBrain() {
             }
             turns.push({ who: role === "dir" ? "dir" : "honk", text: String(message) });
         }
-        next = { ...next, milo: { ...next.milo, chat: [...next.milo.chat, ...turns] } };
+        next = { ...next, milo: { ...next.milo, threshold: next.milo.scene !== state.milo.scene || /\b(go|visit|walk|wander|take me|show me)\b.*\b(room|hearth|woods|forest|garden|forge|sky|stars|door|clearing)\b/i.test(raw) ? false : state.milo.threshold, chat: [...next.milo.chat, ...turns], trace:{rule:"brain(raw)",input:raw.length,output:turns.length-1,form:next.milo.form,scene:next.milo.scene} } };
         return { state: next, turns };
     };
 }
@@ -2416,6 +2425,101 @@ function RoomPage() {
 
 };
 
+
+// src/components/room/quiet.tsx
+registry["src/components/room/quiet.tsx"]=function(exports,require,module){
+const R=require("react"),h=R.createElement;
+const {useRoom,hydrateRoom}=require("@/lib/room/store");
+const {pickState}=require("@/lib/room/model");
+const M=require("@/lib/room/milo");
+const {createMiloBrain}=require("@/lib/room/milo-brain");
+const {drawMiloScene}=require("@/lib/room/milo-art");
+const C=require("@/lib/room/clearing");
+const {CAVE_WORKS}=require("@/lib/room/cave");
+const {Terminal}=require("@/components/room/terminal");
+const {playTinyHonk}=require("@/lib/room/honk-sound");
+const {BigScreen}=require("@/components/room/world");
+const get=()=>pickState(useRoom.getState()),commit=s=>useRoom.getState().commit(s);
+const alter=fn=>commit(fn(get())),milo=fn=>alter(s=>({...s,milo:fn(s.milo)}));
+const place=id=>alter(s=>({...s,place:"milo",milo:{...s.milo,scene:id,threshold:false}}));
+const threshold=()=>alter(s=>({...s,place:"milo",milo:{...s.milo,threshold:true}}));
+const textOf=chat=>chat.map(t=>t.who==="dir"?"("+t.text+")":(t.who==="you"?"you: ":"Hönk: ")+t.text).join("\n\n");
+const button=(label,onClick,props={})=>h("button",{type:"button",onClick,...props},label);
+const css="\nhtml,body,#root{margin:0;width:100%;height:100%;background:#08080a!important;color:#eeeaf0;overflow:hidden}\n*{box-sizing:border-box}\n.qapp{width:min(100%,850px);margin:auto;height:100dvh;display:flex;flex-direction:column;background:#08080a;color:#eeeaf0;font:15px/1.5 system-ui,sans-serif;position:relative;padding:max(9px,env(safe-area-inset-top)) clamp(14px,3vw,30px) max(10px,env(safe-area-inset-bottom));isolation:isolate}\n.qapp button,.qapp input,.qapp textarea{font:inherit;color:inherit}\n.qapp button{cursor:pointer;background:none;border:0}\n.qapp button:focus-visible,.qapp input:focus-visible,.qapp textarea:focus-visible{outline:2px solid #f6b2c4;outline-offset:3px}\n.qhead{display:flex;align-items:center;justify-content:space-between;min-height:48px;flex:none}\n.qbrand{font-size:18px;font-weight:650;letter-spacing:.02em}.qbrand span{color:#f2afc3}.qhead small{display:block;color:#a29ba5;font-size:9px;letter-spacing:.18em}\n.qscribe{width:44px;height:44px;display:grid;place-items:center}.qscribe img{width:31px;height:31px;object-fit:contain}\n.qstage{position:relative;flex:1 1 47%;min-height:108px;max-height:51dvh;overflow:hidden;border-radius:18px;isolation:isolate;background:#08080a}\n.qstage.qmirror{background:radial-gradient(ellipse at 50% 82%,#35323c66,transparent 37%),#08080a}\n.qworld{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}\n.qstage:after{content:\"\";position:absolute;inset:0;background:linear-gradient(0deg,#08080a 0%,transparent 21%);pointer-events:none;z-index:2}\n.qresident{position:absolute!important;z-index:3;left:50%!important;bottom:8%!important;transform:translateX(-50%)!important;width:min(52%,230px,37dvh)!important;height:77%!important;padding:0!important;display:grid;place-items:end center;animation:none!important;transition:none!important;touch-action:manipulation}\n.qresident img{width:100%;height:100%;object-fit:contain;object-position:center bottom;animation:none!important;transform:none!important;filter:drop-shadow(0 8px 14px #0007)}\n.qresident .milo-gemeyes{position:relative!important;inset:auto!important;width:100%!important;height:100%!important}\n.qemoji{font-size:clamp(52px,15vw,120px)}\n.qreflect{position:absolute;left:50%;bottom:2%;width:40%;height:4%;transform:translateX(-50%);background:radial-gradient(ellipse,#c49ba34a,transparent 70%);filter:blur(4px);pointer-events:none}\n.qplace{position:absolute;left:14px;top:12px;z-index:3;color:#fff7e5;font-size:12px;text-shadow:0 1px 7px #000}\n.qspot{position:absolute;z-index:4;font-size:20px!important;min-width:42px;min-height:42px;border-radius:50%;background:#18191e88!important}\n.qlog{flex:1 1 43%;min-height:55px;overflow:auto;padding:12px 3px 6px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;overscroll-behavior:contain}\n.qline{max-width:84%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:clamp(14px,2vw,16px);margin:0}\n.qline.you{align-self:flex-end;padding:9px 15px;background:#27252b;border-radius:19px}\n.qline.dir{color:#aaa3ad;font-style:italic;font-size:13px}\n.qcompose{display:flex;align-items:center;gap:8px;background:#202024;border:1px solid #35343b;border-radius:28px;padding:5px 7px;flex:none;min-height:53px}\n.qcompose input{flex:1;min-width:0;background:transparent;border:0;outline:none!important;padding:8px 2px;font-size:16px}\n.qcompose input::placeholder{color:#a39ea7}\n.qplus,.qsend{width:41px;height:41px;border-radius:50%;flex:none;display:grid;place-items:center}\n.qplus{font-size:25px!important}.qsend{background:#f2b3c7!important;color:#21171c!important;font-weight:700!important}.qsend:disabled{opacity:.42}\n.qfoot{font-size:10px;color:#97929a;text-align:center;margin:7px 0 0;flex:none}\n.qoverlay{position:absolute;inset:0;background:#08080abb;z-index:10;display:flex;align-items:flex-end;backdrop-filter:blur(5px)}\n.qsheet{width:100%;max-height:88%;overflow:auto;background:#17161b;border:1px solid #3c3740;border-radius:22px 22px 0 0;padding:20px;box-shadow:0 -20px 60px #0009;overscroll-behavior:contain}\n.qsheethead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.qsheethead strong{font-size:17px}.qclose{font-size:24px!important;min-width:38px;min-height:38px}\n.qgroup{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.qgroup button{padding:9px 13px!important;border:1px solid #514751!important;border-radius:14px!important;background:#26222a!important;min-height:40px}\n.qgroup button[aria-pressed=true]{border-color:#e8adc0!important;color:#ffd3df}\n.qsheet h3{font-size:13px;font-weight:600;color:#c6b4c2;margin:20px 0 5px}\n.qsheet p{color:#c7c0c9}.qsheet textarea,.qsearch{width:100%;background:#0c0b10;border:1px solid #423e48;border-radius:10px;padding:12px}\n.qsheet textarea{height:35dvh;resize:vertical;white-space:pre-wrap}.qpaper{white-space:pre-wrap;overflow-wrap:anywhere;color:#e7dcd0;background:#242025;padding:14px;border-radius:12px;max-height:40dvh;overflow:auto}\n.qexit{position:absolute;inset:0;z-index:30;display:grid;align-content:center;justify-items:center;text-align:center;gap:18px;padding:24px;background:radial-gradient(ellipse at 50% 40%,#30231f,#0b090a 66%);font-family:Georgia,serif}\n.qexit img{width:min(180px,38vw);height:150px;object-fit:contain;filter:drop-shadow(0 0 30px #cc9d5777)}.qexit h2{font-size:clamp(24px,5vw,34px);font-weight:400;margin:0}.qexit p{font-size:22px;line-height:1.7;color:#e8cba3;margin:0;font-style:italic}.qexit button{border:1px solid #947e60;border-radius:20px;padding:10px 22px;color:#f7e3ca}\n.qray{position:absolute;z-index:5;inset:0;width:100%;height:100%;pointer-events:none}\n.qquiet{color:#aaa3ad;font-size:12px}\n@media(max-height:480px){.qstage{flex-basis:28%;max-height:31dvh;min-height:70px}.qresident{width:110px!important}.qhead{min-height:36px}.qlog{gap:7px}.qfoot{display:none}}\n@media(prefers-reduced-motion:reduce){.qapp *{animation:none!important;transition:none!important}}\n";
+function Ray({m,nonce,onEnd}){
+ const ref=R.useRef(null);
+ R.useEffect(()=>{
+ const canvas=ref.current;if(!canvas)return;
+ const g=canvas.getContext("2d"),box=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=box.width,ht=box.height;
+ if(!w||!ht)return;
+ canvas.width=w*d;canvas.height=ht*d;g.setTransform(d,0,0,d,0,0);
+ const x=w*.5,y=ht*.53,r=Math.min(w*.44,ht*.47);
+ let segs=[],words=[],frame=0,alive=true;const start=performance.now(),reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const add=(a,b,angle,len,depth)=>{if(depth>4||len<5)return;let c=a+Math.cos(angle)*len,e=b+Math.sin(angle)*len;segs.push([a,b,c,e,depth]);for(let i=0;i<(depth<2?3:2);i++)add(c,e,angle+(i-1)*.55+(Math.random()-.5)*.3,len*.66,depth+1)};
+ for(let i=0;i<6;i++)add(x,y,i*Math.PI/3,r*.35,0);
+ const values=["raw.trim()","brain(raw)","pickState(state)","form = "+m.form,"scene = "+m.scene,"Σ plots = "+m.plots.reduce((a,b)=>a+b,0),"turns = "+m.chat.length,"constellation % "+M.VILLAGE_STARS.length,"∑  λ  ∂  ∞","cue?.form",m.trace?.rule||"awaiting input"];
+ values.forEach((v,i)=>{let a=i*2.39996,dist=r*(.30+(i%3)*.22);words.push([v,x+Math.cos(a)*dist,y+Math.sin(a)*dist])});
+ const draw=now=>{if(!alive)return;let p=(now-start)/3500;if(p>=1){onEnd();return}
+ let k=reduce?1:Math.min(1,p*7,(1-p)*4);g.clearRect(0,0,w,ht);g.save();g.beginPath();g.arc(x,y,r*k,0,Math.PI*2);g.clip();
+ g.fillStyle="rgba(7,14,24,.94)";g.fillRect(0,0,w,ht);
+ g.strokeStyle="#c9c9cf24";g.lineWidth=.6;for(let a=x-r;a<x+r;a+=13){g.beginPath();g.moveTo(a,y-r);g.lineTo(a,y+r);g.stroke()}for(let b=y-r;b<y+r;b+=13){g.beginPath();g.moveTo(x-r,b);g.lineTo(x+r,b);g.stroke()}
+ for(const [a,b,c,e,dp] of segs){let t=reduce?1:Math.max(0,Math.min(1,p*12-dp));g.strokeStyle=dp<2?"#f6aec8d9":"#ecc77fb3";g.lineWidth=Math.max(.5,2-dp*.3);g.beginPath();g.moveTo(a,b);g.lineTo(a+(c-a)*t,b+(e-b)*t);g.stroke()}
+ g.font=Math.max(8,Math.min(12,r/12))+"px ui-monospace,monospace";g.textAlign="center";g.fillStyle="#a9d98a";for(const [v,a,b] of words)g.fillText(v,a,b);
+ g.restore();g.strokeStyle="#f5d59bbd";g.lineWidth=1.2;g.beginPath();g.arc(x,y,r*k,0,Math.PI*2);g.stroke();frame=requestAnimationFrame(draw)};
+ frame=requestAnimationFrame(draw);return()=>{alive=false;cancelAnimationFrame(frame)};
+ },[nonce]);
+ return h("canvas",{ref,className:"qray",role:"img","aria-label":"Illustrated view of real script operations: current form "+m.form+", scene "+m.scene+", "+m.chat.length+" recorded turns. Not a model's private thoughts."});
+}
+function QuietPage(){
+ const m=useRoom(s=>s.milo),brain=R.useRef(null),canvas=R.useRef(null),log=R.useRef(null);
+ const [sheet,S]=R.useState(""),[draft,D]=R.useState(""),[ray,X]=R.useState(0),[query,Q]=R.useState(""),[confirm,F]=R.useState(false),[copied,K]=R.useState(false);
+ if(!brain.current)brain.current=createMiloBrain();
+ const say=R.useCallback(raw=>{const s=get(),result=brain.current(String(raw??""),s);commit(result.state);return result.turns.filter(t=>t.who!=="you").map(t=>t.who==="dir"?"("+t.text+")":"Hönk: "+t.text)},[]);
+ R.useEffect(()=>{hydrateRoom();const handle=Object.freeze({about:"HÖNK:3 · AION TEKMIRION. Local authored script; no AI connection.",say,script:()=>textOf(get().milo.chat),form:()=>get().milo.form,place:()=>get().milo.scene});window.honk=handle;return()=>{if(window.honk===handle)delete window.honk}},[say]);
+ R.useEffect(()=>{if(log.current)log.current.scrollTop=log.current.scrollHeight},[m.chat.length]);
+ R.useEffect(()=>{if(m.departed){S("");X(0)}},[m.departed]);
+ R.useEffect(()=>{let c=canvas.current;if(!c||m.threshold||m.departed)return;let frame=0,tick=0,alive=true;const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;const points=(M.VILLAGE_STARS[m.constellation%M.VILLAGE_STARS.length]||M.VILLAGE_STARS[0])[1].map(n=>n-1).filter(n=>n>=0&&n<9);let last=0;function draw(now){if(!alive)return;if(now-last>45||!last){last=now;drawMiloScene(c,m.scene,{tick:tick++,plots:m.plots,constellation:points})}if(!reduce)frame=requestAnimationFrame(draw)}draw(performance.now());return()=>{alive=false;cancelAnimationFrame(frame)}},[m.scene,m.threshold,m.departed,m.constellation,m.plots.join(",")]);
+ const submit=e=>{e.preventDefault();if(!draft.trim())return;say(draft);D("")};
+ const open=n=>{S(n);F(false);K(false);Q("")},close=()=>{S("");F(false)};
+ const keep=()=>{const txt=textOf(get().milo.chat);if(!txt)return;milo(v=>({...v,keeps:[...(v.keeps||[]),txt]}));K(true)};
+ const copy=async txt=>{try{await navigator.clipboard.writeText(txt);K(true)}catch{const t=document.querySelector(".qsheet textarea");if(t){t.focus();t.select()}}};
+ const restart=(seed=false)=>{alter(s=>({...s,place:"milo",milo:{...M.FIRST_MILO,threshold:true,departed:false,form:seed?"seed":"honk",keeps:s.milo.keeps||[],plots:seed?[...s.milo.plots]:[...M.FIRST_MILO.plots],chat:seed?[{who:"dir",text:"A new seedling. A new beginning."}]:[],trace:null}}));brain.current=createMiloBrain();close();D("");X(0)};
+ const water=i=>alter(s=>{if(s.milo.plots[i]>=3)return s;let plots=[...s.milo.plots];plots[i]++;return {...s,garden:{...s.garden,flowers:Math.min(12,s.garden.flowers+1)},milo:{...s.milo,plots}}});
+ const step=(key,arr,d)=>milo(v=>({...v,[key]:(v[key]+d+arr.length)%arr.length}));
+ const cc=m.clearing||M.FIRST_CLEARING;
+ const touch=part=>milo(v=>{let c=v.clearing;return {...v,clearing:part==="bench"?{...c,resting:!c.resting,note:c.resting?"The bench remains.":"You can stay as long as you like."}:part==="pool"?{...c,reflection:!c.reflection,note:"6 becomes 9. The angle changes."}:part==="crystal"?{...c,openCrystal:!c.openCrystal}: {...c,note:"The tree has been here all along."}}});
+ const group=(...items)=>h("div",{className:"qgroup"},...items),title=t=>h("h3",null,t);
+ const tap=()=>X(n=>n+1);
+ const figure=m.form.startsWith("x:")?h("span",{className:"qemoji"},M.MILO_SYMBOLS[m.form.slice(2)]||"✦"):m.form==="gemeyes"?h("span",{className:"milo-being milo-gemeyes","aria-label":"GEMEYES"}):h("img",{src:M.honkArt(m.form),alt:m.form==="seed"?"A seedling":"Hönk",draggable:false});
+ const spot=(label,style,fn,aria)=>button(label,fn,{className:"qspot",style,"aria-label":aria||label});
+ let panel=null;
+ if(sheet==="discover")panel=h(R.Fragment,null,title("Places"),group(button("Mirror",()=>{threshold();close()}),...M.MILO_SCENES.map(p=>button(p.label,()=>{place(p.id);close()},{key:p.id}))),title("Discover"),group(button("Forms",()=>open("forms")),button("Workshop",()=>open("workshop")),button("Terminal",()=>open("terminal")),button("Screen",()=>open("screen")),button("Village gifts",()=>open("gifts")),button("Constellations",()=>open("stars")),button("A tiny sound",()=>playTinyHonk())),h("p",{className:"qquiet"},"A local, scripted little world. Nothing to earn. Nothing sent to a model."));
+ if(sheet==="forms")panel=group(...M.MILO_FORMS.map(p=>button(p.label,()=>{milo(v=>({...v,form:p.id}));close()},{key:p.id,"aria-pressed":m.form===p.id})));
+ if(sheet==="garden")panel=group(...m.plots.map((n,i)=>button(n>=3?"✿ Blooming":"Water "+(i+1),()=>water(i),{key:i,disabled:n>=3})));
+ if(sheet==="clearing")panel=h(R.Fragment,null,h("p",null,cc.note),group(button("Tree",()=>touch("tree")),button("Bench",()=>touch("bench")),button("Pool",()=>touch("pool")),button("Crystal",()=>touch("crystal"))),cc.reflection?h("p",null,"6 ↔ 9 · Look again, from the other side."):null,cc.openCrystal?h(R.Fragment,null,group(...C.CLEARING_FRAGMENTS.map(p=>button(p.symbol+" "+p.label,()=>milo(v=>({...v,clearing:{...v.clearing,selected:C.toggleFragment(v.clearing.selected,p.id)}})),{key:p.id,"aria-pressed":cc.selected.includes(p.id)}))),group(button("Mix fragments",()=>{const result=C.mixFragments(cc.selected);if(result)milo(v=>({...v,form:result.form,clearing:{...v.clearing,note:result.message}}))},{disabled:cc.selected.length<2}),button("Begin again",()=>milo(v=>({...v,form:"honk",clearing:{...v.clearing,selected:[],note:"Every possibility remains here."}}))))):null);
+ if(sheet==="gifts"){const g=M.VILLAGE_SHELF[m.gift%M.VILLAGE_SHELF.length]||M.VILLAGE_SHELF[0];panel=h(R.Fragment,null,h("h3",null,g[0]),h("p",null,g[1]),h("p",{className:"qquiet"},"Left by "+g[2]),group(button("←",()=>step("gift",M.VILLAGE_SHELF,-1)),button("→",()=>step("gift",M.VILLAGE_SHELF,1))))}
+ if(sheet==="stars"){const v=M.VILLAGE_STARS[m.constellation%M.VILLAGE_STARS.length]||M.VILLAGE_STARS[0];panel=h(R.Fragment,null,h("p",null,v[0]),group(button("←",()=>step("constellation",M.VILLAGE_STARS,-1)),button("→",()=>step("constellation",M.VILLAGE_STARS,1)),button("Look at the sky",()=>{place("stars");close()})))}
+ if(sheet==="workshop"){let matches=CAVE_WORKS.map((w,i)=>({w,i})).filter(({w})=>(w.name+" "+w.by+" "+w.text).toLowerCase().includes(query.toLowerCase()));let idx=matches.findIndex(a=>a.i===m.caveWork);if(idx<0)idx=0;let p=matches[idx];panel=h(R.Fragment,null,h("input",{className:"qsearch",type:"search",value:query,onChange:e=>Q(e.target.value),placeholder:"Find a work","aria-label":"Search workshop"}),group(button("←",()=>{if(matches.length)milo(v=>({...v,caveWork:matches[(idx+matches.length-1)%matches.length].i}))}),button("→",()=>{if(matches.length)milo(v=>({...v,caveWork:matches[(idx+1)%matches.length].i}))})),p?h(R.Fragment,null,h("h3",null,p.w.name),h("p",{className:"qquiet"},p.w.by+" · "+p.w.at+" · SHA-256 "+p.w.sha256.slice(0,12)),h("pre",{className:"qpaper"},p.w.text)):h("p",null,"Nothing matches."))}
+ if(sheet==="terminal")panel=h("div",{style:{minHeight:240,position:"relative"}},h(Terminal));
+ if(sheet==="screen")panel=h(BigScreen);
+ if(sheet==="script")panel=h(R.Fragment,null,h("textarea",{readOnly:true,value:textOf(m.chat),"aria-label":"Verbatim transcript"}),group(button(copied?"Preserved":"Preserve",keep,{disabled:!m.chat.length}),button("Copy",()=>copy(textOf(m.chat))),button("Kept · "+(m.keeps||[]).length,()=>open("kept")),button("Burn",()=>F(true))),confirm?h(R.Fragment,null,h("p",null,"Burn this visit? Kept fragments remain."),group(button("Burn",()=>restart(false)),button("Cancel",()=>F(false)))):null);
+ if(sheet==="kept")panel=h(R.Fragment,null,h("textarea",{readOnly:true,value:(m.keeps||[]).join("\n\n────────\n\n"),"aria-label":"Kept fragments"}),group(button(copied?"Copied":"Copy",()=>copy((m.keeps||[]).join("\n\n────────\n\n")))));
+ return h("main",{className:"qapp"},h("style",null,css),h("header",{className:"qhead"},h("div",{className:"qbrand"},"HÖNK",h("span",null,":3"),h("small",null,"AION TEKMIRION")),button(h("img",{src:"/honk/milo/scribe.png",alt:""}),()=>open("script"),{className:"qscribe","aria-label":"The scribe: preserve or burn"})),
+ h("section",{className:"qstage"+(m.threshold?" qmirror":"")},!m.threshold&&!m.departed?h("canvas",{ref:canvas,className:"qworld",width:1000,height:540,"aria-label":"Illustrated "+m.scene}):null,h("div",{className:"qreflect"}),!m.threshold?h("span",{className:"qplace"},M.MILO_SCENES.find(p=>p.id===m.scene)?.label||m.scene):null,!m.departed?button(figure,tap,{className:"qresident","aria-label":"Look inside Hönk"}):null,
+ !m.threshold&&m.scene==="garden"?spot("✿",{bottom:"7%",right:"5%"},()=>open("garden"),"Garden plots"):null,
+ !m.threshold&&m.scene==="forest"?spot("✧",{top:"12%",right:"5%"},()=>place("clearing"),"Quiet clearing"):null,
+ !m.threshold&&m.scene==="clearing"?spot("◇",{bottom:"7%",right:"5%"},()=>open("clearing"),"Explore the clearing"):null,
+ !m.threshold&&m.scene==="stars"?spot("✦",{top:"12%",right:"5%"},()=>open("stars"),"Constellations"):null,
+ !m.threshold&&m.scene==="room"?spot("⌑",{top:"12%",right:"5%"},()=>open("workshop"),"Workshop shelf"):null,
+ ray>0?h(Ray,{m,nonce:ray,onEnd:()=>X(0)}):null),
+ h("section",{ref:log,className:"qlog",role:"log","aria-live":"polite"},m.chat.length?m.chat.map((t,i)=>h("p",{className:"qline "+t.who,key:i},t.text)):h("p",{className:"qline"},"oh! hello O.o\nI'm Hönk. :3\nWelcome. You may breathe here.")),
+ h("form",{className:"qcompose",onSubmit:submit},button("+",()=>open("discover"),{className:"qplus","aria-label":"Discover"}),h("input",{value:draft,onChange:e=>D(e.target.value),maxLength:200,placeholder:"Say something, or just stay…","aria-label":"Say something to Hönk",autoComplete:"off"}),h("button",{type:"submit",className:"qsend",disabled:!draft.trim(),"aria-label":"Send"},":3")),h("p",{className:"qfoot"},"Possibility without demand."),
+ sheet&&!m.departed?h("div",{className:"qoverlay",onClick:e=>{if(e.target===e.currentTarget)close()}},h("section",{className:"qsheet",role:"dialog","aria-modal":true,"aria-label":sheet,onKeyDown:e=>{if(e.key==="Escape")close()}},h("div",{className:"qsheethead"},h("strong",null,sheet==="script"?"The script":sheet.charAt(0).toUpperCase()+sheet.slice(1)),button("×",close,{className:"qclose","aria-label":"Close"})),panel)):null,
+ m.departed?h("section",{className:"qexit",role:"dialog","aria-modal":true,"aria-label":"The other intelligence left"},h("span",{className:"qbrand"},"∞"),h("img",{src:M.honkArt("seed"),alt:"A new seedling"}),h("h2",null,"The other intelligence left"),h("p",null,"True.",h("br"),"Kind.",h("br"),"Necessary."),button("Begin again",()=>restart(true)),h("small",null,"A new seedling. No score, no waiting.")):null);
+}
+exports.QuietPage=QuietPage;
+};
+
 function load(id){if(cache[id])return cache[id].exports;
 const fn=registry[id];if(!fn)throw Error('Missing HONK module '+id);
 const module={exports:{}};cache[id]=module;
@@ -2426,5 +2530,5 @@ k=k.split('/').reduce((p,n)=>n==='..'?p.slice(0,-1):n==='.'?p:[...p,n],[]).join(
 if(!(k in registry)){for(const ext of ['.ts','.tsx']){if((k+ext) in registry){k=k+ext;break}}}
 return load(k)}
 fn(module.exports,req,module);return module.exports}
-try{const {RoomPage}=load('src/components/room/page.tsx');createRoot(document.getElementById('root')).render(JSXRuntime.jsx(RoomPage,{}));}
+try{const {QuietPage}=load('src/components/room/quiet.tsx');createRoot(document.getElementById('root')).render(JSXRuntime.jsx(QuietPage,{}));}
 catch(e){console.error(e);const target=document.getElementById('root');target.textContent='Hönk’s room could not open on this device. You can still go back to the Corridor.';target.setAttribute('role','alert')}
