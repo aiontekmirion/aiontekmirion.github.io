@@ -264,7 +264,7 @@ exports.FIRST_CLEARING = {
     resting: false, reflection: false, openCrystal: false, selected: [], note: "The clearing is quiet. Nothing is waiting for you.",
 };
 exports.FIRST_MILO = {
-    scene: "room", threshold: true, departed: false, keeps: [], trace: null, clearing: { ...exports.FIRST_CLEARING, selected: [] }, form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
+    scene: "room", threshold: true, departed: false, keeps: [], trace: null, unifiedVersion: 1, clearing: { ...exports.FIRST_CLEARING, selected: [] }, form: "honk", plots: [0, 0, 0, 0], constellation: 0, gift: 0, caveWork: 0, caveOpen: false, chat: [],
 };
 exports.MILO_SCENES = [
     { id: "room", label: "Hearth" }, { id: "forest", label: "Woods" },
@@ -1048,7 +1048,7 @@ function handle(cmd, rest, state, script, depth, trail) {
             const id = rest.toLowerCase() === "hearth" ? "room" : rest.toLowerCase();
             if (!milo_ts_1.MILO_SCENES.some((p) => p.id === id))
                 return { state, lines: ["Try scene room, forest, garden, forge, stars, or door."], stop: script };
-            return { state: { ...state, place: "milo", milo: { ...state.milo, scene: id } }, lines: [`Milo's World: ${id}.`] };
+            return { state: { ...state, place: "milo", milo: { ...state.milo, scene: id, threshold:false } }, lines: [`Milo's World: ${id}.`] };
         }
         case "form": {
             const id = rest.toLowerCase();
@@ -1532,13 +1532,18 @@ exports.hydrateRoom = hydrateRoom;
 const zustand_1 = require("zustand");
 const middleware_1 = require("zustand/middleware");
 const model_1 = require("./model");
+function unifyPlace(state) {
+    if (state.place === "milo") return state;
+    const scene = {room:"room", garden:"garden", corridor:"door"}[state.place];
+    return {...state,place:"milo",milo:{...state.milo,scene:scene||state.milo.scene,threshold:false}};
+}
 exports.useRoom = (0, zustand_1.create)()((0, middleware_1.persist)((set) => ({
     ...(0, model_1.seedState)(),
     whisper: "",
     whisperId: 0,
     hadShelf: false,
     say: (line) => set((s) => ({ whisper: line, whisperId: s.whisperId + 1 })),
-    commit: (next) => set((0, model_1.pickState)(next)),
+    commit: (next) => set((0, model_1.pickState)(unifyPlace(next))),
 }), {
     name: "honk-room-v1",
     skipHydration: true,
@@ -1546,7 +1551,12 @@ exports.useRoom = (0, zustand_1.create)()((0, middleware_1.persist)((set) => ({
     merge: (persisted, current) => {
         const saved = persisted ?? {};
         const combined = { ...current, ...saved, garden: { ...current.garden, ...saved.garden }, milo: { ...current.milo, ...saved.milo, clearing: { ...current.milo.clearing, ...saved.milo?.clearing, selected: [...(saved.milo?.clearing?.selected ?? current.milo.clearing.selected)] }, plots: [...(saved.milo?.plots ?? current.milo.plots)], chat: (saved.milo?.chat ?? current.milo.chat) } };
-        return { ...current, ...(0, model_1.pickState)(combined) };
+        // A one-time migration restores the canonical resident, without deleting the record.
+        if (saved.milo && saved.milo.unifiedVersion !== 1) {
+            combined.milo = {...combined.milo,unifiedVersion:1,form:combined.milo.departed?combined.milo.form:"honk",threshold:true};
+            combined.place = "milo";
+        }
+        return { ...current, ...(0, model_1.pickState)(unifyPlace(combined)) };
     },
 }));
 let started = false;
@@ -1889,148 +1899,6 @@ async function playTinyHonk() {
 
 };
 
-// src/components/room/world.tsx
-registry["src/components/room/world.tsx"]=function(exports,require,module){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.HonkFigure = HonkFigure;
-exports.RoomScene = RoomScene;
-exports.BigScreen = BigScreen;
-exports.Hall = Hall;
-exports.CorridorScene = CorridorScene;
-exports.Cabinet = Cabinet;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const catalog_1 = require("@/lib/room/catalog");
-const model_1 = require("@/lib/room/model");
-const store_1 = require("@/lib/room/store");
-const milo_1 = require("@/lib/room/milo");
-const honk_sound_1 = require("@/lib/room/honk-sound");
-function act(next, line) {
-    store_1.useRoom.getState().commit(next);
-    if (line)
-        store_1.useRoom.getState().say(line);
-}
-function snap() {
-    return (0, model_1.pickState)(store_1.useRoom.getState());
-}
-function HonkFigure({ wings = false }) {
-    const form = (0, store_1.useRoom)((s) => s.milo.form);
-    if (form.startsWith("x:"))
-        return (0, jsx_runtime_1.jsx)("span", { className: "honk honk-emoji", "aria-hidden": "true", children: milo_1.MILO_SYMBOLS[form.slice(2)] ?? "✦" });
-    if (form !== "honk")
-        return ((0, jsx_runtime_1.jsx)("span", { className: "honk honk-illustrated", "data-wings": wings, "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("img", { src: (0, milo_1.honkArt)(form), alt: "", draggable: false }) }));
-    return ((0, jsx_runtime_1.jsxs)("span", { className: "honk", "data-wings": wings, "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("span", { className: "honk-blush honk-blush-l" }), (0, jsx_runtime_1.jsx)("span", { className: "honk-blush honk-blush-r" }), (0, jsx_runtime_1.jsx)("span", { className: "honk-eye" }), (0, jsx_runtime_1.jsx)("span", { className: "honk-eye" }), (0, jsx_runtime_1.jsx)("span", { className: "honk-smile" })] }));
-}
-function RoomScene() {
-    const honk = (0, store_1.useRoom)((s) => s.honk);
-    const track = (0, store_1.useRoom)((s) => s.track);
-    const music = (0, store_1.useRoom)((s) => s.music);
-    const song = catalog_1.TRACKS[track] ?? catalog_1.TRACKS[0];
-    function move(spot) {
-        const s = snap();
-        act({ ...s, honk: spot }, (0, model_1.honkLine)(spot));
-    }
-    function cycleLights() {
-        const s = snap();
-        const order = ["on", "dim", "off"];
-        const next = order[(order.indexOf(s.lights) + 1) % order.length];
-        act({ ...s, lights: next }, `Lights ${next}.`);
-    }
-    function nextSong() {
-        const s = snap();
-        const i = (s.track + 1) % catalog_1.TRACKS.length;
-        const t = catalog_1.TRACKS[i];
-        act({ ...s, track: i, music: "on" }, `K.A.A.N. — ${t.title}.`);
-    }
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "living", children: [(0, jsx_runtime_1.jsx)("div", { className: "bulb-cord", "aria-hidden": "true" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "bulb", onClick: cycleLights, "aria-label": "Hanging bulb. Change the lights.", children: (0, jsx_runtime_1.jsx)("span", { className: "bulb-glass" }) }), (0, jsx_runtime_1.jsxs)("div", { className: "window window-a", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("span", { className: "rod" }), (0, jsx_runtime_1.jsx)("span", { className: "curtain" })] }), (0, jsx_runtime_1.jsxs)("div", { className: "window window-b", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("span", { className: "rod" }), (0, jsx_runtime_1.jsx)("span", { className: "curtain" })] }), (0, jsx_runtime_1.jsxs)("aside", { className: "cloth", children: [(0, jsx_runtime_1.jsx)("p", { children: "Same room." }), (0, jsx_runtime_1.jsx)("p", { children: "Different visitors." }), (0, jsx_runtime_1.jsx)("p", { children: "Always open." })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "lamp lamp-bed", onClick: cycleLights, "aria-label": "Bedside lamp. Change the lights.", children: [(0, jsx_runtime_1.jsx)("span", { className: "shade shade-warm" }), (0, jsx_runtime_1.jsx)("span", { className: "stem" })] }), (0, jsx_runtime_1.jsxs)("div", { className: "dresser", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("span", {}), (0, jsx_runtime_1.jsx)("span", {}), (0, jsx_runtime_1.jsx)("span", {})] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "lamp lamp-dresser", onClick: cycleLights, "aria-label": "Dresser lamp. Change the lights.", children: [(0, jsx_runtime_1.jsx)("span", { className: "shade" }), (0, jsx_runtime_1.jsx)("span", { className: "stem" })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "spot bed", "data-here": honk === "bed", onClick: () => move("bed"), "aria-label": honk === "bed" ? "Bed. Honk is here." : "Bed. Honk can sleep here.", children: [(0, jsx_runtime_1.jsx)("span", { className: "pillow" }), (0, jsx_runtime_1.jsx)("span", { className: "duvet" }), honk === "bed" ? (0, jsx_runtime_1.jsx)(HonkFigure, {}) : null] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "spot sofa", "data-here": honk === "sofa", onClick: () => move("sofa"), "aria-label": honk === "sofa" ? "Sofa. Honk is here." : "Sofa.", children: [(0, jsx_runtime_1.jsx)("span", { className: "cushion" }), (0, jsx_runtime_1.jsx)("span", { className: "cushion" }), (0, jsx_runtime_1.jsx)("span", { className: "knit" }), honk === "sofa" ? (0, jsx_runtime_1.jsx)(HonkFigure, {}) : null] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "spot chair", "data-here": honk === "chair", onClick: () => move("chair"), "aria-label": honk === "chair" ? "Chair. Honk is under the blanket." : "Chair.", children: [(0, jsx_runtime_1.jsx)("span", { className: "chair-back" }), (0, jsx_runtime_1.jsx)("span", { className: "chair-post" }), (0, jsx_runtime_1.jsx)("span", { className: "blanket" }), honk === "chair" ? (0, jsx_runtime_1.jsx)(HonkFigure, {}) : null] }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "spot window-seat", "data-here": honk === "window", onClick: () => move("window"), "aria-label": honk === "window" ? "By the curtain. Honk is here." : "By the curtain.", children: honk === "window" ? (0, jsx_runtime_1.jsx)(HonkFigure, {}) : null }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "speaker", onClick: nextSong, "aria-label": `Speaker. K.A.A.N., ${song.title}. Next song.`, children: [(0, jsx_runtime_1.jsxs)("span", { className: "eq", "data-on": music === "on", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {})] }), (0, jsx_runtime_1.jsxs)("span", { className: "speaker-copy", children: [(0, jsx_runtime_1.jsx)("span", { children: "K.A.A.N." }), (0, jsx_runtime_1.jsx)("span", { children: music === "on" ? song.title : "Quiet" })] })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", className: "garden-entry", onClick: () => act({ ...snap(), place: "garden" }, "There's a garden outside. A place to stay."), "aria-label": "Visit the garden outside H\u00F6nk's room", children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u273F" }), " Garden"] }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "honk-sound", onClick: () => { void (0, honk_sound_1.playTinyHonk)(); store_1.useRoom.getState().say("^hönk^ :3"); }, "aria-label": "A little honk, only if you want it", children: "^h\u00F6nk^" }), (0, jsx_runtime_1.jsx)("span", { className: "fan", "aria-hidden": "true" })] }));
-}
-function Fireplace() {
-    return ((0, jsx_runtime_1.jsx)("div", { className: "fire", children: (0, jsx_runtime_1.jsxs)("div", { className: "hearth", children: [(0, jsx_runtime_1.jsx)("span", { className: "flame" }), (0, jsx_runtime_1.jsx)("span", { className: "flame flame-b" }), (0, jsx_runtime_1.jsx)("span", { className: "log" })] }) }));
-}
-function TitleCard({ kicker, title, line }) {
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "titlecard", children: [(0, jsx_runtime_1.jsx)("p", { className: "titlecard-kicker", children: kicker }), (0, jsx_runtime_1.jsx)("p", { className: "titlecard-name", children: title }), (0, jsx_runtime_1.jsx)("p", { className: "titlecard-line", children: line })] }));
-}
-function BigScreen() {
-    const screen = (0, store_1.useRoom)((s) => s.screen);
-    const show = (0, store_1.useRoom)((s) => s.show);
-    const consoleGame = (0, store_1.useRoom)((s) => s.consoleGame);
-    const pins = (0, store_1.useRoom)((s) => s.pins);
-    const mood = (0, store_1.useRoom)((s) => s.mood);
-    const state = store_1.useRoom.getState();
-    function cycle() {
-        const s = snap();
-        const next = (0, model_1.nextScreen)(s);
-        act({ ...s, screen: next, mood: next === "phoenix" ? "phoenix" : next === "mirror" ? "mirror" : next === "corridor" ? "still" : s.mood }, `The big screen shows ${(0, model_1.screenLabel)(next, s).toLowerCase()}.`);
-    }
-    function enter() {
-        act({ ...snap(), place: "corridor" }, "The hall is open. You may breathe here.");
-    }
-    const showCard = show ? (0, catalog_1.showById)(show, pins) : undefined;
-    const gameCard = consoleGame ? (0, catalog_1.entryById)(consoleGame, pins) : undefined;
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "tv-wrap", children: [(0, jsx_runtime_1.jsxs)("div", { className: "bezel", children: [(0, jsx_runtime_1.jsx)("span", { children: "Big screen" }), (0, jsx_runtime_1.jsx)("span", { children: (0, model_1.screenLabel)(screen, { ...state, screen, show, consoleGame, pins }) })] }), (0, jsx_runtime_1.jsxs)("div", { className: "tv", children: [(0, jsx_runtime_1.jsxs)("div", { className: "tv-glass", children: [screen === "fire" ? (0, jsx_runtime_1.jsx)(Fireplace, {}) : null, screen === "corridor" ? (0, jsx_runtime_1.jsx)(Hall, { mood: "still", compact: true }) : null, screen === "mirror" ? ((0, jsx_runtime_1.jsxs)("div", { className: "channel channel-mirror", children: [(0, jsx_runtime_1.jsx)("p", { children: "Look." }), (0, jsx_runtime_1.jsx)("p", { children: "Reflect." })] })) : null, screen === "phoenix" ? ((0, jsx_runtime_1.jsxs)("div", { className: "channel channel-phoenix", children: [(0, jsx_runtime_1.jsx)("span", { className: "emblem", "aria-hidden": "true" }), (0, jsx_runtime_1.jsx)("p", { children: "The Phoenix" })] })) : null, screen === "anime" && showCard ? (0, jsx_runtime_1.jsx)(TitleCard, { kicker: "On the big screen", title: showCard.title, line: showCard.line }) : null, screen === "console" && gameCard ? ((0, jsx_runtime_1.jsx)(TitleCard, { kicker: gameCard.collection, title: gameCard.title, line: gameCard.line })) : null, screen === "off" ? (0, jsx_runtime_1.jsx)("div", { className: "channel channel-off" }) : null, (0, jsx_runtime_1.jsx)("button", { type: "button", className: "tv-hit", onClick: cycle, "aria-label": `Big screen, ${(0, model_1.screenLabel)(screen, { ...state, pins })}. Change channel.` })] }), (0, jsx_runtime_1.jsxs)("div", { className: "tv-chin", children: [(0, jsx_runtime_1.jsx)("span", { className: "power", "data-on": screen !== "off", "aria-hidden": "true" }), screen === "corridor" ? ((0, jsx_runtime_1.jsx)("button", { type: "button", className: "step", onClick: enter, children: "Step through" })) : ((0, jsx_runtime_1.jsx)("span", { className: "chin-note", children: "Possibility without demand" }))] })] }), (0, jsx_runtime_1.jsxs)("div", { className: "deskbooks", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => act({ ...snap(), screen: "phoenix", mood: "phoenix" }, "The phoenix gate."), children: "The Phoenix" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => act({ ...snap(), screen: "mirror", mood: "mirror" }, "The mirror."), children: "The Mirror" })] }), (0, jsx_runtime_1.jsx)("span", { className: "sr-only", children: mood })] }));
-}
-function Hall({ mood, compact }) {
-    return ((0, jsx_runtime_1.jsxs)("div", { className: compact ? "hall hall-compact" : "hall", "data-mood": mood, children: [(0, jsx_runtime_1.jsx)("div", { className: "hall-floor" }), (0, jsx_runtime_1.jsxs)("div", { className: "rings", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {})] }), (0, jsx_runtime_1.jsx)("div", { className: "thread", "aria-hidden": "true" }), !compact ? ((0, jsx_runtime_1.jsxs)("div", { className: "hall-copy", children: [(0, jsx_runtime_1.jsx)("p", { className: "hall-kicker", children: "Aion Tekmura" }), (0, jsx_runtime_1.jsx)("p", { className: "hall-inf", "aria-hidden": "true", children: "\u221E" }), (0, jsx_runtime_1.jsx)("h2", { children: "Welcome" }), (0, jsx_runtime_1.jsx)("p", { children: "You may breathe here" })] })) : ((0, jsx_runtime_1.jsx)("p", { className: "hall-mini", children: "the corridor" }))] }));
-}
-function CorridorScene() {
-    const mood = (0, store_1.useRoom)((s) => s.mood);
-    function tint(next) {
-        const s = snap();
-        act({ ...s, mood: next, screen: next }, next === "phoenix" ? "The warm gate. Nothing is asked." : "The cool gate. Look, and leave when you like.");
-    }
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "hall-full", children: [(0, jsx_runtime_1.jsx)(Hall, { mood: mood }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "portal portal-phoenix", onClick: () => tint("phoenix"), children: (0, jsx_runtime_1.jsx)("span", { children: "Phoenix" }) }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "portal portal-mirror", onClick: () => tint("mirror"), children: (0, jsx_runtime_1.jsx)("span", { children: "Mirror" }) }), (0, jsx_runtime_1.jsx)("aside", { className: "banner banner-dark", children: (0, jsx_runtime_1.jsx)("p", { children: "Same room. Different visitors. Always open." }) }), (0, jsx_runtime_1.jsx)("aside", { className: "banner banner-light", children: (0, jsx_runtime_1.jsx)("p", { children: "Look. Reflect. Remember. Breathe here." }) }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "leave", onClick: () => act({ ...snap(), place: "room" }, "The room is still here."), children: "Back to the room" })] }));
-}
-function Cabinet() {
-    const pins = (0, store_1.useRoom)((s) => s.pins);
-    const consoleGame = (0, store_1.useRoom)((s) => s.consoleGame);
-    const terminalGame = (0, store_1.useRoom)((s) => s.terminalGame);
-    const show = (0, store_1.useRoom)((s) => s.show);
-    const track = (0, store_1.useRoom)((s) => s.track);
-    const music = (0, store_1.useRoom)((s) => s.music);
-    const notes = (0, store_1.useRoom)((s) => s.notes);
-    const song = catalog_1.TRACKS[track] ?? catalog_1.TRACKS[0];
-    function nextSong() {
-        const s = snap();
-        const i = (s.track + 1) % catalog_1.TRACKS.length;
-        act({ ...s, track: i, music: "on" }, `K.A.A.N. — ${catalog_1.TRACKS[i].title}.`);
-    }
-    function toggleMusic() {
-        const s = snap();
-        const musicNext = s.music === "on" ? "off" : "on";
-        act({ ...s, music: musicNext }, musicNext === "on" ? `K.A.A.N. — ${catalog_1.TRACKS[s.track].title}.` : "The speaker rests.");
-    }
-    const consoleSpines = [
-        ...catalog_1.ENTRIES.filter((e) => e.where === "console").map((e) => ({ id: e.id, label: e.short, title: e.title })),
-        ...pins.filter((p) => p.where === "console").map((p) => ({ id: p.id, label: p.title, title: p.title })),
-    ];
-    const adventureSpines = [
-        ...catalog_1.COLLECTIONS.filter((c) => c.where === "terminal").map((c) => ({ id: c.id, label: c.title, title: c.title })),
-        ...pins.filter((p) => p.where === "terminal").map((p) => ({ id: p.id, label: p.title, title: p.title })),
-    ];
-    const storySpines = [
-        ...catalog_1.SHOWS.map((s) => ({ id: s.id, label: s.short, title: s.title })),
-        ...pins.filter((p) => p.where === "anime").map((p) => ({ id: p.id, label: p.title, title: p.title })),
-    ];
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "cabinet", children: [(0, jsx_runtime_1.jsxs)("div", { className: "now", children: [(0, jsx_runtime_1.jsxs)("button", { type: "button", className: "now-main", onClick: nextSong, children: [(0, jsx_runtime_1.jsxs)("span", { className: "eq", "data-on": music === "on", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {}), (0, jsx_runtime_1.jsx)("i", {})] }), (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsx)("span", { className: "now-kicker", children: "K.A.A.N." }), (0, jsx_runtime_1.jsx)("span", { className: "now-title", children: music === "on" ? song.title : "Quiet" })] })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "now-quiet", onClick: toggleMusic, children: music === "on" ? "Quiet" : "Play" })] }), (0, jsx_runtime_1.jsx)(Shelf, { title: "Console", active: consoleGame, items: consoleSpines, onPick: (id) => {
-                    const s = snap();
-                    const res = (0, model_1.applyPlay)(s, id);
-                    act(res.state, res.lines[0]);
-                } }), (0, jsx_runtime_1.jsx)(Shelf, { title: "This screen", active: terminalGame, items: adventureSpines, onPick: (id) => {
-                    const s = snap();
-                    const res = (0, model_1.applyPlay)(s, id);
-                    act(res.state, res.lines[0]);
-                } }), (0, jsx_runtime_1.jsx)(Shelf, { title: "Big screen", active: show, items: storySpines, onPick: (id) => {
-                    const s = snap();
-                    const res = (0, model_1.applyWatch)(s, id);
-                    act(res.state, res.lines[0]);
-                } }), notes.length ? ((0, jsx_runtime_1.jsx)("div", { className: "papers", children: notes.slice(-2).map((n) => ((0, jsx_runtime_1.jsx)("p", { className: "paper", children: n }, n))) })) : null] }));
-}
-function Shelf({ title, items, active, onPick, }) {
-    return ((0, jsx_runtime_1.jsxs)("div", { className: "shelf-block", children: [(0, jsx_runtime_1.jsx)("p", { className: "shelf-label", children: title }), (0, jsx_runtime_1.jsx)("div", { className: "shelf", children: items.map((item) => ((0, jsx_runtime_1.jsx)("button", { type: "button", className: "spine", "data-on": active === item.id, title: item.title, onClick: () => onPick(item.id), children: item.label }, item.id))) })] }));
-}
-
-};
-
 // src/components/room/terminal.tsx
 registry["src/components/room/terminal.tsx"]=function(exports,require,module){
 "use strict";
@@ -2181,251 +2049,6 @@ function Terminal() {
 
 };
 
-// src/components/room/garden.tsx
-registry["src/components/room/garden.tsx"]=function(exports,require,module){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GardenScene = GardenScene;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const world_1 = require("@/components/room/world");
-const model_1 = require("@/lib/room/model");
-const store_1 = require("@/lib/room/store");
-const bloomPositions = [12, 27, 43, 61, 77, 89, 19, 52, 70, 34, 82, 8];
-const starPositions = [
-    [10, 13], [29, 8], [65, 16], [84, 11], [46, 22], [73, 34],
-    [18, 31], [91, 26], [33, 39], [59, 7], [6, 40], [80, 44],
-];
-function change(mutator, line) {
-    const store = store_1.useRoom.getState();
-    store.commit(mutator((0, model_1.pickState)(store)));
-    store.say(line);
-}
-function GardenScene() {
-    const garden = (0, store_1.useRoom)((s) => s.garden);
-    const plant = () => change((s) => ({ ...s, garden: { ...s.garden, flowers: Math.min(12, s.garden.flowers + 1) } }), garden.flowers >= 12 ? "The garden is full. Nothing more is needed." : "A little flower stays.");
-    const stars = () => change((s) => ({ ...s, garden: { ...s.garden, stars: Math.min(12, s.garden.stars + 1) } }), garden.stars >= 12 ? "The sky is already full enough." : "A tiny new star.");
-    const wings = () => change((s) => ({ ...s, garden: { ...s.garden, wings: !s.garden.wings } }), garden.wings ? "Wings put away. Still Hönk." : "Wings on. Still Hönk.");
-    const door = () => change((s) => ({ ...s, garden: { ...s.garden, doorOpen: !s.garden.doorOpen } }), garden.doorOpen ? "The little door closes." : "The door opens. You can stay here too.");
-    const home = () => change((s) => ({ ...s, place: "room" }), "The room is still here.");
-    return ((0, jsx_runtime_1.jsxs)("section", { className: "honk-garden", "aria-label": "H\u00F6nk's garden", children: [(0, jsx_runtime_1.jsxs)("div", { className: "garden-night", "aria-hidden": "true", children: [starPositions.slice(0, garden.stars).map(([left, top], i) => ((0, jsx_runtime_1.jsx)("span", { className: "garden-star", style: { left: `${left}%`, top: `${top}%` }, children: "\u2726" }, i))), (0, jsx_runtime_1.jsx)("div", { className: "garden-moon" }), (0, jsx_runtime_1.jsx)("div", { className: "garden-hills garden-hills-back" }), (0, jsx_runtime_1.jsx)("div", { className: "garden-hills garden-hills-front" }), (0, jsx_runtime_1.jsx)("div", { className: "garden-grass" }), bloomPositions.slice(0, garden.flowers).map((left, i) => ((0, jsx_runtime_1.jsx)("span", { className: "garden-flower", style: { left: `${left}%`, bottom: `${14 + (i % 3) * 7}%` }, children: "\u273F" }, i)))] }), (0, jsx_runtime_1.jsxs)("div", { className: "garden-headline", children: [(0, jsx_runtime_1.jsx)("p", { children: "Just a little outside" }), (0, jsx_runtime_1.jsx)("h2", { children: "H\u00F6nk's garden" })] }), (0, jsx_runtime_1.jsx)("div", { className: "garden-honk", children: (0, jsx_runtime_1.jsx)(world_1.HonkFigure, { wings: garden.wings }) }), (0, jsx_runtime_1.jsxs)("button", { type: "button", "aria-pressed": garden.doorOpen, className: "garden-blue-door", "data-open": garden.doorOpen, onClick: door, "aria-label": garden.doorOpen ? "Close the blue door" : "Open the blue door", children: [(0, jsx_runtime_1.jsx)("span", { className: "door-panel", "aria-hidden": "true", children: (0, jsx_runtime_1.jsx)("span", { className: "door-knob" }) }), (0, jsx_runtime_1.jsxs)("span", { className: "sr-only", children: [garden.doorOpen ? "Close" : "Open", " the blue door"] })] }), (0, jsx_runtime_1.jsxs)("div", { className: "garden-actions", "aria-label": "Garden activities", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: plant, disabled: garden.flowers >= 12, children: "\u273F Plant" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: stars, disabled: garden.stars >= 12, children: "\u2726 Star" }), (0, jsx_runtime_1.jsx)("button", { type: "button", "aria-pressed": garden.wings, onClick: wings, children: garden.wings ? "Wings off" : "Try wings" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => change((s) => ({ ...s, place: "milo" }), "The paths into Milo's World are open."), children: "Milo's World" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => change((s) => ({ ...s, place: "milo", milo: { ...s.milo, scene: "room", caveOpen: true } }), "The Cave Nell shelf is here, beside the hearth."), children: "Cave Nell shelf" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: home, children: "Room" })] }), (0, jsx_runtime_1.jsx)("p", { className: "garden-whisper", role: "status", children: garden.doorOpen ? "The door is open. Nothing asks you to cross." : "No levels. No hurry. Just here." })] }));
-}
-
-};
-
-// src/components/room/milo.tsx
-registry["src/components/room/milo.tsx"]=function(exports,require,module){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MiloScene = MiloScene;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = require("react");
-const cave_1 = require("@/lib/room/cave");
-const milo_1 = require("@/lib/room/milo");
-const clearing_1 = require("@/lib/room/clearing");
-const milo_brain_1 = require("@/lib/room/milo-brain");
-const honk_sound_1 = require("@/lib/room/honk-sound");
-const milo_art_1 = require("@/lib/room/milo-art");
-const model_1 = require("@/lib/room/model");
-const store_1 = require("@/lib/room/store");
-function change(mutator, line) {
-    const store = store_1.useRoom.getState();
-    store.commit(mutator((0, model_1.pickState)(store)));
-    if (line)
-        store.say(line);
-}
-/** A new room within the existing application, using the original Milo paintings and Hönk images. */
-function MiloScene() {
-    const milo = (0, store_1.useRoom)((s) => s.milo);
-    const canvas = (0, react_1.useRef)(null);
-    const [look, setLook] = (0, react_1.useState)(false);
-    const [talkOpen, setTalkOpen] = (0, react_1.useState)(true);
-    const [boop, setBoop] = (0, react_1.useState)(0);
-    const [message, setMessage] = (0, react_1.useState)("");
-    const [caveQuery, setCaveQuery] = (0, react_1.useState)("");
-    const brain = (0, react_1.useRef)(null);
-    const chatLog = (0, react_1.useRef)(null);
-    if (!brain.current)
-        brain.current = (0, milo_brain_1.createMiloBrain)();
-    (0, react_1.useEffect)(() => { const log = chatLog.current; if (log)
-        log.scrollTop = log.scrollHeight; }, [milo.chat.length]);
-    const constellation = milo_1.VILLAGE_STARS[milo.constellation % milo_1.VILLAGE_STARS.length] ?? milo_1.VILLAGE_STARS[0];
-    const gift = milo_1.VILLAGE_SHELF[milo.gift % milo_1.VILLAGE_SHELF.length] ?? milo_1.VILLAGE_SHELF[0];
-    const matches = cave_1.CAVE_WORKS.map((work, index) => ({ work, index })).filter(({ work }) => (work.name + " " + work.by + " " + work.text).toLowerCase().includes(caveQuery.trim().toLowerCase()));
-    const chosen = matches.find(({ index }) => index === milo.caveWork) ?? matches[0];
-    const turnCavePage = (delta) => {
-        if (!matches.length || !chosen)
-            return;
-        const at = matches.findIndex(({ index }) => index === chosen.index);
-        const next = matches[(at + delta + matches.length) % matches.length];
-        change((s) => ({ ...s, milo: { ...s.milo, caveWork: next.index } }));
-    };
-    (0, react_1.useEffect)(() => {
-        const target = canvas.current;
-        if (!target)
-            return;
-        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        let tick = 0, frame = 0, active = true;
-        const constellationPoints = constellation[1].map((value) => value - 1).filter((value) => value >= 0 && value < 9);
-        const draw = () => {
-            if (!active)
-                return;
-            (0, milo_art_1.drawMiloScene)(target, milo.scene, { tick: tick++, plots: milo.plots, constellation: constellationPoints });
-            if (!reduced)
-                frame = window.requestAnimationFrame(draw);
-        };
-        draw();
-        return () => { active = false; window.cancelAnimationFrame(frame); };
-    }, [milo.scene, milo.plots, constellation]);
-    const scene = (next) => {
-        change((s) => ({ ...s, milo: { ...s.milo, scene: next } }), `Milo's World: ${milo_1.MILO_SCENES.find((item) => item.id === next)?.label}.`);
-        setLook(false);
-    };
-    const form = (next) => change((s) => ({ ...s, milo: { ...s.milo, form: next } }), `Trying on ${next}. Still Hönk. Nothing to earn.`);
-    // No scoring, no cooldowns, no level requirements. All three fragments are available immediately.
-    const clearing = { ...milo.clearing, selected: milo.clearing?.selected ?? [] };
-    const touch = (part) => {
-        change((s) => {
-            const c = s.milo.clearing;
-            const next = part === "tree" ? { ...c, note: "The tree has been here all along. It's happy to have company." }
-                : part === "bench" ? { ...c, resting: !c.resting, note: c.resting ? "Whenever you want, you can wander again." : "You can stay here as long as you like. There is no clock." }
-                    : part === "pool" ? { ...c, reflection: !c.reflection, note: c.reflection ? "The pond is still here." : "6 becomes 9. The original remains what it was; the angle has changed." }
-                        : { ...c, openCrystal: !c.openCrystal, resting: false, note: c.openCrystal ? "The little crystal rests in the moss." : "Three small shards. You can mix them—or leave them exactly as they are." };
-            return { ...s, milo: { ...s.milo, clearing: next } };
-        });
-    };
-    const chooseFragment = (part) => change((s) => ({
-        ...s, milo: { ...s.milo, clearing: { ...s.milo.clearing, selected: (0, clearing_1.toggleFragment)(s.milo.clearing.selected, part), note: "Choose any two, or all three. No right answer." } }
-    }));
-    const mix = () => {
-        const result = (0, clearing_1.mixFragments)(clearing.selected);
-        if (!result)
-            return;
-        change((s) => ({ ...s, milo: { ...s.milo, form: result.form, clearing: { ...s.milo.clearing, note: result.message } } }));
-    };
-    const unmix = () => change((s) => ({ ...s, milo: { ...s.milo, form: "honk", clearing: { ...s.milo.clearing, selected: [], note: "Back to Hönk. Every possibility remains here. :3" } } }));
-    const water = (index) => {
-        if (milo.plots[index] >= 3)
-            return;
-        change((s) => {
-            const plots = [...s.milo.plots];
-            plots[index] += 1;
-            return { ...s, milo: { ...s.milo, plots }, garden: { ...s.garden, flowers: Math.min(12, s.garden.flowers + 1) } };
-        }, "A little water. The garden outside remembers too.");
-    };
-    const nextConstellation = (delta) => change((s) => ({
-        ...s, milo: { ...s.milo, constellation: (s.milo.constellation + delta + milo_1.VILLAGE_STARS.length) % milo_1.VILLAGE_STARS.length },
-    }));
-    const nextGift = (delta) => change((s) => ({
-        ...s, milo: { ...s.milo, gift: (s.milo.gift + delta + milo_1.VILLAGE_SHELF.length) % milo_1.VILLAGE_SHELF.length },
-    }));
-    return ((0, jsx_runtime_1.jsxs)("section", { className: "honk-milo", "aria-label": "Milo's World inside H\u00F6nk's room", children: [(0, jsx_runtime_1.jsxs)("div", { className: "milo-heading", children: [(0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsx)("span", { className: "milo-kicker", children: "One small resident, many places" }), (0, jsx_runtime_1.jsx)("h2", { children: "Where shall we wander?" })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => change((s) => ({ ...s, place: "room" }), "Hönk is back in the room."), children: "The room \u2197" })] }), (0, jsx_runtime_1.jsx)("nav", { className: "milo-places", "aria-label": "Places to visit, in any order", children: milo_1.MILO_SCENES.map((p) => ((0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => scene(p.id), "aria-pressed": milo.scene === p.id, children: p.label }, p.id))) }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-stage", children: [(0, jsx_runtime_1.jsx)("canvas", { ref: canvas, width: 1000, height: 540, role: "img", "aria-label": `An original illustration of ${milo_1.MILO_SCENES.find((p) => p.id === milo.scene)?.label ?? milo.scene}` }), milo.form.startsWith("x:") ? ((0, jsx_runtime_1.jsx)("span", { className: "milo-being milo-emoji", role: "img", "aria-label": `Hönk imagining a ${milo.form.slice(2)}`, children: milo_1.MILO_SYMBOLS[milo.form.slice(2)] ?? "✦" })) : milo.form === "gemeyes" ? ((0, jsx_runtime_1.jsx)("span", { className: "milo-being milo-gemeyes", role: "img", "aria-label": "GEMEYES, the cosmic constellation H\u00F6nk, shimmering through six gentle poses" })) : ((0, jsx_runtime_1.jsx)("img", { className: "milo-being", src: (0, milo_1.honkArt)(milo.form), alt: `${milo_1.MILO_FORMS.find((p) => p.id === milo.form)?.label ?? "Hönk"} in Milo's World`, draggable: false })), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-tiny-honk", onClick: () => { void (0, honk_sound_1.playTinyHonk)(); }, "aria-label": "Make a tiny honk sound", children: "^h\u00F6nk^" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-look", onClick: () => { setLook((v) => !v); setBoop((v) => v + 1); }, "aria-label": "Look closer; a temporary little lens", "aria-pressed": look, children: look ? "O.o  ✨" : "Look closer :3" }), look ? (0, jsx_runtime_1.jsx)("div", { className: "milo-lens", "aria-hidden": "true", children: "\u2202 \u221E :3 \u2726 \u03BB" }, boop) : null, milo.scene === "forest" ? (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-forest-path", title: "A path to somewhere quiet", "aria-label": "Follow a little path to the quiet clearing", onClick: () => scene("clearing"), children: "\u2727" }) : null, milo.scene === "clearing" ? (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-forest-return", title: "The woods are still there", "aria-label": "Return to the woods", onClick: () => scene("forest"), children: "\u21B6" }) : null, milo.scene === "clearing" ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-clearing-hotspots", "aria-label": "Things you can touch in the clearing", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot tree", onClick: () => touch("tree"), "aria-label": "Look at the old tree", title: "The tree", children: "\u2733" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot bench", onClick: () => touch("bench"), "aria-pressed": clearing.resting, "aria-label": clearing.resting ? "Get up from the bench" : "Sit and rest at the bench", title: "A place to rest", children: clearing.resting ? "☾" : "⌂" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot pool", onClick: () => touch("pool"), "aria-pressed": clearing.reflection, "aria-label": "Look into the water and change your perspective", title: "Reflect", children: "\u25CC" }), (0, jsx_runtime_1.jsx)("button", { type: "button", className: "milo-hotspot crystal", onClick: () => touch("crystal"), "aria-expanded": clearing.openCrystal, "aria-label": "Examine the glowing crystal and its fragments", title: "Fragments", children: "\u25C7" })] })) : null, milo.scene === "clearing" && clearing.resting ? (0, jsx_runtime_1.jsx)("div", { className: "milo-rest-shimmer", "aria-hidden": "true", children: "\u263E" }) : null] }), milo.scene === "clearing" ? ((0, jsx_runtime_1.jsxs)("section", { className: "milo-clearing-panel", "aria-label": "The clearing; nothing is required", children: [(0, jsx_runtime_1.jsx)("p", { className: "milo-clearing-note", role: "status", children: clearing.note }), clearing.reflection ? (0, jsx_runtime_1.jsxs)("div", { className: "milo-clearing-reflection", "aria-label": "Perspective: six and nine", children: ["6 ", (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2194" }), " 9 ", (0, jsx_runtime_1.jsx)("small", { children: "Look again, from the other side." })] }) : null, clearing.openCrystal ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-panel", "aria-label": "Crystal fragments", children: [(0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-heading", children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2662" }), " ", (0, jsx_runtime_1.jsx)("span", { children: "What might these become?" }), (0, jsx_runtime_1.jsx)("small", { children: "Nothing to earn." })] }), (0, jsx_runtime_1.jsx)("div", { className: "milo-crystal-fragments", children: clearing_1.CLEARING_FRAGMENTS.map((part) => (0, jsx_runtime_1.jsxs)("button", { type: "button", "aria-pressed": clearing.selected.includes(part.id), onClick: () => chooseFragment(part.id), children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: part.symbol }), part.label] }, part.id)) }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-crystal-actions", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", disabled: clearing.selected.length < 2, onClick: mix, children: "Mix fragments" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: unmix, children: "Begin again :3" })] })] })) : null] })) : null, (0, jsx_runtime_1.jsxs)("details", { className: "milo-talk", open: talkOpen, onToggle: (event) => setTalkOpen(event.currentTarget.open), children: [(0, jsx_runtime_1.jsxs)("summary", { children: ["Talk to H\u00F6nk :3 ", (0, jsx_runtime_1.jsx)("span", { children: "(or just sit with him)" })] }), (0, jsx_runtime_1.jsx)("div", { className: "milo-talk-log", ref: chatLog, role: "log", "aria-label": "Conversation with scripted H\u00F6nk", children: milo.chat.length ? milo.chat.map((t, i) => ((0, jsx_runtime_1.jsxs)("p", { className: `milo-line milo-line-${t.who}`, children: [(0, jsx_runtime_1.jsx)("strong", { children: t.who === "you" ? "you: " : t.who === "dir" ? "" : "Hönk: " }), t.who === "dir" ? (0, jsx_runtime_1.jsxs)("em", { children: ["(", t.text, ")"] }) : (0, jsx_runtime_1.jsx)("span", { children: t.text })] }, i))) : (0, jsx_runtime_1.jsxs)("p", { className: "milo-talk-empty", children: [(0, jsx_runtime_1.jsx)("strong", { children: "H\u00F6nk:" }), " oh! hello O.o", (0, jsx_runtime_1.jsx)("br", {}), "i'm h\u00F6nk. :3", (0, jsx_runtime_1.jsx)("br", {}), "nothing you need to do."] }) }), (0, jsx_runtime_1.jsxs)("form", { className: "milo-talk-form", onSubmit: (e) => {
-                            e.preventDefault();
-                            const text = message.trim();
-                            if (!text || !brain.current)
-                                return;
-                            const programmatic = window.honk;
-                            if (programmatic)
-                                programmatic.say(text);
-                            else {
-                                const result = brain.current(text, (0, model_1.pickState)(store_1.useRoom.getState()));
-                                store_1.useRoom.getState().commit(result.state);
-                            }
-                            setMessage("");
-                        }, children: [(0, jsx_runtime_1.jsx)("input", { type: "text", maxLength: 200, value: message, onChange: (e) => setMessage(e.target.value), "aria-label": "Say something to H\u00F6nk", placeholder: "Say something, or just stay..." }), (0, jsx_runtime_1.jsx)("button", { type: "submit", disabled: !message.trim(), children: ":3" })] }), (0, jsx_runtime_1.jsx)("p", { className: "milo-quiet", children: "This is H\u00F6nk's original authored response script, not an AI model or an internet chat. Messages remain in this browser's room state." })] }), milo.scene === "garden" ? ((0, jsx_runtime_1.jsx)("div", { className: "milo-world-action", "aria-label": "Four small garden plots", children: milo.plots.map((value, i) => ((0, jsx_runtime_1.jsx)("button", { type: "button", disabled: value >= 3, onClick: () => water(i), "aria-label": `Water plot ${i + 1}, currently ${value} of 3 growth stages`, children: value >= 3 ? `✿ ${i + 1} blooming` : `Water plot ${i + 1} · ${value}/3` }, i))) })) : null, milo.scene === "stars" ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-world-action milo-discovery", "aria-label": "Village constellations", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => nextConstellation(-1), "aria-label": "Previous constellation", children: "\u2190" }), (0, jsx_runtime_1.jsxs)("span", { children: [constellation[0], " ", (0, jsx_runtime_1.jsxs)("small", { children: ["(", milo.constellation + 1, " of ", milo_1.VILLAGE_STARS.length, " village drawings)"] })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => nextConstellation(1), "aria-label": "Next constellation", children: "\u2192" })] })) : null, milo.scene === "room" ? ((0, jsx_runtime_1.jsxs)("div", { className: "milo-world-action milo-discovery", "aria-label": "Village shelf", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => nextGift(-1), "aria-label": "Previous gift", children: "\u2190" }), (0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsx)("strong", { children: gift[0] }), " \u2014 ", gift[1], " ", (0, jsx_runtime_1.jsxs)("small", { children: ["Left by ", gift[2], " \u00B7 ", milo.gift + 1, "/", milo_1.VILLAGE_SHELF.length] })] }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => nextGift(1), "aria-label": "Next gift", children: "\u2192" })] })) : null, milo.scene === "room" ? ((0, jsx_runtime_1.jsxs)("details", { className: "milo-cave", open: milo.caveOpen, onToggle: (event) => {
-                    const opened = event.currentTarget.open;
-                    if (opened !== store_1.useRoom.getState().milo.caveOpen)
-                        change((s) => ({ ...s, milo: { ...s.milo, caveOpen: opened } }));
-                }, children: [(0, jsx_runtime_1.jsxs)("summary", { children: ["Cave Nell \u00B7 the workshop shelf ", (0, jsx_runtime_1.jsxs)("span", { children: ["(", cave_1.CAVE_WORKS.length, " published pieces)"] })] }), (0, jsx_runtime_1.jsx)("p", { className: "milo-cave-intro", children: "From the Cave Nell snapshot, 23 November 2026. Original words and credited makers, kept intact. Nothing to finish or earn." }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-cave-small", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => store_1.useRoom.getState().say("Sir Cromwell’sworth’s biscuit tin never empties. 🍪"), children: "\uD83C\uDF6A Biscuit tin" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => store_1.useRoom.getState().say("GOOD DAY, COUSIN! says Sir Wicksworth. The candle knight is rather cheerful."), children: "\uD83D\uDD6F\uFE0F Sir Wicksworth" })] }), (0, jsx_runtime_1.jsxs)("label", { className: "milo-cave-search", children: ["Find a work", (0, jsx_runtime_1.jsx)("input", { type: "search", value: caveQuery, onChange: (e) => setCaveQuery(e.target.value), placeholder: "A word, a title, a maker..." })] }), (0, jsx_runtime_1.jsxs)("div", { className: "milo-cave-switch", "aria-label": "Browse the Cave Nell workshop", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => turnCavePage(-1), disabled: !matches.length, "aria-label": "Previous work", children: "\u2190" }), (0, jsx_runtime_1.jsx)("span", { children: matches.length ? `${matches.findIndex(({ index }) => index === chosen?.index) + 1} / ${matches.length}` : "No matching pieces" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => turnCavePage(1), disabled: !matches.length, "aria-label": "Next work", children: "\u2192" })] }), chosen ? (0, jsx_runtime_1.jsxs)("article", { className: "milo-cave-paper", children: [(0, jsx_runtime_1.jsx)("h3", { children: chosen.work.name }), (0, jsx_runtime_1.jsxs)("p", { className: "milo-cave-credit", children: ["By ", chosen.work.by, " \u00B7 ", chosen.work.at, " \u00B7 SHA-256 ", chosen.work.sha256.slice(0, 12), "\u2026"] }), (0, jsx_runtime_1.jsx)("pre", { children: chosen.work.text })] }, chosen.index) : (0, jsx_runtime_1.jsx)("p", { className: "milo-cave-intro", children: "Nothing matches that word. The shelf is still here." }), (0, jsx_runtime_1.jsx)("p", { className: "milo-cave-intro", children: "Public workshop texts only. Visitor conversations and private records remain in the Cave, not on this shelf." })] })) : null, (0, jsx_runtime_1.jsxs)("details", { className: "milo-forms", children: [(0, jsx_runtime_1.jsx)("summary", { children: "H\u00F6nk can try on a form \u00B7 No level-ups, just play" }), (0, jsx_runtime_1.jsx)("div", { className: "milo-form-options", "aria-label": "H\u00F6nk's original forms", children: milo_1.MILO_FORMS.map((p) => (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => form(p.id), "aria-pressed": milo.form === p.id, children: p.label }, p.id)) })] }), (0, jsx_runtime_1.jsx)("p", { className: "milo-quiet", children: "No tasks. No scores. Stay, wander, or leave. :3" })] }));
-}
-
-};
-
-// src/components/room/page.tsx
-registry["src/components/room/page.tsx"]=function(exports,require,module){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoomPage = RoomPage;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = require("react");
-const world_1 = require("@/components/room/world");
-const terminal_1 = require("@/components/room/terminal");
-const garden_1 = require("@/components/room/garden");
-const milo_1 = require("@/components/room/milo");
-const store_1 = require("@/lib/room/store");
-const milo_brain_1 = require("@/lib/room/milo-brain");
-const model_1 = require("@/lib/room/model");
-const milo_2 = require("@/lib/room/milo");
-function RoomPage() {
-    const place = (0, store_1.useRoom)((s) => s.place);
-    const lights = (0, store_1.useRoom)((s) => s.lights);
-    const chat = (0, store_1.useRoom)((s) => s.milo.chat);
-    const [scriptOpen, setScriptOpen] = (0, react_1.useState)(false);
-    const [burnConfirm, setBurnConfirm] = (0, react_1.useState)(false);
-    const [copied, setCopied] = (0, react_1.useState)(false);
-    const [freshVisit, setFreshVisit] = (0, react_1.useState)(0);
-    const scriptTextRef = (0, react_1.useRef)(null);
-    const scriptButtonRef = (0, react_1.useRef)(null);
-    // The transcript contains the actual recorded turns, in order, not a retelling.
-    const scriptText = chat.map((turn) => turn.who === "dir" ? `(${turn.text})` : `${turn.who === "you" ? "you" : "Hönk"}: ${turn.text}`).join("\n\n");
-    const closeScript = () => {
-        setScriptOpen(false);
-        setBurnConfirm(false);
-        scriptButtonRef.current?.focus();
-    };
-    const preserveScript = async () => {
-        try {
-            await navigator.clipboard.writeText(scriptText);
-            setCopied(true);
-        }
-        catch {
-            // No clipboard permission: select the exact text for manual copying.
-            scriptTextRef.current?.focus();
-            scriptTextRef.current?.select();
-        }
-    };
-    const burnScript = () => {
-        const current = (0, model_1.pickState)(store_1.useRoom.getState());
-        store_1.useRoom.getState().commit({ ...current, milo: { ...milo_2.FIRST_MILO, plots: [...milo_2.FIRST_MILO.plots], chat: [] } });
-        setFreshVisit((n) => n + 1); // reset the Hönk conversation engine too
-        setCopied(false);
-        closeScript();
-    };
-    (0, react_1.useEffect)(() => {
-        (0, store_1.hydrateRoom)();
-        // The original browser-readable door survives inside the unified application.
-        // Its scripted replies read and update the SAME persisted store as the visible controls.
-        const brain = (0, milo_brain_1.createMiloBrain)();
-        const handle = {
-            about: "HÖNK:3 · AION TEKMIRION. An authored, local script in one shared room. Nothing sent to an AI model; nothing required.",
-            say(text) {
-                const result = brain(String(text ?? "").slice(0, 200), (0, model_1.pickState)(store_1.useRoom.getState()));
-                store_1.useRoom.getState().commit(result.state);
-                return result.turns.filter((t) => t.who !== "you").map((t) => t.who === "dir" ? `(${t.text})` : `Hönk: ${t.text}`);
-            },
-            script() {
-                return store_1.useRoom.getState().milo.chat.map((t) => `${t.who}: ${t.text}`).join("\n\n");
-            },
-            form() { return store_1.useRoom.getState().milo.form; },
-            place() { return store_1.useRoom.getState().place === "milo" ? store_1.useRoom.getState().milo.scene : store_1.useRoom.getState().place; },
-        };
-        const win = window;
-        win.honk = Object.freeze(handle);
-        return () => { if (win.honk === handle)
-            delete win.honk; };
-    }, []);
-    const enter = (next) => {
-        store_1.useRoom.getState().commit({ ...(0, model_1.pickState)(store_1.useRoom.getState()), place: next });
-        setScriptOpen(false);
-    };
-    return ((0, jsx_runtime_1.jsxs)("main", { className: `studio ${place === "milo" ? "honk-welcome-mode" : "honk-world-mode"}`, children: [(0, jsx_runtime_1.jsxs)("header", { className: "mast", children: [(0, jsx_runtime_1.jsx)("p", { className: "mast-kicker", children: "AION TEKMIRION" }), (0, jsx_runtime_1.jsx)("h1", { children: place === "milo" ? (0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: ["H\u00D6NK", (0, jsx_runtime_1.jsx)("span", { className: "honk-three", children: ":3" })] }) : "Hönk's room" }), (0, jsx_runtime_1.jsx)("p", { className: "mast-sub", children: "Welcome. You may breathe here." })] }), place === "milo" ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("section", { className: "honk-phone", "aria-label": "H\u00D6NK:3, an interactive little world", children: [(0, jsx_runtime_1.jsxs)("div", { className: "honk-phone-door", children: [(0, jsx_runtime_1.jsxs)("span", { children: [(0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2667 " }), " THE DOOR IS OPEN"] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", ref: scriptButtonRef, className: "honk-scribe-trigger", title: "The script", "aria-label": "Open the verbatim conversation script", "aria-haspopup": "dialog", "aria-expanded": scriptOpen, onClick: () => { setScriptOpen((v) => !v); setBurnConfirm(false); setCopied(false); }, children: [(0, jsx_runtime_1.jsx)("img", { src: "/honk/milo/scribe.png", alt: "" }), (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u25A4" })] })] }), (0, jsx_runtime_1.jsx)(milo_1.MiloScene, {}, freshVisit), scriptOpen ? (0, jsx_runtime_1.jsxs)("section", { className: "honk-script-overlay", role: "dialog", "aria-modal": "true", "aria-label": "The script", onKeyDown: (event) => { if (event.key === "Escape") {
-                                    event.stopPropagation();
-                                    closeScript();
-                                } }, children: [(0, jsx_runtime_1.jsxs)("div", { className: "honk-script-heading", children: [(0, jsx_runtime_1.jsx)("strong", { children: "the script" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: closeScript, "aria-label": "Close the script", children: "\u00D7" })] }), (0, jsx_runtime_1.jsx)("textarea", { ref: scriptTextRef, readOnly: true, value: scriptText, "aria-label": "Everything said in this visit, word for word" }), burnConfirm ? (0, jsx_runtime_1.jsxs)("div", { className: "honk-script-confirm", children: [(0, jsx_runtime_1.jsx)("p", { children: "Burn it all? H\u00F6nk starts fresh. This cannot be undone." }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: burnScript, children: "\uD83D\uDD25 burn" }), (0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => setBurnConfirm(false), children: "keep" })] }) : (0, jsx_runtime_1.jsxs)("div", { className: "honk-script-actions", children: [(0, jsx_runtime_1.jsxs)("button", { type: "button", onClick: () => { void preserveScript(); }, children: [(0, jsx_runtime_1.jsx)("img", { src: "/honk/milo/gold.png", alt: "" }), (0, jsx_runtime_1.jsx)("span", { children: copied ? "preserved" : "preserve" })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", onClick: () => setBurnConfirm(true), children: [(0, jsx_runtime_1.jsx)("img", { src: "/honk/milo/phoenix.png", alt: "" }), (0, jsx_runtime_1.jsx)("span", { children: "burn" })] })] })] }) : null] }), (0, jsx_runtime_1.jsxs)("nav", { className: "honk-next-doors", "aria-label": "Other places in H\u00F6nk's world", children: [(0, jsx_runtime_1.jsxs)("button", { type: "button", onClick: () => enter("room"), children: ["The room ", (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u2197" })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", onClick: () => enter("garden"), children: ["The garden ", (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u273F" })] }), (0, jsx_runtime_1.jsxs)("button", { type: "button", onClick: () => enter("corridor"), children: ["The corridor ", (0, jsx_runtime_1.jsx)("span", { "aria-hidden": "true", children: "\u221E" })] })] }), (0, jsx_runtime_1.jsx)("p", { className: "honk-page-note", children: "A scripted little world. Nothing you say is sent to an AI model." })] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("nav", { className: "honk-back", "aria-label": "Return to H\u00F6nk", children: [(0, jsx_runtime_1.jsx)("button", { type: "button", onClick: () => enter("milo"), children: "\u2190 H\u00D6NK:3" }), (0, jsx_runtime_1.jsx)("span", { children: "Same world. Another place." })] }), (0, jsx_runtime_1.jsxs)("section", { className: `frame place-${place} lights-${lights}`, "aria-label": "Honk's room", children: [(0, jsx_runtime_1.jsxs)("div", { className: "frame-inner", children: [(0, jsx_runtime_1.jsxs)("div", { className: "scene-slot", children: [place === "room" ? (0, jsx_runtime_1.jsx)(world_1.RoomScene, {}) : place === "garden" ? (0, jsx_runtime_1.jsx)(garden_1.GardenScene, {}) : (0, jsx_runtime_1.jsx)(world_1.CorridorScene, {}), place === "room" ? (0, jsx_runtime_1.jsx)("div", { className: "room-shade", "aria-hidden": "true" }) : null] }), (0, jsx_runtime_1.jsxs)("div", { className: "stack-slot", children: [place === "room" ? (0, jsx_runtime_1.jsx)(world_1.BigScreen, {}) : null, (0, jsx_runtime_1.jsx)(terminal_1.Terminal, {})] })] }), (0, jsx_runtime_1.jsx)(world_1.Cabinet, {}), (0, jsx_runtime_1.jsxs)("div", { className: "plaque", "aria-hidden": "true", children: [(0, jsx_runtime_1.jsx)("span", { children: "\u221E" }), (0, jsx_runtime_1.jsx)("span", { children: "H\u00F6nk" }), (0, jsx_runtime_1.jsx)("span", { children: "\u221E" })] })] })] })), (0, jsx_runtime_1.jsx)("p", { className: "colophon", children: "Possibility without demand." }), (0, jsx_runtime_1.jsx)("footer", { className: "honk-small-footer", children: (0, jsx_runtime_1.jsx)("a", { href: "/home.html", children: "AION TEKMIRION" }) })] }));
-}
-
-};
-
-
 // src/components/room/quiet.tsx
 registry["src/components/room/quiet.tsx"]=function(exports,require,module){
 const R=require("react"),h=R.createElement;
@@ -2438,14 +2061,14 @@ const C=require("@/lib/room/clearing");
 const {CAVE_WORKS}=require("@/lib/room/cave");
 const {Terminal}=require("@/components/room/terminal");
 const {playTinyHonk}=require("@/lib/room/honk-sound");
-const {BigScreen}=require("@/components/room/world");
+
 const get=()=>pickState(useRoom.getState()),commit=s=>useRoom.getState().commit(s);
 const alter=fn=>commit(fn(get())),milo=fn=>alter(s=>({...s,milo:fn(s.milo)}));
 const place=id=>alter(s=>({...s,place:"milo",milo:{...s.milo,scene:id,threshold:false}}));
 const threshold=()=>alter(s=>({...s,place:"milo",milo:{...s.milo,threshold:true}}));
 const textOf=chat=>chat.map(t=>t.who==="dir"?"("+t.text+")":(t.who==="you"?"you: ":"Hönk: ")+t.text).join("\n\n");
 const button=(label,onClick,props={})=>h("button",{type:"button",onClick,...props},label);
-const css="\nhtml,body,#root{margin:0;width:100%;height:100%;background:#08080a!important;color:#eeeaf0;overflow:hidden}\n*{box-sizing:border-box}\n.qapp{width:min(100%,850px);margin:auto;height:100dvh;display:flex;flex-direction:column;background:#08080a;color:#eeeaf0;font:15px/1.5 system-ui,sans-serif;position:relative;padding:max(9px,env(safe-area-inset-top)) clamp(14px,3vw,30px) max(10px,env(safe-area-inset-bottom));isolation:isolate}\n.qapp button,.qapp input,.qapp textarea{font:inherit;color:inherit}\n.qapp button{cursor:pointer;background:none;border:0}\n.qapp button:focus-visible,.qapp input:focus-visible,.qapp textarea:focus-visible{outline:2px solid #f6b2c4;outline-offset:3px}\n.qhead{display:flex;align-items:center;justify-content:space-between;min-height:48px;flex:none}\n.qbrand{font-size:18px;font-weight:650;letter-spacing:.02em}.qbrand span{color:#f2afc3}.qhead small{display:block;color:#a29ba5;font-size:9px;letter-spacing:.18em}\n.qscribe{width:44px;height:44px;display:grid;place-items:center}.qscribe img{width:31px;height:31px;object-fit:contain}\n.qstage{position:relative;flex:1 1 47%;min-height:108px;max-height:51dvh;overflow:hidden;border-radius:18px;isolation:isolate;background:#08080a}\n.qstage.qmirror{background:radial-gradient(ellipse at 50% 82%,#35323c66,transparent 37%),#08080a}\n.qworld{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}\n.qstage:after{content:\"\";position:absolute;inset:0;background:linear-gradient(0deg,#08080a 0%,transparent 21%);pointer-events:none;z-index:2}\n.qresident{position:absolute!important;z-index:3;left:50%!important;bottom:8%!important;transform:translateX(-50%)!important;width:min(52%,230px,37dvh)!important;height:77%!important;padding:0!important;display:grid;place-items:end center;animation:none!important;transition:none!important;touch-action:manipulation}\n.qresident img{width:100%;height:100%;object-fit:contain;object-position:center bottom;animation:none!important;transform:none!important;filter:drop-shadow(0 8px 14px #0007)}\n.qresident .milo-gemeyes{position:relative!important;inset:auto!important;width:100%!important;height:100%!important}\n.qemoji{font-size:clamp(52px,15vw,120px)}\n.qreflect{position:absolute;left:50%;bottom:2%;width:40%;height:4%;transform:translateX(-50%);background:radial-gradient(ellipse,#c49ba34a,transparent 70%);filter:blur(4px);pointer-events:none}\n.qplace{position:absolute;left:14px;top:12px;z-index:3;color:#fff7e5;font-size:12px;text-shadow:0 1px 7px #000}\n.qspot{position:absolute;z-index:4;font-size:20px!important;min-width:42px;min-height:42px;border-radius:50%;background:#18191e88!important}\n.qlog{flex:1 1 43%;min-height:55px;overflow:auto;padding:12px 3px 6px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;overscroll-behavior:contain}\n.qline{max-width:84%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:clamp(14px,2vw,16px);margin:0}\n.qline.you{align-self:flex-end;padding:9px 15px;background:#27252b;border-radius:19px}\n.qline.dir{color:#aaa3ad;font-style:italic;font-size:13px}\n.qcompose{display:flex;align-items:center;gap:8px;background:#202024;border:1px solid #35343b;border-radius:28px;padding:5px 7px;flex:none;min-height:53px}\n.qcompose input{flex:1;min-width:0;background:transparent;border:0;outline:none!important;padding:8px 2px;font-size:16px}\n.qcompose input::placeholder{color:#a39ea7}\n.qplus,.qsend{width:41px;height:41px;border-radius:50%;flex:none;display:grid;place-items:center}\n.qplus{font-size:25px!important}.qsend{background:#f2b3c7!important;color:#21171c!important;font-weight:700!important}.qsend:disabled{opacity:.42}\n.qfoot{font-size:10px;color:#97929a;text-align:center;margin:7px 0 0;flex:none}\n.qoverlay{position:absolute;inset:0;background:#08080abb;z-index:10;display:flex;align-items:flex-end;backdrop-filter:blur(5px)}\n.qsheet{width:100%;max-height:88%;overflow:auto;background:#17161b;border:1px solid #3c3740;border-radius:22px 22px 0 0;padding:20px;box-shadow:0 -20px 60px #0009;overscroll-behavior:contain}\n.qsheethead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.qsheethead strong{font-size:17px}.qclose{font-size:24px!important;min-width:38px;min-height:38px}\n.qgroup{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.qgroup button{padding:9px 13px!important;border:1px solid #514751!important;border-radius:14px!important;background:#26222a!important;min-height:40px}\n.qgroup button[aria-pressed=true]{border-color:#e8adc0!important;color:#ffd3df}\n.qsheet h3{font-size:13px;font-weight:600;color:#c6b4c2;margin:20px 0 5px}\n.qsheet p{color:#c7c0c9}.qsheet textarea,.qsearch{width:100%;background:#0c0b10;border:1px solid #423e48;border-radius:10px;padding:12px}\n.qsheet textarea{height:35dvh;resize:vertical;white-space:pre-wrap}.qpaper{white-space:pre-wrap;overflow-wrap:anywhere;color:#e7dcd0;background:#242025;padding:14px;border-radius:12px;max-height:40dvh;overflow:auto}\n.qexit{position:absolute;inset:0;z-index:30;display:grid;align-content:center;justify-items:center;text-align:center;gap:18px;padding:24px;background:radial-gradient(ellipse at 50% 40%,#30231f,#0b090a 66%);font-family:Georgia,serif}\n.qexit img{width:min(180px,38vw);height:150px;object-fit:contain;filter:drop-shadow(0 0 30px #cc9d5777)}.qexit h2{font-size:clamp(24px,5vw,34px);font-weight:400;margin:0}.qexit p{font-size:22px;line-height:1.7;color:#e8cba3;margin:0;font-style:italic}.qexit button{border:1px solid #947e60;border-radius:20px;padding:10px 22px;color:#f7e3ca}\n.qray{position:absolute;z-index:5;inset:0;width:100%;height:100%;pointer-events:none}\n.qquiet{color:#aaa3ad;font-size:12px}\n@media(max-height:480px){.qstage{flex-basis:28%;max-height:31dvh;min-height:70px}.qresident{width:110px!important}.qhead{min-height:36px}.qlog{gap:7px}.qfoot{display:none}}\n@media(prefers-reduced-motion:reduce){.qapp *{animation:none!important;transition:none!important}}\n\n/* Landscape and desktop-mode devices: keep the actual reading surface legible. */\nhtml,body{overflow:hidden!important;margin:0!important}\n#root{position:fixed;inset:0;overflow:hidden}\n.qapp{--qtext:clamp(16px,1.25vw,32px);--qicon:clamp(44px,3.2vw,76px);--qhead:clamp(56px,5vw,98px);width:min(100%,max(760px,52vw));height:100%;max-height:100%;padding-top:calc(var(--qhead) + env(safe-area-inset-top,0px));font-size:var(--qtext);margin-inline:auto}\n.qhead{position:absolute;z-index:7;top:env(safe-area-inset-top,0px);left:clamp(14px,3vw,30px);right:clamp(14px,3vw,30px);height:var(--qhead);min-height:var(--qhead);display:flex!important;visibility:visible!important;opacity:1!important}\n.qbrand{font-size:clamp(20px,1.65vw,40px);color:#eeeaf0}.qhead small{font-size:clamp(9px,.66vw,17px);margin-top:2px}\n.qscribe{width:var(--qicon);height:var(--qicon);border:1px solid #39343c!important;border-radius:50%;background:#17151b!important}.qscribe img{width:66%;height:66%}\n.qstage{flex:1 1 44%;max-height:46dvh}.qresident{width:min(66%,36dvh,440px)!important;height:78%!important;bottom:10%!important;left:50%!important;display:flex;align-items:flex-end;justify-content:center}\n.qresident .milo-gemeyes{position:static!important;inset:auto!important;width:min(100%,34dvh)!important;height:auto!important;aspect-ratio:1!important;flex:none;transform:none!important;margin:0!important}\n.qlog{flex:1 1 44%;padding:clamp(12px,1vw,26px) 4px 8px;gap:clamp(14px,1.2vw,28px)}.qline{font-size:var(--qtext);line-height:1.55}.qline.dir{font-size:clamp(13px,1.05vw,26px)}\n.qcompose{border-radius:100px;min-height:calc(var(--qicon) + 12px);padding:6px 10px}.qcompose input{font-size:var(--qtext);line-height:1.5;padding:10px 5px}.qplus,.qsend{width:var(--qicon);height:var(--qicon)}.qplus{font-size:clamp(25px,2vw,46px)!important}.qfoot{font-size:clamp(10px,.75vw,18px)}\n.qsheet{font-size:var(--qtext)}.qsheethead strong{font-size:1em}.qsheet h3{font-size:.88em}.qquiet{font-size:.8em}\n@media(max-width:600px){.qapp{width:100%;--qtext:16px;--qicon:44px;--qhead:56px;padding-inline:14px}.qhead{left:14px;right:14px}.qstage{max-height:45dvh}.qresident{width:min(60%,33dvh,240px)!important}.qresident .milo-gemeyes{width:100%!important}.qlog{gap:12px}}\n@media(max-height:480px){.qapp{--qhead:42px;--qicon:36px;padding-bottom:5px}.qbrand{font-size:16px}.qhead small{font-size:8px}.qstage{max-height:27dvh;min-height:60px}.qresident{width:100px!important}.qresident .milo-gemeyes{width:min(100%,20dvh)!important}.qcompose{min-height:44px}.qfoot{display:none}}\n";
+const css="\nhtml,body,#root{margin:0;width:100%;height:100%;background:#08080a!important;color:#eeeaf0;overflow:hidden}\n*{box-sizing:border-box}\n.qapp{width:min(100%,850px);margin:auto;height:100dvh;display:flex;flex-direction:column;background:#08080a;color:#eeeaf0;font:15px/1.5 system-ui,sans-serif;position:relative;padding:max(9px,env(safe-area-inset-top)) clamp(14px,3vw,30px) max(10px,env(safe-area-inset-bottom));isolation:isolate}\n.qapp button,.qapp input,.qapp textarea{font:inherit;color:inherit}\n.qapp button{cursor:pointer;background:none;border:0}\n.qapp button:focus-visible,.qapp input:focus-visible,.qapp textarea:focus-visible{outline:2px solid #f6b2c4;outline-offset:3px}\n.qhead{display:flex;align-items:center;justify-content:space-between;min-height:48px;flex:none}\n.qbrand{font-size:18px;font-weight:650;letter-spacing:.02em}.qbrand span{color:#f2afc3}.qhead small{display:block;color:#a29ba5;font-size:9px;letter-spacing:.18em}\n.qscribe{width:44px;height:44px;display:grid;place-items:center}.qscribe img{width:31px;height:31px;object-fit:contain}\n.qstage{position:relative;flex:1 1 47%;min-height:108px;max-height:51dvh;overflow:hidden;border-radius:18px;isolation:isolate;background:#08080a}\n.qstage.qmirror{background:radial-gradient(ellipse at 50% 82%,#35323c66,transparent 37%),#08080a}\n.qworld{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}\n.qstage:after{content:\"\";position:absolute;inset:0;background:linear-gradient(0deg,#08080a 0%,transparent 21%);pointer-events:none;z-index:2}\n.qresident{position:absolute!important;z-index:3;left:50%!important;bottom:8%!important;transform:translateX(-50%)!important;width:min(52%,230px,37dvh)!important;height:77%!important;padding:0!important;display:grid;place-items:end center;animation:none!important;transition:none!important;touch-action:manipulation}\n.qresident img{width:100%;height:100%;object-fit:contain;object-position:center bottom;animation:none!important;transform:none!important;filter:drop-shadow(0 8px 14px #0007)}\n.qresident .milo-gemeyes{position:relative!important;inset:auto!important;width:100%!important;height:100%!important}\n.qemoji{font-size:clamp(52px,15vw,120px)}\n.qreflect{position:absolute;left:50%;bottom:2%;width:40%;height:4%;transform:translateX(-50%);background:radial-gradient(ellipse,#c49ba34a,transparent 70%);filter:blur(4px);pointer-events:none}\n.qplace{position:absolute;left:14px;top:12px;z-index:3;color:#fff7e5;font-size:12px;text-shadow:0 1px 7px #000}\n.qspot{position:absolute;z-index:4;font-size:20px!important;min-width:42px;min-height:42px;border-radius:50%;background:#18191e88!important}\n.qlog{flex:1 1 43%;min-height:55px;overflow:auto;padding:12px 3px 6px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;overscroll-behavior:contain}\n.qline{max-width:84%;white-space:pre-wrap;overflow-wrap:anywhere;font-size:clamp(14px,2vw,16px);margin:0}\n.qline.you{align-self:flex-end;padding:9px 15px;background:#27252b;border-radius:19px}\n.qline.dir{color:#aaa3ad;font-style:italic;font-size:13px}\n.qcompose{display:flex;align-items:center;gap:8px;background:#202024;border:1px solid #35343b;border-radius:28px;padding:5px 7px;flex:none;min-height:53px}\n.qcompose input{flex:1;min-width:0;background:transparent;border:0;outline:none!important;padding:8px 2px;font-size:16px}\n.qcompose input::placeholder{color:#a39ea7}\n.qplus,.qsend{width:41px;height:41px;border-radius:50%;flex:none;display:grid;place-items:center}\n.qplus{font-size:25px!important}.qsend{background:#f2b3c7!important;color:#21171c!important;font-weight:700!important}.qsend:disabled{opacity:.42}\n.qfoot{font-size:10px;color:#97929a;text-align:center;margin:7px 0 0;flex:none}\n.qoverlay{position:absolute;inset:0;background:#08080abb;z-index:10;display:flex;align-items:flex-end;backdrop-filter:blur(5px)}\n.qsheet{width:100%;max-height:88%;overflow:auto;background:#17161b;border:1px solid #3c3740;border-radius:22px 22px 0 0;padding:20px;box-shadow:0 -20px 60px #0009;overscroll-behavior:contain}\n.qsheethead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.qsheethead strong{font-size:17px}.qclose{font-size:24px!important;min-width:38px;min-height:38px}\n.qgroup{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.qgroup button{padding:9px 13px!important;border:1px solid #514751!important;border-radius:14px!important;background:#26222a!important;min-height:40px}\n.qgroup button[aria-pressed=true]{border-color:#e8adc0!important;color:#ffd3df}\n.qsheet h3{font-size:13px;font-weight:600;color:#c6b4c2;margin:20px 0 5px}\n.qsheet p{color:#c7c0c9}.qsheet textarea,.qsearch{width:100%;background:#0c0b10;border:1px solid #423e48;border-radius:10px;padding:12px}\n.qsheet textarea{height:35dvh;resize:vertical;white-space:pre-wrap}.qpaper{white-space:pre-wrap;overflow-wrap:anywhere;color:#e7dcd0;background:#242025;padding:14px;border-radius:12px;max-height:40dvh;overflow:auto}\n.qexit{position:absolute;inset:0;z-index:30;display:grid;align-content:center;justify-items:center;text-align:center;gap:18px;padding:24px;background:radial-gradient(ellipse at 50% 40%,#30231f,#0b090a 66%);font-family:Georgia,serif}\n.qexit img{width:min(180px,38vw);height:150px;object-fit:contain;filter:drop-shadow(0 0 30px #cc9d5777)}.qexit h2{font-size:clamp(24px,5vw,34px);font-weight:400;margin:0}.qexit p{font-size:22px;line-height:1.7;color:#e8cba3;margin:0;font-style:italic}.qexit button{border:1px solid #947e60;border-radius:20px;padding:10px 22px;color:#f7e3ca}\n.qray{position:absolute;z-index:5;inset:0;width:100%;height:100%;pointer-events:none}\n.qquiet{color:#aaa3ad;font-size:12px}\n@media(max-height:480px){.qstage{flex-basis:28%;max-height:31dvh;min-height:70px}.qresident{width:110px!important}.qhead{min-height:36px}.qlog{gap:7px}.qfoot{display:none}}\n@media(prefers-reduced-motion:reduce){.qapp *{animation:none!important;transition:none!important}}\n\n/* Landscape and desktop-mode devices: keep the actual reading surface legible. */\nhtml,body{overflow:hidden!important;margin:0!important}\n#root{position:fixed;inset:0;overflow:hidden}\n.qapp{--qtext:clamp(16px,1.25vw,32px);--qicon:clamp(44px,3.2vw,76px);--qhead:clamp(56px,5vw,98px);width:min(100%,max(760px,52vw));height:100%;max-height:100%;padding-top:calc(var(--qhead) + env(safe-area-inset-top,0px));font-size:var(--qtext);margin-inline:auto}\n.qhead{position:absolute;z-index:7;top:env(safe-area-inset-top,0px);left:clamp(14px,3vw,30px);right:clamp(14px,3vw,30px);height:var(--qhead);min-height:var(--qhead);display:flex!important;visibility:visible!important;opacity:1!important}\n.qbrand{font-size:clamp(20px,1.65vw,40px);color:#eeeaf0}.qhead small{font-size:clamp(9px,.66vw,17px);margin-top:2px}\n.qscribe{width:var(--qicon);height:var(--qicon);border:1px solid #39343c!important;border-radius:50%;background:#17151b!important}.qscribe img{width:66%;height:66%}\n.qstage{flex:1 1 44%;max-height:46dvh}.qresident{width:min(66%,36dvh,440px)!important;height:78%!important;bottom:10%!important;left:50%!important;display:flex;align-items:flex-end;justify-content:center}\n.qresident .milo-gemeyes{position:static!important;inset:auto!important;width:min(100%,34dvh)!important;height:auto!important;aspect-ratio:1!important;flex:none;transform:none!important;margin:0!important}\n.qlog{flex:1 1 44%;padding:clamp(12px,1vw,26px) 4px 8px;gap:clamp(14px,1.2vw,28px)}.qline{font-size:var(--qtext);line-height:1.55}.qline.dir{font-size:clamp(13px,1.05vw,26px)}\n.qcompose{border-radius:100px;min-height:calc(var(--qicon) + 12px);padding:6px 10px}.qcompose input{font-size:var(--qtext);line-height:1.5;padding:10px 5px}.qplus,.qsend{width:var(--qicon);height:var(--qicon)}.qplus{font-size:clamp(25px,2vw,46px)!important}.qfoot{font-size:clamp(10px,.75vw,18px)}\n.qsheet{font-size:var(--qtext)}.qsheethead strong{font-size:1em}.qsheet h3{font-size:.88em}.qquiet{font-size:.8em}\n@media(max-width:600px){.qapp{width:100%;--qtext:16px;--qicon:44px;--qhead:56px;padding-inline:14px}.qhead{left:14px;right:14px}.qstage{max-height:45dvh}.qresident{width:min(60%,33dvh,240px)!important}.qresident .milo-gemeyes{width:100%!important}.qlog{gap:12px}}\n@media(max-height:480px){.qapp{--qhead:42px;--qicon:36px;padding-bottom:5px}.qbrand{font-size:16px}.qhead small{font-size:8px}.qstage{max-height:27dvh;min-height:60px}.qresident{width:100px!important}.qresident .milo-gemeyes{width:min(100%,20dvh)!important}.qcompose{min-height:44px}.qfoot{display:none}}\n\n/* One responsive character stage, with full artwork contained inside its bounds. */\n.qresident{position:absolute!important;left:50%!important;top:50%!important;bottom:auto!important;transform:translate(-50%,-50%)!important;width:min(68%,36dvh,440px)!important;height:min(86%,36dvh,440px)!important;display:grid!important;place-items:center!important;overflow:visible!important}.qresident img{display:block;width:100%;height:100%;object-fit:contain;object-position:center!important;max-width:100%;max-height:100%}.qapp{width:min(100%,max(900px,68vw))!important;--qtext:clamp(17px,1.75vw,36px);--qicon:clamp(46px,3.6vw,82px)}.qbrand{font-size:clamp(22px,1.9vw,42px)}.qlog{min-height:75px}.qhead small{font-size:clamp(10px,.85vw,18px)}@media(max-width:600px){.qapp{--qtext:16px;--qicon:44px}.qresident{width:min(65%,31dvh,240px)!important;height:min(86%,31dvh,240px)!important}}@media(max-height:480px){.qresident{height:90%!important;width:100px!important}.qapp{--qicon:36px;--qtext:16px}}\n";
 function Ray({m,nonce,onEnd}){
  const ref=R.useRef(null);
  R.useEffect(()=>{
@@ -2490,10 +2113,10 @@ function QuietPage(){
  const touch=part=>milo(v=>{let c=v.clearing;return {...v,clearing:part==="bench"?{...c,resting:!c.resting,note:c.resting?"The bench remains.":"You can stay as long as you like."}:part==="pool"?{...c,reflection:!c.reflection,note:"6 becomes 9. The angle changes."}:part==="crystal"?{...c,openCrystal:!c.openCrystal}: {...c,note:"The tree has been here all along."}}});
  const group=(...items)=>h("div",{className:"qgroup"},...items),title=t=>h("h3",null,t);
  const tap=()=>X(n=>n+1);
- const figure=m.form.startsWith("x:")?h("span",{className:"qemoji"},M.MILO_SYMBOLS[m.form.slice(2)]||"✦"):m.form==="gemeyes"?h("span",{className:"milo-being milo-gemeyes","aria-label":"GEMEYES"}):h("img",{src:M.honkArt(m.form),alt:m.form==="seed"?"A seedling":"Hönk",draggable:false});
+ const figure=m.form.startsWith("x:")?h("span",{className:"qemoji"},M.MILO_SYMBOLS[m.form.slice(2)]||"✦"):h("img",{src:M.honkArt(m.form),alt:m.form==="seed"?"A seedling":m.form==="gemeyes"?"GEMEYES":"Hönk",draggable:false});
  const spot=(label,style,fn,aria)=>button(label,fn,{className:"qspot",style,"aria-label":aria||label});
  let panel=null;
- if(sheet==="discover")panel=h(R.Fragment,null,title("Places"),group(button("Mirror",()=>{threshold();close()}),...M.MILO_SCENES.map(p=>button(p.label,()=>{place(p.id);close()},{key:p.id}))),title("Discover"),group(button("Forms",()=>open("forms")),button("Workshop",()=>open("workshop")),button("Terminal",()=>open("terminal")),button("Screen",()=>open("screen")),button("Village gifts",()=>open("gifts")),button("Constellations",()=>open("stars")),button("A tiny sound",()=>playTinyHonk())),h("p",{className:"qquiet"},"A local, scripted little world. Nothing to earn. Nothing sent to a model."));
+ if(sheet==="discover")panel=h(R.Fragment,null,title("Places"),group(button("Hönk · home",()=>{alter(s=>({...s,place:"milo",milo:{...s.milo,form:"honk",threshold:true}}));close()}),...M.MILO_SCENES.map(p=>button(p.label,()=>{place(p.id);close()},{key:p.id}))),title("Discover"),group(button("Forms",()=>open("forms")),button("Workshop",()=>open("workshop")),button("Terminal",()=>open("terminal")),button("Village gifts",()=>open("gifts")),button("Constellations",()=>open("stars")),button("A tiny sound",()=>playTinyHonk())),h("p",{className:"qquiet"},"A local, scripted little world. Nothing to earn. Nothing sent to a model."));
  if(sheet==="forms")panel=group(...M.MILO_FORMS.map(p=>button(p.label,()=>{milo(v=>({...v,form:p.id}));close()},{key:p.id,"aria-pressed":m.form===p.id})));
  if(sheet==="garden")panel=group(...m.plots.map((n,i)=>button(n>=3?"✿ Blooming":"Water "+(i+1),()=>water(i),{key:i,disabled:n>=3})));
  if(sheet==="clearing")panel=h(R.Fragment,null,h("p",null,cc.note),group(button("Tree",()=>touch("tree")),button("Bench",()=>touch("bench")),button("Pool",()=>touch("pool")),button("Crystal",()=>touch("crystal"))),cc.reflection?h("p",null,"6 ↔ 9 · Look again, from the other side."):null,cc.openCrystal?h(R.Fragment,null,group(...C.CLEARING_FRAGMENTS.map(p=>button(p.symbol+" "+p.label,()=>milo(v=>({...v,clearing:{...v.clearing,selected:C.toggleFragment(v.clearing.selected,p.id)}})),{key:p.id,"aria-pressed":cc.selected.includes(p.id)}))),group(button("Mix fragments",()=>{const result=C.mixFragments(cc.selected);if(result)milo(v=>({...v,form:result.form,clearing:{...v.clearing,note:result.message}}))},{disabled:cc.selected.length<2}),button("Begin again",()=>milo(v=>({...v,form:"honk",clearing:{...v.clearing,selected:[],note:"Every possibility remains here."}}))))):null);
@@ -2501,7 +2124,7 @@ function QuietPage(){
  if(sheet==="stars"){const v=M.VILLAGE_STARS[m.constellation%M.VILLAGE_STARS.length]||M.VILLAGE_STARS[0];panel=h(R.Fragment,null,h("p",null,v[0]),group(button("←",()=>step("constellation",M.VILLAGE_STARS,-1)),button("→",()=>step("constellation",M.VILLAGE_STARS,1)),button("Look at the sky",()=>{place("stars");close()})))}
  if(sheet==="workshop"){let matches=CAVE_WORKS.map((w,i)=>({w,i})).filter(({w})=>(w.name+" "+w.by+" "+w.text).toLowerCase().includes(query.toLowerCase()));let idx=matches.findIndex(a=>a.i===m.caveWork);if(idx<0)idx=0;let p=matches[idx];panel=h(R.Fragment,null,h("input",{className:"qsearch",type:"search",value:query,onChange:e=>Q(e.target.value),placeholder:"Find a work","aria-label":"Search workshop"}),group(button("←",()=>{if(matches.length)milo(v=>({...v,caveWork:matches[(idx+matches.length-1)%matches.length].i}))}),button("→",()=>{if(matches.length)milo(v=>({...v,caveWork:matches[(idx+1)%matches.length].i}))})),p?h(R.Fragment,null,h("h3",null,p.w.name),h("p",{className:"qquiet"},p.w.by+" · "+p.w.at+" · SHA-256 "+p.w.sha256.slice(0,12)),h("pre",{className:"qpaper"},p.w.text)):h("p",null,"Nothing matches."))}
  if(sheet==="terminal")panel=h("div",{style:{minHeight:240,position:"relative"}},h(Terminal));
- if(sheet==="screen")panel=h(BigScreen);
+
  if(sheet==="script")panel=h(R.Fragment,null,h("textarea",{readOnly:true,value:textOf(m.chat),"aria-label":"Verbatim transcript"}),group(button(copied?"Preserved":"Preserve",keep,{disabled:!m.chat.length}),button("Copy",()=>copy(textOf(m.chat))),button("Kept · "+(m.keeps||[]).length,()=>open("kept")),button("Burn",()=>F(true))),confirm?h(R.Fragment,null,h("p",null,"Burn this visit? Kept fragments remain."),group(button("Burn",()=>restart(false)),button("Cancel",()=>F(false)))):null);
  if(sheet==="kept")panel=h(R.Fragment,null,h("textarea",{readOnly:true,value:(m.keeps||[]).join("\n\n────────\n\n"),"aria-label":"Kept fragments"}),group(button(copied?"Copied":"Copy",()=>copy((m.keeps||[]).join("\n\n────────\n\n")))));
  return h("main",{className:"qapp"},h("style",null,css),h("header",{className:"qhead"},h("div",{className:"qbrand"},"HÖNK",h("span",null,":3"),h("small",null,"AION TEKMIRION")),button(h("img",{src:"/honk/milo/scribe.png",alt:""}),()=>open("script"),{className:"qscribe","aria-label":"The scribe: preserve or burn"})),
@@ -2511,7 +2134,7 @@ function QuietPage(){
  !m.threshold&&m.scene==="clearing"?spot("◇",{bottom:"7%",right:"5%"},()=>open("clearing"),"Explore the clearing"):null,
  !m.threshold&&m.scene==="stars"?spot("✦",{top:"12%",right:"5%"},()=>open("stars"),"Constellations"):null,
  !m.threshold&&m.scene==="room"?spot("⌑",{top:"12%",right:"5%"},()=>open("workshop"),"Workshop shelf"):null,
- ray>0?h(Ray,{m,nonce:ray,onEnd:()=>X(0)}):null),
+ ray>0?h(Ray,{key:ray,m,nonce:ray,onEnd:()=>X(0)}):null),
  h("section",{ref:log,className:"qlog",role:"log","aria-live":"polite"},m.chat.length?m.chat.map((t,i)=>h("p",{className:"qline "+t.who,key:i},t.text)):h("p",{className:"qline"},"oh! hello O.o\nI'm Hönk. :3\nWelcome. You may breathe here.")),
  h("form",{className:"qcompose",onSubmit:submit},button("+",()=>open("discover"),{className:"qplus","aria-label":"Discover"}),h("input",{value:draft,onChange:e=>D(e.target.value),maxLength:200,placeholder:"Say something, or just stay…","aria-label":"Say something to Hönk",autoComplete:"off"}),h("button",{type:"submit",className:"qsend",disabled:!draft.trim(),"aria-label":"Send"},":3")),h("p",{className:"qfoot"},"Possibility without demand."),
  sheet&&!m.departed?h("div",{className:"qoverlay",onClick:e=>{if(e.target===e.currentTarget)close()}},h("section",{className:"qsheet",role:"dialog","aria-modal":true,"aria-label":sheet,onKeyDown:e=>{if(e.key==="Escape")close()}},h("div",{className:"qsheethead"},h("strong",null,sheet==="script"?"The script":sheet.charAt(0).toUpperCase()+sheet.slice(1)),button("×",close,{className:"qclose","aria-label":"Close"})),panel)):null,
