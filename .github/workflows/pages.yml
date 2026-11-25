@@ -32,6 +32,8 @@ jobs:
         run: |
           for attempt in {1..12}; do
             if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=$PAGES_ARTIFACT" --jq '.total_count' | grep -qx 1; then
+              # The deploy action reads the separate Actions artifact index.
+              sleep 25
               exit 0
             fi
             sleep 5
