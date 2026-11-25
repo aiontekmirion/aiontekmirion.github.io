@@ -15444,6 +15444,8 @@ Possibility without demand.
     function createMiloBrain() {
       let place = "room", garden = [0, 0, 0, 0];
       let misses = 0;
+      let awaitingColour = false;
+      let form = "honk";
       let checks = [];
       const subject = () => "H\xF6nk";
       const POLITE = /\b(please|pls|plz|could|can we|can you|shall we|may we|would you|let'?s|maybe|how about|what about|wanna|want to)\b|\?\s*$/;
@@ -15462,6 +15464,11 @@ Possibility without demand.
       ];
       function brain(raw) {
         const s = raw.toLowerCase().replace(/[’]/g, "'").trim();
+        if (awaitingColour) {
+          awaitingColour = false;
+          if (test(/^(yes[ ,]+)?(my favou?rite colou?r is )?red[.!]*$/, s))
+            return [["honk", "red! :3", { form: "red" }]];
+        }
         for (const L of LAYERS) {
           try {
             if (test(L.match, s))
@@ -15574,7 +15581,8 @@ Possibility without demand.
       }
       const reply = (text, state) => {
         checks = [];
-        state = { ...state, milo: { ...state.milo, form: "honk", departed: false } };
+        form = state.milo.form === "red" ? "red" : "honk";
+        state = { ...state, milo: { ...state.milo, form, departed: false } };
         place = state.milo.scene;
         garden = [...state.milo.plots];
         const raw = String(text).trim().slice(0, 200);
@@ -15585,12 +15593,19 @@ Possibility without demand.
         } catch {
           replies = [["honk", ":3"]];
         }
+        if (form === "honk" && !replies.some(([, , cue]) => cue?.form === "red") && test(/!(?:[^!]*!){2}/, raw)) {
+          awaitingColour = true;
+          replies.push(["honk", "O.o that's a lot of exclamation marks!\nwhat's your favourite colour?"]);
+        }
         const turns = [{ who: "you", text: raw }];
         let next = (0, model_ts_1.pickState)(state);
         for (const reply2 of replies) {
           const [role, message, cue] = reply2;
           if (cue?.place && milo_ts_1.MILO_SCENES.some((s) => s.id === cue.place)) {
             next = { ...next, place: "milo", milo: { ...next.milo, scene: cue.place } };
+          }
+          if (cue?.form === "red") {
+            next = { ...next, milo: { ...next.milo, form: "red" } };
           }
           if (Array.isArray(cue?.garden) && cue.garden.length === 4 && cue.garden.every((x) => Number.isInteger(x) && x >= 0 && x <= 3)) {
             const previous = next.milo.plots.reduce((a, b) => a + b, 0);
@@ -15937,13 +15952,16 @@ Possibility without demand.
     function QuietPage() {
       const milo = useRoom((state) => state.milo);
       const [draft, setDraft] = R.useState("");
+      const [turningRed, setTurningRed] = R.useState(false);
       const canvas = R.useRef(null);
       const lens = R.useRef(null);
       const reply = R.useRef(null);
       const log = R.useRef(null);
       if (!reply.current) reply.current = createMiloBrain();
       const say = R.useCallback((text) => {
-        const result = reply.current(text, useRoom.getState());
+        const prior = useRoom.getState();
+        const result = reply.current(text, prior);
+        if (prior.milo.form !== "red" && result.state.milo.form === "red") setTurningRed(true);
         useRoom.setState(result.state);
         return result.turns.filter((turn) => turn.who !== "you").map((turn) => turn.text);
       }, []);
@@ -15954,7 +15972,7 @@ Possibility without demand.
         const handle = Object.freeze({
           say,
           script: () => useRoom.getState().milo.chat.map((turn) => turn.text).join("\n"),
-          form: () => "honk",
+          form: () => useRoom.getState().milo.form === "red" ? "red" : "honk",
           place: () => useRoom.getState().milo.scene
         });
         window.honk = handle;
@@ -15972,6 +15990,7 @@ Possibility without demand.
           lens.current = null;
         };
       }, []);
+      const red = milo.form === "red";
       const scene = !milo.threshold && scenes[milo.scene] ? milo.scene : "";
       return h(
         "main",
@@ -15995,8 +16014,8 @@ Possibility without demand.
           }, h(
             "picture",
             null,
-            h("source", { media: "(prefers-reduced-motion: reduce)", srcSet: "honk-open.webp" }),
-            h("img", { src: "honk-idle.webp", alt: "Pink H\xF6nk", draggable: false })
+            h("source", { media: "(prefers-reduced-motion: reduce)", srcSet: red ? "honk-red.webp" : "honk-open.webp" }),
+            h("img", { src: red ? turningRed ? "honk-turn-red.webp" : "honk-red.webp" : "honk-idle.webp", alt: red ? "Red H\xF6nk" : "Pink H\xF6nk", draggable: false })
           )),
           h("canvas", { ref: canvas, className: "lens", "aria-hidden": true })
         ),
