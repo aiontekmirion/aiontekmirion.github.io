@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>Hönk · AION TEKMIRION</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; color: #eee8e7; font: 16px/1.55 system-ui, sans-serif; }
+  main { min-height: 100svh; max-width: 50rem; margin: auto; display: grid; align-content: start; padding: 1rem; }
+  .stage { min-height: min(56svh, 30rem); position: relative; isolation: isolate; display: grid; place-items: center; }
+  .scenery { position: absolute; inset: 0; z-index: -1; background: url(scenes.webp) no-repeat; background-size: 200% 300%; background-position: left top; }
+  [data-scene="garden"] .scenery { background-position: right top; }
+  [data-scene="clearing"] .scenery, [data-scene="forest"] .scenery { background-position: left center; }
+  [data-scene="forge"] .scenery { background-position: right center; }
+  [data-scene="stars"] .scenery { background-position: left bottom; }
+  [data-scene="door"] .scenery { background-position: right bottom; }
+  .stage:has(.scenery) { min-height: 0; aspect-ratio: 2; align-self: end; }
+  .bloom { position: absolute; z-index: -1; color: #fff0a7; text-shadow: 0 1px 4px #35211d; transform: translate(-50%, -50%); }
+  .resident { background: transparent; border: 0; cursor: pointer; }
+  .resident img { display: block; width: clamp(5rem, 19vw, 10rem); aspect-ratio: 1; object-fit: contain; }
+  .stage:has(.scenery) .resident { align-self: end; margin-bottom: 4%; }
+  button, input { color: inherit; font: inherit; }
+  :focus-visible { outline: 2px solid #f2b5ab; outline-offset: 3px; }
+  .conversation { max-height: 25svh; overflow: auto; padding: 0 .5rem; white-space: pre-wrap; }
+  .conversation .you, .conversation .dir { color: #b2abaa; }
+  .conversation .dir { font-style: italic; }
+  form { display: flex; border-top: 1px solid #353130; margin-top: .75rem; }
+  input { flex: 1; min-width: 0; background: transparent; border: 0; padding: .85rem .5rem; }
+  form button, .again { background: transparent; border: 0; cursor: pointer; padding: .75rem; }
+  form button:disabled { color: #767070; cursor: default; }
+  #xray { overflow: auto; max-height: 30svh; border-left: 1px solid #c48378; padding: .25rem .75rem; color: #e6c4bd; }
+  #xray pre { overflow-wrap: anywhere; white-space: pre-wrap; font: .78rem/1.55 ui-monospace, monospace; }
+  #xray summary { cursor: pointer; }
+</style>
+<div id="root"></div>
+<script defer src="honk.js"></script>
+</html>
