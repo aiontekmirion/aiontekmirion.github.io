@@ -15405,7 +15405,7 @@ Possibility without demand.
       say: (line) => set((s) => ({ whisper: line, whisperId: s.whisperId + 1 })),
       commit: (next) => set((0, model_1.pickState)(unifyPlace(next)))
     }), {
-      name: "honk-room-v1",
+      name: "honk-minimal-preview-v1",
       skipHydration: true,
       partialize: (s) => (0, model_1.pickState)(s),
       merge: (persisted, current) => {
@@ -15425,7 +15425,7 @@ Possibility without demand.
       started = true;
       let had = false;
       try {
-        had = Boolean(localStorage.getItem("honk-room-v1"));
+        had = Boolean(localStorage.getItem("honk-minimal-preview-v1"));
       } catch {
         had = false;
       }
