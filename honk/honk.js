@@ -15441,10 +15441,6 @@ Possibility without demand.
     exports.createMiloBrain = createMiloBrain;
     const milo_ts_1 = require2("./milo.ts");
     const model_ts_1 = require2("./model.ts");
-    function directedAbuse(raw) {
-      const s = raw.toLowerCase().replace(/[’]/g, "'").trim();
-      return /^(?:fuck off|fuck you|shut up|go die|kill yourself|i hate you|i(?:'ll| will) (?:kill|hurt|hit|beat) you)\b/.test(s) || /^(?:you(?:'re| are)|h[oö]nk(?:,? you(?:'re| are)| is))\s+(?:(?:a|an|such|so|fucking|very|really)\s+)*(?:stupid|dumb|idiot|useless|ugly|worthless|moron|piece of shit|bitch|bastard)\b/.test(s) || /^(?:stupid|dumb|ugly|worthless|useless) h[oö]nk\b/.test(s);
-    }
     function createMiloBrain() {
       let place = "room", garden = [0, 0, 0, 0];
       let misses = 0;
@@ -15548,8 +15544,6 @@ Possibility without demand.
           return [say("the fox lives in the woods.\nit doesn't seem to need a name."), say("you be a fox. i'll be a H\xF6nk. :3")];
         if (has(/\b(milo|marshmallow)\b/))
           return [say("my cousin Milo!\nhe's a tiny knight made of marshmallow.\nhe LOVES having no idea what he's doing. ^.^")];
-        if (has(/\b(manners|gatekeeper|gatekeepers)\b/))
-          return [say("my mouth has three gatekeepers.\nis it true? is it kind? is it necessary? :3")];
         if (has(/\b(how are you|how'?re you|you ok|you okay|how do you feel)\b/))
           return [say("squishy! :3\nthank you for asking ^.^")];
         if (has(/\b(ask me|questions?)\b/))
@@ -15580,18 +15574,11 @@ Possibility without demand.
       }
       const reply = (text, state) => {
         checks = [];
-        state = { ...state, milo: { ...state.milo, form: "honk" } };
+        state = { ...state, milo: { ...state.milo, form: "honk", departed: false } };
         place = state.milo.scene;
         garden = [...state.milo.plots];
         const raw = String(text).trim().slice(0, 200);
-        if (!raw || state.milo.departed)
-          return { state, turns: [] };
-        const abusive = directedAbuse(raw);
-        checks.push({ pattern: "directedAbuse(raw)", matched: abusive });
-        if (abusive) {
-          const turns2 = [{ who: "you", text: raw }, { who: "dir", text: "The other intelligence left." }];
-          return { state: { ...state, place: "milo", milo: { ...state.milo, departed: true, chat: [...state.milo.chat, ...turns2], trace: { checks, output: 0 } } }, turns: turns2 };
-        }
+        if (!raw) return { state, turns: [] };
         let replies;
         try {
           replies = brain(raw);
@@ -15810,35 +15797,148 @@ Possibility without demand.
     const h = R.createElement;
     const { useRoom, hydrateRoom } = require2("@/lib/room/store");
     const { createMiloBrain } = require2("@/lib/room/milo-brain");
-    const { FIRST_MILO } = require2("@/lib/room/milo");
     const scenes = { room: "hearth", garden: "garden", forest: "woods", forge: "forge", stars: "observatory", door: "blue door", clearing: "quiet clearing" };
-    function Xray({ milo, source }) {
-      const trace = milo.trace;
-      const checks = Array.isArray(trace?.checks) ? trace.checks : [];
-      return h(
-        "section",
-        { id: "xray", "aria-label": "H\xF6nk\u2019s running script" },
-        checks.length ? h("pre", null, [
-          ...checks.map(({ pattern, matched }) => (matched ? "true  " : "false ") + pattern),
-          "",
-          ...trace.sceneBefore ? [
-            "scene: " + trace.sceneBefore + " \u2192 " + trace.sceneAfter,
-            "plots: " + trace.plotsBefore.join(", ") + " \u2192 " + trace.plotsAfter.join(", ")
-          ] : [],
-          "response lines: " + trace.output
-        ].join("\n")) : null,
-        h(
-          "details",
-          { open: !checks.length },
-          h("summary", null, "Dialogue source"),
-          h("pre", null, source)
-        )
-      );
+    function createLens(XR) {
+      const xg = XR.getContext("2d"), VIEW = XR.parentElement;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lenses = [], xrun = false, frame = 0;
+      function fit() {
+        const r = VIEW.getBoundingClientRect(), d = devicePixelRatio || 1;
+        XR.width = r.width * d;
+        XR.height = r.height * d;
+        XR.style.width = r.width + "px";
+        XR.style.height = r.height + "px";
+        xg.setTransform(d, 0, 0, d, 0, 0);
+      }
+      function lensBranch(x, y, a, len, depth, out) {
+        if (depth > 4 || len < 6) return;
+        const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
+        out.push([x, y, x2, y2, depth]);
+        const n = depth < 2 ? 3 : 2;
+        for (let i = 0; i < n; i++) lensBranch(x2, y2, a + (Math.random() - 0.5) * 1.4, len * (0.62 + Math.random() * 0.2), depth + 1, out);
+      }
+      function poke(x, y, vocabulary) {
+        const r = VIEW.getBoundingClientRect();
+        const R2 = Math.min(r.width, r.height) * 0.42;
+        const segs = [];
+        for (let i = 0; i < 4; i++) lensBranch(x, y, i * 1.5708 + Math.random() * 0.5, R2 * 0.32, 0, segs);
+        const words = vocabulary.slice(0, 5).map((word, i) => {
+          const angle = i * 2.4;
+          const distance = R2 * (0.4 + i * 0.08);
+          return [word, x + Math.cos(angle) * distance, y + Math.sin(angle) * distance, i * 0.04];
+        });
+        lenses.push({ x, y, R: R2, segs, words, t0: performance.now() });
+        if (lenses.length > 6) lenses.shift();
+        if (!xrun) {
+          xrun = true;
+          frame = requestAnimationFrame(xdraw);
+        }
+      }
+      function xdraw(now) {
+        try {
+          xdraw1(now);
+        } catch (e) {
+          lenses = [];
+        }
+        if (lenses.length) frame = requestAnimationFrame(xdraw);
+        else {
+          xrun = false;
+          xg.clearRect(0, 0, XR.width, XR.height);
+        }
+      }
+      function xdraw1(now) {
+        const W = XR.width / (devicePixelRatio || 1), H = XR.height / (devicePixelRatio || 1);
+        xg.clearRect(0, 0, W, H);
+        const D = reduce ? 900 : 2200;
+        lenses = lenses.filter((L) => now - L.t0 < D);
+        for (const L of lenses) {
+          const p = Math.max(0, (now - L.t0) / D);
+          const open = Math.min(1, p * 4), close = p > 0.7 ? (1 - p) / 0.3 : 1, k = Math.min(open, close);
+          const rad = Math.max(0, L.R * (reduce ? close : k));
+          xg.save();
+          xg.beginPath();
+          xg.arc(L.x, L.y, rad, 0, 6.283);
+          xg.clip();
+          const gr = xg.createRadialGradient(L.x, L.y, 0, L.x, L.y, rad);
+          gr.addColorStop(0, "rgba(10,12,24,.92)");
+          gr.addColorStop(1, "rgba(10,12,24,.55)");
+          xg.fillStyle = gr;
+          xg.fillRect(L.x - rad, L.y - rad, rad * 2, rad * 2);
+          xg.strokeStyle = "rgba(201,201,207,.14)";
+          xg.lineWidth = 1;
+          const g = 14;
+          for (let gx = Math.floor((L.x - rad) / g) * g; gx < L.x + rad; gx += g) {
+            xg.beginPath();
+            xg.moveTo(gx, L.y - rad);
+            xg.lineTo(gx, L.y + rad);
+            xg.stroke();
+          }
+          for (let gy = Math.floor((L.y - rad) / g) * g; gy < L.y + rad; gy += g) {
+            xg.beginPath();
+            xg.moveTo(L.x - rad, gy);
+            xg.lineTo(L.x + rad, gy);
+            xg.stroke();
+          }
+          const grow = reduce ? 1 : Math.min(1, p * 2.2) * close;
+          for (const [x1, y1, x2, y2, dp] of L.segs) {
+            const f = Math.max(0, Math.min(1, grow * 6 - dp));
+            if (!f) continue;
+            xg.strokeStyle = dp < 2 ? "rgba(246,174,200,.85)" : "rgba(236,199,127,.7)";
+            xg.lineWidth = Math.max(0.6, 2.2 - dp * 0.35);
+            xg.beginPath();
+            xg.moveTo(x1, y1);
+            xg.lineTo(x1 + (x2 - x1) * f, y1 + (y2 - y1) * f);
+            xg.stroke();
+            if (f === 1 && dp > 3) {
+              xg.fillStyle = "rgba(255,236,190,.9)";
+              xg.beginPath();
+              xg.arc(x2, y2, 1.6, 0, 6.283);
+              xg.fill();
+            }
+          }
+          xg.font = "11px ui-monospace,Menlo,monospace";
+          xg.textAlign = "center";
+          for (const [s, wx, wy, dl] of L.words) {
+            const a = Math.max(0, Math.min(1, (p - dl) * 5)) * close;
+            if (!a) continue;
+            xg.fillStyle = "rgba(169,217,138," + 0.9 * a + ")";
+            xg.fillText(s, wx, wy - p * 12);
+          }
+          xg.restore();
+          xg.strokeStyle = "rgba(255,236,190," + 0.55 * k + ")";
+          xg.lineWidth = 1.5;
+          xg.beginPath();
+          xg.arc(L.x, L.y, rad, 0, 6.283);
+          xg.stroke();
+        }
+      }
+      return {
+        show(event, vocabulary) {
+          const r = VIEW.getBoundingClientRect();
+          if (XR.width !== Math.round(r.width * (devicePixelRatio || 1)) || XR.height !== Math.round(r.height * (devicePixelRatio || 1))) fit();
+          const center = event.currentTarget.getBoundingClientRect();
+          const x = event.detail ? event.clientX : center.left + center.width / 2;
+          const y = event.detail ? event.clientY : center.top + center.height / 2;
+          poke(x - r.left, y - r.top, vocabulary);
+        },
+        dispose() {
+          cancelAnimationFrame(frame);
+        }
+      };
+    }
+    function lensVocabulary(source, checks) {
+      const words = (text) => text.replace(/\\[bBsSdDwW]/g, " ").match(/[a-z][a-z'-]{2,}/gi) || [];
+      const matched = (Array.isArray(checks) ? checks : []).filter((check) => check.matched).reverse().flatMap((check) => words(check.pattern));
+      const patterns = [...source.matchAll(/\/\\b[^/\n]+\//g)];
+      const known = [...new Set(patterns.flatMap((pattern) => words(pattern[0])))];
+      const offset = Math.floor(Math.random() * known.length);
+      return [.../* @__PURE__ */ new Set([...matched, ...known.slice(offset), ...known.slice(0, offset)])];
     }
     function QuietPage() {
       const milo = useRoom((state) => state.milo);
       const [draft, setDraft] = R.useState("");
-      const [inspect, setInspect] = R.useState(false);
+      const canvas = R.useRef(null);
+      const lens = R.useRef(null);
       const reply = R.useRef(null);
       const log = R.useRef(null);
       if (!reply.current) reply.current = createMiloBrain();
@@ -15849,6 +15949,8 @@ Possibility without demand.
       }, []);
       R.useEffect(() => {
         hydrateRoom();
+        const saved = useRoom.getState().milo;
+        if (saved.departed) useRoom.setState({ milo: { ...saved, departed: false, trace: null } });
         const handle = Object.freeze({
           say,
           script: () => useRoom.getState().milo.chat.map((turn) => turn.text).join("\n"),
@@ -15863,7 +15965,14 @@ Possibility without demand.
       R.useEffect(() => {
         if (log.current) log.current.scrollTop = log.current.scrollHeight;
       }, [milo.chat.length]);
-      const scene = !milo.threshold && !milo.departed && scenes[milo.scene] ? milo.scene : "";
+      R.useEffect(() => {
+        lens.current = createLens(canvas.current);
+        return () => {
+          lens.current?.dispose();
+          lens.current = null;
+        };
+      }, []);
+      const scene = !milo.threshold && scenes[milo.scene] ? milo.scene : "";
       return h(
         "main",
         null,
@@ -15878,26 +15987,25 @@ Possibility without demand.
             role: "img",
             "aria-label": "A flower"
           }, "\u273F") : null) : null,
-          !milo.departed ? h("button", {
+          h("button", {
             className: "resident",
             type: "button",
-            onClick: () => setInspect((value) => !value),
-            "aria-label": "Inspect H\xF6nk\u2019s running script",
-            "aria-expanded": inspect,
-            "aria-controls": inspect ? "xray" : void 0
-          }, h("img", { src: "honk.webp", alt: "Pink H\xF6nk", draggable: false })) : null
+            onClick: (event) => lens.current?.show(event, lensVocabulary(reply.current.source, milo.trace?.checks)),
+            "aria-label": "Reveal H\xF6nk\u2019s dialogue vocabulary"
+          }, h(
+            "picture",
+            null,
+            h("source", { media: "(prefers-reduced-motion: reduce)", srcSet: "honk-open.webp" }),
+            h("img", { src: "honk-idle.webp", alt: "Pink H\xF6nk", draggable: false })
+          )),
+          h("canvas", { ref: canvas, className: "lens", "aria-hidden": true })
         ),
-        inspect && !milo.departed ? h(Xray, { milo, source: reply.current.source }) : null,
         h(
           "div",
           { className: "conversation", role: "log", ref: log, "aria-label": "Conversation" },
           milo.chat.map((turn, index) => h("p", { className: turn.who, key: index }, turn.text))
         ),
-        milo.departed ? h("button", { className: "again", type: "button", onClick: () => {
-          reply.current = createMiloBrain();
-          setInspect(false);
-          useRoom.setState((state) => ({ milo: { ...FIRST_MILO, keeps: state.milo.keeps, plots: state.milo.plots } }));
-        } }, "Begin again") : h(
+        h(
           "form",
           { onSubmit: (event) => {
             event.preventDefault();

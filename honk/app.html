@@ -17,6 +17,8 @@
   [data-scene="door"] .scenery { background-position: right bottom; }
   .stage:has(.scenery) { min-height: 0; aspect-ratio: 2; align-self: end; }
   .bloom { position: absolute; z-index: -1; color: #fff0a7; text-shadow: 0 1px 4px #35211d; transform: translate(-50%, -50%); }
+  .stage { overflow: hidden; }
+  .lens { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .resident { background: transparent; border: 0; cursor: pointer; }
   .resident img { display: block; width: clamp(5rem, 19vw, 10rem); aspect-ratio: 1; object-fit: contain; }
   .stage:has(.scenery) .resident { align-self: end; margin-bottom: 4%; }
@@ -29,10 +31,7 @@
   input { flex: 1; min-width: 0; background: transparent; border: 0; padding: .85rem .5rem; }
   form button, .again { background: transparent; border: 0; cursor: pointer; padding: .75rem; }
   form button:disabled { color: #767070; cursor: default; }
-  #xray { overflow: auto; max-height: 30svh; border-left: 1px solid #c48378; padding: .25rem .75rem; color: #e6c4bd; }
-  #xray pre { overflow-wrap: anywhere; white-space: pre-wrap; font: .78rem/1.55 ui-monospace, monospace; }
-  #xray summary { cursor: pointer; }
 </style>
 <div id="root"></div>
-<script defer src="honk.js"></script>
+<script defer src="honk.js?v=lens-idle-1"></script>
 </html>
